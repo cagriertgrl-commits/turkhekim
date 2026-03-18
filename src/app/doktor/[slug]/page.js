@@ -1,5 +1,15 @@
 import Navbar from "@/components/Navbar";
 
+export async function generateMetadata({ params }) {
+  const { slug } = await params;
+  const ad = slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  return {
+    title: `${ad} — Profil ve Randevu`,
+    description: `${ad} profilini inceleyin. Doğrulanmış hasta yorumları, uzmanlık alanları ve online randevu. TurkHekim güvencesiyle.`,
+    alternates: { canonical: `https://turkhekim.vercel.app/doktor/${slug}` },
+  };
+}
+
 export default async function DoktorProfil({ params }) {
   await params;
   // İleride bu veri veritabanından gelecek
@@ -34,6 +44,25 @@ export default async function DoktorProfil({ params }) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Navbar />
+
+      {/* JSON-LD Schema — Google için */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Physician",
+            "name": doktor.ad,
+            "medicalSpecialty": doktor.uzmanlik,
+            "address": { "@type": "PostalAddress", "addressLocality": doktor.sehir, "addressCountry": "TR" },
+            "aggregateRating": {
+              "@type": "AggregateRating",
+              "ratingValue": doktor.puan,
+              "reviewCount": doktor.yorumSayisi,
+            },
+          }),
+        }}
+      />
 
       <div className="max-w-6xl mx-auto px-6 py-10">
         <div className="grid md:grid-cols-3 gap-8">

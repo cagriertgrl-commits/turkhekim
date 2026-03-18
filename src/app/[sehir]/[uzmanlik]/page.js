@@ -1,6 +1,17 @@
 import Navbar from "@/components/Navbar";
 import sql from "@/lib/db";
 
+export async function generateMetadata({ params }) {
+  const { sehir, uzmanlik } = await params;
+  const sehirAd = sehir.charAt(0).toUpperCase() + sehir.slice(1);
+  const uzmanlikAd = uzmanlik.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  return {
+    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar`,
+    description: `${sehirAd} şehrindeki en iyi ${uzmanlikAd} doktorlarını inceleyin. Doğrulanmış yorumlar ve kolay randevu. TurkHekim güvencesiyle.`,
+    alternates: { canonical: `https://turkhekim.vercel.app/${sehir}/${uzmanlik}` },
+  };
+}
+
 export default async function DoktorListesi({ params }) {
   const { sehir: sehirParam, uzmanlik: uzmanlikParam } = await params;
   const sehir = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
