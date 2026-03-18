@@ -189,16 +189,28 @@ export default function Home() {
               <p className="text-gray-500 text-sm leading-relaxed">Türkiye'nin bağımsız, şeffaf sağlık otorite platformu.</p>
             </div>
             {[
-              { baslik: "Platform", linkler: ["Doktor Bul", "Sağlık Rehberi", "Medikal Turizm", "Klinikler"] },
-              { baslik: "Doktorlar", linkler: ["Ücretsiz Profil", "Pro Paket", "Klinik Paketi", "Turizm Paketi"] },
-              { baslik: "Kurumsal", linkler: ["Hakkımızda", "Gizlilik", "Kullanım Koşulları", "İletişim"] },
+              { baslik: "Platform", linkler: [
+                { ad: "Doktor Bul", href: "/istanbul/kbb-uzmani" },
+                { ad: "Sağlık Rehberi", href: "/saglik" },
+                { ad: "Medikal Turizm", href: "/medikal-turizm" },
+              ]},
+              { baslik: "Doktorlar", linkler: [
+                { ad: "Ücretsiz Kayıt Ol", href: "/doktor-ol" },
+                { ad: "Giriş Yap", href: "/giris" },
+                { ad: "Doktor Paneli", href: "/panel" },
+              ]},
+              { baslik: "Kurumsal", linkler: [
+                { ad: "Hakkımızda", href: "/hakkimizda" },
+                { ad: "Gizlilik Politikası", href: "/gizlilik" },
+                { ad: "Kullanım Koşulları", href: "/kullanim-kosullari" },
+              ]},
             ].map((kolon) => (
               <div key={kolon.baslik}>
                 <h4 className="text-white font-medium mb-4 text-sm">{kolon.baslik}</h4>
                 <ul className="space-y-2">
                   {kolon.linkler.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-gray-500 hover:text-gray-300 text-sm transition-colors">{link}</a>
+                    <li key={link.ad}>
+                      <a href={link.href} className="text-gray-500 hover:text-gray-300 text-sm transition-colors">{link.ad}</a>
                     </li>
                   ))}
                 </ul>
