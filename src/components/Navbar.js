@@ -29,6 +29,8 @@ export default function Navbar({ aktifSayfa }) {
         </div>
 
         <div className="flex items-center gap-3">
+          <a href="/fa" className="text-gray-400 hover:text-white text-xs transition-colors">🇮🇷 فارسی</a>
+          <a href="/ar" className="text-gray-400 hover:text-white text-xs transition-colors">🌍 العربية</a>
           <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">Giriş Yap</a>
           <a href="/doktor-ol" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
             Doktor Ol
