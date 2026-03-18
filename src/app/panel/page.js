@@ -3,6 +3,7 @@ import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import sql from "@/lib/db";
 import FotoYukle from "@/components/FotoYukle";
+import SifreDegistir from "@/components/SifreDegistir";
 
 export default async function Panel() {
   const session = await getServerSession(authOptions);
@@ -128,6 +129,8 @@ export default async function Panel() {
                 </button>
               </form>
             </div>
+
+            <SifreDegistir />
           </div>
 
           {/* SAĞ — Yorumlar */}
