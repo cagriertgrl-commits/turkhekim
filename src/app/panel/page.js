@@ -2,6 +2,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
 import sql from "@/lib/db";
+import FotoYukle from "@/components/FotoYukle";
 
 export default async function Panel() {
   const session = await getServerSession(authOptions);
@@ -63,9 +64,12 @@ export default async function Panel() {
           <div className="space-y-4">
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 style={{ color: "#0D2137" }} className="font-bold text-lg mb-4">Profilim</h2>
-              <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-4">
-                {doktor.ad?.split(" ")[1]?.[0]}{doktor.ad?.split(" ")[2]?.[0] || ""}
-              </div>
+
+              {/* Fotoğraf */}
+              <FotoYukle
+                fotoUrl={doktor.foto_url}
+                initials={`${doktor.ad?.split(" ")[1]?.[0] || ""}${doktor.ad?.split(" ")[2]?.[0] || ""}`}
+              />
               <div className="space-y-2 text-sm">
                 <div className="flex justify-between">
                   <span className="text-gray-500">Ad</span>

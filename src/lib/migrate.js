@@ -13,7 +13,8 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS telefon TEXT,
     ADD COLUMN IF NOT EXISTS sifre TEXT,
     ADD COLUMN IF NOT EXISTS onaylandi BOOLEAN DEFAULT false,
-    ADD COLUMN IF NOT EXISTS fiyat TEXT
+    ADD COLUMN IF NOT EXISTS fiyat TEXT,
+    ADD COLUMN IF NOT EXISTS foto_url TEXT
   `;
 
   console.log("✅ Migrasyon tamamlandı!");

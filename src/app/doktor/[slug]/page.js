@@ -66,9 +66,17 @@ export default async function DoktorProfil({ params }) {
 
             {/* Profil Kartı */}
             <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
-              <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-24 h-24 rounded-full flex items-center justify-center font-bold text-3xl mx-auto mb-4">
-                {initials}
-              </div>
+              {doktor.foto_url ? (
+                <img
+                  src={doktor.foto_url}
+                  alt={doktor.ad}
+                  className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border-4 border-gray-100"
+                />
+              ) : (
+                <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-24 h-24 rounded-full flex items-center justify-center font-bold text-3xl mx-auto mb-4">
+                  {initials}
+                </div>
+              )}
               <h1 className="text-xl font-bold text-gray-900">{doktor.ad}</h1>
               <p style={{ color: "#0E7C7B" }} className="font-medium text-sm mt-1">{doktor.uzmanlik}</p>
               <p className="text-gray-400 text-sm mt-1">📍 {doktor.sehir}{doktor.ilce ? ` · ${doktor.ilce}` : ""}</p>
