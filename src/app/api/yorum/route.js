@@ -1,8 +1,17 @@
 import sql from "@/lib/db";
+import { rateLimit } from "@/lib/rateLimit";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
+    const { basarili, kalan } = rateLimit(ip, 3, 10); // 10 dakikada 3 yorum
+    if (!basarili) {
+      return NextResponse.json(
+        { hata: `Çok fazla istek. Lütfen 10 dakika bekleyin.` },
+        { status: 429 }
+      );
+    }
     const body = await request.json();
     const { doktor_id, hasta_adi, puan, metin, telefon } = body;
 

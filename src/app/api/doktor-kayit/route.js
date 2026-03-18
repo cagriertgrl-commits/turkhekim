@@ -1,5 +1,6 @@
 import sql from "@/lib/db";
 import { hash } from "bcryptjs";
+import { rateLimit } from "@/lib/rateLimit";
 import { NextResponse } from "next/server";
 
 function slugOlustur(ad) {
@@ -13,6 +14,15 @@ function slugOlustur(ad) {
 
 export async function POST(request) {
   try {
+    const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
+    const { basarili } = rateLimit(ip, 3, 60); // 1 saatte 3 kayıt
+    if (!basarili) {
+      return NextResponse.json(
+        { hata: "Çok fazla kayıt denemesi. Lütfen 1 saat bekleyin." },
+        { status: 429 }
+      );
+    }
+
     const body = await request.json();
     const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda, sifre } = body;
 

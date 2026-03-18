@@ -1,5 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import { compare } from "bcryptjs";
+import { rateLimit } from "./rateLimit";
 import sql from "./db";
 
 export const authOptions = {
@@ -10,8 +11,12 @@ export const authOptions = {
         email: { label: "Email", type: "email" },
         sifre: { label: "Şifre", type: "password" },
       },
-      async authorize(credentials) {
+      async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.sifre) return null;
+
+        const ip = req?.headers?.["x-forwarded-for"] || "bilinmiyor";
+        const { basarili } = rateLimit(`giris-${ip}`, 5, 15); // 15 dakikada 5 deneme
+        if (!basarili) return null;
 
         const doktorlar = await sql`
           SELECT * FROM doktorlar WHERE email = ${credentials.email} LIMIT 1
