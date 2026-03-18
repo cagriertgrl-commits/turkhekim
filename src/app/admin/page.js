@@ -2,25 +2,13 @@
 
 import { useState, useEffect } from "react";
 
-const ADMIN_TOKEN = "turkhekim-admin-2025";
-
 export default function AdminPanel() {
-  const [giris, setGiris] = useState(false);
-  const [sifre, setSifre] = useState("");
-  const [hata, setHata] = useState("");
   const [aktifSekme, setAktifSekme] = useState("doktorlar");
   const [doktorlar, setDoktorlar] = useState([]);
   const [yorumlar, setYorumlar] = useState([]);
   const [yukleniyor, setYukleniyor] = useState(false);
 
-  const girisYap = () => {
-    if (sifre === ADMIN_TOKEN) {
-      setGiris(true);
-      veriCek();
-    } else {
-      setHata("Hatalı şifre.");
-    }
-  };
+  useEffect(() => { veriCek(); }, []);
 
   const veriCek = async () => {
     setYukleniyor(true);
@@ -36,7 +24,7 @@ export default function AdminPanel() {
   const doktorOnayla = async (id, onaylandi) => {
     await fetch("/api/admin/doktorlar", {
       method: "PATCH",
-      headers: { "Content-Type": "application/json", "x-admin-token": ADMIN_TOKEN },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, onaylandi }),
     });
     setDoktorlar(doktorlar.map(d => d.id === id ? { ...d, onaylandi } : d));
@@ -46,7 +34,7 @@ export default function AdminPanel() {
     if (!confirm("Bu doktoru silmek istediğinize emin misiniz?")) return;
     await fetch("/api/admin/doktorlar", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", "x-admin-token": ADMIN_TOKEN },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id }),
     });
     setDoktorlar(doktorlar.filter(d => d.id !== id));
@@ -56,41 +44,11 @@ export default function AdminPanel() {
     if (!confirm("Bu yorumu silmek istediğinize emin misiniz?")) return;
     await fetch("/api/admin/yorumlar", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json", "x-admin-token": ADMIN_TOKEN },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id, doktor_id }),
     });
     setYorumlar(yorumlar.filter(y => y.id !== id));
   };
-
-  if (!giris) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center px-6">
-        <div className="bg-gray-800 rounded-2xl p-8 w-full max-w-sm">
-          <div className="text-center mb-6">
-            <div className="text-4xl mb-3">🔐</div>
-            <h1 className="text-white text-xl font-bold">Admin Paneli</h1>
-            <p className="text-gray-400 text-sm mt-1">TurkHekim Yönetim</p>
-          </div>
-          <input
-            type="password"
-            value={sifre}
-            onChange={e => { setSifre(e.target.value); setHata(""); }}
-            onKeyDown={e => e.key === "Enter" && girisYap()}
-            placeholder="Admin şifresi"
-            className="w-full bg-gray-700 text-white border border-gray-600 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 mb-3"
-          />
-          {hata && <p className="text-red-400 text-sm mb-3">{hata}</p>}
-          <button
-            onClick={girisYap}
-            style={{ backgroundColor: "#0E7C7B" }}
-            className="w-full text-white py-3 rounded-xl font-medium hover:opacity-90"
-          >
-            Giriş Yap
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   const bekleyenDoktorlar = doktorlar.filter(d => !d.onaylandi);
   const onayliDoktorlar = doktorlar.filter(d => d.onaylandi);

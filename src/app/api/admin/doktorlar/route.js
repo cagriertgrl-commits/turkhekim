@@ -2,8 +2,8 @@ import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
 function adminKontrol(request) {
-  const token = request.headers.get("x-admin-token");
-  return token === process.env.ADMIN_SECRET;
+  const cookie = request.cookies.get("admin-token")?.value;
+  return cookie === process.env.ADMIN_SECRET;
 }
 
 // Doktor onayla / reddet
