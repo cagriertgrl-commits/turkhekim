@@ -1,18 +1,16 @@
 import Navbar from "@/components/Navbar";
+import sql from "@/lib/db";
 
 export default async function DoktorListesi({ params }) {
   const { sehir: sehirParam, uzmanlik: uzmanlikParam } = await params;
   const sehir = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
   const uzmanlik = uzmanlikParam.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
-  const doktorlar = [
-    { slug: "dr-ayse-kaya", ad: "Dr. Ayşe Kaya", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Kadıköy", puan: 4.9, yorum: 127, deneyim: "12 yıl", musait: true, fiyat: "800 TL" },
-    { slug: "dr-kemal-arslan", ad: "Dr. Kemal Arslan", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Beşiktaş", puan: 4.7, yorum: 89, deneyim: "9 yıl", musait: true, fiyat: "700 TL" },
-    { slug: "dr-selin-yurt", ad: "Dr. Selin Yurt", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Şişli", puan: 4.8, yorum: 214, deneyim: "16 yıl", musait: false, fiyat: "950 TL" },
-    { slug: "dr-baris-celik", ad: "Dr. Barış Çelik", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Üsküdar", puan: 4.6, yorum: 63, deneyim: "7 yıl", musait: true, fiyat: "650 TL" },
-    { slug: "dr-neslihan-oz", ad: "Dr. Neslihan Öz", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Bakırköy", puan: 4.9, yorum: 178, deneyim: "20 yıl", musait: true, fiyat: "1.100 TL" },
-    { slug: "dr-emre-sahin", ad: "Dr. Emre Şahin", uzmanlik: "KBB Uzmanı", sehir: "İstanbul · Maltepe", puan: 4.5, yorum: 41, deneyim: "5 yıl", musait: false, fiyat: "600 TL" },
-  ];
+  const doktorlar = await sql`
+    SELECT * FROM doktorlar
+    WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
+    ORDER BY puan DESC
+  `;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -113,11 +111,11 @@ export default async function DoktorListesi({ params }) {
                       <div>
                         <h2 className="font-bold text-gray-900 text-lg">{doktor.ad}</h2>
                         <p style={{ color: "#0E7C7B" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
-                        <p className="text-gray-400 text-sm">📍 {doktor.sehir} · {doktor.deneyim}</p>
+                        <p className="text-gray-400 text-sm">📍 {doktor.sehir} · {doktor.ilce} · {doktor.deneyim}</p>
                         <div className="flex items-center gap-2 mt-2">
                           <span className="text-yellow-400">★</span>
                           <span className="font-bold text-sm">{doktor.puan}</span>
-                          <span className="text-gray-400 text-xs">({doktor.yorum} doğrulanmış yorum)</span>
+                          <span className="text-gray-400 text-xs">({doktor.yorum_sayisi} doğrulanmış yorum)</span>
                           <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-medium ml-1">
                             ✓ Doğrulanmış
                           </span>
