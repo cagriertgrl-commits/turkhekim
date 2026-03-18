@@ -30,6 +30,7 @@ export default function DoktorOl() {
     ilce: "",
     telefon: "",
     email: "",
+    sifre: "",
     deneyim: "",
     hakkinda: "",
   });
@@ -232,6 +233,19 @@ export default function DoktorOl() {
                   placeholder="doktor@email.com"
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
                 />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Şifre <span className="text-red-500">*</span></label>
+                <input
+                  name="sifre"
+                  type="password"
+                  value={form.sifre}
+                  onChange={guncelle}
+                  placeholder="En az 6 karakter"
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
+                />
+                <p className="text-xs text-gray-400 mt-1">Panele giriş için kullanacaksınız.</p>
               </div>
 
               <div style={{ backgroundColor: "#E8F5F5", borderColor: "#0E7C7B" }} className="border rounded-xl p-4">

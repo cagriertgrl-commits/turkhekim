@@ -1,4 +1,5 @@
 import sql from "@/lib/db";
+import { hash } from "bcryptjs";
 import { NextResponse } from "next/server";
 
 function slugOlustur(ad) {
@@ -13,28 +14,30 @@ function slugOlustur(ad) {
 export async function POST(request) {
   try {
     const body = await request.json();
-    const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda } = body;
+    const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda, sifre } = body;
 
-    if (!ad || !uzmanlik || !sehir || !telefon || !email) {
+    if (!ad || !uzmanlik || !sehir || !telefon || !email || !sifre) {
       return NextResponse.json({ hata: "Zorunlu alanlar eksik." }, { status: 400 });
     }
 
-    const slug = slugOlustur(ad) + "-" + slugOlustur(sehir);
+    const mevcutEmail = await sql`SELECT id FROM doktorlar WHERE email = ${email}`;
+    if (mevcutEmail.length > 0) {
+      return NextResponse.json({ hata: "Bu email zaten kayıtlı." }, { status: 400 });
+    }
 
-    // Aynı slug varsa numara ekle
-    const mevcut = await sql`SELECT id FROM doktorlar WHERE slug = ${slug}`;
-    const finalSlug = mevcut.length > 0 ? slug + "-" + Date.now() : slug;
+    const slug = slugOlustur(ad) + "-" + slugOlustur(sehir);
+    const mevcutSlug = await sql`SELECT id FROM doktorlar WHERE slug = ${slug}`;
+    const finalSlug = mevcutSlug.length > 0 ? slug + "-" + Date.now() : slug;
+
+    const hashedSifre = await hash(sifre, 12);
 
     const yeni = await sql`
-      INSERT INTO doktorlar (slug, ad, uzmanlik, sehir, ilce, deneyim, hakkinda, puan, yorum_sayisi, musait)
-      VALUES (${finalSlug}, ${ad}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${deneyim || ""}, ${hakkinda || ""}, 0, 0, true)
+      INSERT INTO doktorlar (slug, ad, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, hakkinda, puan, yorum_sayisi, musait, onaylandi)
+      VALUES (${finalSlug}, ${ad}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${hakkinda || ""}, 0, 0, true, false)
       RETURNING id, slug
     `;
 
-    return NextResponse.json({
-      mesaj: "Kayıt başarılı!",
-      slug: yeni[0].slug,
-    });
+    return NextResponse.json({ mesaj: "Kayıt başarılı!", slug: yeni[0].slug });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ hata: "Sunucu hatası." }, { status: 500 });
