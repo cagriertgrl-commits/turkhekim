@@ -14,7 +14,15 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS sifre TEXT,
     ADD COLUMN IF NOT EXISTS onaylandi BOOLEAN DEFAULT false,
     ADD COLUMN IF NOT EXISTS fiyat TEXT,
-    ADD COLUMN IF NOT EXISTS foto_url TEXT
+    ADD COLUMN IF NOT EXISTS foto_url TEXT,
+    ADD COLUMN IF NOT EXISTS sozlesme_onaylandi BOOLEAN DEFAULT false,
+    ADD COLUMN IF NOT EXISTS kvkk_onaylandi BOOLEAN DEFAULT false,
+    ADD COLUMN IF NOT EXISTS onay_tarihi TIMESTAMPTZ
+  `;
+
+  await sql`
+    ALTER TABLE yorumlar
+    ADD COLUMN IF NOT EXISTS kvkk_onaylandi BOOLEAN DEFAULT false
   `;
 
   console.log("✅ Migrasyon tamamlandı!");

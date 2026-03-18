@@ -35,6 +35,11 @@ export default function DoktorOl() {
     hakkinda: "",
   });
 
+  const [onaylar, setOnaylar] = useState({
+    sozlesme: false,
+    kvkk: false,
+  });
+
   const guncelle = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
     setHata("");
@@ -57,13 +62,17 @@ export default function DoktorOl() {
   };
 
   const gonder = async () => {
+    if (!onaylar.sozlesme || !onaylar.kvkk) {
+      setHata("Devam edebilmek için kullanım koşullarını ve KVKK metnini onaylamanız gerekiyor.");
+      return;
+    }
     setYukleniyor(true);
     setHata("");
     try {
       const res = await fetch("/api/doktor-kayit", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, sozlesme_onaylandi: true, kvkk_onaylandi: true }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -284,6 +293,47 @@ export default function DoktorOl() {
                   <p>📞 {form.telefon}</p>
                   <p>📧 {form.email}</p>
                 </div>
+              </div>
+
+              {/* ONAY KUTULARI */}
+              <div className="space-y-3 pt-2">
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={onaylar.sozlesme}
+                    onChange={(e) => setOnaylar({ ...onaylar, sozlesme: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 accent-teal-600 flex-shrink-0"
+                  />
+                  <span className="text-sm text-gray-600 leading-relaxed">
+                    <a href="/kullanim-kosullari" target="_blank" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+                      Doktor Kullanım Koşulları
+                    </a>
+                    'nı okudum ve kabul ediyorum.{" "}
+                    <span className="text-red-500 font-medium">*</span>
+                  </span>
+                </label>
+
+                <label className="flex items-start gap-3 cursor-pointer group">
+                  <input
+                    type="checkbox"
+                    checked={onaylar.kvkk}
+                    onChange={(e) => setOnaylar({ ...onaylar, kvkk: e.target.checked })}
+                    className="mt-0.5 w-4 h-4 accent-teal-600 flex-shrink-0"
+                  />
+                  <span className="text-sm text-gray-600 leading-relaxed">
+                    <a href="/gizlilik" target="_blank" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+                      KVKK Aydınlatma Metni
+                    </a>
+                    'ni okudum; kişisel verilerimin işlenmesine açık rıza veriyorum.{" "}
+                    <span className="text-red-500 font-medium">*</span>
+                  </span>
+                </label>
+
+                {(!onaylar.sozlesme || !onaylar.kvkk) && (
+                  <p className="text-xs text-gray-400">
+                    * İşaretli alanlar profil oluşturabilmek için zorunludur.
+                  </p>
+                )}
               </div>
             </div>
           )}

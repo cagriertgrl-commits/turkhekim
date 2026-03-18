@@ -5,6 +5,7 @@ import { useState } from "react";
 export default function YorumFormu({ doktorId }) {
   const [adim, setAdim] = useState(1); // 1: form, 2: başarılı
   const [form, setForm] = useState({ hasta_adi: "", telefon: "", puan: 0, metin: "" });
+  const [kvkkOnay, setKvkkOnay] = useState(false);
   const [hata, setHata] = useState("");
   const [yukleniyor, setYukleniyor] = useState(false);
 
@@ -22,13 +23,17 @@ export default function YorumFormu({ doktorId }) {
       setHata("Yorumunuz en az 20 karakter olmalıdır.");
       return;
     }
+    if (!kvkkOnay) {
+      setHata("Yorum bırakabilmek için KVKK metnini onaylamanız gerekiyor.");
+      return;
+    }
 
     setYukleniyor(true);
     try {
       const res = await fetch("/api/yorum", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...form, doktor_id: doktorId, puan: Number(form.puan) }),
+        body: JSON.stringify({ ...form, doktor_id: doktorId, puan: Number(form.puan), kvkk_onaylandi: true }),
       });
       const data = await res.json();
       if (!res.ok) {
@@ -115,8 +120,24 @@ export default function YorumFormu({ doktorId }) {
             placeholder="Deneyiminizi paylaşın... (en az 20 karakter)"
             className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-teal-500 resize-none"
           />
-          <p className="text-xs text-gray-400 mt-1">{form.metin.length} / 500</p>
+            <p className="text-xs text-gray-400 mt-1">{form.metin.length} / 500</p>
         </div>
+
+        {/* KVKK onayı */}
+        <label className="flex items-start gap-3 cursor-pointer">
+          <input
+            type="checkbox"
+            checked={kvkkOnay}
+            onChange={(e) => setKvkkOnay(e.target.checked)}
+            className="mt-0.5 w-4 h-4 accent-teal-600 flex-shrink-0"
+          />
+          <span className="text-xs text-gray-500 leading-relaxed">
+            <a href="/gizlilik" target="_blank" style={{ color: "#0E7C7B" }} className="hover:underline font-medium">
+              KVKK Aydınlatma Metni
+            </a>
+            'ni okudum; telefon numaram ve kişisel verilerimin yorum doğrulaması amacıyla işlenmesine onay veriyorum.
+          </span>
+        </label>
 
         {hata && (
           <div className="bg-red-50 border border-red-200 rounded-lg p-3">

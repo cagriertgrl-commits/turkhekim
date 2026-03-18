@@ -24,10 +24,14 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda, sifre } = body;
+    const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda, sifre, sozlesme_onaylandi, kvkk_onaylandi } = body;
 
     if (!ad || !uzmanlik || !sehir || !telefon || !email || !sifre) {
       return NextResponse.json({ hata: "Zorunlu alanlar eksik." }, { status: 400 });
+    }
+
+    if (!sozlesme_onaylandi || !kvkk_onaylandi) {
+      return NextResponse.json({ hata: "Kullanım koşulları ve KVKK onayı zorunludur." }, { status: 400 });
     }
 
     const mevcutEmail = await sql`SELECT id FROM doktorlar WHERE email = ${email}`;
@@ -42,8 +46,8 @@ export async function POST(request) {
     const hashedSifre = await hash(sifre, 12);
 
     const yeni = await sql`
-      INSERT INTO doktorlar (slug, ad, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, hakkinda, puan, yorum_sayisi, musait, onaylandi)
-      VALUES (${finalSlug}, ${ad}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${hakkinda || ""}, 0, 0, true, false)
+      INSERT INTO doktorlar (slug, ad, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, hakkinda, puan, yorum_sayisi, musait, onaylandi, sozlesme_onaylandi, kvkk_onaylandi, onay_tarihi)
+      VALUES (${finalSlug}, ${ad}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${hakkinda || ""}, 0, 0, true, false, true, true, NOW())
       RETURNING id, slug
     `;
 

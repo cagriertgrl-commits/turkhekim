@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-    const { basarili, kalan } = rateLimit(ip, 3, 10); // 10 dakikada 3 yorum
+    const { basarili } = rateLimit(ip, 3, 10); // 10 dakikada 3 yorum
     if (!basarili) {
       return NextResponse.json(
         { hata: `Çok fazla istek. Lütfen 10 dakika bekleyin.` },
@@ -13,10 +13,14 @@ export async function POST(request) {
       );
     }
     const body = await request.json();
-    const { doktor_id, hasta_adi, puan, metin, telefon } = body;
+    const { doktor_id, hasta_adi, puan, metin, telefon, kvkk_onaylandi } = body;
 
     if (!doktor_id || !hasta_adi || !puan || !metin || !telefon) {
       return NextResponse.json({ hata: "Tüm alanlar zorunludur." }, { status: 400 });
+    }
+
+    if (!kvkk_onaylandi) {
+      return NextResponse.json({ hata: "KVKK onayı zorunludur." }, { status: 400 });
     }
 
     if (metin.length < 20) {
@@ -39,8 +43,8 @@ export async function POST(request) {
     const tarih = new Date().toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
 
     await sql`
-      INSERT INTO yorumlar (doktor_id, hasta_adi, puan, metin, tarih, dogrulanmis, telefon)
-      VALUES (${doktor_id}, ${hasta_adi}, ${puan}, ${metin}, ${tarih}, true, ${telefon})
+      INSERT INTO yorumlar (doktor_id, hasta_adi, puan, metin, tarih, dogrulanmis, telefon, kvkk_onaylandi)
+      VALUES (${doktor_id}, ${hasta_adi}, ${puan}, ${metin}, ${tarih}, true, ${telefon}, true)
     `;
 
     // Doktorun ortalama puanını güncelle
