@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import AramaKutusu from "@/components/AramaKutusu";
 
 export default function Home() {
   return (
@@ -20,39 +21,7 @@ export default function Home() {
           </p>
 
           {/* ARAMA KUTUSU */}
-          <div className="bg-white rounded-2xl p-4 max-w-3xl mx-auto shadow-2xl">
-            <div className="flex flex-col md:flex-row gap-3">
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-500 mb-1 text-left">Uzmanlık Alanı</label>
-                <input
-                  type="text"
-                  placeholder="KBB, Kardiyoloji, Ortopedi..."
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-teal-500"
-                />
-              </div>
-              <div className="flex-1">
-                <label className="block text-xs font-medium text-gray-500 mb-1 text-left">Şehir</label>
-                <input
-                  type="text"
-                  placeholder="İstanbul, Ankara, Eskişehir..."
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-teal-500"
-                />
-              </div>
-              <div className="flex items-end">
-                <button style={{ backgroundColor: "#0D2137" }} className="w-full md:w-auto text-white px-8 py-2 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity">
-                  Doktor Ara
-                </button>
-              </div>
-            </div>
-            <div className="mt-3 flex flex-wrap gap-2">
-              <span className="text-xs text-gray-500">Popüler:</span>
-              {["KBB Uzmanı", "Rinoplasti", "Estetik Cerrahi", "Diş Hekimi", "Göz Doktoru"].map((tag) => (
-                <button key={tag} className="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors">
-                  {tag}
-                </button>
-              ))}
-            </div>
-          </div>
+          <AramaKutusu />
         </div>
       </section>
 

@@ -12,7 +12,8 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS email TEXT,
     ADD COLUMN IF NOT EXISTS telefon TEXT,
     ADD COLUMN IF NOT EXISTS sifre TEXT,
-    ADD COLUMN IF NOT EXISTS onaylandi BOOLEAN DEFAULT false
+    ADD COLUMN IF NOT EXISTS onaylandi BOOLEAN DEFAULT false,
+    ADD COLUMN IF NOT EXISTS fiyat TEXT
   `;
 
   console.log("✅ Migrasyon tamamlandı!");
