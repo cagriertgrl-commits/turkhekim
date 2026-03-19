@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import sql from "@/lib/db";
 import FotoYukle from "@/components/FotoYukle";
 import SifreDegistir from "@/components/SifreDegistir";
+import RandevuPanel from "@/components/RandevuPanel";
 
 export default async function Panel() {
   const session = await getServerSession(authOptions);
@@ -133,8 +134,9 @@ export default async function Panel() {
             <SifreDegistir />
           </div>
 
-          {/* SAĞ — Yorumlar */}
-          <div className="md:col-span-2">
+          {/* SAĞ — Randevular + Yorumlar */}
+          <div className="md:col-span-2 space-y-6">
+            <RandevuPanel doktorId={doktor.id} />
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h2 style={{ color: "#0D2137" }} className="font-bold text-lg">Hasta Yorumları</h2>
@@ -182,10 +184,10 @@ export default async function Panel() {
                 </div>
               )}
             </div>
-          </div>
 
         </div>
       </div>
+    </div>
     </div>
   );
 }

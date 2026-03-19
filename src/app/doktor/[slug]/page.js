@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import YorumFormu from "@/components/YorumFormu";
+import RandevuFormu from "@/components/RandevuFormu";
 import sql from "@/lib/db";
 import { notFound } from "next/navigation";
 
@@ -100,27 +101,7 @@ export default async function DoktorProfil({ params }) {
             </div>
 
             {/* Randevu Al */}
-            <div id="randevu" className="bg-white rounded-2xl p-6 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-4">Randevu Al</h3>
-              <div className="space-y-3">
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Adınız Soyadınız</label>
-                  <input type="text" placeholder="Ad Soyad" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
-                </div>
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Telefon</label>
-                  <input type="tel" placeholder="0532 xxx xx xx" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
-                </div>
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Şikayet (opsiyonel)</label>
-                  <textarea placeholder="Kısaca belirtin..." rows={3} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none" />
-                </div>
-                <button style={{ backgroundColor: "#0D2137" }} className="w-full text-white py-3 rounded-xl font-medium text-sm hover:opacity-90 transition-opacity">
-                  Randevu Talebi Gönder
-                </button>
-                <p className="text-xs text-gray-400 text-center">SMS ile onay alacaksınız</p>
-              </div>
-            </div>
+            <RandevuFormu doktorId={doktor.id} doktorAd={doktor.ad} />
 
             {/* Çalışma Saatleri */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
