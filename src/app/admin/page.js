@@ -61,7 +61,7 @@ export default function AdminPanel() {
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
             <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">TH</span>
+              <svg width="28" height="28" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="16" fill="#0E7C7B"/><circle cx="16" cy="16" r="1.8" fill="white"/><polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/><polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/></svg>
             </div>
             <span className="text-white font-bold">DoktorPusula Admin</span>
           </div>
