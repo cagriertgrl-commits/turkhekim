@@ -1,61 +1,59 @@
 import Navbar from "@/components/Navbar";
+import AramaKutusu from "@/components/AramaKutusu";
 import sql from "@/lib/db";
+import Link from "next/link";
 
 export async function generateMetadata({ params }) {
   const { sehir, uzmanlik } = await params;
   const sehirAd = sehir.charAt(0).toUpperCase() + sehir.slice(1);
   const uzmanlikAd = uzmanlik.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return {
-    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar`,
+    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar | TurkHekim`,
     description: `${sehirAd} şehrindeki en iyi ${uzmanlikAd} doktorlarını inceleyin. Doğrulanmış yorumlar ve kolay randevu. TurkHekim güvencesiyle.`,
     alternates: { canonical: `https://turkhekim.vercel.app/${sehir}/${uzmanlik}` },
   };
 }
 
+function rozetHesapla(doktor) {
+  const rozetler = [];
+  if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış", renk: "#059669", bg: "#D1FAE5" });
+  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
+  return rozetler;
+}
+
 export default async function DoktorListesi({ params }) {
   const { sehir: sehirParam, uzmanlik: uzmanlikParam } = await params;
-  const sehir = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
-  const uzmanlik = uzmanlikParam.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const sehirAd = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
+  const uzmanlikAd = uzmanlikParam.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 
   const doktorlar = await sql`
     SELECT * FROM doktorlar
     WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-    ORDER BY puan DESC
+      AND onaylandi = true
+    ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
   `;
 
   return (
     <div className="min-h-screen bg-gray-50">
-
       <Navbar aktifSayfa="Doktor Bul" />
 
-      {/* BAŞLIK & FİLTRE */}
-      <div style={{ backgroundColor: "#0D2137" }} className="px-6 py-10">
+      {/* BAŞLIK */}
+      <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
-          <p className="text-gray-400 text-sm mb-2">
-            <a href="/" className="hover:text-white transition-colors">Ana Sayfa</a>
+          <p className="text-gray-400 text-sm mb-3">
+            <Link href="/" className="hover:text-white transition-colors">Ana Sayfa</Link>
             <span className="mx-2">›</span>
-            <span className="text-white">{sehir} · {uzmanlik}</span>
+            <span className="text-gray-300">{sehirAd}</span>
+            <span className="mx-2">›</span>
+            <span className="text-white">{uzmanlikAd}</span>
           </p>
-          <h1 className="text-white text-3xl font-bold mb-6">
-            {sehir} {uzmanlik} — {doktorlar.length} Doktor Bulundu
+          <h1 className="text-white text-2xl md:text-3xl font-bold mb-6">
+            {sehirAd} {uzmanlikAd}
+            <span style={{ color: "#4DD9D8" }} className="text-lg font-normal ml-3">
+              {doktorlar.length} doktor
+            </span>
           </h1>
-
-          {/* Arama Filtresi */}
-          <div className="bg-white rounded-xl p-4 flex flex-col md:flex-row gap-3">
-            <input
-              type="text"
-              defaultValue={uzmanlik}
-              className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
-            />
-            <input
-              type="text"
-              defaultValue={sehir}
-              className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
-            />
-            <button style={{ backgroundColor: "#0D2137" }} className="text-white px-6 py-2 rounded-lg text-sm font-medium hover:opacity-90">
-              Ara
-            </button>
-          </div>
+          <AramaKutusu />
         </div>
       </div>
 
@@ -64,13 +62,13 @@ export default async function DoktorListesi({ params }) {
 
           {/* SOL — Filtreler */}
           <div className="md:col-span-1 space-y-4">
-            <div className="bg-white rounded-xl p-5 shadow-sm">
-              <h3 className="font-bold text-gray-900 mb-4 text-sm">Filtrele</h3>
+            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <h3 className="font-bold text-gray-900 mb-5 text-sm">Filtrele</h3>
 
-              <div className="mb-4">
-                <p className="text-xs text-gray-500 font-medium mb-2">SIRALAMA</p>
+              <div className="mb-5">
+                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Sıralama</p>
                 <div className="space-y-2">
-                  {["En Yüksek Puan", "En Fazla Yorum", "En Yakın Tarih"].map((opt) => (
+                  {["En Yüksek Puan", "En Fazla Yorum", "En Deneyimli"].map((opt) => (
                     <label key={opt} className="flex items-center gap-2 cursor-pointer">
                       <input type="radio" name="siralama" className="accent-teal-600" defaultChecked={opt === "En Yüksek Puan"} />
                       <span className="text-sm text-gray-600">{opt}</span>
@@ -79,10 +77,10 @@ export default async function DoktorListesi({ params }) {
                 </div>
               </div>
 
-              <div className="mb-4">
-                <p className="text-xs text-gray-500 font-medium mb-2">MÜSAİTLİK</p>
+              <div>
+                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Müsaitlik</p>
                 <div className="space-y-2">
-                  {["Tümü", "Bu Hafta Müsait", "Bugün Müsait"].map((opt) => (
+                  {["Tümü", "Bu Hafta Müsait"].map((opt) => (
                     <label key={opt} className="flex items-center gap-2 cursor-pointer">
                       <input type="radio" name="musait" className="accent-teal-600" defaultChecked={opt === "Tümü"} />
                       <span className="text-sm text-gray-600">{opt}</span>
@@ -90,17 +88,21 @@ export default async function DoktorListesi({ params }) {
                   ))}
                 </div>
               </div>
+            </div>
 
-              <div>
-                <p className="text-xs text-gray-500 font-medium mb-2">İLÇE</p>
-                <div className="space-y-2">
-                  {["Tümü", "Kadıköy", "Beşiktaş", "Şişli", "Üsküdar", "Bakırköy"].map((ilce) => (
-                    <label key={ilce} className="flex items-center gap-2 cursor-pointer">
-                      <input type="checkbox" className="accent-teal-600" defaultChecked={ilce === "Tümü"} />
-                      <span className="text-sm text-gray-600">{ilce}</span>
-                    </label>
-                  ))}
-                </div>
+            {/* Popüler Şehirler */}
+            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+              <h3 className="font-bold text-gray-900 mb-4 text-sm">Diğer Şehirler</h3>
+              <div className="flex flex-wrap gap-2">
+                {["istanbul", "ankara", "izmir", "bursa", "antalya"].map((s) => (
+                  <Link
+                    key={s}
+                    href={`/${s}/${uzmanlikParam}`}
+                    className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-teal-400 hover:text-teal-700 transition-colors capitalize"
+                  >
+                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                  </Link>
+                ))}
               </div>
             </div>
           </div>
@@ -108,58 +110,128 @@ export default async function DoktorListesi({ params }) {
           {/* SAĞ — Doktor Listesi */}
           <div className="md:col-span-3 space-y-4">
             <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-500">{doktorlar.length} doktor listeleniyor</p>
+              <p className="text-sm text-gray-400">
+                <strong className="text-gray-700">{doktorlar.length}</strong> doktor listeleniyor
+              </p>
             </div>
 
-            {doktorlar.map((doktor) => (
-              <div key={doktor.slug} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="flex items-start gap-5">
-                  <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl flex-shrink-0">
-                    {doktor.ad.split(" ")[1][0]}{doktor.ad.split(" ")[2]?.[0] || ""}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
-                      <div>
-                        <h2 className="font-bold text-gray-900 text-lg">{doktor.ad}</h2>
-                        <p style={{ color: "#0E7C7B" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
-                        <p className="text-gray-400 text-sm">📍 {doktor.sehir} · {doktor.ilce} · {doktor.deneyim}</p>
-                        <div className="flex items-center gap-2 mt-2">
-                          <span className="text-yellow-400">★</span>
-                          <span className="font-bold text-sm">{doktor.puan}</span>
-                          <span className="text-gray-400 text-xs">({doktor.yorum_sayisi} doğrulanmış yorum)</span>
-                          <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-medium ml-1">
-                            ✓ Doğrulanmış
-                          </span>
-                        </div>
-                      </div>
-                      <div className="flex flex-col items-start md:items-end gap-2 flex-shrink-0">
-                        <span className="text-gray-500 text-sm">Muayene: <strong className="text-gray-900">{doktor.fiyat}</strong></span>
-                        {doktor.musait ? (
-                          <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-3 py-1 rounded-full font-medium">
-                            ● Bu hafta müsait
-                          </span>
-                        ) : (
-                          <span className="bg-gray-100 text-gray-500 text-xs px-3 py-1 rounded-full">
-                            Yakın tarih yok
-                          </span>
-                        )}
-                        <a
-                          href={`/doktor/${doktor.slug}`}
-                          style={{ backgroundColor: "#0D2137" }}
-                          className="text-white px-5 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+            {doktorlar.length === 0 ? (
+              <div className="bg-white rounded-2xl p-16 text-center border border-gray-100">
+                <div className="text-5xl mb-4">🔍</div>
+                <h3 className="text-gray-700 font-bold text-lg mb-2">Sonuç Bulunamadı</h3>
+                <p className="text-gray-400 text-sm mb-6">
+                  {sehirAd} şehrinde onaylı {uzmanlikAd} doktoru henüz yok.
+                </p>
+                <Link
+                  href="/"
+                  style={{ backgroundColor: "#0E7C7B" }}
+                  className="inline-block text-white px-6 py-2 rounded-xl text-sm font-medium hover:opacity-90"
+                >
+                  Yeni Arama Yap
+                </Link>
+              </div>
+            ) : (
+              doktorlar.map((doktor) => {
+                const initials = doktor.ad.split(" ").slice(1).map((n) => n[0]).join("").slice(0, 2);
+                const rozetler = rozetHesapla(doktor);
+                return (
+                  <div key={doktor.slug} className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all border border-gray-100 group">
+                    <div className="flex items-start gap-4">
+
+                      {/* Fotoğraf */}
+                      {doktor.foto_url ? (
+                        <img
+                          src={doktor.foto_url}
+                          alt={doktor.ad}
+                          className="w-20 h-20 rounded-2xl object-cover flex-shrink-0 border-2 border-gray-100"
+                        />
+                      ) : (
+                        <div
+                          style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }}
+                          className="w-20 h-20 rounded-2xl flex items-center justify-center font-bold text-2xl flex-shrink-0"
                         >
-                          Profili İncele
-                        </a>
+                          {initials}
+                        </div>
+                      )}
+
+                      <div className="flex-1 min-w-0">
+                        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
+                          <div>
+                            <h2 className="font-bold text-gray-900 text-lg group-hover:text-teal-700 transition-colors">
+                              {doktor.ad}
+                            </h2>
+                            <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold">{doktor.uzmanlik}</p>
+                            <p className="text-gray-400 text-sm mt-0.5">
+                              📍 {doktor.sehir}{doktor.ilce ? ` · ${doktor.ilce}` : ""}
+                            </p>
+
+                            {/* Puan */}
+                            <div className="flex items-center gap-2 mt-2">
+                              {doktor.yorum_sayisi > 0 ? (
+                                <>
+                                  <div className="flex">
+                                    {[1,2,3,4,5].map((y) => (
+                                      <span key={y} className={`text-sm ${y <= Math.round(doktor.puan) ? "text-yellow-400" : "text-gray-200"}`}>★</span>
+                                    ))}
+                                  </div>
+                                  <span className="font-bold text-sm text-gray-900">{doktor.puan}</span>
+                                  <span className="text-gray-400 text-xs">({doktor.yorum_sayisi} yorum)</span>
+                                </>
+                              ) : (
+                                <span className="text-gray-400 text-xs">Henüz yorum yok</span>
+                              )}
+                            </div>
+
+                            {/* Rozetler */}
+                            {rozetler.length > 0 && (
+                              <div className="flex flex-wrap gap-1.5 mt-2">
+                                {rozetler.map((r) => (
+                                  <span
+                                    key={r.ad}
+                                    style={{ backgroundColor: r.bg, color: r.renk }}
+                                    className="text-xs px-2 py-0.5 rounded-full font-semibold"
+                                  >
+                                    {r.ad}
+                                  </span>
+                                ))}
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Sağ taraf */}
+                          <div className="flex flex-col items-start md:items-end gap-2 flex-shrink-0">
+                            {doktor.fiyat && (
+                              <span className="text-gray-500 text-sm">
+                                Muayene: <strong className="text-gray-900">{doktor.fiyat}</strong>
+                              </span>
+                            )}
+                            {doktor.musait ? (
+                              <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-3 py-1 rounded-full font-semibold">
+                                ● Bu hafta müsait
+                              </span>
+                            ) : (
+                              <span className="bg-gray-100 text-gray-400 text-xs px-3 py-1 rounded-full">
+                                Müsaitlik belirtilmedi
+                              </span>
+                            )}
+                            <Link
+                              href={`/doktor/${doktor.slug}`}
+                              style={{ backgroundColor: "#0D2137" }}
+                              className="text-white px-5 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity mt-1"
+                            >
+                              Profili İncele →
+                            </Link>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </div>
-            ))}
+                );
+              })
+            )}
           </div>
         </div>
       </div>
-
     </div>
   );
 }
