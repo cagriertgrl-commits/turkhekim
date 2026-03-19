@@ -63,7 +63,7 @@ export default function AdminPanel() {
             <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">TH</span>
             </div>
-            <span className="text-white font-bold">TurkHekim Admin</span>
+            <span className="text-white font-bold">DoktorPusula Admin</span>
           </div>
           <div className="flex items-center gap-4">
             <span style={{ backgroundColor: "#DC262620", color: "#DC2626", borderColor: "#DC2626" }} className="border text-xs px-3 py-1 rounded-full font-medium">

@@ -54,7 +54,7 @@ const yorumlar = [
     sehir: "Tahran, İran",
     bayrak: "🇮🇷",
     tedavi: "Rinoplasti",
-    metin: "TurkHekim sayesinde İstanbul'da harika bir doktor buldum. Farsça destek çok işe yaradı, hiçbir şeyde zorlanmadım.",
+    metin: "DoktorPusula sayesinde İstanbul'da harika bir doktor buldum. Farsça destek çok işe yaradı, hiçbir şeyde zorlanmadım.",
     puan: 5,
   },
   {

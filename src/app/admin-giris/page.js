@@ -34,7 +34,7 @@ export default function AdminGiris() {
         <div className="text-center mb-6">
           <div className="text-4xl mb-3">🔐</div>
           <h1 className="text-white text-xl font-bold">Admin Girişi</h1>
-          <p className="text-gray-400 text-sm mt-1">TurkHekim Yönetim</p>
+          <p className="text-gray-400 text-sm mt-1">DoktorPusula Yönetim</p>
         </div>
         <form onSubmit={gonder} className="space-y-3">
           <input

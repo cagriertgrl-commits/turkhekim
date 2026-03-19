@@ -39,7 +39,7 @@ export default function Giris() {
           <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-sm">TH</span>
           </div>
-          <span className="text-white font-bold text-xl">TurkHekim</span>
+          <span className="text-white font-bold text-xl">DoktorPusula</span>
         </a>
       </nav>
 

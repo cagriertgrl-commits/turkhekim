@@ -2,8 +2,8 @@ export const metadata = {
   title: "تورك حكيم — منصة الصحة في تركيا",
   description: "ابحث عن أفضل الأطباء في تركيا. حجز مواعيد أونلاين، آراء موثقة، دعم عربي كامل. السياحة الطبية إلى تركيا.",
   alternates: {
-    canonical: "https://turkhekim.vercel.app/ar",
-    languages: { "tr": "https://turkhekim.vercel.app", "ar": "https://turkhekim.vercel.app/ar" },
+    canonical: "https://doktorpusula.com/ar",
+    languages: { "tr": "https://doktorpusula.com", "ar": "https://doktorpusula.com/ar" },
   },
 };
 

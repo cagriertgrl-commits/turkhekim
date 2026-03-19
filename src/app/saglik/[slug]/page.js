@@ -53,7 +53,7 @@ const makaleler = {
       {
         tip: "kutu",
         renk: "yesil",
-        metin: "✅ TurkHekim'de KBB uzmanı doktorlarımız kulak çınlaması konusunda size yardımcı olmaya hazır. Hemen randevu alın."
+        metin: "✅ DoktorPusula'de KBB uzmanı doktorlarımız kulak çınlaması konusunda size yardımcı olmaya hazır. Hemen randevu alın."
       },
     ],
     ilgiliDoktor: { ad: "Dr. Ayşe Kaya", uzmanlik: "KBB Uzmanı", slug: "dr-ayse-kaya", puan: 4.9 },

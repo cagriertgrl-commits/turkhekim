@@ -10,9 +10,9 @@ export async function generateMetadata({ params }) {
   if (!doktorlar.length) return { title: "Doktor Bulunamadı" };
   const d = doktorlar[0];
   return {
-    title: `${d.ad} — ${d.uzmanlik} | TurkHekim`,
+    title: `${d.ad} — ${d.uzmanlik} | DoktorPusula`,
     description: `${d.ad} profilini inceleyin. ${d.sehir} şehrinde ${d.uzmanlik}. Doğrulanmış yorumlar ve online randevu.`,
-    alternates: { canonical: `https://turkhekim.vercel.app/doktor/${slug}` },
+    alternates: { canonical: `https://doktorpusula.com/doktor/${slug}` },
   };
 }
 

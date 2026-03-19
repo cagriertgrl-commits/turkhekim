@@ -1,7 +1,7 @@
 import sql from "@/lib/db";
 
 export default async function sitemap() {
-  const baseUrl = "https://turkhekim.vercel.app";
+  const baseUrl = "https://doktorpusula.com";
 
   const doktorlar = await sql`SELECT slug FROM doktorlar`;
   const doktorUrls = doktorlar.map((d) => ({

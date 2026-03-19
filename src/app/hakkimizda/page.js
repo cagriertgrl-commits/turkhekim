@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "Hakkımızda | TurkHekim",
-  description: "TurkHekim hakkında — Türkiye'nin bağımsız sağlık platformunun hikayesi ve misyonu.",
+  title: "Hakkımızda | DoktorPusula",
+  description: "DoktorPusula hakkında — Türkiye'nin bağımsız sağlık platformunun hikayesi ve misyonu.",
 };
 
 export default function Hakkimizda() {
@@ -16,7 +16,7 @@ export default function Hakkimizda() {
           <div style={{ backgroundColor: "#0E7C7B20", borderColor: "#0E7C7B" }} className="inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6">
             <span style={{ color: "#0E7C7B" }} className="text-sm font-medium">🇹🇷 Türkiye'nin Bağımsız Sağlık Platformu</span>
           </div>
-          <h1 className="text-white text-4xl font-bold mb-4">Neden TurkHekim?</h1>
+          <h1 className="text-white text-4xl font-bold mb-4">Neden DoktorPusula?</h1>
           <p className="text-gray-300 max-w-2xl mx-auto leading-relaxed">
             Türkiye'de sağlık platformları ya yabancı sermayeye ya da reklam geliri için doktor sıralamasını bozan teşviklere dayanıyor.
             Biz farklıyız: tamamen şeffaf, tamamen yerli, tamamen bağımsız.
@@ -46,9 +46,9 @@ export default function Hakkimizda() {
             <h2 style={{ color: "#0D2137" }} className="text-2xl font-bold mb-8">İletişim</h2>
             <div className="bg-white rounded-2xl p-8 shadow-sm space-y-4 text-sm text-gray-600">
               {[
-                { etiket: "E-posta", deger: "iletisim@turkhekim.com" },
-                { etiket: "Doktor destek", deger: "doktor@turkhekim.com" },
-                { etiket: "Basın", deger: "basin@turkhekim.com" },
+                { etiket: "E-posta", deger: "iletisim@doktorpusula.com" },
+                { etiket: "Doktor destek", deger: "doktor@doktorpusula.com" },
+                { etiket: "Basın", deger: "basin@doktorpusula.com" },
               ].map((item) => (
                 <div key={item.etiket} className="flex justify-between items-center border-b border-gray-100 pb-3 last:border-0 last:pb-0">
                   <span className="text-gray-400">{item.etiket}</span>

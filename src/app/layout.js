@@ -2,26 +2,26 @@ import "./globals.css";
 
 export const metadata = {
   title: {
-    default: "TurkHekim — Türkiye'nin Sağlık Otoritesi",
-    template: "%s | TurkHekim",
+    default: "DoktorPusula — Türkiye'nin Sağlık Otoritesi",
+    template: "%s | DoktorPusula",
   },
   description: "Türkiye'nin bağımsız, şeffaf sağlık platformu. Doğrulanmış yorumlar, kolay randevu, çok dilli destek. Doğru hekime güvenle ulaşın.",
   keywords: ["doktor bul", "randevu al", "türkiye doktor", "kbb uzmanı", "medikal turizm türkiye"],
-  authors: [{ name: "TurkHekim" }],
-  creator: "TurkHekim",
-  metadataBase: new URL("https://turkhekim.vercel.app"),
+  authors: [{ name: "DoktorPusula" }],
+  creator: "DoktorPusula",
+  metadataBase: new URL("https://doktorpusula.com"),
   openGraph: {
     type: "website",
     locale: "tr_TR",
-    url: "https://turkhekim.vercel.app",
-    siteName: "TurkHekim",
-    title: "TurkHekim — Türkiye'nin Sağlık Otoritesi",
+    url: "https://doktorpusula.com",
+    siteName: "DoktorPusula",
+    title: "DoktorPusula — Türkiye'nin Sağlık Otoritesi",
     description: "Doğrulanmış yorumlar, kolay randevu, çok dilli destek. Türkiye'nin bağımsız sağlık platformu.",
-    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "TurkHekim" }],
+    images: [{ url: "/og-image.png", width: 1200, height: 630, alt: "DoktorPusula" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "TurkHekim — Türkiye'nin Sağlık Otoritesi",
+    title: "DoktorPusula — Türkiye'nin Sağlık Otoritesi",
     description: "Doğrulanmış yorumlar, kolay randevu, çok dilli destek.",
   },
   robots: {
@@ -30,7 +30,7 @@ export const metadata = {
     googleBot: { index: true, follow: true },
   },
   alternates: {
-    canonical: "https://turkhekim.vercel.app",
+    canonical: "https://doktorpusula.com",
   },
 };
 

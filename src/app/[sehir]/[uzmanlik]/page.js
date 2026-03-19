@@ -8,9 +8,9 @@ export async function generateMetadata({ params }) {
   const sehirAd = sehir.charAt(0).toUpperCase() + sehir.slice(1);
   const uzmanlikAd = uzmanlik.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
   return {
-    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar | TurkHekim`,
-    description: `${sehirAd} şehrindeki en iyi ${uzmanlikAd} doktorlarını inceleyin. Doğrulanmış yorumlar ve kolay randevu. TurkHekim güvencesiyle.`,
-    alternates: { canonical: `https://turkhekim.vercel.app/${sehir}/${uzmanlik}` },
+    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar | DoktorPusula`,
+    description: `${sehirAd} şehrindeki en iyi ${uzmanlikAd} doktorlarını inceleyin. Doğrulanmış yorumlar ve kolay randevu. DoktorPusula güvencesiyle.`,
+    alternates: { canonical: `https://doktorpusula.com/${sehir}/${uzmanlik}` },
   };
 }
 

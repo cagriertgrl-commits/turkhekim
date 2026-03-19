@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "Kullanım Koşulları | TurkHekim",
-  description: "TurkHekim platform kullanım koşulları ve sorumluluk bildirimi.",
+  title: "Kullanım Koşulları | DoktorPusula",
+  description: "DoktorPusula platform kullanım koşulları ve sorumluluk bildirimi.",
 };
 
 export default function KullanimKosullari() {
@@ -20,7 +20,7 @@ export default function KullanimKosullari() {
           {[
             {
               baslik: "1. Platform Niteliği",
-              icerik: "TurkHekim, doktor ve hasta buluşmasını kolaylaştıran bağımsız bir rehber platformudur. Platform, tıbbi tavsiye vermez, teşhis koymaz ve sağlık hizmeti sunmaz. Platforma erişiminiz bu koşulları kabul ettiğiniz anlamına gelir.",
+              icerik: "DoktorPusula, doktor ve hasta buluşmasını kolaylaştıran bağımsız bir rehber platformudur. Platform, tıbbi tavsiye vermez, teşhis koymaz ve sağlık hizmeti sunmaz. Platforma erişiminiz bu koşulları kabul ettiğiniz anlamına gelir.",
             },
             {
               baslik: "2. Doktorlar İçin Koşullar",
@@ -47,7 +47,7 @@ export default function KullanimKosullari() {
               baslik: "4. Sorumluluk Reddi",
               icerik: null,
               liste: [
-                "TurkHekim, doktorların verdikleri hizmetlerden sorumlu değildir.",
+                "DoktorPusula, doktorların verdikleri hizmetlerden sorumlu değildir.",
                 "Platform yalnızca bilgi sunar; tıbbi karar tamamen doktor-hasta arasındaki ilişkiye aittir.",
                 "Doktor profil bilgilerinin doğruluğundan birincil sorumlu ilgili doktordur.",
                 "Platform, teknik kesintilerden doğan zararlardan sorumlu tutulamaz.",
@@ -55,7 +55,7 @@ export default function KullanimKosullari() {
             },
             {
               baslik: "5. Fikri Mülkiyet",
-              icerik: "TurkHekim markası, logosu ve platform içeriği platforma aittir. İzinsiz kopyalanamaz, çoğaltılamaz veya dağıtılamaz.",
+              icerik: "DoktorPusula markası, logosu ve platform içeriği platforma aittir. İzinsiz kopyalanamaz, çoğaltılamaz veya dağıtılamaz.",
             },
             {
               baslik: "6. Değişiklikler",
@@ -67,7 +67,7 @@ export default function KullanimKosullari() {
             },
             {
               baslik: "8. İletişim",
-              icerik: "Kullanım koşullarına ilişkin sorularınız için: iletisim@turkhekim.com",
+              icerik: "Kullanım koşullarına ilişkin sorularınız için: iletisim@doktorpusula.com",
             },
           ].map((bolum) => (
             <section key={bolum.baslik} className="mb-8">

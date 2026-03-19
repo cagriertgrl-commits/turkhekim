@@ -2,8 +2,8 @@ export const metadata = {
   title: "ترک‌حکیم — پلتفرم سلامت ترکیه",
   description: "بهترین پزشکان ترکیه را پیدا کنید. نوبت‌دهی آنلاین، نظرات تأییدشده، پشتیبانی فارسی. گردشگری پزشکی به ترکیه.",
   alternates: {
-    canonical: "https://turkhekim.vercel.app/fa",
-    languages: { "tr": "https://turkhekim.vercel.app", "fa": "https://turkhekim.vercel.app/fa" },
+    canonical: "https://doktorpusula.com/fa",
+    languages: { "tr": "https://doktorpusula.com", "fa": "https://doktorpusula.com/fa" },
   },
 };
 

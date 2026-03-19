@@ -29,7 +29,7 @@ export default async function Panel() {
             <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">TH</span>
             </div>
-            <span className="text-white font-bold text-xl">TurkHekim</span>
+            <span className="text-white font-bold text-xl">DoktorPusula</span>
           </a>
           <div className="flex items-center gap-4">
             <span className="text-gray-300 text-sm">Hoş geldiniz, {doktor.ad}</span>

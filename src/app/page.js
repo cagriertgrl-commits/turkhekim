@@ -265,7 +265,7 @@ export default async function Home() {
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold mb-3">Neden TurkHekim?</h2>
+            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold mb-3">Neden DoktorPusula?</h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
               Mevcut platformların çözemediği sorunları çözüyoruz.
             </p>
@@ -362,7 +362,7 @@ export default async function Home() {
             <div>
               <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold mb-3 uppercase tracking-wide">Hekimler İçin</p>
               <h2 className="text-white text-2xl md:text-3xl font-bold mb-4">
-                Siz de TurkHekim'de<br />Yerinizi Alın
+                Siz de DoktorPusula'da<br />Yerinizi Alın
               </h2>
               <p className="text-gray-300 mb-8 leading-relaxed text-sm">
                 Ücretsiz profilinizi oluşturun, randevu takviminizi yönetin
@@ -420,11 +420,16 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-4 gap-8 mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-4">
-                <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xs">TH</span>
-                </div>
-                <span className="text-white font-bold text-lg">TurkHekim</span>
+              <div className="flex items-center gap-2.5 mb-4">
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
+                  <circle cx="16" cy="16" r="1.8" fill="white"/>
+                  <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
+                  <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
+                </svg>
+                <span className="text-white font-bold text-lg tracking-tight">
+                  Doktor<span style={{ color: "#C9A84C" }}>Pusula</span>
+                </span>
               </div>
               <p className="text-gray-500 text-sm leading-relaxed">
                 Türkiye'nin bağımsız, şeffaf sağlık otorite platformu.
@@ -471,7 +476,7 @@ export default async function Home() {
             ))}
           </div>
           <div style={{ borderColor: "#ffffff08" }} className="border-t pt-6 flex flex-col md:flex-row items-center justify-between gap-3">
-            <p className="text-gray-600 text-xs">© 2025 TurkHekim.com — Tüm hakları saklıdır.</p>
+            <p className="text-gray-600 text-xs">© 2025 DoktorPusula.com — Tüm hakları saklıdır.</p>
             <p className="text-gray-600 text-xs">🇹🇷 Türkiye'de geliştirildi</p>
           </div>
         </div>

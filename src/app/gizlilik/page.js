@@ -1,8 +1,8 @@
 import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "Gizlilik Politikası | TurkHekim",
-  description: "TurkHekim kişisel verilerin korunması ve gizlilik politikası.",
+  title: "Gizlilik Politikası | DoktorPusula",
+  description: "DoktorPusula kişisel verilerin korunması ve gizlilik politikası.",
 };
 
 export default function GizlilikPolitikasi() {
@@ -24,7 +24,7 @@ export default function GizlilikPolitikasi() {
           {[
             {
               baslik: "1. Veri Sorumlusu",
-              icerik: `TurkHekim ("Platform"), kişisel verilerinizin işlenmesinden sorumlu veri sorumlusudur. Platform; doktor-hasta buluşmasını kolaylaştıran bağımsız bir rehber hizmetidir, sağlık hizmeti sunucusu değildir.`
+              icerik: `DoktorPusula ("Platform"), kişisel verilerinizin işlenmesinden sorumlu veri sorumlusudur. Platform; doktor-hasta buluşmasını kolaylaştıran bağımsız bir rehber hizmetidir, sağlık hizmeti sunucusu değildir.`
             },
             {
               baslik: "2. Toplanan Kişisel Veriler",
@@ -77,7 +77,7 @@ export default function GizlilikPolitikasi() {
             },
             {
               baslik: "7. İletişim",
-              icerik: "Gizlilik politikamıza ilişkin sorularınız veya KVKK kapsamındaki talepleriniz için: iletisim@turkhekim.com adresine yazabilirsiniz."
+              icerik: "Gizlilik politikamıza ilişkin sorularınız veya KVKK kapsamındaki talepleriniz için: iletisim@doktorpusula.com adresine yazabilirsiniz."
             },
           ].map((bolum) => (
             <section key={bolum.baslik} className="mb-8">

@@ -1,7 +1,7 @@
 import Navbar from "@/components/Navbar";
 
 export const metadata = {
-  title: "Sayfa Bulunamadı | TurkHekim",
+  title: "Sayfa Bulunamadı | DoktorPusula",
   description: "Aradığınız sayfa bulunamadı.",
 };
 

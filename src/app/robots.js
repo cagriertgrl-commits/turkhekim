@@ -5,6 +5,6 @@ export default function robots() {
       allow: "/",
       disallow: ["/api/", "/admin/"],
     },
-    sitemap: "https://turkhekim.vercel.app/sitemap.xml",
+    sitemap: "https://doktorpusula.com/sitemap.xml",
   };
 }
