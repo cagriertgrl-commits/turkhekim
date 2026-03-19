@@ -19,7 +19,7 @@ export async function generateMetadata({ params }) {
 function rozetHesapla(doktor) {
   const rozetler = [];
   if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış Doktor", renk: "#059669", bg: "#D1FAE5" });
-  if (parseInt(doktor.deneyim) >= 15) rozetler.push({ ad: "⭐ 15+ Yıl Deneyim", renk: "#2563EB", bg: "#DBEAFE" });
+  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
   return rozetler;
 }
 
