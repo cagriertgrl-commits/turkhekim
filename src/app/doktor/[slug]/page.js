@@ -16,6 +16,14 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function rozetHesapla(doktor) {
+  const rozetler = [];
+  if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış Doktor", renk: "#059669", bg: "#D1FAE5" });
+  if (doktor.puan >= 4.8 && doktor.yorum_sayisi >= 10) rozetler.push({ ad: "🏆 Üst Doktor", renk: "#D97706", bg: "#FEF3C7" });
+  if (parseInt(doktor.deneyim) >= 15) rozetler.push({ ad: "⭐ 15+ Yıl Deneyim", renk: "#2563EB", bg: "#DBEAFE" });
+  return rozetler;
+}
+
 const CALISMA_SAATLERI = {
   "Pazartesi": "09:00 - 17:00",
   "Salı": "09:00 - 17:00",
@@ -36,6 +44,7 @@ export default async function DoktorProfil({ params }) {
   `;
 
   const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0, 2);
+  const rozetler = rozetHesapla(doktor);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -86,6 +95,15 @@ export default async function DoktorProfil({ params }) {
                   <span className="text-yellow-400 text-lg">★</span>
                   <span className="font-bold">{doktor.puan}</span>
                   <span className="text-gray-400 text-sm">({doktor.yorum_sayisi} yorum)</span>
+                </div>
+              )}
+              {rozetler.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-1.5 mt-3">
+                  {rozetler.map((r) => (
+                    <span key={r.ad} style={{ backgroundColor: r.bg, color: r.renk }} className="text-xs px-2 py-0.5 rounded-full font-semibold">
+                      {r.ad}
+                    </span>
+                  ))}
                 </div>
               )}
               {doktor.deneyim && (

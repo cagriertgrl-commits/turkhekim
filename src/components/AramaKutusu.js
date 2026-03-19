@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
 
 function slugYap(metin) {
@@ -13,13 +13,75 @@ function slugYap(metin) {
     .replace(/[^a-z0-9-]/g, "");
 }
 
-const populerAramalar = [
-  { etiket: "KBB Uzmanı", sehir: "istanbul", uzmanlik: "kbb-uzmani" },
-  { etiket: "Rinoplasti", sehir: "istanbul", uzmanlik: "rinoplasti" },
-  { etiket: "Estetik Cerrahi", sehir: "istanbul", uzmanlik: "estetik-cerrahi" },
-  { etiket: "Diş Hekimi", sehir: "istanbul", uzmanlik: "dis-hekimi" },
-  { etiket: "Göz Doktoru", sehir: "istanbul", uzmanlik: "goz-doktoru" },
+const UZMANLIKLAR = [
+  "KBB Uzmanı", "Kardiyoloji", "Ortopedi", "Plastik Cerrahi",
+  "Göz Hastalıkları", "Diş Hekimi", "Dermatoloji", "Nöroloji",
+  "Üroloji", "Psikiyatri", "Çocuk Hastalıkları", "Estetik Cerrahi",
+  "Genel Cerrahi", "İç Hastalıkları", "Kadın Doğum", "Rinoplasti",
+  "Onkoloji", "Endokrinoloji", "Gastroenteroloji", "Fizik Tedavi",
+  "Radyoloji", "Anesteziyoloji", "Acil Tıp", "Aile Hekimi",
 ];
+
+const SEHIRLER = [
+  "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
+  "Adana", "Konya", "Gaziantep", "Mersin", "Kayseri",
+  "Trabzon", "Diyarbakır", "Samsun", "Eskişehir", "Erzurum",
+];
+
+const POPULER = [
+  { etiket: "KBB · İstanbul", sehir: "istanbul", uzmanlik: "kbb-uzmani" },
+  { etiket: "Rinoplasti · İstanbul", sehir: "istanbul", uzmanlik: "rinoplasti" },
+  { etiket: "Estetik Cerrahi · Ankara", sehir: "ankara", uzmanlik: "estetik-cerrahi" },
+  { etiket: "Diş · İzmir", sehir: "izmir", uzmanlik: "dis-hekimi" },
+  { etiket: "Göz · İstanbul", sehir: "istanbul", uzmanlik: "goz-hastaliklari" },
+];
+
+function DropdownInput({ value, onChange, placeholder, onaylar, label, icon }) {
+  const [acik, setAcik] = useState(false);
+  const ref = useRef(null);
+
+  const filtreli = onaylar.filter((o) =>
+    o.toLowerCase().includes(value.toLowerCase())
+  ).slice(0, 8);
+
+  useEffect(() => {
+    function kapat(e) {
+      if (ref.current && !ref.current.contains(e.target)) setAcik(false);
+    }
+    document.addEventListener("mousedown", kapat);
+    return () => document.removeEventListener("mousedown", kapat);
+  }, []);
+
+  return (
+    <div className="flex-1 relative" ref={ref}>
+      <label className="block text-xs font-semibold text-gray-500 mb-1 text-left uppercase tracking-wide">
+        {icon} {label}
+      </label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => { onChange(e.target.value); setAcik(true); }}
+        onFocus={() => setAcik(true)}
+        placeholder={placeholder}
+        className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 transition-colors bg-gray-50 focus:bg-white"
+      />
+      {acik && value.length > 0 && filtreli.length > 0 && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-xl mt-1 z-50 overflow-hidden">
+          {filtreli.map((o) => (
+            <button
+              key={o}
+              type="button"
+              onClick={() => { onChange(o); setAcik(false); }}
+              className="w-full text-left px-4 py-2.5 text-sm text-gray-700 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+            >
+              {o}
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
 
 export default function AramaKutusu() {
   const router = useRouter();
@@ -34,52 +96,45 @@ export default function AramaKutusu() {
   }
 
   return (
-    <div className="bg-white rounded-2xl p-4 max-w-3xl mx-auto shadow-2xl">
+    <div className="bg-white rounded-2xl p-5 max-w-3xl mx-auto shadow-2xl">
       <form onSubmit={ara}>
         <div className="flex flex-col md:flex-row gap-3">
-          <div className="flex-1">
-            <label className="block text-xs font-medium text-gray-500 mb-1 text-left">
-              Uzmanlık Alanı
-            </label>
-            <input
-              type="text"
-              value={uzmanlik}
-              onChange={(e) => setUzmanlik(e.target.value)}
-              placeholder="KBB, Kardiyoloji, Ortopedi..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-teal-500"
-            />
-          </div>
-          <div className="flex-1">
-            <label className="block text-xs font-medium text-gray-500 mb-1 text-left">
-              Şehir
-            </label>
-            <input
-              type="text"
-              value={sehir}
-              onChange={(e) => setSehir(e.target.value)}
-              placeholder="İstanbul, Ankara, İzmir..."
-              className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:border-teal-500"
-            />
-          </div>
+          <DropdownInput
+            label="Uzmanlık"
+            icon="🔍"
+            value={uzmanlik}
+            onChange={setUzmanlik}
+            placeholder="KBB, Kardiyoloji, Ortopedi..."
+            onaylar={UZMANLIKLAR}
+          />
+          <DropdownInput
+            label="Şehir"
+            icon="📍"
+            value={sehir}
+            onChange={setSehir}
+            placeholder="İstanbul, Ankara, İzmir..."
+            onaylar={SEHIRLER}
+          />
           <div className="flex items-end">
             <button
               type="submit"
-              style={{ backgroundColor: "#0D2137" }}
-              className="w-full md:w-auto text-white px-8 py-2 rounded-lg font-medium text-sm hover:opacity-90 transition-opacity"
+              style={{ backgroundColor: "#0E7C7B" }}
+              className="w-full md:w-auto text-white px-8 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap shadow-lg"
             >
-              Doktor Ara
+              Doktor Ara →
             </button>
           </div>
         </div>
       </form>
 
-      <div className="mt-3 flex flex-wrap gap-2">
-        <span className="text-xs text-gray-500">Popüler:</span>
-        {populerAramalar.map((item) => (
+      <div className="mt-4 flex flex-wrap gap-2 items-center">
+        <span className="text-xs text-gray-400 font-medium">Popüler:</span>
+        {POPULER.map((item) => (
           <button
             key={item.etiket}
+            type="button"
             onClick={() => router.push(`/${item.sehir}/${item.uzmanlik}`)}
-            className="text-xs text-gray-600 bg-gray-100 hover:bg-gray-200 px-3 py-1 rounded-full transition-colors"
+            className="text-xs text-gray-600 bg-gray-50 border border-gray-200 hover:border-teal-400 hover:text-teal-700 hover:bg-teal-50 px-3 py-1.5 rounded-full transition-all"
           >
             {item.etiket}
           </button>
