@@ -21,7 +21,6 @@ const UZMANLIK_GRID = [
 function rozetHesapla(doktor) {
   const rozetler = [];
   if (doktor.onaylandi) rozetler.push({ ad: "Doğrulanmış", renk: "#059669", bg: "#D1FAE5" });
-  if (doktor.puan >= 4.8 && doktor.yorum_sayisi >= 10) rozetler.push({ ad: "Üst Doktor", renk: "#D97706", bg: "#FEF3C7" });
   if (parseInt(doktor.deneyim) >= 15) rozetler.push({ ad: "15+ Yıl Deneyim", renk: "#2563EB", bg: "#DBEAFE" });
   return rozetler;
 }
@@ -246,7 +245,6 @@ export default async function Home() {
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-3">
                     <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">Doğrulanmış</span>
-                    <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">Üst Doktor</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
