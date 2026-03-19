@@ -25,15 +25,28 @@ export default async function Panel() {
       {/* NAVBAR */}
       <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2">
-            <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-lg flex items-center justify-center">
-              <span className="text-white font-bold text-sm">TH</span>
-            </div>
-            <span className="text-white font-bold text-xl">DoktorPusula</span>
+          <a href="/" className="flex items-center gap-2.5">
+            <svg width="30" height="30" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
+              <circle cx="16" cy="16" r="1.8" fill="white"/>
+              <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
+              <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
+            </svg>
+            <span className="text-white font-bold text-lg tracking-tight">
+              Doktor<span style={{ color: "#C9A84C" }}>Pusula</span>
+            </span>
           </a>
           <div className="flex items-center gap-4">
-            <span className="text-gray-300 text-sm">Hoş geldiniz, {doktor.ad}</span>
-            <a href="/api/auth/signout" className="bg-red-600 text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90">
+            <div className="hidden md:flex items-center gap-2">
+              <div style={{ backgroundColor: "#0E7C7B" }} className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold">
+                {doktor.ad?.split(" ")[1]?.[0] || "D"}
+              </div>
+              <span className="text-gray-300 text-sm">{doktor.ad}</span>
+            </div>
+            <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 transition-opacity hidden md:block">
+              Profilimi Gör
+            </a>
+            <a href="/api/auth/signout" className="text-gray-400 hover:text-white text-sm transition-colors">
               Çıkış
             </a>
           </div>
@@ -42,20 +55,26 @@ export default async function Panel() {
 
       <div className="max-w-6xl mx-auto px-6 py-8">
 
+        {/* HOŞGELDIN BAŞLIĞI */}
+        <div className="mb-6">
+          <h1 style={{ color: "#0D2137" }} className="text-2xl font-bold">Hoş geldiniz, {doktor.ad.split(" ")[1]} 👋</h1>
+          <p className="text-gray-400 text-sm mt-1">Doktor panelinize genel bakış</p>
+        </div>
+
         {/* ÖZET KARTLAR */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
-            { baslik: "Puan", deger: doktor.puan || "—", icon: "⭐", renk: "#FCD34D" },
-            { baslik: "Yorum", deger: yorumlar.length, icon: "💬", renk: "#0E7C7B" },
-            { baslik: "Durum", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "#059669" : "#D97706" },
-            { baslik: "Müsaitlik", deger: doktor.musait ? "Aktif" : "Kapalı", icon: "📅", renk: "#0D2137" },
+            { baslik: "Ortalama Puan", deger: doktor.puan || "—", icon: "⭐", renk: "#D97706", bg: "#FFFBEB" },
+            { baslik: "Toplam Yorum", deger: yorumlar.length, icon: "💬", renk: "#0E7C7B", bg: "#F0FDFA" },
+            { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "#059669" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
+            { baslik: "Müsaitlik", deger: doktor.musait ? "Aktif" : "Kapalı", icon: "📅", renk: doktor.musait ? "#059669" : "#6B7280", bg: "#F5F7FA" },
           ].map((kart) => (
-            <div key={kart.baslik} className="bg-white rounded-xl p-5 shadow-sm">
-              <div className="flex items-center justify-between mb-2">
+            <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
+              <div className="flex items-start justify-between mb-3">
                 <span className="text-2xl">{kart.icon}</span>
-                <span style={{ color: kart.renk }} className="text-xl font-bold">{kart.deger}</span>
               </div>
-              <p className="text-gray-500 text-sm">{kart.baslik}</p>
+              <p style={{ color: kart.renk }} className="text-xl font-bold">{kart.deger}</p>
+              <p className="text-gray-500 text-xs mt-1">{kart.baslik}</p>
             </div>
           ))}
         </div>
