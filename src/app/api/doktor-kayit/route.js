@@ -24,7 +24,7 @@ export async function POST(request) {
     }
 
     const body = await request.json();
-    const { ad, uzmanlik, sehir, ilce, telefon, email, deneyim, hakkinda, sifre, sozlesme_onaylandi, kvkk_onaylandi } = body;
+    const { ad, unvan, uzmanlik, sehir, ilce, telefon, email, deneyim, diploma_no, hakkinda, sifre, sozlesme_onaylandi, kvkk_onaylandi } = body;
 
     if (!ad || !uzmanlik || !sehir || !telefon || !email || !sifre) {
       return NextResponse.json({ hata: "Zorunlu alanlar eksik." }, { status: 400 });
@@ -46,8 +46,8 @@ export async function POST(request) {
     const hashedSifre = await hash(sifre, 12);
 
     const yeni = await sql`
-      INSERT INTO doktorlar (slug, ad, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, hakkinda, puan, yorum_sayisi, musait, onaylandi, sozlesme_onaylandi, kvkk_onaylandi, onay_tarihi)
-      VALUES (${finalSlug}, ${ad}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${hakkinda || ""}, 0, 0, true, false, true, true, NOW())
+      INSERT INTO doktorlar (slug, ad, unvan, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, diploma_no, hakkinda, puan, yorum_sayisi, musait, onaylandi, sozlesme_onaylandi, kvkk_onaylandi, onay_tarihi)
+      VALUES (${finalSlug}, ${ad}, ${unvan || ""}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${diploma_no || ""}, ${hakkinda || ""}, 0, 0, true, false, true, true, NOW())
       RETURNING id, slug
     `;
 

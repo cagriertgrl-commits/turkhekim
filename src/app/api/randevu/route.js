@@ -13,7 +13,7 @@ export async function POST(request) {
       );
     }
 
-    const { doktor_id, hasta_adi, telefon, sikayet, tip } = await request.json();
+    const { doktor_id, hasta_adi, telefon, sikayet, tip, tarih, saat } = await request.json();
 
     if (!doktor_id || !hasta_adi || !telefon) {
       return NextResponse.json({ hata: "Ad ve telefon zorunludur." }, { status: 400 });
@@ -40,8 +40,8 @@ export async function POST(request) {
     }
 
     await sql`
-      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip)
-      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi})
+      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip, tarih, saat)
+      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi}, ${tarih || null}, ${saat || null})
     `;
 
     return NextResponse.json({ mesaj: "Randevu talebiniz alındı. Doktor en kısa sürede sizi arayacak." });
@@ -60,7 +60,7 @@ export async function GET(request) {
   }
 
   const randevular = await sql`
-    SELECT id, hasta_adi, telefon, sikayet, durum, created_at
+    SELECT id, hasta_adi, telefon, sikayet, durum, tarih, saat, created_at
     FROM randevular
     WHERE doktor_id = ${doktor_id}
     ORDER BY created_at DESC

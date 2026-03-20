@@ -66,6 +66,12 @@ export default function RandevuPanel({ doktorId }) {
                     <a href={`tel:${r.telefon}`} style={{ color: "#0E7C7B" }} className="text-sm font-medium hover:underline">
                       📞 {r.telefon}
                     </a>
+                    {r.tarih && (
+                      <p className="text-xs font-medium mt-1" style={{ color: "#0D2137" }}>
+                        📅 {new Date(r.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" })}
+                        {r.saat && <span style={{ color: "#0E7C7B" }}> ⏰ {r.saat}</span>}
+                      </p>
+                    )}
                     {r.sikayet && (
                       <p className="text-xs text-gray-400 mt-1 truncate">💬 {r.sikayet}</p>
                     )}

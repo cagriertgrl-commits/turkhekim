@@ -55,7 +55,9 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS tip TEXT DEFAULT 'yuzyuze',
     ADD COLUMN IF NOT EXISTS durum TEXT DEFAULT 'bekliyor',
     ADD COLUMN IF NOT EXISTS doktor_notu TEXT,
-    ADD COLUMN IF NOT EXISTS hasta_profil_id INTEGER
+    ADD COLUMN IF NOT EXISTS hasta_profil_id INTEGER,
+    ADD COLUMN IF NOT EXISTS tarih TEXT,
+    ADD COLUMN IF NOT EXISTS saat TEXT
   `;
   console.log("✅ randevular tablosu güncellendi");
 
