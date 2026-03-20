@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  /* config options here */
+  serverExternalPackages: ["jspdf", "html2pdf.js", "fflate"],
 };
 
 export default nextConfig;
