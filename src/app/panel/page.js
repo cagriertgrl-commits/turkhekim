@@ -13,6 +13,7 @@ import YorumDogrulamaPanel from "@/components/YorumDogrulamaPanel";
 import KlinikFotoYukle from "@/components/KlinikFotoYukle";
 import SigortaSecici from "@/components/SigortaSecici";
 import HizmetSecici from "@/components/HizmetSecici";
+import HastalarPanel from "@/components/HastalarPanel";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -30,7 +31,7 @@ export default async function Panel() {
   const doktorlar = await sql`SELECT * FROM doktorlar WHERE id = ${session.user.id} LIMIT 1`;
   const doktor = doktorlar[0];
 
-  const [yorumlar, sorular, analitkler, medyaListesi, dogrulamalar] = await Promise.all([
+  const [yorumlar, sorular, analitkler, medyaListesi, dogrulamalar, gorusmeler] = await Promise.all([
     sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
     sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} ORDER BY yanit NULLS FIRST, created_at DESC`,
     sql`
@@ -42,6 +43,9 @@ export default async function Panel() {
     `,
     sql`SELECT * FROM doktor_medya WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
     sql`SELECT * FROM yorum_dogrulama WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC LIMIT 20`,
+    ["pro", "kurumsal"].includes(doktor.paket)
+      ? sql`SELECT * FROM gorusme_ozetleri WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`.catch(() => [])
+      : Promise.resolve([]),
   ]);
   const analitik = analitkler[0];
 
@@ -329,6 +333,11 @@ export default async function Panel() {
 
             {/* Medya Panel */}
             <MedyaPanel baslangicMedya={medyaListesi} />
+
+            {/* Hastalarım — Pro/Kurumsal */}
+            {["pro", "kurumsal"].includes(doktor.paket) && (
+              <HastalarPanel gorusmeler={gorusmeler} />
+            )}
 
             {/* Yorumlar */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">

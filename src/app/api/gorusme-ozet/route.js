@@ -74,12 +74,6 @@ export async function POST(request) {
     });
 
     const ozet = yanit.content[0].text;
-
-    await sql`
-      INSERT INTO gorusme_ozetleri (doktor_id, hasta_adi, transkript, ozet)
-      VALUES (${session.user.id}, ${hastaAdi || null}, ${transkript}, ${ozet})
-    `;
-
     return NextResponse.json({ ozet });
   } catch (err) {
     console.error("Görüşme özet hatası:", err);

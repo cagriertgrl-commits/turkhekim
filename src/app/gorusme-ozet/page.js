@@ -5,19 +5,22 @@ import Navbar from "@/components/Navbar";
 
 export default function GorusmeOzetSayfasi() {
   const [tarayiciDestekli, setTarayiciDestekli] = useState(null);
-  const [kayitDurumu, setKayitDurumu] = useState("bekliyor"); // bekliyor | kayit | durakladi | bitti
+  const [kayitDurumu, setKayitDurumu] = useState("bekliyor"); // bekliyor | kayit | bitti
   const [transkript, setTranskript] = useState("");
   const [geciciMetin, setGeciciMetin] = useState("");
   const [ozet, setOzet] = useState(null);
-  const [yukleniyor, setYukleniyor] = useState(false);
+  const [ozetYukleniyor, setOzetYukleniyor] = useState(false);
+  const [kayitYukleniyor, setKayitYukleniyor] = useState(false);
+  const [kaydedildi, setKaydedildi] = useState(false);
   const [hata, setHata] = useState(null);
-  const [hastaAdi, setHastaAdi] = useState("");
+  const [hastaAd, setHastaAd] = useState("");
+  const [hastaSoyad, setHastaSoyad] = useState("");
   const [sure, setSure] = useState(0);
 
   const recognitionRef = useRef(null);
   const sureRef = useRef(null);
   const transkriptRef = useRef("");
-  const aktifRef = useRef(false); // stale closure sorununu önler
+  const aktifRef = useRef(false);
 
   useEffect(() => {
     const destekli = "webkitSpeechRecognition" in window || "SpeechRecognition" in window;
@@ -35,11 +38,8 @@ export default function GorusmeOzetSayfasi() {
       let gecici = "";
       let kesin = "";
       for (let i = e.resultIndex; i < e.results.length; i++) {
-        if (e.results[i].isFinal) {
-          kesin += e.results[i][0].transcript + " ";
-        } else {
-          gecici += e.results[i][0].transcript;
-        }
+        if (e.results[i].isFinal) kesin += e.results[i][0].transcript + " ";
+        else gecici += e.results[i][0].transcript;
       }
       if (kesin) {
         transkriptRef.current += kesin;
@@ -55,7 +55,6 @@ export default function GorusmeOzetSayfasi() {
       setKayitDurumu("bitti");
     };
 
-    // Ref ile kontrol — stale closure yok
     recognition.onend = () => {
       if (aktifRef.current) recognition.start();
     };
@@ -65,7 +64,6 @@ export default function GorusmeOzetSayfasi() {
     recognitionRef.current = recognition;
     setKayitDurumu("kayit");
     setHata(null);
-
     sureRef.current = setInterval(() => setSure((s) => s + 1), 1000);
   }
 
@@ -81,21 +79,21 @@ export default function GorusmeOzetSayfasi() {
   }
 
   function sureFormat(s) {
-    const d = Math.floor(s / 60).toString().padStart(2, "0");
-    const sn = (s % 60).toString().padStart(2, "0");
-    return `${d}:${sn}`;
+    return `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
   }
+
+  const hastaAdiTam = [hastaAd, hastaSoyad].filter(Boolean).join(" ");
 
   async function ozetle() {
     const tamMetin = transkriptRef.current.trim();
     if (!tamMetin) return setHata("Özetlenecek bir transkript yok.");
-    setYukleniyor(true);
+    setOzetYukleniyor(true);
     setHata(null);
     try {
       const res = await fetch("/api/gorusme-ozet", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ transkript: tamMetin, hastaAdi }),
+        body: JSON.stringify({ transkript: tamMetin, hastaAdi: hastaAdiTam }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.hata || "Sunucu hatası");
@@ -103,7 +101,31 @@ export default function GorusmeOzetSayfasi() {
     } catch (err) {
       setHata(err.message);
     } finally {
-      setYukleniyor(false);
+      setOzetYukleniyor(false);
+    }
+  }
+
+  async function gorusmeKaydet() {
+    setKayitYukleniyor(true);
+    setHata(null);
+    try {
+      const res = await fetch("/api/gorusme-kaydet", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          hastaAd,
+          hastaSoyad,
+          transkript: transkriptRef.current.trim(),
+          ozet,
+        }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.hata || "Kayıt hatası");
+      setKaydedildi(true);
+    } catch (err) {
+      setHata(err.message);
+    } finally {
+      setKayitYukleniyor(false);
     }
   }
 
@@ -114,7 +136,10 @@ export default function GorusmeOzetSayfasi() {
     setOzet(null);
     setHata(null);
     setSure(0);
+    setKaydedildi(false);
     transkriptRef.current = "";
+    setHastaAd("");
+    setHastaSoyad("");
     setKayitDurumu("bekliyor");
   }
 
@@ -140,27 +165,43 @@ export default function GorusmeOzetSayfasi() {
             <span className="text-2xl">⚠️</span>
             <div>
               <div className="font-semibold text-red-800 mb-1">Bu özellik tarayıcınızda çalışmıyor</div>
-              <p className="text-red-700 text-sm">Görüşme Özetle yalnızca <strong>Google Chrome</strong> veya <strong>Microsoft Edge</strong> tarayıcısında çalışır. Lütfen bu tarayıcılardan birini kullanın.</p>
+              <p className="text-red-700 text-sm">Görüşme Özetle yalnızca <strong>Google Chrome</strong> veya <strong>Microsoft Edge</strong> tarayıcısında çalışır.</p>
             </div>
           </div>
         )}
 
         {tarayiciDestekli && (
           <>
-            {/* Hasta bilgisi */}
+            {/* 1. Hasta Bilgisi */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">Hasta Adı <span className="text-gray-400 font-normal">(isteğe bağlı)</span></label>
-              <input
-                type="text"
-                value={hastaAdi}
-                onChange={(e) => setHastaAdi(e.target.value)}
-                placeholder="Örn: Ahmet Yılmaz"
-                disabled={kayitDurumu === "kayit"}
-                className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 disabled:bg-gray-50"
-              />
+              <h2 className="font-semibold text-gray-800 text-sm mb-4">Hasta Bilgisi</h2>
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Ad</label>
+                  <input
+                    type="text"
+                    value={hastaAd}
+                    onChange={(e) => setHastaAd(e.target.value)}
+                    placeholder="Ahmet"
+                    disabled={kayitDurumu === "kayit"}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 disabled:bg-gray-50"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs text-gray-500 mb-1">Soyad</label>
+                  <input
+                    type="text"
+                    value={hastaSoyad}
+                    onChange={(e) => setHastaSoyad(e.target.value)}
+                    placeholder="Yılmaz"
+                    disabled={kayitDurumu === "kayit"}
+                    className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-purple-400 disabled:bg-gray-50"
+                  />
+                </div>
+              </div>
             </div>
 
-            {/* Kayıt kontrolü */}
+            {/* 2. Kayıt Kontrolü */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
               {kayitDurumu === "bekliyor" && (
                 <button
@@ -195,29 +236,31 @@ export default function GorusmeOzetSayfasi() {
               )}
             </div>
 
-            {/* Transkript */}
+            {/* 3. Transkript */}
             {(transkript || geciciMetin) && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <div className="flex items-center justify-between mb-3">
-                  <h2 className="font-semibold text-gray-800 text-sm">Transkript</h2>
-                  <span className="text-xs text-gray-400">{transkript.split(" ").filter(Boolean).length} kelime</span>
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="font-bold text-gray-800">📝 Görüşme Transkripti</h2>
+                  <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
+                    {transkript.split(" ").filter(Boolean).length} kelime
+                  </span>
                 </div>
-                <div className="text-sm text-gray-700 leading-relaxed max-h-48 overflow-y-auto">
+                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed max-h-64 overflow-y-auto">
                   <span>{transkript}</span>
                   {geciciMetin && <span className="text-gray-400 italic">{geciciMetin}</span>}
                 </div>
               </div>
             )}
 
-            {/* Özetle butonu */}
+            {/* 4. Özetle butonu */}
             {kayitDurumu === "bitti" && transkript && !ozet && (
               <button
                 onClick={ozetle}
-                disabled={yukleniyor}
+                disabled={ozetYukleniyor}
                 className="w-full py-3 rounded-xl font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
                 style={{ backgroundColor: "#7C3AED" }}
               >
-                {yukleniyor ? "⏳ Özet hazırlanıyor..." : "✨ Görüşmeyi Özetle"}
+                {ozetYukleniyor ? "⏳ Özet hazırlanıyor..." : "✨ Görüşmeyi Özetle"}
               </button>
             )}
 
@@ -226,24 +269,48 @@ export default function GorusmeOzetSayfasi() {
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{hata}</div>
             )}
 
-            {/* Özet */}
+            {/* 5. AI Özeti */}
             {ozet && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-purple-100">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-bold text-gray-800">Görüşme Özeti</h2>
-                  {hastaAdi && <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">{hastaAdi}</span>}
+                  <h2 className="font-bold text-gray-800">✨ AI Özeti</h2>
+                  {hastaAdiTam && (
+                    <span className="text-xs text-purple-700 bg-purple-100 px-3 py-1 rounded-full font-medium">
+                      {hastaAdiTam}
+                    </span>
+                  )}
                 </div>
-                <div className="text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">{ozet}</div>
-                <div className="mt-5 flex gap-3">
+                <div className="bg-purple-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed whitespace-pre-wrap">
+                  {ozet}
+                </div>
+
+                {/* Butonlar */}
+                <div className="mt-5 flex flex-wrap gap-3">
                   <button
                     onClick={() => navigator.clipboard.writeText(ozet)}
                     className="text-xs text-purple-600 border border-purple-200 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors"
                   >
                     📋 Kopyala
                   </button>
+
+                  {!kaydedildi ? (
+                    <button
+                      onClick={gorusmeKaydet}
+                      disabled={kayitYukleniyor}
+                      className="text-xs text-white px-4 py-2 rounded-lg transition-opacity hover:opacity-90 disabled:opacity-60"
+                      style={{ backgroundColor: "#059669" }}
+                    >
+                      {kayitYukleniyor ? "⏳ Kaydediliyor..." : "💾 Görüşmeyi Kaydet"}
+                    </button>
+                  ) : (
+                    <span className="text-xs text-green-700 bg-green-100 px-4 py-2 rounded-lg font-medium">
+                      ✓ Hastalarım bölümüne kaydedildi
+                    </span>
+                  )}
+
                   <button
                     onClick={sifirla}
-                    className="text-xs text-gray-500 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+                    className="text-xs text-gray-500 border border-gray-200 px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors ml-auto"
                   >
                     Yeni Görüşme
                   </button>
@@ -252,7 +319,6 @@ export default function GorusmeOzetSayfasi() {
             )}
           </>
         )}
-
       </div>
     </div>
   );
