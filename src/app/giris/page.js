@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 export default function Giris() {
   const router = useRouter();
   const [form, setForm] = useState({ email: "", sifre: "" });
+  const [beniHatirla, setBeniHatirla] = useState(false);
   const [hata, setHata] = useState("");
   const [yukleniyor, setYukleniyor] = useState(false);
 
@@ -20,6 +21,7 @@ export default function Giris() {
     const sonuc = await signIn("credentials", {
       email: form.email,
       sifre: form.sifre,
+      remember: beniHatirla ? "true" : "false",
       redirect: false,
     });
 
@@ -83,6 +85,16 @@ export default function Giris() {
                 className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
               />
             </div>
+
+            <label className="flex items-center gap-2.5 cursor-pointer select-none">
+              <input
+                type="checkbox"
+                checked={beniHatirla}
+                onChange={(e) => setBeniHatirla(e.target.checked)}
+                className="w-4 h-4 rounded accent-teal-600"
+              />
+              <span className="text-sm text-gray-600">Beni hatırla <span className="text-gray-400">(30 gün)</span></span>
+            </label>
 
             {hata && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3">

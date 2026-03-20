@@ -10,6 +10,7 @@ export const authOptions = {
       credentials: {
         email: { label: "Email", type: "email" },
         sifre: { label: "Şifre", type: "password" },
+        remember: { label: "Beni Hatırla", type: "text" },
       },
       async authorize(credentials, req) {
         if (!credentials?.email || !credentials?.sifre) return null;
@@ -35,6 +36,7 @@ export const authOptions = {
           name: doktor.ad,
           email: doktor.email,
           slug: doktor.slug,
+          remember: credentials.remember === "true",
         };
       },
     }),
@@ -44,6 +46,9 @@ export const authOptions = {
       if (user) {
         token.slug = user.slug;
         token.id = user.id;
+        if (user.remember) {
+          token.exp = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60; // 30 gün
+        }
       }
       return token;
     },
@@ -56,5 +61,5 @@ export const authOptions = {
   pages: {
     signIn: "/giris",
   },
-  session: { strategy: "jwt" },
+  session: { strategy: "jwt", maxAge: 30 * 24 * 60 * 60 },
 };
