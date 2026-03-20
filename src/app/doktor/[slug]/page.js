@@ -8,12 +8,13 @@ import Link from "next/link";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
-  const doktorlar = await sql`SELECT ad, uzmanlik, sehir FROM doktorlar WHERE slug = ${slug}`;
+  const doktorlar = await sql`SELECT ad, uzmanlik, sehir, unvan FROM doktorlar WHERE slug = ${slug}`;
   if (!doktorlar.length) return { title: "Doktor Bulunamadı" };
   const d = doktorlar[0];
+  const unvanAd = d.unvan ? `${d.unvan} ${d.ad}` : d.ad;
   return {
-    title: `${d.ad} — ${d.uzmanlik} | DoktorPusula`,
-    description: `${d.ad} profilini inceleyin. ${d.sehir} şehrinde ${d.uzmanlik}. Doğrulanmış yorumlar ve online randevu.`,
+    title: `${unvanAd} — ${d.uzmanlik} | DoktorPusula`,
+    description: `${unvanAd} profilini inceleyin. ${d.sehir} şehrinde ${d.uzmanlik}. Doğrulanmış yorumlar ve online randevu.`,
     alternates: { canonical: `https://doktorpusula.com/doktor/${slug}` },
   };
 }
@@ -31,15 +32,21 @@ function YildizBar({ puan, toplam }) {
   );
 }
 
-const CALISMA_SAATLERI = [
-  { gun: "Pazartesi", saat: "09:00 - 17:00", acik: true },
-  { gun: "Salı", saat: "09:00 - 17:00", acik: true },
-  { gun: "Çarşamba", saat: "10:00 - 18:00", acik: true },
-  { gun: "Perşembe", saat: "09:00 - 17:00", acik: true },
-  { gun: "Cuma", saat: "09:00 - 15:00", acik: true },
-  { gun: "Cumartesi", saat: "Kapalı", acik: false },
-  { gun: "Pazar", saat: "Kapalı", acik: false },
-];
+const TIP_ETIKET = {
+  makale: { etiket: "📄 Makale", renk: "#1E40AF", bg: "#EFF6FF" },
+  haber: { etiket: "📰 Haber", renk: "#065F46", bg: "#ECFDF5" },
+  dergi: { etiket: "📖 Dergi", renk: "#7C3AED", bg: "#F5F3FF" },
+  kitap: { etiket: "📚 Kitap", renk: "#92400E", bg: "#FFFBEB" },
+  video: { etiket: "🎥 Video", renk: "#DC2626", bg: "#FFF1F2" },
+  sosyal: { etiket: "🔗 Sosyal Medya", renk: "#0369A1", bg: "#F0F9FF" },
+};
+
+function slugify(s = "") {
+  return s.toLowerCase()
+    .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
+    .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c")
+    .replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"");
+}
 
 export default async function DoktorProfil({ params }) {
   const { slug } = await params;
@@ -48,107 +55,90 @@ export default async function DoktorProfil({ params }) {
   if (!doktorlar.length) notFound();
   const doktor = doktorlar[0];
 
-  const [yorumlar, sorular] = await Promise.all([
-    sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
+  const [yorumlar, sorular, medya] = await Promise.all([
+    sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} AND dogrulama_durumu = 'onaylandi' ORDER BY created_at DESC`,
     sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL ORDER BY created_at DESC LIMIT 10`,
+    sql`SELECT * FROM doktor_medya WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
   ]);
 
-  // Görüntülenme sayacı (fire-and-forget)
-  sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme, 0) + 1 WHERE id = ${doktor.id}`.catch(() => {});
+  sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme,0)+1 WHERE id=${doktor.id}`.catch(()=>{});
 
-  const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0, 2);
+  const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0,2) || "DR";
+  const unvanAd = doktor.unvan ? `${doktor.unvan} ${doktor.ad}` : doktor.ad;
+  const sehirSlug = slugify(doktor.sehir || "istanbul");
+  const uzmanlikSlug = slugify(doktor.uzmanlik || "doktor");
 
-  const sehirSlug = doktor.sehir?.toLowerCase()
-    .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
-    .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c")
-    .replace(/\s+/g,"-") || "istanbul";
-  const uzmanlikSlug = doktor.uzmanlik?.toLowerCase()
-    .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
-    .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c")
-    .replace(/\s+/g,"-").replace(/[^a-z0-9-]/g,"") || "doktor";
+  const sigortalar = (doktor.sigorta || "").split(",").map(s => s.trim()).filter(Boolean);
+  const hizmetler = (doktor.hizmetler || "").split("\n").map(s => s.trim()).filter(Boolean);
+  const diller = (doktor.diller || "").split(",").map(s => s.trim()).filter(Boolean);
+
+  const adresTipEtiket = {
+    muayenehane: "🏠 Muayenehane",
+    klinik: "🏥 Klinik",
+    hastane: "🏨 Hastane",
+    tip_merkezi: "🏢 Tıp Merkezi",
+  }[doktor.adres_tipi || "muayenehane"];
+
+  // WhatsApp mesajı
+  const whatsappMesaj = encodeURIComponent(
+    `Merhaba ${unvanAd},\n\nDoktorPusula üzerinden profilinizi inceledim ve randevu almak istiyorum.\n\nAd Soyad: \nŞikayet: \nTercih Edilen Tarih: \n\nTeşekkürler.`
+  );
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F5F7FA" }}>
       <Navbar />
 
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{
-          __html: JSON.stringify({
-            "@context": "https://schema.org",
-            "@type": "Physician",
-            "name": doktor.ad,
-            "medicalSpecialty": doktor.uzmanlik,
-            "address": { "@type": "PostalAddress", "addressLocality": doktor.sehir, "addressCountry": "TR" },
-            "aggregateRating": doktor.yorum_sayisi > 0 ? {
-              "@type": "AggregateRating",
-              "ratingValue": doktor.puan,
-              "reviewCount": doktor.yorum_sayisi,
-            } : undefined,
-          }),
-        }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org", "@type": "Physician",
+        "name": unvanAd, "medicalSpecialty": doktor.uzmanlik,
+        "address": { "@type": "PostalAddress", "addressLocality": doktor.sehir, "addressCountry": "TR" },
+        "url": doktor.website || undefined,
+        "aggregateRating": doktor.yorum_sayisi > 0 ? { "@type": "AggregateRating", "ratingValue": doktor.puan, "reviewCount": doktor.yorum_sayisi } : undefined,
+      }) }} />
 
-      {/* HERO BANNER */}
+      {/* HERO */}
       <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 pt-10 pb-24">
         <div className="max-w-6xl mx-auto">
-          {/* Breadcrumb */}
           <nav className="flex items-center gap-2 text-xs text-gray-400 mb-8">
-            <Link href="/" className="hover:text-white transition-colors">Ana Sayfa</Link>
+            <Link href="/" className="hover:text-white">Ana Sayfa</Link>
             <span>/</span>
-            <Link href={`/${sehirSlug}/${uzmanlikSlug}`} className="hover:text-white transition-colors">{doktor.uzmanlik}</Link>
+            <Link href={`/${sehirSlug}/${uzmanlikSlug}`} className="hover:text-white">{doktor.uzmanlik}</Link>
             <span>/</span>
-            <span className="text-gray-300">{doktor.ad}</span>
+            <span className="text-gray-300">{unvanAd}</span>
           </nav>
 
           <div className="flex flex-col md:flex-row gap-6 items-start">
-            {/* Fotoğraf */}
             <div className="flex-shrink-0">
               {doktor.foto_url ? (
-                <img
-                  src={doktor.foto_url}
-                  alt={doktor.ad}
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover border-4 shadow-xl"
-                  style={{ borderColor: "#0E7C7B" }}
-                />
+                <img src={doktor.foto_url} alt={unvanAd} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: "#0E7C7B" }} />
               ) : (
-                <div
-                  style={{ backgroundColor: "#0E7C7B", color: "white" }}
-                  className="w-28 h-28 md:w-36 md:h-36 rounded-2xl flex items-center justify-center font-bold text-4xl shadow-xl"
-                >
+                <div style={{ backgroundColor: "#0E7C7B" }} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center font-bold text-4xl text-white shadow-xl">
                   {initials}
                 </div>
               )}
             </div>
 
-            {/* Bilgiler */}
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                {doktor.onaylandi && (
-                  <span style={{ backgroundColor: "#059669", color: "white" }} className="text-xs px-3 py-1 rounded-full font-semibold">
-                    ✓ Doğrulanmış Doktor
-                  </span>
-                )}
-                {doktor.deneyim && (
-                  <span style={{ backgroundColor: "#1E40AF", color: "white" }} className="text-xs px-3 py-1 rounded-full font-semibold">
-                    ⭐ {doktor.deneyim} Deneyim
-                  </span>
-                )}
+                {doktor.onaylandi && <span style={{ backgroundColor: "#059669" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">✓ Doğrulanmış Doktor</span>}
+                {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">⭐ {doktor.deneyim} Deneyim</span>}
+                {doktor.online_randevu && <span style={{ backgroundColor: "#059669" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">🎥 Online Randevu</span>}
               </div>
 
-              <h1 className="text-white text-2xl md:text-4xl font-bold mb-1">{doktor.ad}</h1>
+              <h1 className="text-white text-2xl md:text-4xl font-bold mb-1">{unvanAd}</h1>
               <p style={{ color: "#4DD9D8" }} className="text-lg font-medium mb-1">{doktor.uzmanlik}</p>
-              <p className="text-gray-400 text-sm mb-4">
-                📍 {doktor.sehir}{doktor.ilce ? `, ${doktor.ilce}` : ""}
-              </p>
 
-              {/* Hızlı istatistikler */}
-              <div className="flex flex-wrap gap-4">
+              <div className="flex flex-wrap gap-3 text-sm text-gray-400 mb-4">
+                <span>📍 {doktor.sehir}{doktor.ilce ? `, ${doktor.ilce}` : ""}</span>
+                {doktor.klinik_adi && <span>🏥 {doktor.klinik_adi}</span>}
+                {diller.length > 0 && <span>🌐 {diller.join(", ")}</span>}
+              </div>
+
+              <div className="flex flex-wrap gap-3">
                 {doktor.yorum_sayisi > 0 && (
-                  <div className="flex items-center gap-1.5">
-                    <span className="text-yellow-400 text-xl">★</span>
-                    <span className="text-white font-bold text-xl">{doktor.puan}</span>
-                    <span className="text-gray-400 text-sm">({doktor.yorum_sayisi} yorum)</span>
+                  <div style={{ backgroundColor: "#ffffff15", borderColor: "#ffffff20" }} className="border rounded-xl px-4 py-2">
+                    <span className="text-yellow-400 text-xl font-bold">★ {doktor.puan}</span>
+                    <span className="text-gray-400 text-sm ml-1">({doktor.yorum_sayisi} yorum)</span>
                   </div>
                 )}
                 {doktor.fiyat && (
@@ -156,6 +146,16 @@ export default async function DoktorProfil({ params }) {
                     <div style={{ color: "#C9A84C" }} className="font-bold text-sm">{doktor.fiyat}</div>
                     <div className="text-gray-400 text-xs">Muayene</div>
                   </div>
+                )}
+                {doktor.website && (
+                  <a href={doktor.website} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#ffffff15", borderColor: "#ffffff20" }} className="border rounded-xl px-4 py-2 text-center hover:opacity-80">
+                    <div className="text-white text-sm font-medium">🌐 Web Sitesi</div>
+                  </a>
+                )}
+                {doktor.whatsapp && (
+                  <a href={`https://wa.me/${doktor.whatsapp}?text=${whatsappMesaj}`} target="_blank" rel="noopener noreferrer" style={{ backgroundColor: "#25D366", borderColor: "#25D366" }} className="border rounded-xl px-4 py-2 text-center hover:opacity-80">
+                    <div className="text-white text-sm font-bold">💬 WhatsApp</div>
+                  </a>
                 )}
               </div>
             </div>
@@ -167,97 +167,153 @@ export default async function DoktorProfil({ params }) {
       <div className="max-w-6xl mx-auto px-6 -mt-10 pb-16">
         <div className="grid md:grid-cols-3 gap-6">
 
-          {/* SAĞ KOLON (Sidebar) */}
+          {/* SIDEBAR */}
           <div className="md:col-span-1 space-y-4 md:order-2">
-
-            {/* Randevu Al */}
-            <RandevuFormu doktorId={doktor.id} doktorAd={doktor.ad} onlineRandevu={doktor.online_randevu} />
+            <RandevuFormu doktorId={doktor.id} doktorAd={unvanAd} onlineRandevu={doktor.online_randevu} />
 
             {/* Çalışma Saatleri */}
-            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
-              <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
-                <span style={{ color: "#0E7C7B" }}>🕐</span> Çalışma Saatleri
-              </h3>
-              <div className="space-y-2">
-                {CALISMA_SAATLERI.map(({ gun, saat, acik }) => (
-                  <div key={gun} className="flex justify-between items-center text-sm py-1 border-b border-gray-50 last:border-0">
-                    <span className="text-gray-600">{gun}</span>
-                    <span className={acik ? "font-medium" : "text-gray-400"} style={acik ? { color: "#059669" } : {}}>
-                      {saat}
-                    </span>
-                  </div>
-                ))}
+            {doktor.calisma_saatleri && (
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-4">🕐 Çalışma Saatleri</h3>
+                <pre className="text-sm text-gray-600 whitespace-pre-wrap font-sans">{doktor.calisma_saatleri}</pre>
               </div>
-            </div>
+            )}
 
             {/* Paylaş */}
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-3 text-sm">Profili Paylaş</h3>
               <div className="flex gap-2">
                 <a
-                  href={`https://wa.me/?text=${encodeURIComponent(`${doktor.ad} - DoktorPusula\nhttps://doktorpusula.com/doktor/${slug}`)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 text-center text-xs py-2 rounded-xl font-semibold transition-opacity hover:opacity-80"
-                  style={{ backgroundColor: "#25D366", color: "white" }}
+                  href={`https://wa.me/?text=${encodeURIComponent(`${unvanAd} - DoktorPusula\nhttps://doktorpusula.com/doktor/${slug}`)}`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ backgroundColor: "#25D366" }}
+                  className="flex-1 text-center text-xs py-2 rounded-xl font-semibold text-white hover:opacity-80"
                 >
                   WhatsApp
                 </a>
                 <button
                   onClick={() => navigator.clipboard?.writeText(`https://doktorpusula.com/doktor/${slug}`)}
-                  className="flex-1 text-center text-xs py-2 rounded-xl font-semibold border border-gray-200 text-gray-600 hover:bg-gray-50 transition-colors"
+                  className="flex-1 text-center text-xs py-2 rounded-xl font-semibold border border-gray-200 text-gray-600 hover:bg-gray-50"
                 >
                   Bağlantıyı Kopyala
                 </button>
               </div>
             </div>
-
           </div>
 
-          {/* SOL KOLON (Ana içerik) */}
+          {/* ANA İÇERİK */}
           <div className="md:col-span-2 space-y-5 md:order-1">
 
             {/* Hakkında */}
             {doktor.hakkinda && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <h2 className="font-bold text-gray-900 text-lg mb-3 flex items-center gap-2">
-                  <span style={{ color: "#0E7C7B" }}>👨‍⚕️</span> Hakkında
-                </h2>
+                <h2 className="font-bold text-gray-900 text-lg mb-3">👨‍⚕️ Hakkında</h2>
                 <p className="text-gray-600 leading-relaxed text-sm">{doktor.hakkinda}</p>
               </div>
             )}
 
-            {/* Sigorta & Adres */}
-            {(doktor.sigorta || doktor.adres) && (
+            {/* Hizmetler */}
+            {hizmetler.length > 0 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-                <h2 className="font-bold text-gray-900 text-lg mb-4 flex items-center gap-2">
-                  <span style={{ color: "#0E7C7B" }}>🏥</span> Klinik Bilgileri
-                </h2>
-                <div className="space-y-3">
-                  {doktor.sigorta && (
+                <h2 className="font-bold text-gray-900 text-lg mb-4">🩺 Hizmetler & İşlemler</h2>
+                <div className="grid grid-cols-2 gap-2">
+                  {hizmetler.map((h, i) => (
+                    <div key={i} style={{ backgroundColor: "#F0FDFA", borderColor: "#CCFBF1" }} className="border rounded-xl px-3 py-2 text-sm text-gray-700 flex items-center gap-2">
+                      <span style={{ color: "#0E7C7B" }}>✓</span> {h}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Klinik & Sigorta Bilgileri */}
+            {(doktor.sigorta || doktor.adres || doktor.klinik_adi) && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="font-bold text-gray-900 text-lg mb-4">🏥 {doktor.klinik_adi || adresTipEtiket} Bilgileri</h2>
+                <div className="space-y-4">
+                  {doktor.klinik_adi && (
                     <div className="flex items-start gap-3">
-                      <span className="text-lg flex-shrink-0">🛡️</span>
+                      <span className="text-lg">🏥</span>
                       <div>
-                        <p className="text-xs text-gray-400 mb-1">Kabul Edilen Sigortalar</p>
-                        <div className="flex flex-wrap gap-1.5">
-                          {doktor.sigorta.split(",").map((s) => s.trim()).filter(Boolean).map((s) => (
-                            <span key={s} style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-xs px-2 py-1 rounded-full font-medium">
-                              {s}
-                            </span>
-                          ))}
-                        </div>
+                        <p className="text-xs text-gray-400 mb-1">{adresTipEtiket}</p>
+                        <p className="text-sm font-semibold text-gray-800">{doktor.klinik_adi}</p>
+                        {doktor.calisan_sayisi && <p className="text-xs text-gray-400 mt-0.5">{doktor.calisan_sayisi} personel</p>}
                       </div>
                     </div>
                   )}
                   {doktor.adres && (
                     <div className="flex items-start gap-3">
-                      <span className="text-lg flex-shrink-0">📍</span>
+                      <span className="text-lg">📍</span>
                       <div>
                         <p className="text-xs text-gray-400 mb-1">Adres</p>
                         <p className="text-sm text-gray-700">{doktor.adres}</p>
+                        <a href={`https://maps.google.com/?q=${encodeURIComponent(doktor.adres)}`} target="_blank" rel="noopener noreferrer" style={{ color: "#0E7C7B" }} className="text-xs hover:underline mt-1 inline-block">
+                          📌 Haritada Gör →
+                        </a>
                       </div>
                     </div>
                   )}
+                  {diller.length > 0 && (
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg">🌐</span>
+                      <div>
+                        <p className="text-xs text-gray-400 mb-1">Hizmet Dilleri</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {diller.map((d) => (
+                            <span key={d} style={{ backgroundColor: "#EFF6FF", color: "#1E40AF" }} className="text-xs px-2 py-1 rounded-full font-medium">{d}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {sigortalar.length > 0 && (
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg">🛡️</span>
+                      <div>
+                        <p className="text-xs text-gray-400 mb-1">Kabul Edilen Sigortalar</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {sigortalar.map((s) => (
+                            <span key={s} style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-xs px-2 py-1 rounded-full font-medium">{s}</span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Medya & Yayınlar */}
+            {medya.length > 0 && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="font-bold text-gray-900 text-lg mb-4">📰 Yayınlar & Medyada</h2>
+                <div className="space-y-3">
+                  {medya.map((m) => {
+                    const tip = TIP_ETIKET[m.tip] || TIP_ETIKET.makale;
+                    return (
+                      <div key={m.id} className="flex items-start gap-3 p-3 rounded-xl border border-gray-100 hover:border-gray-200 transition-colors">
+                        <span style={{ backgroundColor: tip.bg, color: tip.renk }} className="text-xs px-2 py-1 rounded-full font-semibold flex-shrink-0 mt-0.5">
+                          {tip.etiket}
+                        </span>
+                        <div className="flex-1">
+                          {m.url ? (
+                            <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "#0D2137" }} className="font-semibold text-sm hover:underline">
+                              {m.baslik}
+                            </a>
+                          ) : (
+                            <p style={{ color: "#0D2137" }} className="font-semibold text-sm">{m.baslik}</p>
+                          )}
+                          {m.aciklama && <p className="text-gray-400 text-xs mt-0.5">{m.aciklama}</p>}
+                          {m.yayin_tarihi && <p className="text-gray-300 text-xs mt-0.5">{new Date(m.yayin_tarihi).toLocaleDateString("tr-TR")}</p>}
+                        </div>
+                        {m.url && (
+                          <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "#0E7C7B" }} className="text-xs hover:underline flex-shrink-0">
+                            →
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
             )}
@@ -265,9 +321,7 @@ export default async function DoktorProfil({ params }) {
             {/* Yorumlar */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="font-bold text-gray-900 text-lg flex items-center gap-2">
-                  <span style={{ color: "#0E7C7B" }}>⭐</span> Hasta Yorumları
-                </h2>
+                <h2 className="font-bold text-gray-900 text-lg">⭐ Hasta Yorumları</h2>
                 {doktor.yorum_sayisi > 0 && (
                   <div className="text-right">
                     <div className="flex items-center gap-1 justify-end">
@@ -275,34 +329,29 @@ export default async function DoktorProfil({ params }) {
                       <span className="text-gray-400 text-sm">/ 5</span>
                     </div>
                     <div className="flex mt-1 justify-end">
-                      {[1,2,3,4,5].map(y => (
-                        <span key={y} className={parseFloat(doktor.puan) >= y ? "text-yellow-400" : "text-gray-200"}>★</span>
-                      ))}
+                      {[1,2,3,4,5].map(y => <span key={y} className={parseFloat(doktor.puan) >= y ? "text-yellow-400" : "text-gray-200"}>★</span>)}
                     </div>
                     <p className="text-xs text-gray-400">{doktor.yorum_sayisi} değerlendirme</p>
                   </div>
                 )}
               </div>
 
-              {/* Rating bars */}
               {doktor.yorum_sayisi > 0 && (
                 <div className="mb-6 space-y-1.5 p-4 rounded-xl" style={{ backgroundColor: "#F5F7FA" }}>
-                  {[5,4,3,2,1].map(p => (
-                    <YildizBar key={p} puan={p} toplam={yorumlar.filter(y => y.puan === p).length} />
-                  ))}
+                  {[5,4,3,2,1].map(p => <YildizBar key={p} puan={p} toplam={yorumlar.filter(y => y.puan === p).length} />)}
                 </div>
               )}
 
               <div style={{ backgroundColor: "#F0FDF4", borderColor: "#BBF7D0" }} className="border rounded-xl p-3 mb-5">
                 <p className="text-xs text-gray-600 text-center">
-                  🔒 Tüm yorumlar telefon numarasıyla doğrulanmıştır ve <strong>değiştirilemez</strong>.
+                  🔒 Tüm yorumlar doğrulama sürecinden geçer ve moderasyonla yayınlanır.
                 </p>
               </div>
 
               {yorumlar.length === 0 ? (
                 <div className="text-center py-10">
                   <div className="text-4xl mb-3">💬</div>
-                  <p className="text-gray-400 text-sm">Henüz yorum yok. İlk yorumu siz bırakın!</p>
+                  <p className="text-gray-400 text-sm">Henüz yayınlanmış yorum yok.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
@@ -316,19 +365,13 @@ export default async function DoktorProfil({ params }) {
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="font-semibold text-sm text-gray-900">{yorum.hasta_adi}</span>
-                              {yorum.dogrulanmis && (
-                                <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-medium">
-                                  ✓ Doğrulanmış
-                                </span>
-                              )}
+                              {yorum.dogrulanmis && <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>}
                             </div>
                             <span className="text-xs text-gray-400">{yorum.tarih}</span>
                           </div>
                         </div>
-                        <div className="flex items-center gap-0.5">
-                          {[1,2,3,4,5].map(y => (
-                            <span key={y} className={y <= yorum.puan ? "text-yellow-400" : "text-gray-200"} style={{ fontSize: "14px" }}>★</span>
-                          ))}
+                        <div className="flex">
+                          {[1,2,3,4,5].map(y => <span key={y} className={y <= yorum.puan ? "text-yellow-400" : "text-gray-200"} style={{ fontSize: 14 }}>★</span>)}
                         </div>
                       </div>
                       <p className="text-gray-600 text-sm leading-relaxed">{yorum.metin}</p>
@@ -338,10 +381,7 @@ export default async function DoktorProfil({ params }) {
               )}
             </div>
 
-            {/* Yorum Formu */}
             <YorumFormu doktorId={doktor.id} />
-
-            {/* Soru-Cevap */}
             <SoruFormu doktorId={doktor.id} sorular={sorular} />
 
           </div>

@@ -42,24 +42,29 @@ export async function POST(request) {
 
     const tarih = new Date().toLocaleDateString("tr-TR", { month: "long", year: "numeric" });
 
+    // Yorum doğrulama sistemine alınıyor — henüz yayınlanmıyor
+    const yeniYorum = await sql`
+      INSERT INTO yorumlar (doktor_id, hasta_adi, puan, metin, tarih, dogrulanmis, telefon, kvkk_onaylandi, dogrulama_durumu)
+      VALUES (${doktor_id}, ${hasta_adi}, ${puan}, ${metin}, ${tarih}, false, ${telefon}, true, 'doktor_bekleniyor')
+      RETURNING id
+    `;
+
+    const yorumId = yeniYorum[0].id;
+
+    // Doğrulama kaydı oluştur + doktora bildirim gönder
     await sql`
-      INSERT INTO yorumlar (doktor_id, hasta_adi, puan, metin, tarih, dogrulanmis, telefon, kvkk_onaylandi)
-      VALUES (${doktor_id}, ${hasta_adi}, ${puan}, ${metin}, ${tarih}, true, ${telefon}, true)
+      INSERT INTO yorum_dogrulama (yorum_id, doktor_id, hasta_adi, durum)
+      VALUES (${yorumId}, ${doktor_id}, ${hasta_adi}, 'doktor_bekleniyor')
     `;
-
-    // Doktorun ortalama puanını güncelle
-    const tumYorumlar = await sql`
-      SELECT puan FROM yorumlar WHERE doktor_id = ${doktor_id}
-    `;
-    const ortalama = (tumYorumlar.reduce((t, y) => t + y.puan, 0) / tumYorumlar.length).toFixed(1);
 
     await sql`
-      UPDATE doktorlar
-      SET puan = ${ortalama}, yorum_sayisi = ${tumYorumlar.length}
-      WHERE id = ${doktor_id}
+      INSERT INTO bildirimler (hedef_tip, hedef_id, tip, baslik, mesaj, link)
+      VALUES ('doktor', ${String(doktor_id)}, 'yorum_dogrulama', 'Yeni Yorum Doğrulama Talebi',
+        ${`${hasta_adi} adlı hasta size yorum yazmak istiyor. Bu kişi size muayene oldu mu?`},
+        '/panel')
     `;
 
-    return NextResponse.json({ mesaj: "Yorumunuz kaydedildi. Teşekkürler!" });
+    return NextResponse.json({ mesaj: "Yorumunuz alındı. Doktor onayı sonrası yayınlanacak. Teşekkürler!" });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ hata: "Sunucu hatası." }, { status: 500 });
