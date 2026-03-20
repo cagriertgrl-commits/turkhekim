@@ -11,6 +11,8 @@ import MedyaPanel from "@/components/MedyaPanel";
 import BildirimZili from "@/components/BildirimZili";
 import YorumDogrulamaPanel from "@/components/YorumDogrulamaPanel";
 import KlinikFotoYukle from "@/components/KlinikFotoYukle";
+import SigortaSecici from "@/components/SigortaSecici";
+import HizmetSecici from "@/components/HizmetSecici";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -182,7 +184,15 @@ export default async function Panel() {
 
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Unvan</label>
-                  <input name="unvan" defaultValue={doktor.unvan || ""} placeholder="Uzm. Dr., Prof. Dr. ..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <select name="unvan" defaultValue={doktor.unvan || ""} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none">
+                    <option value="">Seçiniz</option>
+                    <option value="Pratisyen Dr.">Pratisyen Dr.</option>
+                    <option value="Uzm. Dr.">Uzm. Dr. — Uzman Doktor</option>
+                    <option value="Asst. Dr.">Asst. Dr. — Asistan Doktor</option>
+                    <option value="Doç. Dr.">Doç. Dr. — Doçent</option>
+                    <option value="Prof. Dr.">Prof. Dr. — Profesör</option>
+                    <option value="Op. Dr.">Op. Dr. — Operatör Doktor</option>
+                  </select>
                 </div>
 
                 <div>
@@ -243,21 +253,9 @@ export default async function Panel() {
                   <input type="hidden" name="diller" id="dillerGizli" defaultValue={doktor.diller || ""} />
                 </div>
 
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Hizmetler / İşlemler</label>
-                  <textarea
-                    name="hizmetler"
-                    defaultValue={doktor.hizmetler || ""}
-                    rows={3}
-                    placeholder="Her satıra bir hizmet yazın:&#10;Burun Estetiği (Rinoplasti)&#10;Göz Kapağı Estetiği&#10;Yüz Gerdirme"
-                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none"
-                  />
-                </div>
+                <HizmetSecici mevcutHizmetler={doktor.hizmetler || ""} />
 
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Kabul Edilen Sigortalar</label>
-                  <input name="sigorta" defaultValue={doktor.sigorta || ""} placeholder="SGK, Anadolu Sigorta, Allianz..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
-                </div>
+                <SigortaSecici mevcutSigorta={doktor.sigorta || ""} />
 
                 {/* Klinik Fotoğrafları */}
                 <div className="pt-2 border-t border-gray-100">

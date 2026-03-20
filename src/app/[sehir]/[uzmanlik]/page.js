@@ -120,30 +120,15 @@ export default async function DoktorListesi({ params, searchParams }) {
                 </div>
               </div>
 
-              <div className="mb-5">
-                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Görüşme Tipi</p>
-                <div className="space-y-2">
-                  <Link
-                    href={`/${sehirParam}/${uzmanlikParam}${onlineFiltreAktif ? "" : "?online=1"}`}
-                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${onlineFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
-                    style={onlineFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
-                  >
-                    💻 Online Randevu {onlineFiltreAktif && "✓"}
-                  </Link>
-                </div>
-              </div>
-
               <div>
                 <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Sigorta</p>
-                <div className="space-y-2">
-                  <Link
-                    href={`/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "" : "?sigorta=1"}`}
-                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
-                    style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
-                  >
-                    🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
-                  </Link>
-                </div>
+                <Link
+                  href={`/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "" : "?sigorta=1"}`}
+                  className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
+                  style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                >
+                  🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
+                </Link>
               </div>
             </div>
 

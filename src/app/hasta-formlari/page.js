@@ -20,8 +20,9 @@ const KATEGORI_IKON = {
   "Genel": "📄",
 };
 
-export default function HastaFormlariSayfasi({ searchParams }) {
-  const seciliKategori = searchParams?.kategori || "";
+export default async function HastaFormlariSayfasi({ searchParams }) {
+  const sp = await searchParams;
+  const seciliKategori = sp?.kategori || "";
   const kategoriler = tumKategoriler();
 
   const filtrelenmis = seciliKategori
