@@ -1,6 +1,9 @@
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { HASTA_FORMLARI, tumKategoriler } from "@/lib/hastaFormlari";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Hasta Formları — DoktorPusula",
@@ -21,6 +24,9 @@ const KATEGORI_IKON = {
 };
 
 export default async function HastaFormlariSayfasi({ searchParams }) {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect("/giris?callbackUrl=/hasta-formlari");
+
   const sp = await searchParams;
   const seciliKategori = sp?.kategori || "";
   const kategoriler = tumKategoriler();
@@ -100,14 +106,7 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
                   style={{ backgroundColor: "#0D2137" }}
                   className="flex-1 text-center text-white text-xs py-2 rounded-xl font-semibold hover:opacity-90 transition-opacity"
                 >
-                  👁️ Görüntüle
-                </Link>
-                <Link
-                  href={`/hasta-formlari/${form.id}?indir=1`}
-                  style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
-                  className="flex-1 text-center border text-xs py-2 rounded-xl font-semibold hover:bg-teal-50 transition-colors"
-                >
-                  ⬇️ İndir
+                  👁️ Görüntüle & Yazdır
                 </Link>
               </div>
             </div>

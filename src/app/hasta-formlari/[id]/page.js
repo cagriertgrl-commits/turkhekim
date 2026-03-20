@@ -1,11 +1,9 @@
 import Navbar from "@/components/Navbar";
 import { HASTA_FORMLARI } from "@/lib/hastaFormlari";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import FormIcerik from "./FormIcerik";
-
-export async function generateStaticParams() {
-  return HASTA_FORMLARI.map((f) => ({ id: f.id }));
-}
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -18,6 +16,9 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function FormDetay({ params }) {
+  const session = await getServerSession(authOptions);
+  if (!session) redirect(`/giris?callbackUrl=/hasta-formlari`);
+
   const { id } = await params;
   const form = HASTA_FORMLARI.find((f) => f.id === id);
   if (!form) notFound();

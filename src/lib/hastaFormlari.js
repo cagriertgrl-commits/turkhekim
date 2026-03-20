@@ -166,6 +166,14 @@ export const HASTA_FORMLARI = [
   },
   // ─── GENEL ──────────────────────────────────────────────────────────
   {
+    id: "sosyal-medya-onam",
+    uzmanliklar: ["*"],
+    baslik: "Fotoğraf/Video Sosyal Medya Paylaşım Onam Formu",
+    aciklama: "Tedavi öncesi/sonrası görsel kayıtların sosyal medyada paylaşılması için KVKK uyumlu onam formu.",
+    kategori: "Genel",
+    dil: "tr",
+  },
+  {
     id: "kvkk-hasta",
     uzmanliklar: ["*"],
     baslik: "KVKK Hasta Açık Rıza Beyanı",

@@ -1,8 +1,88 @@
 "use client";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 
 // Form şablonları — gerçek klinik içerik
 const FORM_SABLONLARI = {
+  "sosyal-medya-onam": {
+    basliklar: ["FOTOĞRAF/VİDEO SOSYAL MEDYA PAYLAŞIM AYDINLATILMIŞ ONAM FORMU"],
+    icerik: `Sayın Hastamız,
+
+Bu form; 6698 Sayılı Kişisel Verilerin Korunması Kanunu (KVKK) madde 6, 1219 Sayılı Kanun, Hasta Hakları Yönetmeliği ve Sağlık Hizmetlerinde Tanıtım ve Bilgilendirme Faaliyetleri Yönetmeliği (Resmî Gazete, 12.11.2025) kapsamında hazırlanmıştır.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1. KAPSAM — NE PAYLAŞILACAK?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Aşağıdaki kayıt türleri için ayrı ayrı onay vermeniz gerekmektedir:
+
+□ Tedavi öncesi fotoğraf(lar)
+□ Tedavi sonrası fotoğraf(lar)
+□ İşlem sırasında çekilen fotoğraf/video (operasyon görüntüsü hariç)
+□ Tedavi sürecini anlatan kısa video/reels
+□ Yalnızca vücut bölgesi (yüz gösterilmez)
+□ Yüz dahil görüntüler
+
+Tedavi/İşlem Adı: .......................................
+Görüntülenecek Vücut Bölgesi: .......................................
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+2. NEREDE PAYLAŞILACAK?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+□ Instagram (@.............................................)
+□ YouTube (kanal: .............................................)
+□ TikTok (@.............................................)
+□ Klinik/hekim web sitesi
+□ Tıbbi eğitim/kongre sunumu (anonim)
+□ Diğer: .......................................
+
+Hesap sahibi/Hekim adı: .......................................
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+3. YASAL ÇERÇEVE VE KISITLAMALAR
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Paylaşımlar aşağıdaki kurallara tabidir:
+
+• Fotoğraflar aynı ışık, açı ve arka planda çekilir; filtre, rötuş veya dijital değişiklik uygulanamaz.
+• Paylaşımlarda hastanın adı, T.C. Kimlik No, adresi veya kimliğini açığa çıkaran bilgi yer almaz.
+• Görsellere yorum kapatılır; "garanti" veya "kesin sonuç" içeren ifade kullanılamaz.
+• Ücret bilgisi veya kampanya içerikli reklam amacıyla kullanılamaz.
+• Küçük hastalara ait görseller için ebeveyn/vasi onayı ayrıca alınır.
+• Operasyon sırasındaki cerrahi görüntüler paylaşılamaz.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+4. HASTA HAKLARI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+• Bu onayı vermek zorunda değilsiniz. Reddetmeniz tedavi kalitenizi etkilemez.
+• Onayınızı istediğiniz zaman yazılı olarak geri alabilirsiniz. İptal talebinden itibaren 5 iş günü içinde yeni paylaşımlar durdurulur; mevcut içeriklerin kaldırılması platforma göre değişen süre alabilir.
+• KVKK md. 11 kapsamında verilerinize erişim, düzeltme, silme ve aktarım hakkına sahipsiniz.
+• Şikâyet: Kişisel Verileri Koruma Kurumu — www.kvkk.gov.tr
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+5. VERİ SORUMLUSU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Sağlık kuruluşu/hekim: .......................................
+İletişim: .......................................
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+6. HASTA BEYANI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Yukarıda belirtilen koşulları okudum, anladım. Hangi görsel türlerin, hangi platformlarda paylaşılacağını bana açıklandı. Hiçbir baskı altında kalmaksızın kendi özgür irademle onay veriyorum.
+
+□ Yukarıda işaretlediğim görsel kayıtların belirtilen platformlarda paylaşılmasına ONAY VERİYORUM.
+□ KVKK kapsamında görsel verilerimin işlenmesine AÇIK RIZA VERİYORUM.
+
+Ad Soyad        : .......................................    Tarih: ................
+T.C. Kimlik No  : .......................................    İmza : ................
+Veli/Vasi (18 yaş altı): ............................    İmza : ................
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+HEKİM/YETKİLİ BEYANI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Hastayı yukarıdaki koşullar hakkında bilgilendirdim, sorularını yanıtladım ve onamını aldım. Paylaşımların ilgili mevzuata uygun yapılacağını taahhüt ederim.
+
+Hekim/Yetkili Adı : .......................................
+Diploma No        : .......................................
+Tarih/İmza/Kaşe   : .......................................`,
+  },
   "rinoplasti-onam": {
     basliklar: ["RİNOPLASTİ (BURUN ESTETİĞİ) AYDINLATILMIŞ ONAM FORMU"],
     icerik: `Sayın Hastamız,
@@ -1038,7 +1118,6 @@ function formHtml(baslik, icerik) {
 
 export default function FormIcerik({ form }) {
   const yazdirilacakRef = useRef(null);
-  const [indiriliyor, setIndiriliyor] = useState(false);
 
   function yazdir() {
     const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
@@ -1046,63 +1125,6 @@ export default function FormIcerik({ form }) {
     if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
     pencere.document.write(formHtml(form.baslik, icerik) + `<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>`);
     pencere.document.close();
-  }
-
-  async function indir() {
-    setIndiriliyor(true);
-    try {
-      const { jsPDF } = await import("jspdf");
-      const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
-
-      const sayfa_genislik = 210;
-      const kenar = 15;
-      const icerik_genislik = sayfa_genislik - kenar * 2;
-      let y = 20;
-
-      // Başlık
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(13);
-      doc.setTextColor(13, 33, 55);
-      const baslikSatirlar = doc.splitTextToSize(form.baslik.toUpperCase(), icerik_genislik);
-      doc.text(baslikSatirlar, sayfa_genislik / 2, y, { align: "center" });
-      y += baslikSatirlar.length * 7 + 3;
-
-      doc.setDrawColor(14, 124, 123);
-      doc.setLineWidth(0.5);
-      doc.line(kenar, y, sayfa_genislik - kenar, y);
-      y += 6;
-
-      // DoktorPusula alt bilgisi
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(8);
-      doc.setTextColor(100, 100, 100);
-      doc.text(`DoktorPusula — doktorpusula.com | ${new Date().toLocaleDateString("tr-TR")}`, sayfa_genislik / 2, y, { align: "center" });
-      y += 8;
-
-      // Form içeriği
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.setTextColor(55, 65, 81);
-
-      const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
-      const satirlar = doc.splitTextToSize(icerik, icerik_genislik);
-
-      for (const satir of satirlar) {
-        if (y > 275) {
-          doc.addPage();
-          y = 15;
-        }
-        doc.text(satir, kenar, y);
-        y += 5.5;
-      }
-
-      doc.save(`${form.id}-onam-formu.pdf`);
-    } catch (err) {
-      console.error("PDF hatası:", err);
-      alert("PDF oluşturulamadı. Yazdır butonunu kullanarak 'PDF olarak kaydet' seçeneğiyle indirebilirsiniz.");
-    } finally {
-      setIndiriliyor(false);
-    }
   }
 
   const sablonIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
@@ -1122,15 +1144,7 @@ export default function FormIcerik({ form }) {
             style={{ backgroundColor: "#0D2137" }}
             className="flex items-center gap-2 text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 print:hidden"
           >
-            🖨️ Yazdır
-          </button>
-          <button
-            onClick={indir}
-            disabled={indiriliyor}
-            style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
-            className="flex items-center gap-2 border px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-teal-50 print:hidden disabled:opacity-50"
-          >
-            {indiriliyor ? "⏳ Hazırlanıyor..." : "⬇️ PDF İndir"}
+            🖨️ Yazdır / PDF İndir
           </button>
         </div>
       </div>
