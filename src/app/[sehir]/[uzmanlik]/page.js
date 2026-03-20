@@ -32,14 +32,37 @@ export default async function DoktorListesi({ params, searchParams }) {
   const onlineFiltreAktif = sp?.online === "1";
   const sigortaFiltreAktif = sp?.sigorta === "1";
 
-  const doktorlar = await sql`
-    SELECT * FROM doktorlar
-    WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-      AND onaylandi = true
-      ${onlineFiltreAktif ? sql`AND online_randevu = true` : sql``}
-      ${sigortaFiltreAktif ? sql`AND sigorta IS NOT NULL AND sigorta != ''` : sql``}
-    ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
-  `;
+  let doktorlar;
+  if (onlineFiltreAktif && sigortaFiltreAktif) {
+    doktorlar = await sql`
+      SELECT * FROM doktorlar
+      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
+        AND onaylandi = true AND online_randevu = true
+        AND sigorta IS NOT NULL AND sigorta != ''
+      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
+    `;
+  } else if (onlineFiltreAktif) {
+    doktorlar = await sql`
+      SELECT * FROM doktorlar
+      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
+        AND onaylandi = true AND online_randevu = true
+      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
+    `;
+  } else if (sigortaFiltreAktif) {
+    doktorlar = await sql`
+      SELECT * FROM doktorlar
+      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
+        AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != ''
+      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
+    `;
+  } else {
+    doktorlar = await sql`
+      SELECT * FROM doktorlar
+      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
+        AND onaylandi = true
+      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
+    `;
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
