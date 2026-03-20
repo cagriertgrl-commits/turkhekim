@@ -46,9 +46,8 @@ export const authOptions = {
       if (user) {
         token.slug = user.slug;
         token.id = user.id;
-        if (user.remember) {
-          token.exp = Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60; // 30 gün
-        }
+        // Beni Hatırla: 30 gün | Hatırlatma: 8 saat
+        token.exp = Math.floor(Date.now() / 1000) + (user.remember ? 30 * 24 * 60 * 60 : 8 * 60 * 60);
       }
       return token;
     },
