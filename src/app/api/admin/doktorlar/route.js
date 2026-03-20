@@ -12,8 +12,19 @@ export async function PATCH(request) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 
-  const { id, onaylandi } = await request.json();
-  await sql`UPDATE doktorlar SET onaylandi = ${onaylandi} WHERE id = ${id}`;
+  const body = await request.json();
+  const { id } = body;
+
+  if (body.paket !== undefined) {
+    const gecerliPaketler = ["ucretsiz", "premium", "pro", "kurumsal"];
+    if (!gecerliPaketler.includes(body.paket)) {
+      return NextResponse.json({ hata: "Geçersiz paket." }, { status: 400 });
+    }
+    await sql`UPDATE doktorlar SET paket = ${body.paket} WHERE id = ${id}`;
+  } else {
+    await sql`UPDATE doktorlar SET onaylandi = ${body.onaylandi} WHERE id = ${id}`;
+  }
+
   return NextResponse.json({ mesaj: "Güncellendi." });
 }
 

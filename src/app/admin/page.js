@@ -52,6 +52,11 @@ export default function AdminPanel() {
     setDoktorlar(doktorlar.map(d => d.id === id ? { ...d, onaylandi } : d));
   }
 
+  async function paketGuncelle(id, paket) {
+    await fetch("/api/admin/doktorlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, paket }) });
+    setDoktorlar(doktorlar.map(d => d.id === id ? { ...d, paket } : d));
+  }
+
   async function doktorSil(id) {
     if (!confirm("🗑️ Bu doktoru gerçekten silmek istiyor musunuz? Bu işlem geri alınamaz!")) return;
     await fetch("/api/admin/doktorlar", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
@@ -278,7 +283,7 @@ export default function AdminPanel() {
               <table className="w-full text-sm">
                 <thead style={{ backgroundColor: "#F5F7FA" }}>
                   <tr>
-                    {["Doktor", "Uzmanlık", "Şehir", "Klinik", "Puan", "Durum", "İşlem"].map(h => (
+                    {["Doktor", "Uzmanlık", "Şehir", "Paket", "Puan", "Durum", "İşlem"].map(h => (
                       <th key={h} className="text-left px-4 py-3 text-gray-500 font-semibold text-xs">{h}</th>
                     ))}
                   </tr>
@@ -294,7 +299,24 @@ export default function AdminPanel() {
                       </td>
                       <td className="px-4 py-3 text-gray-600">{d.uzmanlik}</td>
                       <td className="px-4 py-3 text-gray-600">{d.sehir}</td>
-                      <td className="px-4 py-3 text-gray-400 text-xs">{d.klinik_adi || "—"}</td>
+                      <td className="px-4 py-3">
+                        <select
+                          value={d.paket || "ucretsiz"}
+                          onChange={e => paketGuncelle(d.id, e.target.value)}
+                          className="text-xs border border-gray-200 rounded-lg px-2 py-1 focus:outline-none focus:border-teal-400"
+                          style={{
+                            color: d.paket === "ucretsiz" || !d.paket ? "#6B7280"
+                              : d.paket === "premium" ? "#D97706"
+                              : d.paket === "pro" ? "#7C3AED"
+                              : "#059669"
+                          }}
+                        >
+                          <option value="ucretsiz">🆓 Ücretsiz</option>
+                          <option value="premium">⭐ Premium</option>
+                          <option value="pro">🚀 Pro</option>
+                          <option value="kurumsal">🏢 Kurumsal</option>
+                        </select>
+                      </td>
                       <td className="px-4 py-3">
                         {d.yorum_sayisi > 0 ? <span className="text-yellow-500 font-bold">★ {d.puan}</span> : <span className="text-gray-300">—</span>}
                       </td>
