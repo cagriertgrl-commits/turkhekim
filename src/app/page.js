@@ -25,8 +25,18 @@ function rozetHesapla(doktor) {
   return rozetler;
 }
 
+const POPULER_SEHIRLER = [
+  { ad: "İstanbul", slug: "istanbul", ikon: "🌉" },
+  { ad: "Ankara", slug: "ankara", ikon: "🏛️" },
+  { ad: "İzmir", slug: "izmir", ikon: "🌊" },
+  { ad: "Antalya", slug: "antalya", ikon: "🏖️" },
+  { ad: "Bursa", slug: "bursa", ikon: "🏔️" },
+  { ad: "Adana", slug: "adana", ikon: "🌞" },
+];
+
 export default async function Home() {
   let doktorlar = [];
+  let sonYorumlar = [];
   let istatistikler = { doktor_sayisi: 0, yorum_sayisi: 0 };
 
   try {
@@ -43,6 +53,14 @@ export default async function Home() {
         (SELECT COUNT(*) FROM yorumlar) as yorum_sayisi
     `;
     istatistikler = stats[0];
+    sonYorumlar = await sql`
+      SELECT y.hasta_adi, y.puan, y.metin, y.tarih, d.ad as doktor_ad, d.uzmanlik, d.slug
+      FROM yorumlar y
+      JOIN doktorlar d ON d.id = y.doktor_id
+      WHERE d.onaylandi = true
+      ORDER BY y.tarih DESC
+      LIMIT 3
+    `;
   } catch {}
 
   return (
@@ -260,6 +278,91 @@ export default async function Home() {
           )}
         </div>
       </section>
+
+      {/* NASIL ÇALIŞIR */}
+      <section className="px-6 py-16 bg-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold mb-2 uppercase tracking-widest">Basit ve Hızlı</p>
+            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold">Nasıl Çalışır?</h2>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 relative">
+            {/* Bağlantı çizgisi (masaüstü) */}
+            <div className="hidden md:block absolute top-10 left-1/3 right-1/3 h-0.5 bg-gradient-to-r from-teal-100 to-teal-100" />
+            {[
+              { adim: "1", icon: "🔍", baslik: "Doktor Ara", aciklama: "Uzmanlık alanı ve şehir seçerek yüzlerce doktor arasından filtreleme yap. Puan, yorum ve deneyime göre sırala." },
+              { adim: "2", icon: "📋", baslik: "Profil İncele", aciklama: "Doktorun deneyimini, doğrulanmış hasta yorumlarını ve muayene fiyatını şeffaf şekilde gör." },
+              { adim: "3", icon: "📅", baslik: "Randevu Al", aciklama: "Doğrudan doktor profili üzerinden randevu talebi gönder. Onay SMS ile bildirilir." },
+            ].map((adim, i) => (
+              <div key={adim.adim} className="relative text-center">
+                <div
+                  style={{ backgroundColor: i === 1 ? "#0E7C7B" : "#F0FDFA", color: i === 1 ? "white" : "#0E7C7B" }}
+                  className="w-20 h-20 rounded-2xl flex flex-col items-center justify-center mx-auto mb-5 shadow-sm"
+                >
+                  <span className="text-2xl">{adim.icon}</span>
+                  <span className="text-xs font-bold mt-0.5 opacity-70">Adım {adim.adim}</span>
+                </div>
+                <h3 style={{ color: "#0D2137" }} className="font-bold text-lg mb-2">{adim.baslik}</h3>
+                <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">{adim.aciklama}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* POPÜLER ŞEHİRLER */}
+      <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-14">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 style={{ color: "#0D2137" }} className="text-xl font-bold">Şehir Seçin</h2>
+          </div>
+          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+            {POPULER_SEHIRLER.map((sehir) => (
+              <Link
+                key={sehir.slug}
+                href={`/${sehir.slug}/doktor`}
+                className="bg-white rounded-2xl p-4 text-center border border-gray-100 hover:border-teal-300 hover:shadow-md transition-all group"
+              >
+                <div className="text-3xl mb-2">{sehir.ikon}</div>
+                <div style={{ color: "#0D2137" }} className="text-sm font-semibold group-hover:text-teal-700 transition-colors">{sehir.ad}</div>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SON YORUMLAR */}
+      {sonYorumlar.length > 0 && (
+        <section className="px-6 py-16 bg-white">
+          <div className="max-w-6xl mx-auto">
+            <div className="flex items-center justify-between mb-10">
+              <div>
+                <h2 style={{ color: "#0D2137" }} className="text-2xl font-bold">Gerçek Hasta Yorumları</h2>
+                <p className="text-gray-400 text-sm mt-1">Telefon ile doğrulanmış, değiştirilemeyen yorumlar</p>
+              </div>
+            </div>
+            <div className="grid md:grid-cols-3 gap-5">
+              {sonYorumlar.map((yorum, i) => (
+                <Link key={i} href={`/doktor/${yorum.slug}`} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow">
+                  <div className="flex items-center gap-1 mb-3">
+                    {[1,2,3,4,5].map((y) => (
+                      <span key={y} className={y <= yorum.puan ? "text-yellow-400" : "text-gray-200"}>★</span>
+                    ))}
+                  </div>
+                  <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">"{yorum.metin}"</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-xs font-semibold text-gray-700">{yorum.hasta_adi}</div>
+                      <div style={{ color: "#0E7C7B" }} className="text-xs">{yorum.doktor_ad} · {yorum.uzmanlik}</div>
+                    </div>
+                    <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">✓ Doğrulanmış</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* NEDEN TURKHEKİM */}
       <section className="px-6 py-16 bg-white">
