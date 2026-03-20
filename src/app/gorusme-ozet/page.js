@@ -17,6 +17,7 @@ export default function GorusmeOzetSayfasi() {
   const recognitionRef = useRef(null);
   const sureRef = useRef(null);
   const transkriptRef = useRef("");
+  const aktifRef = useRef(false); // stale closure sorununu önler
 
   useEffect(() => {
     const destekli = "webkitSpeechRecognition" in window || "SpeechRecognition" in window;
@@ -48,14 +49,18 @@ export default function GorusmeOzetSayfasi() {
     };
 
     recognition.onerror = (e) => {
-      if (e.error !== "aborted") setHata("Mikrofon hatası: " + e.error);
+      if (e.error === "aborted" || e.error === "no-speech") return;
+      setHata("Mikrofon hatası: " + e.error);
+      aktifRef.current = false;
       setKayitDurumu("bitti");
     };
 
+    // Ref ile kontrol — stale closure yok
     recognition.onend = () => {
-      if (kayitDurumu === "kayit") recognition.start();
+      if (aktifRef.current) recognition.start();
     };
 
+    aktifRef.current = true;
     recognition.start();
     recognitionRef.current = recognition;
     setKayitDurumu("kayit");
@@ -65,6 +70,7 @@ export default function GorusmeOzetSayfasi() {
   }
 
   function kaydiBitir() {
+    aktifRef.current = false;
     if (recognitionRef.current) {
       recognitionRef.current.onend = null;
       recognitionRef.current.stop();
