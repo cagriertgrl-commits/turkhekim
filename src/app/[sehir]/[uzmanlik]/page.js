@@ -18,18 +18,26 @@ function rozetHesapla(doktor) {
   const rozetler = [];
   if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış", renk: "#059669", bg: "#D1FAE5" });
   if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
+  if (doktor.online_randevu) rozetler.push({ ad: "💻 Online Randevu", renk: "#0E7C7B", bg: "#E8F5F5" });
+  if (doktor.sigorta) rozetler.push({ ad: "🛡️ Sigorta", renk: "#7C3AED", bg: "#EDE9FE" });
   return rozetler;
 }
 
-export default async function DoktorListesi({ params }) {
+export default async function DoktorListesi({ params, searchParams }) {
   const { sehir: sehirParam, uzmanlik: uzmanlikParam } = await params;
+  const sp = await searchParams;
   const sehirAd = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
   const uzmanlikAd = uzmanlikParam.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+
+  const onlineFiltreAktif = sp?.online === "1";
+  const sigortaFiltreAktif = sp?.sigorta === "1";
 
   const doktorlar = await sql`
     SELECT * FROM doktorlar
     WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
       AND onaylandi = true
+      ${onlineFiltreAktif ? sql`AND online_randevu = true` : sql``}
+      ${sigortaFiltreAktif ? sql`AND sigorta IS NOT NULL AND sigorta != ''` : sql``}
     ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
   `;
 
@@ -77,7 +85,7 @@ export default async function DoktorListesi({ params }) {
                 </div>
               </div>
 
-              <div>
+              <div className="mb-5">
                 <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Müsaitlik</p>
                 <div className="space-y-2">
                   {["Tümü", "Bu Hafta Müsait"].map((opt) => (
@@ -86,6 +94,32 @@ export default async function DoktorListesi({ params }) {
                       <span className="text-sm text-gray-600">{opt}</span>
                     </label>
                   ))}
+                </div>
+              </div>
+
+              <div className="mb-5">
+                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Görüşme Tipi</p>
+                <div className="space-y-2">
+                  <Link
+                    href={`/${sehirParam}/${uzmanlikParam}${onlineFiltreAktif ? "" : "?online=1"}`}
+                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${onlineFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
+                    style={onlineFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                  >
+                    💻 Online Randevu {onlineFiltreAktif && "✓"}
+                  </Link>
+                </div>
+              </div>
+
+              <div>
+                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Sigorta</p>
+                <div className="space-y-2">
+                  <Link
+                    href={`/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "" : "?sigorta=1"}`}
+                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
+                    style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                  >
+                    🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
+                  </Link>
                 </div>
               </div>
             </div>

@@ -12,6 +12,9 @@ export async function POST(request) {
   const formData = await request.formData();
   const hakkinda = formData.get("hakkinda")?.toString().trim() || "";
   const fiyat = formData.get("fiyat")?.toString().trim() || "";
+  const sigorta = formData.get("sigorta")?.toString().trim() || "";
+  const adres = formData.get("adres")?.toString().trim() || "";
+  const online_randevu = formData.get("online_randevu") === "on";
 
   if (hakkinda.length > 2000) {
     return NextResponse.json({ hata: "Hakkında 2000 karakteri geçemez." }, { status: 400 });
@@ -19,7 +22,7 @@ export async function POST(request) {
 
   await sql`
     UPDATE doktorlar
-    SET hakkinda = ${hakkinda}, fiyat = ${fiyat}
+    SET hakkinda = ${hakkinda}, fiyat = ${fiyat}, sigorta = ${sigorta}, adres = ${adres}, online_randevu = ${online_randevu}
     WHERE id = ${session.user.id}
   `;
 

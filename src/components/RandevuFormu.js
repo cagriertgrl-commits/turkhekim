@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 
-export default function RandevuFormu({ doktorId, doktorAd }) {
+export default function RandevuFormu({ doktorId, doktorAd, onlineRandevu }) {
+  const [tip, setTip] = useState("yuzyuze");
   const [form, setForm] = useState({ hasta_adi: "", telefon: "", sikayet: "" });
-  const [durum, setDurum] = useState(null); // null | "basari" | "hata"
+  const [durum, setDurum] = useState(null);
   const [mesaj, setMesaj] = useState("");
   const [yukleniyor, setYukleniyor] = useState(false);
 
@@ -18,7 +19,7 @@ export default function RandevuFormu({ doktorId, doktorAd }) {
     const res = await fetch("/api/randevu", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ ...form, doktor_id: doktorId }),
+      body: JSON.stringify({ ...form, doktor_id: doktorId, tip }),
     });
 
     const data = await res.json();
@@ -37,7 +38,7 @@ export default function RandevuFormu({ doktorId, doktorAd }) {
   if (durum === "basari") {
     return (
       <div id="randevu" className="bg-white rounded-2xl p-6 shadow-sm text-center">
-        <div className="text-4xl mb-3">📅</div>
+        <div className="text-4xl mb-3">{tip === "online" ? "💻" : "📅"}</div>
         <h3 className="font-bold text-gray-900 mb-2">Talebiniz Alındı!</h3>
         <p className="text-gray-500 text-sm mb-4">{mesaj}</p>
         <div style={{ backgroundColor: "#D1FAE5", borderColor: "#059669" }} className="border rounded-xl p-3">
@@ -59,6 +60,40 @@ export default function RandevuFormu({ doktorId, doktorAd }) {
     <div id="randevu" className="bg-white rounded-2xl p-6 shadow-sm">
       <h3 className="font-bold text-gray-900 mb-1">Randevu Al</h3>
       <p className="text-xs text-gray-400 mb-4">Doktor bilgilerinizi aldıktan sonra sizi arayacak.</p>
+
+      {/* Randevu Tipi */}
+      {onlineRandevu && (
+        <div className="flex gap-2 mb-4 p-1 rounded-xl" style={{ backgroundColor: "#F5F7FA" }}>
+          <button
+            type="button"
+            onClick={() => setTip("yuzyuze")}
+            className="flex-1 py-2 rounded-lg text-xs font-semibold transition-all"
+            style={tip === "yuzyuze"
+              ? { backgroundColor: "#0D2137", color: "white" }
+              : { color: "#6B7280" }}
+          >
+            🏥 Yüz Yüze
+          </button>
+          <button
+            type="button"
+            onClick={() => setTip("online")}
+            className="flex-1 py-2 rounded-lg text-xs font-semibold transition-all"
+            style={tip === "online"
+              ? { backgroundColor: "#0E7C7B", color: "white" }
+              : { color: "#6B7280" }}
+          >
+            💻 Online
+          </button>
+        </div>
+      )}
+
+      {tip === "online" && (
+        <div style={{ backgroundColor: "#E8F5F5", borderColor: "#0E7C7B" }} className="border rounded-xl p-3 mb-4">
+          <p className="text-xs text-gray-600">
+            📹 Online görüşme için doktor sizi arayıp video görüşme bağlantısı paylaşacak.
+          </p>
+        </div>
+      )}
 
       <form onSubmit={gonder} className="space-y-3">
         <div>
@@ -106,10 +141,10 @@ export default function RandevuFormu({ doktorId, doktorAd }) {
         <button
           type="submit"
           disabled={yukleniyor}
-          style={{ backgroundColor: "#0D2137" }}
+          style={{ backgroundColor: tip === "online" ? "#0E7C7B" : "#0D2137" }}
           className="w-full text-white py-3 rounded-xl font-medium text-sm hover:opacity-90 transition-opacity disabled:opacity-50"
         >
-          {yukleniyor ? "Gönderiliyor..." : "Randevu Talebi Gönder"}
+          {yukleniyor ? "Gönderiliyor..." : tip === "online" ? "Online Randevu Talebi Gönder" : "Randevu Talebi Gönder"}
         </button>
 
         <p className="text-xs text-gray-400 text-center">

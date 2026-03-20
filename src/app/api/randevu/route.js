@@ -13,7 +13,7 @@ export async function POST(request) {
       );
     }
 
-    const { doktor_id, hasta_adi, telefon, sikayet } = await request.json();
+    const { doktor_id, hasta_adi, telefon, sikayet, tip } = await request.json();
 
     if (!doktor_id || !hasta_adi || !telefon) {
       return NextResponse.json({ hata: "Ad ve telefon zorunludur." }, { status: 400 });
@@ -22,6 +22,8 @@ export async function POST(request) {
     if (!/^[0-9\s\+\-]{10,15}$/.test(telefon.trim())) {
       return NextResponse.json({ hata: "Geçerli bir telefon numarası girin." }, { status: 400 });
     }
+
+    const randevuTipi = ["yuzyuze", "online"].includes(tip) ? tip : "yuzyuze";
 
     // Aynı numaradan aynı doktora 24 saat içinde tekrar randevu engeli
     const mevcutRandevu = await sql`
@@ -38,8 +40,8 @@ export async function POST(request) {
     }
 
     await sql`
-      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum)
-      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor')
+      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip)
+      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi})
     `;
 
     return NextResponse.json({ mesaj: "Randevu talebiniz alındı. Doktor en kısa sürede sizi arayacak." });

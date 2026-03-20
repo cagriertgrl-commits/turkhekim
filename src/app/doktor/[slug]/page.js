@@ -1,6 +1,7 @@
 import Navbar from "@/components/Navbar";
 import YorumFormu from "@/components/YorumFormu";
 import RandevuFormu from "@/components/RandevuFormu";
+import SoruFormu from "@/components/SoruFormu";
 import sql from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -47,9 +48,10 @@ export default async function DoktorProfil({ params }) {
   if (!doktorlar.length) notFound();
   const doktor = doktorlar[0];
 
-  const yorumlar = await sql`
-    SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC
-  `;
+  const [yorumlar, sorular] = await Promise.all([
+    sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
+    sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL ORDER BY created_at DESC LIMIT 10`,
+  ]);
 
   const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0, 2);
 
@@ -166,7 +168,7 @@ export default async function DoktorProfil({ params }) {
           <div className="md:col-span-1 space-y-4 md:order-2">
 
             {/* Randevu Al */}
-            <RandevuFormu doktorId={doktor.id} doktorAd={doktor.ad} />
+            <RandevuFormu doktorId={doktor.id} doktorAd={doktor.ad} onlineRandevu={doktor.online_randevu} />
 
             {/* Çalışma Saatleri */}
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
@@ -219,6 +221,41 @@ export default async function DoktorProfil({ params }) {
                   <span style={{ color: "#0E7C7B" }}>👨‍⚕️</span> Hakkında
                 </h2>
                 <p className="text-gray-600 leading-relaxed text-sm">{doktor.hakkinda}</p>
+              </div>
+            )}
+
+            {/* Sigorta & Adres */}
+            {(doktor.sigorta || doktor.adres) && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="font-bold text-gray-900 text-lg mb-4 flex items-center gap-2">
+                  <span style={{ color: "#0E7C7B" }}>🏥</span> Klinik Bilgileri
+                </h2>
+                <div className="space-y-3">
+                  {doktor.sigorta && (
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg flex-shrink-0">🛡️</span>
+                      <div>
+                        <p className="text-xs text-gray-400 mb-1">Kabul Edilen Sigortalar</p>
+                        <div className="flex flex-wrap gap-1.5">
+                          {doktor.sigorta.split(",").map((s) => s.trim()).filter(Boolean).map((s) => (
+                            <span key={s} style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-xs px-2 py-1 rounded-full font-medium">
+                              {s}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  )}
+                  {doktor.adres && (
+                    <div className="flex items-start gap-3">
+                      <span className="text-lg flex-shrink-0">📍</span>
+                      <div>
+                        <p className="text-xs text-gray-400 mb-1">Adres</p>
+                        <p className="text-sm text-gray-700">{doktor.adres}</p>
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
             )}
 
@@ -300,6 +337,9 @@ export default async function DoktorProfil({ params }) {
 
             {/* Yorum Formu */}
             <YorumFormu doktorId={doktor.id} />
+
+            {/* Soru-Cevap */}
+            <SoruFormu doktorId={doktor.id} sorular={sorular} />
 
           </div>
         </div>

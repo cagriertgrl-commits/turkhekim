@@ -5,6 +5,7 @@ import sql from "@/lib/db";
 import FotoYukle from "@/components/FotoYukle";
 import SifreDegistir from "@/components/SifreDegistir";
 import RandevuPanel from "@/components/RandevuPanel";
+import SoruPanel from "@/components/SoruPanel";
 
 export default async function Panel() {
   const session = await getServerSession(authOptions);
@@ -15,9 +16,10 @@ export default async function Panel() {
   `;
   const doktor = doktorlar[0];
 
-  const yorumlar = await sql`
-    SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC
-  `;
+  const [yorumlar, sorular] = await Promise.all([
+    sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
+    sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} ORDER BY yanit NULLS FIRST, created_at DESC`,
+  ]);
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -78,6 +80,40 @@ export default async function Panel() {
             </div>
           ))}
         </div>
+
+        {/* PROFİL TAMAMLAMA */}
+        {(() => {
+          const alanlar = [
+            { ad: "Fotoğraf", tamam: !!doktor.foto_url },
+            { ad: "Hakkında", tamam: !!doktor.hakkinda },
+            { ad: "Muayene Ücreti", tamam: !!doktor.fiyat },
+            { ad: "Sigorta Bilgisi", tamam: !!doktor.sigorta },
+            { ad: "Adres", tamam: !!doktor.adres },
+            { ad: "Online Randevu Ayarı", tamam: doktor.online_randevu !== null },
+          ];
+          const tamamlanan = alanlar.filter((a) => a.tamam).length;
+          const yuzde = Math.round((tamamlanan / alanlar.length) * 100);
+          const renk = yuzde === 100 ? "#059669" : yuzde >= 60 ? "#0E7C7B" : "#D97706";
+          if (yuzde === 100) return null;
+          return (
+            <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
+              <div className="flex items-center justify-between mb-3">
+                <h3 style={{ color: "#0D2137" }} className="font-bold text-sm">Profil Tamamlama</h3>
+                <span style={{ color: renk }} className="font-bold text-sm">%{yuzde}</span>
+              </div>
+              <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
+                <div style={{ width: `${yuzde}%`, backgroundColor: renk }} className="h-full rounded-full transition-all" />
+              </div>
+              <div className="flex flex-wrap gap-2">
+                {alanlar.filter((a) => !a.tamam).map((a) => (
+                  <span key={a.ad} className="text-xs px-2 py-1 rounded-full border border-dashed border-gray-300 text-gray-400">
+                    ✗ {a.ad}
+                  </span>
+                ))}
+              </div>
+            </div>
+          );
+        })()}
 
         <div className="grid md:grid-cols-3 gap-6">
 
@@ -140,6 +176,37 @@ export default async function Panel() {
                     className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
                   />
                 </div>
+                <div>
+                  <label className="text-xs text-gray-500 block mb-1">Kabul Edilen Sigortalar</label>
+                  <input
+                    name="sigorta"
+                    defaultValue={doktor.sigorta || ""}
+                    placeholder="SGK, Anadolu Sigorta, Allianz..."
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-gray-500 block mb-1">Adres / Klinik</label>
+                  <input
+                    name="adres"
+                    defaultValue={doktor.adres || ""}
+                    placeholder="Mahalle, Sokak, Bina No..."
+                    className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
+                  />
+                </div>
+                <label className="flex items-center gap-3 cursor-pointer py-1">
+                  <div className="relative flex-shrink-0">
+                    <input
+                      type="checkbox"
+                      name="online_randevu"
+                      defaultChecked={doktor.online_randevu}
+                      className="sr-only peer"
+                    />
+                    <div className="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition-colors"></div>
+                    <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+                  </div>
+                  <span className="text-sm text-gray-700">Online Randevu Kabul Ediyorum</span>
+                </label>
                 <button
                   type="submit"
                   style={{ backgroundColor: "#0D2137" }}
@@ -156,6 +223,7 @@ export default async function Panel() {
           {/* SAĞ — Randevular + Yorumlar */}
           <div className="md:col-span-2 space-y-6">
             <RandevuPanel doktorId={doktor.id} />
+            <SoruPanel sorular={sorular} />
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <div className="flex items-center justify-between mb-6">
                 <h2 style={{ color: "#0D2137" }} className="font-bold text-lg">Hasta Yorumları</h2>

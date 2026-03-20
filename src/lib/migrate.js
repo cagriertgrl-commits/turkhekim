@@ -17,12 +17,31 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS foto_url TEXT,
     ADD COLUMN IF NOT EXISTS sozlesme_onaylandi BOOLEAN DEFAULT false,
     ADD COLUMN IF NOT EXISTS kvkk_onaylandi BOOLEAN DEFAULT false,
-    ADD COLUMN IF NOT EXISTS onay_tarihi TIMESTAMPTZ
+    ADD COLUMN IF NOT EXISTS onay_tarihi TIMESTAMPTZ,
+    ADD COLUMN IF NOT EXISTS sigorta TEXT,
+    ADD COLUMN IF NOT EXISTS adres TEXT,
+    ADD COLUMN IF NOT EXISTS online_randevu BOOLEAN DEFAULT false
   `;
 
   await sql`
     ALTER TABLE yorumlar
     ADD COLUMN IF NOT EXISTS kvkk_onaylandi BOOLEAN DEFAULT false
+  `;
+
+  await sql`
+    ALTER TABLE randevular
+    ADD COLUMN IF NOT EXISTS tip TEXT DEFAULT 'yuzyuze'
+  `;
+
+  await sql`
+    CREATE TABLE IF NOT EXISTS sorular (
+      id SERIAL PRIMARY KEY,
+      doktor_id INTEGER NOT NULL,
+      soran_adi TEXT NOT NULL,
+      soru TEXT NOT NULL,
+      yanit TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
   `;
 
   console.log("✅ Migrasyon tamamlandı!");
