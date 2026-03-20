@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 // Form şablonları — gerçek klinik içerik
 const FORM_SABLONLARI = {
@@ -1014,21 +1014,12 @@ Tarih       : .......................................
 İmza/Kaşe   : .......................................`;
 }
 
-export default function FormIcerik({ form }) {
-  const yazdirilacakRef = useRef(null);
-
-  function yazdir() {
-    window.print();
-  }
-
-  function indir() {
-    const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
-    const pencere = window.open("", "_blank");
-    pencere.document.write(`<!DOCTYPE html>
+function formHtml(baslik, icerik) {
+  return `<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8"/>
-  <title>${form.baslik}</title>
+  <title>${baslik}</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; font-size: 13px; line-height: 1.8; color: #1a1a1a; }
     h1 { font-size: 16px; text-align: center; border-bottom: 2px solid #0E7C7B; padding-bottom: 12px; margin-bottom: 24px; }
@@ -1038,13 +1029,43 @@ export default function FormIcerik({ form }) {
   </style>
 </head>
 <body>
-  <h1>${form.baslik}</h1>
+  <h1>${baslik}</h1>
   <pre>${icerik}</pre>
   <div class="footer">DoktorPusula — doktorpusula.com | Bu form bilgilendirme amaçlıdır.</div>
-  <script>window.onload = function(){ window.print(); }<\/script>
 </body>
-</html>`);
+</html>`;
+}
+
+export default function FormIcerik({ form }) {
+  const yazdirilacakRef = useRef(null);
+  const [indiriliyor, setIndiriliyor] = useState(false);
+
+  function yazdir() {
+    const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
+    const pencere = window.open("", "_blank");
+    if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
+    pencere.document.write(formHtml(form.baslik, icerik) + `<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>`);
     pencere.document.close();
+  }
+
+  async function indir() {
+    setIndiriliyor(true);
+    try {
+      const html2pdf = (await import("html2pdf.js")).default;
+      html2pdf()
+        .set({
+          margin: 10,
+          filename: `${form.id}-onam-formu.pdf`,
+          image: { type: "jpeg", quality: 0.98 },
+          html2canvas: { scale: 2 },
+          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
+        })
+        .from(yazdirilacakRef.current)
+        .save()
+        .finally(() => setIndiriliyor(false));
+    } catch {
+      setIndiriliyor(false);
+    }
   }
 
   const sablonIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
@@ -1068,10 +1089,11 @@ export default function FormIcerik({ form }) {
           </button>
           <button
             onClick={indir}
+            disabled={indiriliyor}
             style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
-            className="flex items-center gap-2 border px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-teal-50 print:hidden"
+            className="flex items-center gap-2 border px-4 py-2.5 rounded-xl text-sm font-semibold hover:bg-teal-50 print:hidden disabled:opacity-50"
           >
-            ⬇️ İndir
+            {indiriliyor ? "⏳ Hazırlanıyor..." : "⬇️ PDF İndir"}
           </button>
         </div>
       </div>
@@ -1109,15 +1131,6 @@ export default function FormIcerik({ form }) {
         </div>
       </div>
 
-      {/* Yazdırma stili */}
-      <style>{`
-        @media print {
-          .print\\:hidden { display: none !important; }
-          body * { visibility: hidden; }
-          #yazdirilacak-form, #yazdirilacak-form * { visibility: visible; }
-          #yazdirilacak-form { position: fixed; top: 0; left: 0; width: 100%; }
-        }
-      `}</style>
     </div>
   );
 }
