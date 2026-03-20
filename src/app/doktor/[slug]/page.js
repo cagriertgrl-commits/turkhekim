@@ -53,6 +53,9 @@ export default async function DoktorProfil({ params }) {
     sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL ORDER BY created_at DESC LIMIT 10`,
   ]);
 
+  // Görüntülenme sayacı (fire-and-forget)
+  sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme, 0) + 1 WHERE id = ${doktor.id}`.catch(() => {});
+
   const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0, 2);
 
   const sehirSlug = doktor.sehir?.toLowerCase()

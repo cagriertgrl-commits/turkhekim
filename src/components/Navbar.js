@@ -1,12 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import DilSecici from "./DilSecici";
 
 export default function Navbar({ aktifSayfa }) {
   const [menuAcik, setMenuAcik] = useState(false);
 
   const linkler = [
     { href: "/istanbul/kbb-uzmani", etiket: "Doktor Bul" },
+    { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/saglik", etiket: "Sağlık Rehberi" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
   ];
@@ -48,8 +50,7 @@ export default function Navbar({ aktifSayfa }) {
 
         {/* MASAÜSTÜ SAĞ */}
         <div className="hidden md:flex items-center gap-3">
-          <a href="/fa" className="text-gray-400 hover:text-white text-xs transition-colors">🇮🇷 فارسی</a>
-          <a href="/ar" className="text-gray-400 hover:text-white text-xs transition-colors">🌍 العربية</a>
+          <DilSecici />
           <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">Giriş Yap</a>
           <a href="/kayit-ol" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
             Kayıt Ol
@@ -99,9 +100,8 @@ export default function Navbar({ aktifSayfa }) {
             >
               Kayıt Ol
             </a>
-            <div className="flex gap-4 pt-2">
-              <a href="/fa" className="text-gray-400 hover:text-white text-xs transition-colors">🇮🇷 فارسی</a>
-              <a href="/ar" className="text-gray-400 hover:text-white text-xs transition-colors">🌍 العربية</a>
+            <div className="pt-2">
+              <DilSecici />
             </div>
           </div>
         </div>

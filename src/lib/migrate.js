@@ -20,7 +20,8 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS onay_tarihi TIMESTAMPTZ,
     ADD COLUMN IF NOT EXISTS sigorta TEXT,
     ADD COLUMN IF NOT EXISTS adres TEXT,
-    ADD COLUMN IF NOT EXISTS online_randevu BOOLEAN DEFAULT false
+    ADD COLUMN IF NOT EXISTS online_randevu BOOLEAN DEFAULT false,
+    ADD COLUMN IF NOT EXISTS profil_goruntulenme INTEGER DEFAULT 0
   `;
 
   await sql`

@@ -16,10 +16,18 @@ export default async function Panel() {
   `;
   const doktor = doktorlar[0];
 
-  const [yorumlar, sorular] = await Promise.all([
+  const [yorumlar, sorular, analitkler] = await Promise.all([
     sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
     sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} ORDER BY yanit NULLS FIRST, created_at DESC`,
+    sql`
+      SELECT
+        (SELECT COUNT(*) FROM randevular WHERE doktor_id = ${doktor.id} AND created_at >= date_trunc('month', NOW())) as bu_ay_randevu,
+        (SELECT COUNT(*) FROM randevular WHERE doktor_id = ${doktor.id} AND durum = 'bekliyor') as bekleyen_randevu,
+        (SELECT COUNT(*) FROM yorumlar WHERE doktor_id = ${doktor.id} AND created_at >= date_trunc('month', NOW())) as bu_ay_yorum,
+        (SELECT COALESCE(profil_goruntulenme, 0) FROM doktorlar WHERE id = ${doktor.id}) as profil_goruntulenme
+    `,
   ]);
+  const analitik = analitkler[0];
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -64,18 +72,36 @@ export default async function Panel() {
         </div>
 
         {/* ÖZET KARTLAR */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {[
             { baslik: "Ortalama Puan", deger: doktor.puan || "—", icon: "⭐", renk: "#D97706", bg: "#FFFBEB" },
             { baslik: "Toplam Yorum", deger: yorumlar.length, icon: "💬", renk: "#0E7C7B", bg: "#F0FDFA" },
             { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "#059669" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
-            { baslik: "Müsaitlik", deger: doktor.musait ? "Aktif" : "Kapalı", icon: "📅", renk: doktor.musait ? "#059669" : "#6B7280", bg: "#F5F7FA" },
+            { baslik: "Bekleyen Randevu", deger: Number(analitik.bekleyen_randevu) || 0, icon: "📅", renk: Number(analitik.bekleyen_randevu) > 0 ? "#DC2626" : "#6B7280", bg: Number(analitik.bekleyen_randevu) > 0 ? "#FFF1F2" : "#F5F7FA" },
           ].map((kart) => (
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
               <div className="flex items-start justify-between mb-3">
                 <span className="text-2xl">{kart.icon}</span>
               </div>
               <p style={{ color: kart.renk }} className="text-xl font-bold">{kart.deger}</p>
+              <p className="text-gray-500 text-xs mt-1">{kart.baslik}</p>
+            </div>
+          ))}
+        </div>
+
+        {/* ANALİTİK KARTLAR */}
+        <div className="grid grid-cols-3 gap-4 mb-8">
+          {[
+            { baslik: "Bu Ay Randevu", deger: Number(analitik.bu_ay_randevu) || 0, icon: "📊", renk: "#0D2137", bg: "#EFF6FF", alt: "Bu ay" },
+            { baslik: "Bu Ay Yorum", deger: Number(analitik.bu_ay_yorum) || 0, icon: "💬", renk: "#7C3AED", bg: "#F5F3FF", alt: "Bu ay" },
+            { baslik: "Profil Görüntülenme", deger: Number(analitik.profil_goruntulenme) || 0, icon: "👁️", renk: "#059669", bg: "#F0FDF4", alt: "Toplam" },
+          ].map((kart) => (
+            <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
+              <div className="flex items-center justify-between mb-2">
+                <span className="text-xl">{kart.icon}</span>
+                <span className="text-xs text-gray-400">{kart.alt}</span>
+              </div>
+              <p style={{ color: kart.renk }} className="text-2xl font-bold">{kart.deger.toLocaleString("tr-TR")}</p>
               <p className="text-gray-500 text-xs mt-1">{kart.baslik}</p>
             </div>
           ))}

@@ -87,16 +87,42 @@ export default function AramaKutusu() {
   const router = useRouter();
   const [uzmanlik, setUzmanlik] = useState("");
   const [sehir, setSehir] = useState("");
+  const [mod, setMod] = useState("yuzyuze"); // "yuzyuze" | "online"
 
   function ara(e) {
     e.preventDefault();
     const u = slugYap(uzmanlik || "doktor");
     const s = slugYap(sehir || "istanbul");
-    router.push(`/${s}/${u}`);
+    const query = mod === "online" ? "?online=1" : "";
+    router.push(`/${s}/${u}${query}`);
   }
 
   return (
     <div className="bg-white rounded-2xl p-5 max-w-3xl mx-auto shadow-2xl">
+      {/* MOD SEÇİCİ */}
+      <div className="flex gap-1 p-1 rounded-xl mb-4" style={{ backgroundColor: "#F5F7FA" }}>
+        <button
+          type="button"
+          onClick={() => setMod("yuzyuze")}
+          className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
+          style={mod === "yuzyuze"
+            ? { backgroundColor: "#0D2137", color: "white", boxShadow: "0 2px 8px rgba(13,33,55,0.3)" }
+            : { color: "#6B7280" }}
+        >
+          🏥 Yüz Yüze Randevu
+        </button>
+        <button
+          type="button"
+          onClick={() => setMod("online")}
+          className="flex-1 py-2.5 rounded-lg text-sm font-semibold transition-all flex items-center justify-center gap-2"
+          style={mod === "online"
+            ? { backgroundColor: "#0E7C7B", color: "white", boxShadow: "0 2px 8px rgba(14,124,123,0.3)" }
+            : { color: "#6B7280" }}
+        >
+          💻 Online Görüşme
+        </button>
+      </div>
+
       <form onSubmit={ara}>
         <div className="flex flex-col md:flex-row gap-3">
           <DropdownInput
@@ -118,10 +144,10 @@ export default function AramaKutusu() {
           <div className="flex items-end">
             <button
               type="submit"
-              style={{ backgroundColor: "#0E7C7B" }}
+              style={{ backgroundColor: mod === "online" ? "#0E7C7B" : "#0D2137" }}
               className="w-full md:w-auto text-white px-8 py-3 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity whitespace-nowrap shadow-lg"
             >
-              Doktor Ara →
+              {mod === "online" ? "Online Doktor Ara →" : "Doktor Ara →"}
             </button>
           </div>
         </div>
