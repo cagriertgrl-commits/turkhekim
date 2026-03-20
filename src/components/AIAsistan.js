@@ -10,7 +10,7 @@ const HIZLI_SORULAR = [
   { etiket: "📊 SGK & Sigorta", soru: "Doktor malpraktis sigortası nedir, nasıl alınır?" },
 ];
 
-export default function AIAsistan({ doktorId }) {
+export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
   const [acik, setAcik] = useState(false);
   const [mesajlar, setMesajlar] = useState([
     {
@@ -21,6 +21,9 @@ export default function AIAsistan({ doktorId }) {
   const [girdi, setGirdi] = useState("");
   const [yukleniyor, setYukleniyor] = useState(false);
   const mesajSonuRef = useRef(null);
+
+  const yetkiliPaketler = ["premium", "pro", "kurumsal"];
+  const erisimVar = yetkiliPaketler.includes(paket);
 
   useEffect(() => {
     mesajSonuRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -77,14 +80,38 @@ export default function AIAsistan({ doktorId }) {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-1 rounded-full font-semibold">
-            Aktif
-          </span>
+          {erisimVar ? (
+            <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-1 rounded-full font-semibold">
+              Aktif
+            </span>
+          ) : (
+            <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-1 rounded-full font-semibold">
+              🔒 Premium
+            </span>
+          )}
           <span className="text-gray-400 text-sm">{acik ? "▲" : "▼"}</span>
         </div>
       </button>
 
-      {acik && (
+      {acik && !erisimVar && (
+        <div className="border-t border-gray-100 p-6 text-center">
+          <div className="text-4xl mb-3">🚀</div>
+          <h3 style={{ color: "#0D2137" }} className="font-bold mb-2">Premium Özellik</h3>
+          <p className="text-sm text-gray-500 mb-4 leading-relaxed">
+            AI Asistan, malpraktis hukuku ve klinik yönetim konularında anında yanıt veriyor.
+            Bu özellik <strong>Premium paket</strong> ve üstü için geçerlidir.
+          </p>
+          <a
+            href="/paketler"
+            style={{ backgroundColor: "#0E7C7B" }}
+            className="inline-block text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity"
+          >
+            Paketi Yükselt →
+          </a>
+        </div>
+      )}
+
+      {acik && erisimVar && (
         <div className="border-t border-gray-100">
           {/* Hızlı Sorular */}
           {mesajlar.length <= 1 && (

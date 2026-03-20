@@ -34,7 +34,8 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS klinik_logo_url TEXT,
     ADD COLUMN IF NOT EXISTS klinik_foto_urls TEXT,
     ADD COLUMN IF NOT EXISTS calisan_sayisi INTEGER,
-    ADD COLUMN IF NOT EXISTS calisma_saatleri TEXT
+    ADD COLUMN IF NOT EXISTS calisma_saatleri TEXT,
+    ADD COLUMN IF NOT EXISTS paket TEXT DEFAULT 'ucretsiz'
   `;
   console.log("✅ doktorlar tablosu güncellendi");
 

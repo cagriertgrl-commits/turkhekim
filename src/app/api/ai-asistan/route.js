@@ -62,6 +62,16 @@ export async function POST(request) {
   const session = await getServerSession(authOptions);
   if (!session) return NextResponse.json({ hata: "Giriş yapmanız gerekiyor." }, { status: 401 });
 
+  // Paket kontrolü — sadece premium ve üstü kullanabilir
+  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.user.id}`;
+  const yetkiliPaketler = ["premium", "pro", "kurumsal"];
+  if (!doktor || !yetkiliPaketler.includes(doktor.paket)) {
+    return NextResponse.json({
+      hata: "Bu özellik Premium paket ve üstü için geçerlidir.",
+      paketYukselt: true,
+    }, { status: 403 });
+  }
+
   const { mesajlar, konu } = await request.json();
   if (!mesajlar || !Array.isArray(mesajlar) || mesajlar.length === 0) {
     return NextResponse.json({ hata: "Mesaj gerekli." }, { status: 400 });

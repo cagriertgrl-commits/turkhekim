@@ -286,7 +286,7 @@ export default async function Panel() {
           <div className="md:col-span-2 space-y-6">
 
             {/* AI Asistan */}
-            <AIAsistan doktorId={doktor.id} />
+            <AIAsistan doktorId={doktor.id} paket={doktor.paket || "ucretsiz"} />
 
             {/* Yorum Doğrulama */}
             <YorumDogrulamaPanel dogrulamalar={dogrulamalar} />
