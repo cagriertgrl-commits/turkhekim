@@ -278,6 +278,21 @@ export default async function Panel() {
             </div>
 
             <SifreDegistir />
+
+            {/* Paket Yükselt kartı — sadece ücretsiz pakette */}
+            {(!doktor.paket || doktor.paket === "ucretsiz") && (
+              <div style={{ background: "linear-gradient(135deg, #0D2137, #0a3d62)" }} className="rounded-2xl p-5 text-center">
+                <div className="text-2xl mb-2">🚀</div>
+                <h3 className="text-white font-bold text-sm mb-1">Premium'a Yükselt</h3>
+                <p className="text-gray-300 text-xs mb-4 leading-relaxed">
+                  AI Asistan, öne çıkarma ve analitik dashboard için paketi yükseltin.
+                </p>
+                <a href="/paketler" style={{ backgroundColor: "#0E7C7B" }}
+                  className="block text-white text-xs font-semibold py-2.5 rounded-xl hover:opacity-90 transition-opacity">
+                  Paketleri İncele →
+                </a>
+              </div>
+            )}
           </div>
 
           {/* SAĞ KOLON */}
