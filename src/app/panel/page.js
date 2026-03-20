@@ -10,6 +10,7 @@ import AIAsistan from "@/components/AIAsistan";
 import MedyaPanel from "@/components/MedyaPanel";
 import BildirimZili from "@/components/BildirimZili";
 import YorumDogrulamaPanel from "@/components/YorumDogrulamaPanel";
+import KlinikFotoYukle from "@/components/KlinikFotoYukle";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -256,6 +257,11 @@ export default async function Panel() {
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">Kabul Edilen Sigortalar</label>
                   <input name="sigorta" defaultValue={doktor.sigorta || ""} placeholder="SGK, Anadolu Sigorta, Allianz..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                </div>
+
+                {/* Klinik Fotoğrafları */}
+                <div className="pt-2 border-t border-gray-100">
+                  <KlinikFotoYukle baslangicFotolar={doktor.klinik_foto_urls || []} />
                 </div>
 
                 <label className="flex items-center gap-3 cursor-pointer py-1">
