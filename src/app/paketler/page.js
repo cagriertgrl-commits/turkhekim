@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Link from "next/link";
 
 export const metadata = {
   title: "Paketler & Fiyatlandırma — DoktorPusula",
@@ -21,7 +20,7 @@ const PAKETLER = [
       { metin: "Hasta yorumları", var: true },
       { metin: "Fotoğraf yükleme", var: true },
       { metin: "Analitik dashboard", var: false },
-      { metin: "AI Asistan (malpraktis)", var: false },
+      { metin: "AI Asistan", var: false },
       { metin: "Öne çıkarma", var: false },
       { metin: "WhatsApp entegrasyonu", var: false },
       { metin: "Medya / Makale yayını", var: false },
@@ -32,7 +31,7 @@ const PAKETLER = [
   },
   {
     ad: "Premium",
-    fiyat: "499",
+    fiyat: "999",
     periyot: "ay",
     renk: "#D97706",
     bg: "#FFFBEB",
@@ -42,11 +41,11 @@ const PAKETLER = [
       { metin: "Randevu talebi alma", var: true },
       { metin: "Hasta yorumları", var: true },
       { metin: "Fotoğraf yükleme", var: true },
-      { metin: "Analitik dashboard", var: true },
-      { metin: "AI Asistan (malpraktis)", var: true },
+      { metin: "Analitik dashboard", var: false },
+      { metin: "AI Asistan", var: true },
       { metin: "Öne çıkarma", var: false },
       { metin: "WhatsApp entegrasyonu", var: true },
-      { metin: "Medya / Makale yayını", var: true },
+      { metin: "Medya / Makale yayını", var: false },
     ],
     cta: "Premium'a Geç",
     href: "mailto:satis@doktorpusula.com?subject=Premium Paket Talebi",
@@ -54,7 +53,7 @@ const PAKETLER = [
   },
   {
     ad: "Pro",
-    fiyat: "999",
+    fiyat: "1.599",
     periyot: "ay",
     renk: "#7C3AED",
     bg: "#F5F3FF",
@@ -65,7 +64,8 @@ const PAKETLER = [
       { metin: "Hasta yorumları", var: true },
       { metin: "Fotoğraf yükleme", var: true },
       { metin: "Analitik dashboard", var: true },
-      { metin: "AI Asistan (malpraktis)", var: true },
+      { metin: "AI Asistan (Gelişmiş)", var: true },
+      { metin: "Görüşme Özetle — AI not asistanı", var: true },
       { metin: "Öne çıkarma (kategori başı)", var: true },
       { metin: "WhatsApp entegrasyonu", var: true },
       { metin: "Medya / Makale yayını", var: true },
@@ -88,6 +88,7 @@ const PAKETLER = [
       { metin: "Özel entegrasyon", var: true },
       { metin: "Öncelikli destek", var: true },
       { metin: "AI Asistan sınırsız", var: true },
+      { metin: "Görüşme Özetle — AI not asistanı", var: true },
       { metin: "Özel fiyatlandırma", var: true },
       { metin: "SLA garantisi", var: true },
       { metin: "Dedike hesap yöneticisi", var: true },
@@ -113,6 +114,18 @@ export default function PaketlerSayfasi() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6 py-12">
+
+        {/* Görüşme Özetle Banner */}
+        <div style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-center gap-5">
+          <div className="text-4xl">🎙️</div>
+          <div className="flex-1 text-center md:text-left">
+            <div className="text-white font-bold text-lg mb-1">Yeni: Görüşme Özetle — AI Not Asistanı</div>
+            <p className="text-purple-200 text-sm leading-relaxed">
+              Hasta görüşmenizi kaydedin; AI gerçek zamanlı dinler, şikayetleri, talepleri ve kritik noktaları otomatik özetler. Not alma devri bitti.
+            </p>
+          </div>
+          <div className="text-purple-300 text-xs font-semibold bg-purple-900/40 px-4 py-2 rounded-xl whitespace-nowrap">Pro & Kurumsal</div>
+        </div>
 
         {/* Paket kartları */}
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
@@ -175,7 +188,8 @@ export default function PaketlerSayfasi() {
             {[
               { s: "Ücretsiz paketten ücretliye geçiş nasıl oluyor?", c: "satis@doktorpusula.com adresine mail atmanız yeterli. 24 saat içinde paketiniz aktifleştirilir." },
               { s: "İptal edebilir miyim?", c: "İstediğiniz zaman iptal edebilirsiniz. İptal sonrası dönem sonuna kadar paketiniz aktif kalır." },
-              { s: "AI Asistan ne işe yarıyor?", c: "Malpraktis hukuku, emsal kararlar, hasta hakları ve klinik yönetim konularında anında yanıt veriyor." },
+              { s: "AI Asistan ne işe yarıyor?", c: "Emsal kararlar, hasta hakları ve klinik yönetim konularında anında yanıt veriyor." },
+              { s: "Görüşme Özetle nasıl çalışıyor?", c: "Hasta görüşmenizi kayıt altına alın; AI gerçek zamanlı metne döküp şikayetleri, talepleri ve kritik noktaları otomatik özetler. Yalnızca Chrome/Edge tarayıcısında çalışır." },
               { s: "Fatura kesiyor musunuz?", c: "Evet, tüm ödemeler için e-fatura düzenliyoruz." },
             ].map((item) => (
               <div key={item.s}>

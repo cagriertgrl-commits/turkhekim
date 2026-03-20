@@ -64,6 +64,11 @@ export default async function Panel() {
           </a>
           <div className="flex items-center gap-3">
             <BildirimZili />
+            {["pro", "kurumsal"].includes(doktor.paket) && (
+              <a href="/gorusme-ozet" style={{ backgroundColor: "#7C3AED" }} className="text-white text-xs px-3 py-1.5 rounded-lg hover:opacity-90 hidden md:flex items-center gap-1.5">
+                🎙️ Görüşme Özetle
+              </a>
+            )}
             <span className="text-gray-300 text-sm hidden md:block">{doktor.ad}</span>
             <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör
@@ -297,6 +302,18 @@ export default async function Panel() {
 
           {/* SAĞ KOLON */}
           <div className="md:col-span-2 space-y-6">
+
+            {/* Görüşme Özetle — Pro/Kurumsal */}
+            {["pro", "kurumsal"].includes(doktor.paket) && (
+              <a href="/gorusme-ozet" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="flex items-center gap-4 rounded-2xl p-5 hover:opacity-90 transition-opacity">
+                <span className="text-3xl">🎙️</span>
+                <div className="flex-1">
+                  <div className="text-white font-bold text-sm mb-0.5">Görüşme Özetle</div>
+                  <p className="text-purple-200 text-xs leading-relaxed">Hasta görüşmenizi kaydedin, AI otomatik özetlesin</p>
+                </div>
+                <span className="text-purple-300 text-lg">→</span>
+              </a>
+            )}
 
             {/* AI Asistan */}
             <AIAsistan doktorId={doktor.id} paket={doktor.paket || "ucretsiz"} />
