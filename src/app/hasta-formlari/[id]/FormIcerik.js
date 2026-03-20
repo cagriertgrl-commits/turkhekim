@@ -915,7 +915,7 @@ Tarih/İmza/Kaşe  : .......................................`,
     icerik: `6698 Sayılı Kişisel Verilerin Korunması Kanunu ("KVKK") kapsamında, aşağıda belirtilen kişisel ve sağlık verilerimin işlenmesine ilişkin açık rızamı beyan ederim.
 
 1. VERİ SORUMLUSU
-DoktorPusula platformu aracılığıyla hizmet veren sağlık kuruluşu ve/veya hekim.
+Sağlık kuruluşu ve/veya hekim.
 
 2. İŞLENECEK VERİLER
 • Kimlik bilgileri (Ad, soyad, T.C. Kimlik No, doğum tarihi)
@@ -1021,10 +1021,10 @@ export default function FormIcerik({ form }) {
     window.print();
   }
 
-  async function indir() {
-    // Basit HTML → blob yaklaşımı (react-pdf olmadan)
+  function indir() {
     const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
-    const html = `<!DOCTYPE html>
+    const pencere = window.open("", "_blank");
+    pencere.document.write(`<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8"/>
@@ -1041,16 +1041,10 @@ export default function FormIcerik({ form }) {
   <h1>${form.baslik}</h1>
   <pre>${icerik}</pre>
   <div class="footer">DoktorPusula — doktorpusula.com | Bu form bilgilendirme amaçlıdır.</div>
+  <script>window.onload = function(){ window.print(); }<\/script>
 </body>
-</html>`;
-
-    const blob = new Blob([html], { type: "text/html;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url;
-    a.download = `${form.id}-onam-formu.html`;
-    a.click();
-    URL.revokeObjectURL(url);
+</html>`);
+    pencere.document.close();
   }
 
   const sablonIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
@@ -1119,8 +1113,9 @@ export default function FormIcerik({ form }) {
       <style>{`
         @media print {
           .print\\:hidden { display: none !important; }
-          body > * { display: none; }
-          #yazdirilacak-form { display: block !important; }
+          body * { visibility: hidden; }
+          #yazdirilacak-form, #yazdirilacak-form * { visibility: visible; }
+          #yazdirilacak-form { position: fixed; top: 0; left: 0; width: 100%; }
         }
       `}</style>
     </div>
