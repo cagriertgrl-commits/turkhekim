@@ -57,14 +57,27 @@ export default async function Home() {
       SELECT y.hasta_adi, y.puan, y.metin, y.tarih, d.ad as doktor_ad, d.uzmanlik, d.slug
       FROM yorumlar y
       JOIN doktorlar d ON d.id = y.doktor_id
-      WHERE d.onaylandi = true
+      WHERE d.onaylandi = true AND y.yayinlandi = true
       ORDER BY y.tarih DESC
       LIMIT 3
     `;
   } catch {}
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "name": "DoktorPusula",
+    "url": "https://doktorpusula.com",
+    "logo": "https://doktorpusula.com/logo.png",
+    "description": "Türkiye'nin bağımsız, şeffaf sağlık platformu. Doğrulanmış yorumlar ve kolay randevu.",
+    "address": { "@type": "PostalAddress", "addressCountry": "TR" },
+    "availableLanguage": ["Turkish", "English", "Arabic"],
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": istatistikler.doktor_sayisi },
+  };
+
   return (
     <div className="min-h-screen bg-white">
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <Navbar />
 
       {/* HERO */}

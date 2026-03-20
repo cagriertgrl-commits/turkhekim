@@ -3,6 +3,8 @@
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
 
+
+
 const uzmanliklar = [
   "KBB Uzmanı", "Plastik Cerrah", "Göz Hastalıkları", "Ortopedi",
   "Kardiyoloji", "Nöroloji", "Dermatoloji", "Diş Hekimi",
@@ -29,6 +31,7 @@ export default function DoktorOl() {
 
   const [form, setForm] = useState({
     ad: "",
+    unvan: "",
     uzmanlik: baslangicUzmanlik,
     sehir: "",
     ilce: "",
@@ -36,6 +39,7 @@ export default function DoktorOl() {
     email: "",
     sifre: "",
     deneyim: "",
+    diploma_no: "",
     hakkinda: "",
   });
 
@@ -153,15 +157,25 @@ export default function DoktorOl() {
             <div className="space-y-5">
               <h2 style={{ color: "#0D2137" }} className="text-xl font-bold mb-6">Klinik Bilgileriniz</h2>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad <span className="text-red-500">*</span></label>
-                <input
-                  name="ad"
-                  value={form.ad}
-                  onChange={guncelle}
-                  placeholder="Dr. Adınız Soyadınız"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
-                />
+              <div className="grid grid-cols-3 gap-3">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Unvan</label>
+                  <select name="unvan" value={form.unvan} onChange={guncelle}
+                    className="w-full border border-gray-200 rounded-xl px-3 py-3 text-sm focus:outline-none focus:border-teal-500 bg-white">
+                    <option value="">Seçiniz</option>
+                    <option value="Pratisyen Dr.">Pratisyen Dr.</option>
+                    <option value="Uzm. Dr.">Uzm. Dr.</option>
+                    <option value="Asst. Dr.">Asst. Dr.</option>
+                    <option value="Doç. Dr.">Doç. Dr.</option>
+                    <option value="Prof. Dr.">Prof. Dr.</option>
+                    <option value="Op. Dr.">Op. Dr.</option>
+                  </select>
+                </div>
+                <div className="col-span-2">
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad <span className="text-red-500">*</span></label>
+                  <input name="ad" value={form.ad} onChange={guncelle} placeholder="Adınız Soyadınız"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
+                </div>
               </div>
 
               <div>
@@ -206,15 +220,18 @@ export default function DoktorOl() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Deneyim Yılı</label>
-                <input
-                  name="deneyim"
-                  value={form.deneyim}
-                  onChange={guncelle}
-                  placeholder="10 yıl"
-                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
-                />
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Deneyim Yılı</label>
+                  <input name="deneyim" value={form.deneyim} onChange={guncelle} placeholder="10 yıl"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Diploma No</label>
+                  <input name="diploma_no" value={form.diploma_no} onChange={guncelle} placeholder="123456"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
+                  <p className="text-xs text-gray-400 mt-1">Doğrulama sürecini hızlandırır</p>
+                </div>
               </div>
             </div>
           )}
@@ -291,7 +308,7 @@ export default function DoktorOl() {
               <div style={{ backgroundColor: "#F5F7FA" }} className="rounded-xl p-5">
                 <h3 className="font-bold text-sm text-gray-700 mb-3">Profil Özeti</h3>
                 <div className="space-y-1 text-sm text-gray-600">
-                  <p>👤 {form.ad}</p>
+                  <p>👤 {form.unvan ? `${form.unvan} ${form.ad}` : form.ad}</p>
                   <p>🏥 {form.uzmanlik}</p>
                   <p>📍 {form.sehir}{form.ilce ? ` · ${form.ilce}` : ""}</p>
                   <p>📞 {form.telefon}</p>
