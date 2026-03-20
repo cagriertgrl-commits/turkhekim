@@ -23,9 +23,13 @@ export default function DoktorOl() {
   const [profilSlug, setProfilSlug] = useState("");
   const [hata, setHata] = useState("");
 
+  const baslangicUzmanlik = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("uzmanlik") || ""
+    : "";
+
   const [form, setForm] = useState({
     ad: "",
-    uzmanlik: "",
+    uzmanlik: baslangicUzmanlik,
     sehir: "",
     ilce: "",
     telefon: "",

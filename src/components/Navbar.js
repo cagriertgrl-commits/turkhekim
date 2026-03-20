@@ -51,8 +51,8 @@ export default function Navbar({ aktifSayfa }) {
           <a href="/fa" className="text-gray-400 hover:text-white text-xs transition-colors">🇮🇷 فارسی</a>
           <a href="/ar" className="text-gray-400 hover:text-white text-xs transition-colors">🌍 العربية</a>
           <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">Giriş Yap</a>
-          <a href="/doktor-ol" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
-            Doktor Ol
+          <a href="/kayit-ol" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
+            Kayıt Ol
           </a>
         </div>
 
@@ -93,11 +93,11 @@ export default function Navbar({ aktifSayfa }) {
               Giriş Yap
             </a>
             <a
-              href="/doktor-ol"
+              href="/kayit-ol"
               style={{ backgroundColor: "#0E7C7B" }}
               className="block text-white text-center py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
             >
-              Doktor Ol
+              Kayıt Ol
             </a>
             <div className="flex gap-4 pt-2">
               <a href="/fa" className="text-gray-400 hover:text-white text-xs transition-colors">🇮🇷 فارسی</a>
