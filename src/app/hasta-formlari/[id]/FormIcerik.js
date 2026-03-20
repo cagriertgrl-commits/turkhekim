@@ -1051,19 +1051,56 @@ export default function FormIcerik({ form }) {
   async function indir() {
     setIndiriliyor(true);
     try {
-      const html2pdf = (await import("html2pdf.js")).default;
-      html2pdf()
-        .set({
-          margin: 10,
-          filename: `${form.id}-onam-formu.pdf`,
-          image: { type: "jpeg", quality: 0.98 },
-          html2canvas: { scale: 2 },
-          jsPDF: { unit: "mm", format: "a4", orientation: "portrait" },
-        })
-        .from(yazdirilacakRef.current)
-        .save()
-        .finally(() => setIndiriliyor(false));
-    } catch {
+      const { jsPDF } = await import("jspdf");
+      const doc = new jsPDF({ unit: "mm", format: "a4", orientation: "portrait" });
+
+      const sayfa_genislik = 210;
+      const kenar = 15;
+      const icerik_genislik = sayfa_genislik - kenar * 2;
+      let y = 20;
+
+      // Başlık
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.setTextColor(13, 33, 55);
+      const baslikSatirlar = doc.splitTextToSize(form.baslik.toUpperCase(), icerik_genislik);
+      doc.text(baslikSatirlar, sayfa_genislik / 2, y, { align: "center" });
+      y += baslikSatirlar.length * 7 + 3;
+
+      doc.setDrawColor(14, 124, 123);
+      doc.setLineWidth(0.5);
+      doc.line(kenar, y, sayfa_genislik - kenar, y);
+      y += 6;
+
+      // DoktorPusula alt bilgisi
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(8);
+      doc.setTextColor(100, 100, 100);
+      doc.text(`DoktorPusula — doktorpusula.com | ${new Date().toLocaleDateString("tr-TR")}`, sayfa_genislik / 2, y, { align: "center" });
+      y += 8;
+
+      // Form içeriği
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(10);
+      doc.setTextColor(55, 65, 81);
+
+      const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
+      const satirlar = doc.splitTextToSize(icerik, icerik_genislik);
+
+      for (const satir of satirlar) {
+        if (y > 275) {
+          doc.addPage();
+          y = 15;
+        }
+        doc.text(satir, kenar, y);
+        y += 5.5;
+      }
+
+      doc.save(`${form.id}-onam-formu.pdf`);
+    } catch (err) {
+      console.error("PDF hatası:", err);
+      alert("PDF oluşturulamadı. Yazdır butonunu kullanarak 'PDF olarak kaydet' seçeneğiyle indirebilirsiniz.");
+    } finally {
       setIndiriliyor(false);
     }
   }
