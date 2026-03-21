@@ -1,62 +1,115 @@
 "use client";
+import { useState } from "react";
 
-import { useState, useRef, useEffect } from "react";
-import { usePathname } from "next/navigation";
-
-const DILLER = [
-  { kod: "tr", ad: "Türkçe", bayrak: "🇹🇷", href: "/" },
-  { kod: "en", ad: "English", bayrak: "🇬🇧", href: "/en" },
-  { kod: "ar", ad: "العربية", bayrak: "🇸🇦", href: "/ar" },
-  { kod: "fa", ad: "فارسی", bayrak: "🇮🇷", href: "/fa" },
+const HAZIR_DILLER = [
+  "Türkçe", "İngilizce", "Arapça", "Farsça", "Almanca", "Fransızca", "Rusça",
+  "İspanyolca", "İtalyanca", "Çince", "Japonca", "Korece", "Portekizce",
+  "Hollandaca", "Lehçe", "Romence", "Bulgarca", "Yunanca", "Ukraynaca",
+  "Azerbaycanca", "Özbekçe", "Kazakça", "Kürtçe", "Süryanice", "Ermenice",
 ];
 
-export default function DilSecici() {
-  const pathname = usePathname();
+export default function DilSecici({ mevcutDiller = "" }) {
+  const baslangic = mevcutDiller
+    ? mevcutDiller.split(",").map((d) => d.trim()).filter(Boolean)
+    : [];
+  const [secili, setSecili] = useState(baslangic);
+  const [arama, setArama] = useState("");
   const [acik, setAcik] = useState(false);
-  const ref = useRef(null);
 
-  const aktifDil = DILLER.find((d) =>
-    d.kod === "tr" ? !pathname.startsWith("/ar") && !pathname.startsWith("/fa") && !pathname.startsWith("/en")
-    : pathname.startsWith("/" + d.kod)
-  ) || DILLER[0];
+  function toggle(dil) {
+    setSecili((prev) =>
+      prev.includes(dil) ? prev.filter((d) => d !== dil) : [...prev, dil]
+    );
+  }
 
-  useEffect(() => {
-    function kapat(e) {
-      if (ref.current && !ref.current.contains(e.target)) setAcik(false);
+  function ozelEkle() {
+    const temiz = arama.trim();
+    if (temiz && !secili.includes(temiz)) {
+      setSecili((prev) => [...prev, temiz]);
     }
-    document.addEventListener("mousedown", kapat);
-    return () => document.removeEventListener("mousedown", kapat);
-  }, []);
+    setArama("");
+    setAcik(false);
+  }
+
+  const filtrelenmis = HAZIR_DILLER.filter(
+    (d) => !secili.includes(d) && d.toLowerCase().includes(arama.toLowerCase())
+  );
 
   return (
-    <div className="relative" ref={ref}>
-      <button
-        onClick={() => setAcik(!acik)}
-        className="flex items-center gap-1.5 text-gray-300 hover:text-white text-sm transition-colors px-2 py-1 rounded-lg hover:bg-white hover:bg-opacity-10"
-      >
-        <span className="text-base">{aktifDil.bayrak}</span>
-        <span className="hidden md:inline text-xs">{aktifDil.ad}</span>
-        <svg className={`w-3 h-3 transition-transform ${acik ? "rotate-180" : ""}`} fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-        </svg>
-      </button>
+    <div>
+      <label className="text-xs text-gray-500 block mb-1">Hizmet Verilen Diller</label>
 
+      {/* Seçili diller — tag'ler */}
+      <div
+        className="min-h-[42px] flex flex-wrap gap-1.5 p-2 border border-gray-200 rounded-lg cursor-text"
+        onClick={() => setAcik(true)}
+      >
+        {secili.map((dil) => (
+          <span
+            key={dil}
+            style={{ backgroundColor: "#0E7C7B", color: "white" }}
+            className="text-xs px-2.5 py-1 rounded-full flex items-center gap-1"
+          >
+            {dil}
+            <button
+              type="button"
+              onClick={(e) => { e.stopPropagation(); toggle(dil); }}
+              className="ml-1 hover:opacity-70"
+            >×</button>
+          </span>
+        ))}
+        <input
+          type="text"
+          value={arama}
+          onChange={(e) => { setArama(e.target.value); setAcik(true); }}
+          onFocus={() => setAcik(true)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (filtrelenmis.length === 1) { toggle(filtrelenmis[0]); setArama(""); }
+              else if (filtrelenmis.length === 0 && arama.trim()) ozelEkle();
+            }
+            if (e.key === "Escape") setAcik(false);
+          }}
+          placeholder={secili.length === 0 ? "Dil ekle... (ör: İngilizce)" : ""}
+          className="flex-1 min-w-[120px] text-xs outline-none bg-transparent"
+        />
+      </div>
+
+      {/* Dropdown */}
       {acik && (
-        <div className="absolute right-0 top-full mt-2 bg-white rounded-xl shadow-xl border border-gray-100 overflow-hidden z-50 min-w-[140px]">
-          {DILLER.map((dil) => (
-            <a
-              key={dil.kod}
-              href={dil.href}
-              onClick={() => setAcik(false)}
-              className="flex items-center gap-2.5 px-4 py-2.5 text-sm hover:bg-gray-50 transition-colors"
-              style={dil.kod === aktifDil.kod ? { backgroundColor: "#F0FDFA", color: "#0E7C7B", fontWeight: 600 } : { color: "#374151" }}
-            >
-              <span className="text-base">{dil.bayrak}</span>
-              <span>{dil.ad}</span>
-              {dil.kod === aktifDil.kod && <span className="ml-auto text-xs">✓</span>}
-            </a>
-          ))}
+        <div className="relative">
+          <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-48 overflow-y-auto">
+            {filtrelenmis.length > 0 ? (
+              filtrelenmis.map((dil) => (
+                <button
+                  key={dil}
+                  type="button"
+                  onClick={() => { toggle(dil); setArama(""); setAcik(false); }}
+                  className="w-full text-left text-xs px-3 py-2 hover:bg-teal-50 hover:text-teal-700 transition-colors"
+                >
+                  + {dil}
+                </button>
+              ))
+            ) : arama.trim() ? (
+              <button
+                type="button"
+                onClick={ozelEkle}
+                className="w-full text-left text-xs px-3 py-2 hover:bg-teal-50 text-teal-700 font-medium"
+              >
+                + &quot;{arama.trim()}&quot; ekle
+              </button>
+            ) : (
+              <p className="text-xs text-gray-400 px-3 py-2">Tüm diller eklendi</p>
+            )}
+          </div>
+          <div className="fixed inset-0 z-0" onClick={() => setAcik(false)} />
         </div>
+      )}
+
+      <input type="hidden" name="diller" value={secili.join(", ")} />
+      {secili.length > 0 && (
+        <p className="text-xs text-teal-600 mt-1">{secili.length} dil seçildi</p>
       )}
     </div>
   );

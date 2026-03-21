@@ -34,7 +34,7 @@ export default function HizmetSecici({ mevcutHizmetler = "" }) {
     ? mevcutHizmetler.split("\n").map((s) => s.trim()).filter(Boolean)
     : [];
   const [secili, setSecili] = useState(baslangic);
-  const [ozelGiris, setOzelGiris] = useState("");
+  const [arama, setArama] = useState("");
 
   function toggle(hizmet) {
     setSecili((prev) =>
@@ -43,12 +43,16 @@ export default function HizmetSecici({ mevcutHizmetler = "" }) {
   }
 
   function ozelEkle() {
-    const temiz = ozelGiris.trim();
+    const temiz = arama.trim();
     if (temiz && !secili.includes(temiz)) {
       setSecili((prev) => [...prev, temiz]);
     }
-    setOzelGiris("");
+    setArama("");
   }
+
+  const filtrelenmis = HAZIR_HIZMETLER.filter((h) =>
+    !secili.includes(h) && h.toLowerCase().includes(arama.toLowerCase())
+  );
 
   return (
     <div>
@@ -70,29 +74,37 @@ export default function HizmetSecici({ mevcutHizmetler = "" }) {
         </div>
       )}
 
-      {/* Özel ekleme */}
+      {/* Arama + özel ekleme */}
       <div className="flex gap-2 mb-3">
         <input
           type="text"
-          value={ozelGiris}
-          onChange={(e) => setOzelGiris(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), ozelEkle())}
-          placeholder="Özel hizmet ekle..."
+          value={arama}
+          onChange={(e) => setArama(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (filtrelenmis.length === 1) toggle(filtrelenmis[0]);
+              else if (filtrelenmis.length === 0) ozelEkle();
+            }
+          }}
+          placeholder="Hizmet ara veya ekle... (ör: botoks)"
           className="flex-1 border border-gray-200 rounded-lg px-3 py-1.5 text-xs focus:outline-none focus:border-teal-400"
         />
-        <button
-          type="button"
-          onClick={ozelEkle}
-          style={{ backgroundColor: "#0D2137" }}
-          className="text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90"
-        >
-          + Ekle
-        </button>
+        {arama && filtrelenmis.length === 0 && (
+          <button
+            type="button"
+            onClick={ozelEkle}
+            style={{ backgroundColor: "#0D2137" }}
+            className="text-white px-3 py-1.5 rounded-lg text-xs font-semibold hover:opacity-90 whitespace-nowrap"
+          >
+            + Ekle
+          </button>
+        )}
       </div>
 
-      {/* Hazır listeden seç */}
+      {/* Filtrelenmiş liste */}
       <div className="flex flex-wrap gap-1.5 p-3 border border-gray-200 rounded-lg max-h-40 overflow-y-auto">
-        {HAZIR_HIZMETLER.filter((h) => !secili.includes(h)).map((hizmet) => (
+        {filtrelenmis.length > 0 ? filtrelenmis.map((hizmet) => (
           <button
             key={hizmet}
             type="button"
@@ -101,7 +113,11 @@ export default function HizmetSecici({ mevcutHizmetler = "" }) {
           >
             + {hizmet}
           </button>
-        ))}
+        )) : (
+          <p className="text-xs text-gray-400 w-full text-center py-2">
+            {arama ? `"${arama}" listede yok — + Ekle butonuyla özel ekleyebilirsiniz` : "Tüm hizmetler seçildi"}
+          </p>
+        )}
       </div>
 
       <input type="hidden" name="hizmetler" value={secili.join("\n")} />

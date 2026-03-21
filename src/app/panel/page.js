@@ -14,6 +14,7 @@ import KlinikFotoYukle from "@/components/KlinikFotoYukle";
 import SigortaSecici from "@/components/SigortaSecici";
 import HizmetSecici from "@/components/HizmetSecici";
 import HastalarPanel from "@/components/HastalarPanel";
+import DilSecici from "@/components/DilSecici";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -22,7 +23,6 @@ const ADRES_TIPLERI = [
   { deger: "tip_merkezi", etiket: "🏢 Tıp Merkezi" },
 ];
 
-const DILLER = ["Türkçe", "İngilizce", "Arapça", "Farsça", "Almanca", "Fransızca", "Rusça"];
 
 export default async function Panel() {
   const session = await getServerSession(authOptions);
@@ -49,7 +49,7 @@ export default async function Panel() {
   ]);
   const analitik = analitkler[0];
 
-  const mevcutDiller = (doktor.diller || "").split(",").map((d) => d.trim()).filter(Boolean);
+
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -243,24 +243,7 @@ export default async function Panel() {
                   <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
                 </div>
 
-                <div>
-                  <label className="text-xs text-gray-500 block mb-1">Hizmet Verilen Diller</label>
-                  <div className="flex flex-wrap gap-2 p-3 border border-gray-200 rounded-lg">
-                    {DILLER.map((dil) => (
-                      <label key={dil} className="flex items-center gap-1.5 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          name="diller_cb"
-                          value={dil}
-                          defaultChecked={mevcutDiller.includes(dil)}
-                          className="w-3 h-3"
-                        />
-                        <span className="text-xs text-gray-700">{dil}</span>
-                      </label>
-                    ))}
-                  </div>
-                  <input type="hidden" name="diller" id="dillerGizli" defaultValue={doktor.diller || ""} />
-                </div>
+                <DilSecici mevcutDiller={doktor.diller || ""} />
 
                 <HizmetSecici mevcutHizmetler={doktor.hizmetler || ""} />
 
