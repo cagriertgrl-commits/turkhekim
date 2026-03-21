@@ -4,9 +4,11 @@ const LINKLER = {
   "Platform": [
     { href: "/istanbul/kbb-uzmani", ad: "Doktor Bul" },
     { href: "/tedaviler", ad: "Tedaviler" },
+    { href: "/hastaliklar", ad: "Hastalıklar" },
     { href: "/hasta-formlari", ad: "Hasta Formları" },
     { href: "/saglik", ad: "Sağlık Rehberi" },
     { href: "/medikal-turizm", ad: "Medikal Turizm" },
+    { href: "/sss", ad: "Sıkça Sorulan Sorular" },
   ],
   "Doktorlar İçin": [
     { href: "/doktor-ol", ad: "Ücretsiz Kayıt Ol" },
