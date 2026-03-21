@@ -92,7 +92,7 @@ export default function AramaKutusu() {
   function ara(e) {
     e.preventDefault();
     const u = slugYap(uzmanlik || "doktor");
-    const s = slugYap(sehir || "istanbul");
+    const s = slugYap(sehir || "turkiye");
     const query = mod === "online" ? "?online=1" : "";
     router.push(`/${s}/${u}${query}`);
   }
