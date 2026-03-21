@@ -95,7 +95,7 @@ export default function HesabimPage() {
   const [hata, setHata] = useState(null);
   const [profilYukleniyor, setProfilYukleniyor] = useState(false);
   const [arkaplanYukleniyor, setArkaplanYukleniyor] = useState(false);
-  const [temaKaydediliyor, setTemaKaydediliyor] = useState(false);
+
 
   useEffect(() => {
     fetch("/api/hesabim")
@@ -113,7 +113,6 @@ export default function HesabimPage() {
 
   async function temaKaydet(yeniTema) {
     setTema(yeniTema);
-    setTemaKaydediliyor(true);
     try {
       const r = await fetch("/api/hesabim", {
         method: "PATCH",
@@ -128,8 +127,6 @@ export default function HesabimPage() {
       }
     } catch (_) {
       setHata("Tema kaydedilemedi — bağlantı hatası.");
-    } finally {
-      setTemaKaydediliyor(false);
     }
   }
 
@@ -190,29 +187,34 @@ export default function HesabimPage() {
   const t = TEMALAR.find((x) => x.id === tema) || TEMALAR[0];
   const initials = veri.ad?.split(" ").slice(1).map((n) => n[0]).join("").slice(0, 2) || veri.ad?.slice(0, 2) || "DR";
 
-  const pageStyle = tema === "desen" && veri.arka_plan_foto_url
-    ? {
-        backgroundImage: `url(${veri.arka_plan_foto_url})`,
-        backgroundRepeat: "repeat",
-        backgroundSize: "140px 140px",
-      }
-    : tema === "desen"
-    ? { backgroundColor: "#F5F7FA" }
-    : t.pageBg;
+  const pageStyle = tema === "desen" ? { backgroundColor: "#F8F9FA" } : t.pageBg;
 
-  const bannerStyle = tema === "desen" && veri.arka_plan_foto_url
-    ? {
-        backgroundImage: `url(${veri.arka_plan_foto_url})`,
-        backgroundRepeat: "repeat",
-        backgroundSize: "120px 120px",
-        backgroundColor: "rgba(255,255,255,0.5)",
-      }
-    : veri.arka_plan_foto_url && tema !== "koyu" && tema !== "teal"
+  const bannerStyle = tema === "desen"
+    ? { background: "linear-gradient(135deg, #e8eef2 0%, #dde5ec 100%)" }
+    : veri.arka_plan_foto_url && tema === "varsayilan"
     ? { backgroundImage: `url(${veri.arka_plan_foto_url})`, backgroundSize: "cover", backgroundPosition: "center" }
     : t.bannerBg;
 
   return (
-    <div className="min-h-screen" style={pageStyle}>
+    <div className="min-h-screen relative" style={pageStyle}>
+
+      {/* DESEN WATERMARK — arka planı siyah bile olsa filigran gibi hafif görünür */}
+      {tema === "desen" && veri.arka_plan_foto_url && (
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            backgroundImage: `url(${veri.arka_plan_foto_url})`,
+            backgroundRepeat: "repeat",
+            backgroundSize: "220px 220px",
+            opacity: 0.06,
+            pointerEvents: "none",
+            zIndex: 0,
+            mixBlendMode: "multiply",
+          }}
+        />
+      )}
+
       {/* NAVBAR */}
       <nav style={{ backgroundColor: "rgba(13,33,55,0.97)", backdropFilter: "blur(8px)" }} className="px-6 py-4 sticky top-0 z-40">
         <div className="max-w-4xl mx-auto flex items-center justify-between">
@@ -242,7 +244,7 @@ export default function HesabimPage() {
         <div className="absolute inset-0 bg-black/20" />
       </div>
 
-      <div className="max-w-4xl mx-auto px-6">
+      <div className="max-w-4xl mx-auto px-6 relative" style={{ zIndex: 1 }}>
         {/* Avatar — banner'a taşıyor */}
         <div className="flex items-end gap-5 -mt-14 mb-6 relative z-10">
           <div className="relative flex-shrink-0">
@@ -290,15 +292,10 @@ export default function HesabimPage() {
             <h2 className={`font-bold text-base mb-4 ${t.text}`}>🎨 Sayfa Teması</h2>
             <div className="grid grid-cols-2 gap-3">
               {TEMALAR.map((temaSec) => {
+                // Desen teması önizlemesi: açık gri üzerine hafif logo watermark
                 const onizlemeBg =
                   temaSec.id === "desen"
-                    ? veri.arka_plan_foto_url
-                      ? {
-                          backgroundImage: `url(${veri.arka_plan_foto_url})`,
-                          backgroundRepeat: "repeat",
-                          backgroundSize: "30px 30px",
-                        }
-                      : { background: "repeating-linear-gradient(45deg, #e5e7eb 0px, #e5e7eb 4px, #f3f4f6 4px, #f3f4f6 12px)" }
+                    ? { backgroundColor: "#F8F9FA" }
                     : temaSec.pageBg;
                 return (
                   <button
