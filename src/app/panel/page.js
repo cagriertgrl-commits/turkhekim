@@ -14,7 +14,7 @@ import KlinikFotoYukle from "@/components/KlinikFotoYukle";
 import SigortaSecici from "@/components/SigortaSecici";
 import HizmetSecici from "@/components/HizmetSecici";
 import HastalarPanel from "@/components/HastalarPanel";
-import DilSecici from "@/components/DilSecici";
+import PanelDilSecici from "@/components/PanelDilSecici";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -243,7 +243,7 @@ export default async function Panel() {
                   <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
                 </div>
 
-                <DilSecici mevcutDiller={doktor.diller || ""} />
+                <PanelDilSecici mevcutDiller={doktor.diller || ""} />
 
                 <HizmetSecici mevcutHizmetler={doktor.hizmetler || ""} />
 
