@@ -1,10 +1,24 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DilSecici from "./DilSecici";
 
 export default function Navbar({ aktifSayfa }) {
   const [menuAcik, setMenuAcik] = useState(false);
+  const [kullanici, setKullanici] = useState(undefined); // undefined = yükleniyor, null = giriş yok
+
+  useEffect(() => {
+    fetch("/api/me")
+      .then((r) => r.json())
+      .then((d) => setKullanici(d.kullanici))
+      .catch(() => setKullanici(null));
+  }, []);
+
+  async function cikisYap() {
+    await fetch("/api/auth/logout", { method: "POST" });
+    setKullanici(null);
+    window.location.href = "/";
+  }
 
   const linkler = [
     { href: "/istanbul/kbb-uzmani", etiket: "Doktor Bul" },
@@ -23,11 +37,8 @@ export default function Navbar({ aktifSayfa }) {
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
             <circle cx="16" cy="16" r="1.8" fill="white"/>
-            {/* Kuzey iğnesi — altın */}
             <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
-            {/* Güney iğnesi — beyaz */}
             <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
-            {/* Kuzey D harfi */}
             <text x="14.5" y="11" fontSize="5" fill="white" fontWeight="bold" fontFamily="sans-serif">N</text>
           </svg>
           <span className="text-white font-bold text-xl tracking-tight">
@@ -52,10 +63,49 @@ export default function Navbar({ aktifSayfa }) {
         {/* MASAÜSTÜ SAĞ */}
         <div className="hidden md:flex items-center gap-3">
           <DilSecici />
-          <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">Giriş Yap</a>
-          <a href="/kayit-ol" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity">
-            Kayıt Ol
-          </a>
+
+          {kullanici === undefined ? (
+            // Yükleniyor — boş yer tut
+            <div className="w-24 h-8 rounded-lg bg-white/10 animate-pulse" />
+          ) : kullanici ? (
+            // Giriş yapılmış
+            <>
+              <a
+                href="/panel"
+                style={{ color: "#4DD9D8" }}
+                className="text-sm font-medium hover:text-white transition-colors"
+              >
+                {kullanici.ad?.split(" ")[0]}
+              </a>
+              <a
+                href="/panel"
+                style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }}
+                className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80"
+              >
+                Panelim
+              </a>
+              <button
+                onClick={cikisYap}
+                className="text-gray-400 hover:text-white text-sm bg-transparent border-0 cursor-pointer"
+              >
+                Çıkış
+              </button>
+            </>
+          ) : (
+            // Giriş yapılmamış
+            <>
+              <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">
+                Giriş Yap
+              </a>
+              <a
+                href="/doktor-ol"
+                style={{ backgroundColor: "#0E7C7B" }}
+                className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+              >
+                Kayıt Ol
+              </a>
+            </>
+          )}
         </div>
 
         {/* MOBİL HAMBURGER */}
@@ -91,16 +141,32 @@ export default function Navbar({ aktifSayfa }) {
             </a>
           ))}
           <div className="pt-3 space-y-2">
-            <a href="/giris" className="block text-gray-300 hover:text-white py-2 text-sm transition-colors">
-              Giriş Yap
-            </a>
-            <a
-              href="/kayit-ol"
-              style={{ backgroundColor: "#0E7C7B" }}
-              className="block text-white text-center py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
-            >
-              Kayıt Ol
-            </a>
+            {kullanici ? (
+              <>
+                <a href="/panel" className="block text-teal-400 hover:text-white py-2 text-sm font-medium transition-colors">
+                  {kullanici.ad?.split(" ")[0]} — Panelim
+                </a>
+                <button
+                  onClick={cikisYap}
+                  className="block w-full text-left text-gray-400 hover:text-white py-2 text-sm transition-colors bg-transparent border-0 cursor-pointer"
+                >
+                  Çıkış Yap
+                </button>
+              </>
+            ) : (
+              <>
+                <a href="/giris" className="block text-gray-300 hover:text-white py-2 text-sm transition-colors">
+                  Giriş Yap
+                </a>
+                <a
+                  href="/doktor-ol"
+                  style={{ backgroundColor: "#0E7C7B" }}
+                  className="block text-white text-center py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
+                >
+                  Kayıt Ol
+                </a>
+              </>
+            )}
             <div className="pt-2">
               <DilSecici />
             </div>
