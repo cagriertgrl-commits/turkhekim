@@ -5,7 +5,8 @@ import { useState, useRef, useEffect } from "react";
 // adim: bekliyor | kayit | bitti | transkript | ozetleniyor | ozet
 export default function GorusmeOzetSayfasi() {
   const [tarayiciDestekli, setTarayiciDestekli] = useState(null);
-  const [adim, setAdim] = useState("bekliyor");
+  const [adim, setAdim] = useState("bekliyor"); // bekliyor | kayit | bitti | isleniyor | transkript | ozetleniyor | ozet
+  const [yuklemePct, setYuklemePct] = useState(0);
   const [transkript, setTranskript] = useState("");
   const [geciciMetin, setGeciciMetin] = useState("");
   const [ozet, setOzet] = useState("");
@@ -129,8 +130,18 @@ export default function GorusmeOzetSayfasi() {
   }
 
   function yukle() {
-    setTranskript(transkriptRef.current);
-    setAdim("transkript");
+    setAdim("isleniyor");
+    setYuklemePct(0);
+    let pct = 0;
+    const iv = setInterval(() => {
+      pct += 2;
+      setYuklemePct(pct);
+      if (pct >= 100) {
+        clearInterval(iv);
+        setTranskript(transkriptRef.current);
+        setAdim("transkript");
+      }
+    }, 40); // 40ms * 50 adım = 2 saniye
   }
 
   async function ozetle() {
@@ -354,7 +365,7 @@ export default function GorusmeOzetSayfasi() {
               )}
 
               {/* Kompakt başlık — transkript/özet adımları */}
-              {["transkript", "ozetleniyor", "ozet"].includes(adim) && (
+              {["isleniyor", "transkript", "ozetleniyor", "ozet"].includes(adim) && (
                 <div className="px-6 py-3 border-b border-gray-100 flex items-center justify-between">
                   <div className="flex items-center gap-2 text-sm text-gray-500">
                     <span className="text-green-500">✓</span>
@@ -366,6 +377,29 @@ export default function GorusmeOzetSayfasi() {
                 </div>
               )}
             </div>
+
+            {/* ── İŞLENİYOR ── */}
+            {adim === "isleniyor" && (
+              <div className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
+                <div className="flex items-center gap-3 mb-5">
+                  <svg className="animate-spin w-5 h-5 text-purple-600 flex-shrink-0" fill="none" viewBox="0 0 24 24">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"/>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"/>
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-gray-800 text-sm">Transkript oluşturuluyor...</p>
+                    <p className="text-gray-400 text-xs mt-0.5">Ses işleniyor, lütfen bekleyin</p>
+                  </div>
+                  <span className="ml-auto font-bold text-purple-600 text-sm">{yuklemePct}%</span>
+                </div>
+                <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
+                  <div
+                    className="h-full rounded-full transition-all duration-75"
+                    style={{ width: `${yuklemePct}%`, backgroundColor: "#7C3AED" }}
+                  />
+                </div>
+              </div>
+            )}
 
             {/* ── TRANSKRİPT ── */}
             {adim === "transkript" && (
@@ -383,6 +417,11 @@ export default function GorusmeOzetSayfasi() {
                   placeholder="Otomatik transkripsiyon burada görünür. Eksik veya hatalı yerleri düzeltebilirsiniz..."
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 leading-relaxed focus:outline-none focus:border-purple-400 resize-none"
                 />
+                {!transkript.trim() && (
+                  <div className="mt-2 bg-amber-50 border border-amber-200 rounded-xl p-3 text-xs text-amber-700">
+                    ⚠️ Konuşma algılanamadı. Chrome kullandığınızdan emin olun veya transkripti buraya manuel olarak yazabilirsiniz.
+                  </div>
+                )}
                 <p className="text-xs text-gray-400 mt-2">💡 Hatalı kelimeleri düzeltip özetleyin.</p>
                 <button
                   onClick={ozetle}
