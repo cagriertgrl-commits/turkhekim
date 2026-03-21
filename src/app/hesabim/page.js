@@ -94,6 +94,7 @@ export default function HesabimPage() {
   const [hata, setHata] = useState(null);
   const [profilYukleniyor, setProfilYukleniyor] = useState(false);
   const [arkaplanYukleniyor, setArkaplanYukleniyor] = useState(false);
+  const [temaKaydediliyor, setTemaKaydediliyor] = useState(false);
 
   useEffect(() => {
     fetch("/api/hesabim")
@@ -111,28 +112,42 @@ export default function HesabimPage() {
 
   async function temaKaydet(yeniTema) {
     setTema(yeniTema);
-    const r = await fetch("/api/hesabim", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tema: yeniTema }),
-    });
-    if (r.ok) {
-      gosterMesaj("Tema güncellendi!");
+    setTemaKaydediliyor(true);
+    try {
+      const r = await fetch("/api/hesabim", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ tema: yeniTema }),
+      });
+      if (r.ok) {
+        gosterMesaj("Tema güncellendi!");
+      } else {
+        const d = await r.json().catch(() => ({}));
+        setHata(d.hata || "Tema kaydedilemedi.");
+      }
+    } catch (_) {
+      setHata("Tema kaydedilemedi — bağlantı hatası.");
+    } finally {
+      setTemaKaydediliyor(false);
     }
   }
 
   async function fotoYukle(dosya, tip) {
     const yukleniyorSetter = tip === "profil" ? setProfilYukleniyor : setArkaplanYukleniyor;
     yukleniyorSetter(true);
+    setHata(null);
     try {
       const form = new FormData();
       form.append("foto", dosya);
       const url = tip === "profil" ? "/api/hesabim/profil-foto" : "/api/hesabim/arka-plan";
       const r = await fetch(url, { method: "POST", body: form });
-      const data = await r.json();
+      const data = await r.json().catch(() => ({}));
       if (!r.ok) {
-        setHata(data.hata || "Yükleme başarısız.");
-        setTimeout(() => setHata(null), 3000);
+        setHata(data.hata || `Yükleme başarısız (HTTP ${r.status}).`);
+        return;
+      }
+      if (!data.url) {
+        setHata("Sunucu URL döndürmedi — tekrar deneyin.");
         return;
       }
       setVeri((prev) => ({
@@ -140,14 +155,17 @@ export default function HesabimPage() {
         [tip === "profil" ? "foto_url" : "arka_plan_foto_url"]: data.url,
       }));
       gosterMesaj(tip === "profil" ? "Profil fotoğrafı güncellendi!" : "Arka plan güncellendi!");
+    } catch (_) {
+      setHata("Yükleme başarısız — bağlantı hatası.");
     } finally {
       yukleniyorSetter(false);
     }
   }
 
   function gosterMesaj(m) {
+    setHata(null);
     setMesaj(m);
-    setTimeout(() => setMesaj(null), 2500);
+    setTimeout(() => setMesaj(null), 3000);
   }
 
   async function cikisYap() {
@@ -248,13 +266,15 @@ export default function HesabimPage() {
         </div>
 
         {/* MESAJ / HATA */}
-        {(mesaj || hata) && (
-          <div
-            className={`mb-4 px-4 py-3 rounded-xl text-sm font-medium ${
-              hata ? "bg-red-50 text-red-700 border border-red-200" : "bg-green-50 text-green-700 border border-green-200"
-            }`}
-          >
-            {hata ? `✗ ${hata}` : `✓ ${mesaj}`}
+        {hata && (
+          <div className="mb-4 px-4 py-3 rounded-xl text-sm font-medium bg-red-50 text-red-700 border border-red-200 flex items-start justify-between gap-3">
+            <span>✗ {hata}</span>
+            <button onClick={() => setHata(null)} className="text-red-400 hover:text-red-700 text-lg leading-none flex-shrink-0 bg-transparent border-0 cursor-pointer">×</button>
+          </div>
+        )}
+        {mesaj && (
+          <div className="mb-4 px-4 py-3 rounded-xl text-sm font-medium bg-green-50 text-green-700 border border-green-200">
+            ✓ {mesaj}
           </div>
         )}
 
