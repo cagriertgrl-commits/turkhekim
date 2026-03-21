@@ -23,9 +23,18 @@ export async function POST(request) {
   }
 
   const dosyaAdi = `doktor-arkaplan-${session.id}-${Date.now()}.${uzanti}`;
-  const blob = await put(dosyaAdi, dosya, { access: "public", addRandomSuffix: false });
 
-  // Ensure column exists before update
+  let blob;
+  try {
+    blob = await put(dosyaAdi, dosya, { access: "public", addRandomSuffix: false });
+  } catch (err) {
+    console.error("Vercel Blob hatası:", err);
+    return NextResponse.json(
+      { hata: `Blob yükleme hatası: ${err?.message || String(err)}` },
+      { status: 500 }
+    );
+  }
+
   try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS arka_plan_foto_url TEXT`; } catch (_) {}
   await sql`UPDATE doktorlar SET arka_plan_foto_url = ${blob.url} WHERE id = ${session.id}`;
 

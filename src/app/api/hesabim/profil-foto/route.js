@@ -23,7 +23,17 @@ export async function POST(request) {
   }
 
   const dosyaAdi = `doktor-profil-${session.id}-${Date.now()}.${uzanti}`;
-  const blob = await put(dosyaAdi, dosya, { access: "public", addRandomSuffix: false });
+
+  let blob;
+  try {
+    blob = await put(dosyaAdi, dosya, { access: "public", addRandomSuffix: false });
+  } catch (err) {
+    console.error("Vercel Blob hatası:", err);
+    return NextResponse.json(
+      { hata: `Blob yükleme hatası: ${err?.message || String(err)}` },
+      { status: 500 }
+    );
+  }
 
   await sql`UPDATE doktorlar SET foto_url = ${blob.url} WHERE id = ${session.id}`;
 
