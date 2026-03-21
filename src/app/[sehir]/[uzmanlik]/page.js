@@ -32,36 +32,31 @@ export default async function DoktorListesi({ params, searchParams }) {
   const onlineFiltreAktif = sp?.online === "1";
   const sigortaFiltreAktif = sp?.sigorta === "1";
 
+  // Türkçe karakterleri slug formatına çevirerek karşılaştır:
+  // "Eskişehir" → translate → "eskisehir", "KBB Uzmanı" → "kbb-uzmani"
+  const TR = "ğüşıöçâîûê ";
+  const EN = "gusiocaiue-";
+  const sehirLike = "%" + sehirParam.toLowerCase() + "%";
+  const uzmanlikLike = "%" + uzmanlikParam.toLowerCase() + "%";
+  const tumDoktor = uzmanlikParam === "doktor"; // uzmanlık filtresi yok
+
   let doktorlar;
   if (onlineFiltreAktif && sigortaFiltreAktif) {
-    doktorlar = await sql`
-      SELECT * FROM doktorlar
-      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-        AND onaylandi = true AND online_randevu = true
-        AND sigorta IS NOT NULL AND sigorta != ''
-      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
-    `;
+    doktorlar = tumDoktor
+      ? await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`
+      : await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
   } else if (onlineFiltreAktif) {
-    doktorlar = await sql`
-      SELECT * FROM doktorlar
-      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-        AND onaylandi = true AND online_randevu = true
-      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
-    `;
+    doktorlar = tumDoktor
+      ? await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`
+      : await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
   } else if (sigortaFiltreAktif) {
-    doktorlar = await sql`
-      SELECT * FROM doktorlar
-      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-        AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != ''
-      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
-    `;
+    doktorlar = tumDoktor
+      ? await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`
+      : await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
   } else {
-    doktorlar = await sql`
-      SELECT * FROM doktorlar
-      WHERE LOWER(sehir) LIKE ${"%" + sehirParam.toLowerCase() + "%"}
-        AND onaylandi = true
-      ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
-    `;
+    doktorlar = tumDoktor
+      ? await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`
+      : await sql`SELECT * FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
   }
 
   return (
