@@ -84,7 +84,7 @@ export default function GorusmeOzetSayfasi() {
   const hastaAdiTam = [hastaAd, hastaSoyad].filter(Boolean).join(" ");
 
   async function ozetle() {
-    const tamMetin = transkriptRef.current.trim();
+    const tamMetin = transkript.trim();
     if (!tamMetin) return setHata("Özetlenecek bir transkript yok.");
     setOzetYukleniyor(true);
     setHata(null);
@@ -114,7 +114,7 @@ export default function GorusmeOzetSayfasi() {
         body: JSON.stringify({
           hastaAd,
           hastaSoyad,
-          transkript: transkriptRef.current.trim(),
+          transkript: transkript.trim(),
           ozet,
         }),
       });
@@ -129,14 +129,19 @@ export default function GorusmeOzetSayfasi() {
   }
 
   function sifirla() {
-    kaydiBitir();
+    aktifRef.current = false;
+    if (recognitionRef.current) {
+      recognitionRef.current.onend = null;
+      recognitionRef.current.stop();
+    }
+    clearInterval(sureRef.current);
     setTranskript("");
+    transkriptRef.current = "";
     setGeciciMetin("");
     setOzet(null);
     setHata(null);
     setSure(0);
     setKaydedildi(false);
-    transkriptRef.current = "";
     setHastaAd("");
     setHastaSoyad("");
     setKayitDurumu("bekliyor");
@@ -146,6 +151,7 @@ export default function GorusmeOzetSayfasi() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {/* Panel Navbar */}
       <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4 sticky top-0 z-40">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5">
@@ -163,7 +169,8 @@ export default function GorusmeOzetSayfasi() {
         </div>
       </nav>
 
-      <div style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="px-6 py-12">
+      {/* Header */}
+      <div style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="px-6 py-10">
         <div className="max-w-3xl mx-auto text-center">
           <div className="text-4xl mb-3">🎙️</div>
           <h1 className="text-white text-3xl font-bold mb-2">Görüşme Özetle</h1>
@@ -171,7 +178,7 @@ export default function GorusmeOzetSayfasi() {
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-6 py-8 space-y-6">
+      <div className="max-w-3xl mx-auto px-6 py-8 space-y-5">
 
         {/* Tarayıcı uyarısı */}
         {!tarayiciDestekli && (
@@ -186,9 +193,13 @@ export default function GorusmeOzetSayfasi() {
 
         {tarayiciDestekli && (
           <>
-            {/* 1. Hasta Bilgisi */}
+            {/* ADIM 1 — Hasta Bilgisi */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
-              <h2 className="font-semibold text-gray-800 text-sm mb-4">Hasta Bilgisi</h2>
+              <div className="flex items-center gap-2 mb-4">
+                <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center">1</span>
+                <h2 className="font-semibold text-gray-800 text-sm">Hasta Bilgisi</h2>
+                <span className="text-gray-400 text-xs">(isteğe bağlı)</span>
+              </div>
               <div className="grid grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs text-gray-500 mb-1">Ad</label>
@@ -215,66 +226,93 @@ export default function GorusmeOzetSayfasi() {
               </div>
             </div>
 
-            {/* 2. Kayıt Kontrolü */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 text-center">
-              {kayitDurumu === "bekliyor" && (
-                <button
-                  onClick={kaydiBaslat}
-                  className="bg-purple-600 text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-purple-700 transition-colors"
-                >
-                  🎙️ Kaydı Başlat
-                </button>
-              )}
+            {/* ADIM 2 — Kayıt */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <div className="flex items-center gap-2 mb-5">
+                <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center">2</span>
+                <h2 className="font-semibold text-gray-800 text-sm">Görüşmeyi Kaydet</h2>
+              </div>
 
-              {kayitDurumu === "kayit" && (
-                <div className="space-y-4">
-                  <div className="flex items-center justify-center gap-3">
-                    <span className="inline-block w-3 h-3 rounded-full bg-red-500 animate-pulse" />
-                    <span className="text-red-600 font-semibold text-sm">Kayıt yapılıyor</span>
-                    <span className="text-gray-400 text-sm font-mono">{sureFormat(sure)}</span>
-                  </div>
+              <div className="text-center">
+                {kayitDurumu === "bekliyor" && (
                   <button
-                    onClick={kaydiBitir}
-                    className="bg-red-600 text-white px-8 py-3 rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors"
+                    onClick={kaydiBaslat}
+                    className="bg-purple-600 text-white px-10 py-3.5 rounded-xl font-semibold text-sm hover:bg-purple-700 transition-colors"
                   >
-                    ⏹ Kaydı Durdur
+                    🎙️ Kaydı Başlat
                   </button>
-                </div>
-              )}
+                )}
 
-              {kayitDurumu === "bitti" && (
-                <div className="flex items-center justify-center gap-3">
-                  <span className="text-green-600 font-semibold text-sm">✓ Kayıt tamamlandı — {sureFormat(sure)}</span>
-                  <button onClick={sifirla} className="text-gray-400 text-xs underline hover:text-gray-600">Sıfırla</button>
-                </div>
-              )}
+                {kayitDurumu === "kayit" && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-center gap-3">
+                      <span className="inline-block w-3 h-3 rounded-full bg-red-500 animate-pulse" />
+                      <span className="text-red-600 font-semibold text-sm">Kayıt yapılıyor</span>
+                      <span className="text-gray-400 text-sm font-mono">{sureFormat(sure)}</span>
+                    </div>
+                    {/* Canlı transkript */}
+                    {(transkript || geciciMetin) && (
+                      <div className="bg-gray-50 rounded-xl p-4 text-left text-sm text-gray-700 leading-relaxed max-h-40 overflow-y-auto">
+                        <span>{transkript}</span>
+                        {geciciMetin && <span className="text-gray-400 italic">{geciciMetin}</span>}
+                      </div>
+                    )}
+                    <button
+                      onClick={kaydiBitir}
+                      className="bg-red-600 text-white px-10 py-3.5 rounded-xl font-semibold text-sm hover:bg-red-700 transition-colors"
+                    >
+                      ⏹ Kaydı Durdur
+                    </button>
+                  </div>
+                )}
+
+                {kayitDurumu === "bitti" && (
+                  <div className="flex items-center justify-center gap-3">
+                    <span className="text-green-600 font-semibold text-sm">✓ Kayıt tamamlandı — {sureFormat(sure)}</span>
+                    <button onClick={sifirla} className="text-gray-400 text-xs underline hover:text-gray-600">Sıfırla</button>
+                  </div>
+                )}
+              </div>
             </div>
 
-            {/* 3. Transkript */}
-            {(transkript || geciciMetin) && (
+            {/* ADIM 3 — Transkript (kayıt bittikten sonra göster) */}
+            {kayitDurumu === "bitti" && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-bold text-gray-800">📝 Görüşme Transkripti</h2>
-                  <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
-                    {transkript.split(" ").filter(Boolean).length} kelime
-                  </span>
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center">3</span>
+                    <h2 className="font-semibold text-gray-800 text-sm">📄 Transkript</h2>
+                  </div>
+                  {transkript && (
+                    <span className="text-xs text-gray-400 bg-gray-100 px-3 py-1 rounded-full">
+                      {transkript.trim().split(/\s+/).filter(Boolean).length} kelime
+                    </span>
+                  )}
                 </div>
-                <div className="bg-gray-50 rounded-xl p-4 text-sm text-gray-700 leading-relaxed max-h-64 overflow-y-auto">
-                  <span>{transkript}</span>
-                  {geciciMetin && <span className="text-gray-400 italic">{geciciMetin}</span>}
-                </div>
+
+                <textarea
+                  value={transkript}
+                  onChange={(e) => {
+                    setTranskript(e.target.value);
+                    transkriptRef.current = e.target.value;
+                  }}
+                  rows={8}
+                  placeholder="Otomatik transkripsiyon burada görünür. Eksik veya hatalı yerleri düzeltebilirsiniz..."
+                  className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm text-gray-700 leading-relaxed focus:outline-none focus:border-purple-400 resize-none"
+                />
+                <p className="text-xs text-gray-400 mt-2">💡 Otomatik metni düzenleyebilir, eksik kısımları ekleyebilirsiniz.</p>
               </div>
             )}
 
-            {/* 4. Özetle butonu */}
-            {kayitDurumu === "bitti" && transkript && !ozet && (
+            {/* ADIM 4 — Özetini Çıkar */}
+            {kayitDurumu === "bitti" && !ozet && (
               <button
                 onClick={ozetle}
-                disabled={ozetYukleniyor}
-                className="w-full py-3 rounded-xl font-semibold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-60"
+                disabled={ozetYukleniyor || !transkript.trim()}
+                className="w-full py-4 rounded-xl font-bold text-sm text-white transition-opacity hover:opacity-90 disabled:opacity-50"
                 style={{ backgroundColor: "#7C3AED" }}
               >
-                {ozetYukleniyor ? "⏳ Özet hazırlanıyor..." : "✨ Görüşmeyi Özetle"}
+                {ozetYukleniyor ? "⏳ Özet hazırlanıyor..." : "✨ Özetini Çıkar"}
               </button>
             )}
 
@@ -283,11 +321,14 @@ export default function GorusmeOzetSayfasi() {
               <div className="bg-red-50 border border-red-200 rounded-xl p-4 text-red-700 text-sm">{hata}</div>
             )}
 
-            {/* 5. AI Özeti */}
+            {/* ADIM 5 — AI Özeti */}
             {ozet && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-purple-100">
                 <div className="flex items-center justify-between mb-4">
-                  <h2 className="font-bold text-gray-800">✨ AI Özeti</h2>
+                  <div className="flex items-center gap-2">
+                    <span className="w-6 h-6 rounded-full bg-purple-100 text-purple-700 text-xs font-bold flex items-center justify-center">4</span>
+                    <h2 className="font-bold text-gray-800">✨ AI Özeti</h2>
+                  </div>
                   {hastaAdiTam && (
                     <span className="text-xs text-purple-700 bg-purple-100 px-3 py-1 rounded-full font-medium">
                       {hastaAdiTam}
@@ -298,7 +339,6 @@ export default function GorusmeOzetSayfasi() {
                   {ozet}
                 </div>
 
-                {/* Butonlar */}
                 <div className="mt-5 flex flex-wrap gap-3">
                   <button
                     onClick={() => navigator.clipboard.writeText(ozet)}
