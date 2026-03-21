@@ -8,6 +8,7 @@ const SEKMELER = [
   { key: "yorumlar", label: "💬 Yorum Moderasyon" },
   { key: "dogrulamalar", label: "🔍 Doğrulamalar" },
   { key: "randevular", label: "📅 Randevular" },
+  { key: "api", label: "🤖 API Kullanımı" },
 ];
 
 const DURUM_RENK = {
@@ -24,6 +25,7 @@ export default function AdminPanel() {
   const [yorumlar, setYorumlar] = useState([]);
   const [dogrulamalar, setDogrulamalar] = useState([]);
   const [randevular, setRandevular] = useState([]);
+  const [apiKullanim, setApiKullanim] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
   const [arama, setArama] = useState("");
   const [moderasyonNotu, setModerayonNotu] = useState({});
@@ -33,16 +35,18 @@ export default function AdminPanel() {
   async function veriCek() {
     setYukleniyor(true);
     try {
-      const [d, y, dg, r] = await Promise.all([
+      const [d, y, dg, r, apiData] = await Promise.all([
         fetch("/api/admin/doktorlar").then(r => r.json()),
         fetch("/api/yorum-listesi").then(r => r.json()),
         fetch("/api/admin/dogrulamalar").then(r => r.json()).catch(() => ({ dogrulamalar: [] })),
         fetch("/api/admin/randevular").then(r => r.json()).catch(() => ({ randevular: [] })),
+        fetch("/api/admin/api-kullanim").then(r => r.json()).catch(() => null),
       ]);
       setDoktorlar(Array.isArray(d) ? d : (d.doktorlar || []));
       setYorumlar(y.yorumlar || []);
       setDogrulamalar(dg.dogrulamalar || []);
       setRandevular(r.randevular || []);
+      setApiKullanim(apiData);
     } catch (e) { console.error(e); }
     setYukleniyor(false);
   }
@@ -453,6 +457,76 @@ export default function AdminPanel() {
                   );
                 })}
               </div>
+            )}
+          </div>
+        )}
+
+        {/* API KULLANIMI */}
+        {!yukleniyor && aktifSekme === "api" && (
+          <div className="space-y-4">
+            {!apiKullanim || apiKullanim.hata ? (
+              <div className="bg-amber-50 border border-amber-200 rounded-xl p-4 text-amber-700 text-sm">
+                Henüz API kullanım verisi yok. İlk AI Asistan veya Görüşme Özetle kullanımından sonra burada görünür.
+              </div>
+            ) : (
+              <>
+                {/* Bu Ay Özet */}
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                  {[
+                    { baslik: "Bu Ay İstek", deger: Number(apiKullanim.buAy?.istek_sayisi || 0).toLocaleString("tr-TR"), ikon: "📡", renk: "#7C3AED" },
+                    { baslik: "Giriş Token", deger: Number(apiKullanim.buAy?.input_tokens || 0).toLocaleString("tr-TR"), ikon: "📥", renk: "#0E7C7B" },
+                    { baslik: "Çıkış Token", deger: Number(apiKullanim.buAy?.output_tokens || 0).toLocaleString("tr-TR"), ikon: "📤", renk: "#D97706" },
+                    { baslik: "Tahmini Maliyet", deger: `$${(apiKullanim.buAyMaliyet || 0).toFixed(4)}`, ikon: "💰", renk: "#059669" },
+                  ].map(k => (
+                    <div key={k.baslik} className="bg-white rounded-xl p-4 border border-gray-100 shadow-sm">
+                      <div className="text-xl mb-2">{k.ikon}</div>
+                      <div style={{ color: k.renk }} className="text-xl font-bold">{k.deger}</div>
+                      <div className="text-gray-400 text-xs mt-1">{k.baslik}</div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Endpoint bazlı */}
+                {apiKullanim.endpoint?.length > 0 && (
+                  <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+                    <h3 className="font-bold text-gray-800 mb-4 text-sm">Bu Ay — Endpoint Bazlı</h3>
+                    <div className="space-y-3">
+                      {apiKullanim.endpoint.map((row, i) => (
+                        <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                          <div>
+                            <span className="font-medium text-sm text-gray-800">{row.endpoint}</span>
+                            <span className="text-xs text-gray-400 ml-2">{row.model}</span>
+                          </div>
+                          <div className="text-right">
+                            <div className="text-sm font-semibold text-gray-700">{Number(row.istek_sayisi).toLocaleString("tr-TR")} istek</div>
+                            <div className="text-xs text-gray-400">{(Number(row.input_tokens) + Number(row.output_tokens)).toLocaleString("tr-TR")} token</div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* Son 7 gün */}
+                {apiKullanim.gunluk?.length > 0 && (
+                  <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
+                    <h3 className="font-bold text-gray-800 mb-4 text-sm">Son 7 Gün</h3>
+                    <div className="space-y-2">
+                      {apiKullanim.gunluk.map((g, i) => (
+                        <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
+                          <span className="text-sm text-gray-600">{new Date(g.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "short" })}</span>
+                          <div className="flex gap-4 text-xs text-gray-500">
+                            <span>{Number(g.istek_sayisi)} istek</span>
+                            <span>{(Number(g.input_tokens) + Number(g.output_tokens)).toLocaleString("tr-TR")} token</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                <p className="text-xs text-gray-400 text-center">* Maliyet tahminidir. Gerçek fatura Anthropic Console&apos;dan görülebilir.</p>
+              </>
             )}
           </div>
         )}

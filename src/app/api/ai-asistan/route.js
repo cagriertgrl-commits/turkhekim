@@ -90,6 +90,24 @@ export async function POST(request) {
 
     const yanitMetni = yanit.content[0].text;
 
+    // Token kullanımını logla
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS api_kullanim (
+          id SERIAL PRIMARY KEY,
+          endpoint TEXT NOT NULL,
+          model TEXT NOT NULL,
+          input_tokens INTEGER NOT NULL,
+          output_tokens INTEGER NOT NULL,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `;
+      await sql`
+        INSERT INTO api_kullanim (endpoint, model, input_tokens, output_tokens)
+        VALUES ('ai-asistan', ${yanit.model}, ${yanit.usage.input_tokens}, ${yanit.usage.output_tokens})
+      `;
+    } catch (_) {}
+
     // Geçmişe kaydet
     await sql`
       INSERT INTO ai_sohbet (doktor_id, soru, yanit, konu)

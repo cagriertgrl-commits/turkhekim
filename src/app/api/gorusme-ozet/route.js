@@ -75,6 +75,25 @@ export async function POST(request) {
     });
 
     const ozet = yanit.content[0].text;
+
+    // Token kullanımını logla
+    try {
+      await sql`
+        CREATE TABLE IF NOT EXISTS api_kullanim (
+          id SERIAL PRIMARY KEY,
+          endpoint TEXT NOT NULL,
+          model TEXT NOT NULL,
+          input_tokens INTEGER NOT NULL,
+          output_tokens INTEGER NOT NULL,
+          created_at TIMESTAMPTZ DEFAULT NOW()
+        )
+      `;
+      await sql`
+        INSERT INTO api_kullanim (endpoint, model, input_tokens, output_tokens)
+        VALUES ('gorusme-ozet', ${yanit.model}, ${yanit.usage.input_tokens}, ${yanit.usage.output_tokens})
+      `;
+    } catch (_) {}
+
     return NextResponse.json({ ozet });
   } catch (err) {
     console.error("Görüşme özet hatası:", err);
