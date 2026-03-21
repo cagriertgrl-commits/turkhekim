@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import Navbar from "@/components/Navbar";
 
 export default function GorusmeOzetSayfasi() {
   const [tarayiciDestekli, setTarayiciDestekli] = useState(null);
@@ -147,7 +146,22 @@ export default function GorusmeOzetSayfasi() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4 sticky top-0 z-40">
+        <div className="max-w-3xl mx-auto flex items-center justify-between">
+          <a href="/" className="flex items-center gap-2.5">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
+              <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
+              <circle cx="16" cy="16" r="1.8" fill="white"/>
+              <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
+              <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
+            </svg>
+            <span className="text-white font-bold">Doktor<span style={{ color: "#C9A84C" }}>Pusula</span></span>
+          </a>
+          <a href="/panel" className="text-gray-300 hover:text-white text-sm flex items-center gap-1.5">
+            ← Panele Dön
+          </a>
+        </div>
+      </nav>
 
       <div style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="px-6 py-12">
         <div className="max-w-3xl mx-auto text-center">
