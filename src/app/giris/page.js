@@ -24,8 +24,12 @@ export default function Giris() {
     });
 
     if (!res.ok) {
-      const d = await res.json();
-      setHata(d.hata || "Email veya şifre hatalı.");
+      try {
+        const d = await res.json();
+        setHata(d.hata || "Email veya şifre hatalı.");
+      } catch {
+        setHata("Sunucu hatası, tekrar deneyin.");
+      }
       setYukleniyor(false);
       return;
     }

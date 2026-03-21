@@ -14,7 +14,7 @@ export async function sessionOlustur(kullanici, hatirla = false) {
   })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setExpirationTime(Math.floor(Date.now() / 1000) + sure)
+    .setExpirationTime(hatirla ? "30d" : "8h")
     .sign(secret);
 
   return { token, sure };
@@ -32,7 +32,7 @@ export async function getSession() {
   }
 }
 
-export async function sessionSil(response) {
+export async function sessionSil() {
   const cookieStore = await cookies();
   cookieStore.delete(COOKIE_ADI);
 }
