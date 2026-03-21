@@ -20,20 +20,18 @@ export async function GET(request) {
       yd.id,
       yd.yorum_id,
       yd.durum,
-      yd.doktor_notu,
-      yd.olusturulma,
-      y.yorum_metni,
+      yd.created_at,
+      y.metin      AS yorum_metni,
       y.puan,
       y.hasta_adi,
       y.doktor_id,
-      d.ad       AS doktor_ad,
-      d.soyad    AS doktor_soyad,
-      d.uzmanlik AS doktor_uzmanlik
+      d.ad         AS doktor_ad,
+      d.uzmanlik   AS doktor_uzmanlik
     FROM yorum_dogrulama yd
     JOIN yorumlar y  ON y.id  = yd.yorum_id
     JOIN doktorlar d ON d.id  = y.doktor_id
     WHERE yd.durum = ${durum}
-    ORDER BY yd.olusturulma ASC
+    ORDER BY yd.created_at ASC
   `;
 
   return NextResponse.json({ rows });
