@@ -26,12 +26,12 @@ function rozetHesapla(doktor) {
 }
 
 const POPULER_SEHIRLER = [
-  { ad: "İstanbul", slug: "istanbul", ikon: "🌉" },
-  { ad: "Ankara", slug: "ankara", ikon: "🏛️" },
-  { ad: "İzmir", slug: "izmir", ikon: "🌊" },
-  { ad: "Antalya", slug: "antalya", ikon: "🏖️" },
-  { ad: "Bursa", slug: "bursa", ikon: "🏔️" },
-  { ad: "Adana", slug: "adana", ikon: "🌞" },
+  { ad: "İstanbul", slug: "istanbul", foto: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "Ankara", slug: "ankara", foto: "https://images.unsplash.com/photo-1578894303900-16f3a135cac1?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "İzmir", slug: "izmir", foto: "https://images.unsplash.com/photo-1581449516-de23d18a9e79?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "Antalya", slug: "antalya", foto: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "Bursa", slug: "bursa", foto: "https://images.unsplash.com/photo-1506905925345-e44c4ea2c478?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "Adana", slug: "adana", foto: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=400&h=300&q=80" },
 ];
 
 export default async function Home() {
@@ -334,10 +334,22 @@ export default async function Home() {
               <Link
                 key={sehir.slug}
                 href={`/${sehir.slug}/doktor`}
-                className="bg-white rounded-2xl p-4 text-center border border-gray-100 hover:border-teal-300 hover:shadow-md transition-all group"
+                className="relative overflow-hidden rounded-2xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-1 group"
+                style={{ aspectRatio: "3/4" }}
               >
-                <div className="text-3xl mb-2">{sehir.ikon}</div>
-                <div style={{ color: "#0D2137" }} className="text-sm font-semibold group-hover:text-teal-700 transition-colors">{sehir.ad}</div>
+                <img
+                  src={sehir.foto}
+                  alt={sehir.ad}
+                  className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  loading="lazy"
+                />
+                <div
+                  className="absolute inset-0"
+                  style={{ background: "linear-gradient(to top, rgba(13,33,55,0.85) 0%, rgba(13,33,55,0.2) 50%, transparent 100%)" }}
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-3 text-center">
+                  <span className="text-white font-bold text-sm drop-shadow">{sehir.ad}</span>
+                </div>
               </Link>
             ))}
           </div>
