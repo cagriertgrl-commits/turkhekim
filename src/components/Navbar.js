@@ -70,7 +70,7 @@ export default function Navbar({ aktifSayfa }) {
           ) : kullanici ? (
             // Giriş yapılmış
             <>
-              <a href="/hesabim" title="Hesabım" className="flex-shrink-0">
+              <a href="/panel" title="Panelim" className="flex-shrink-0">
                 <div
                   className="w-8 h-8 rounded-full overflow-hidden border-2 hover:border-teal-300 transition-colors"
                   style={{ borderColor: "#0E7C7B" }}
@@ -153,9 +153,6 @@ export default function Navbar({ aktifSayfa }) {
           <div className="pt-3 space-y-2">
             {kullanici ? (
               <>
-                <a href="/hesabim" className="block text-gray-300 hover:text-white py-2 text-sm transition-colors">
-                  Hesabım
-                </a>
                 <a href="/panel" className="block text-teal-400 hover:text-white py-2 text-sm font-medium transition-colors">
                   {kullanici.ad?.split(" ")[0]} — Panelim
                 </a>

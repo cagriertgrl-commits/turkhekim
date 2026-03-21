@@ -38,7 +38,7 @@ export default function ArkaplanYukle({ arkaplanUrl: baslangic }) {
 
   return (
     <div className="mt-4 pt-4 border-t border-gray-100">
-      <p className="text-xs text-gray-500 mb-2 font-medium">Arka Plan / Logo</p>
+      <p className="text-xs text-gray-500 mb-2 font-medium">Kapak Fotoğrafı</p>
       <label className="flex items-center gap-3 cursor-pointer group">
         <div className="w-14 h-10 rounded-lg overflow-hidden border-2 border-gray-200 group-hover:border-teal-400 transition-colors flex-shrink-0">
           {yukleniyor ? (
@@ -55,7 +55,7 @@ export default function ArkaplanYukle({ arkaplanUrl: baslangic }) {
           <span className="text-xs text-teal-600 group-hover:underline">
             {url ? "Değiştir" : "Yükle"}
           </span>
-          <p className="text-xs text-gray-400">PNG logo veya banner · Maks. 5MB</p>
+          <p className="text-xs text-gray-400">Panelin üstünde gösterilir · Maks. 5MB</p>
         </div>
         <input type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={dosyaSec} />
       </label>
