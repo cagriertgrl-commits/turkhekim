@@ -15,7 +15,7 @@ export default function FotoYukle({ fotoUrl: baslangic, initials }) {
     setYukleniyor(true);
     setMesaj(null);
     try {
-      const base64 = await gorselSikistir(dosya, 400, 400, 0.88);
+      const base64 = await gorselSikistir(dosya, 600, 600, 0.95);
       const r = await fetch("/api/foto-yukle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },

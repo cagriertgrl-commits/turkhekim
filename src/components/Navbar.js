@@ -87,13 +87,6 @@ export default function Navbar({ aktifSayfa }) {
                   )}
                 </div>
               </a>
-              <a
-                href="/panel"
-                style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }}
-                className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80"
-              >
-                Panelim
-              </a>
               <button
                 onClick={cikisYap}
                 className="text-gray-400 hover:text-white text-sm bg-transparent border-0 cursor-pointer"

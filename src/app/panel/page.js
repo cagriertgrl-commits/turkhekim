@@ -17,8 +17,7 @@ import HizmetSecici from "@/components/HizmetSecici";
 import HastalarPanel from "@/components/HastalarPanel";
 import PanelDilSecici from "@/components/PanelDilSecici";
 import CikisButonu from "@/components/CikisButonu";
-import ArkaplanYukle from "@/components/ArkaplanYukle";
-import TemaSecici from "@/components/TemaSecici";
+import WhatsappInput from "@/components/WhatsappInput";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -188,8 +187,6 @@ export default async function Panel() {
               <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }} className="block mt-4 border text-center py-2 rounded-xl text-sm font-medium hover:bg-gray-50">
                 Profilimi Gör →
               </a>
-              <ArkaplanYukle arkaplanUrl={doktor.arka_plan_foto_url} />
-              <TemaSecici mevcutTema={doktor.tema} arkaplanUrl={doktor.arka_plan_foto_url} />
             </div>
 
             {/* Profil Düzenle */}
@@ -227,7 +224,7 @@ export default async function Panel() {
 
                 <div>
                   <label className="text-xs text-gray-500 block mb-1">WhatsApp Numarası</label>
-                  <input name="whatsapp" defaultValue={doktor.whatsapp || ""} placeholder="905XXXXXXXXX" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <WhatsappInput mevcutDeger={doktor.whatsapp || ""} />
                 </div>
 
                 <div>

@@ -11,7 +11,7 @@ export async function POST(request) {
   if (!base64 || !base64.startsWith("data:image/")) {
     return NextResponse.json({ hata: "Geçersiz fotoğraf verisi." }, { status: 400 });
   }
-  if (base64.length > 400 * 1024) {
+  if (base64.length > 900 * 1024) {
     return NextResponse.json({ hata: "Fotoğraf çok büyük." }, { status: 400 });
   }
 
