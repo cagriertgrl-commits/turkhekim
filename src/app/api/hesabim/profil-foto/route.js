@@ -1,5 +1,4 @@
 import { getSession } from "@/lib/session";
-import { put } from "@vercel/blob";
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
@@ -7,35 +6,17 @@ export async function POST(request) {
   const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
-  const formData = await request.formData();
-  const dosya = formData.get("foto");
+  const { base64 } = await request.json().catch(() => ({}));
 
-  if (!dosya || typeof dosya === "string") {
-    return NextResponse.json({ hata: "Dosya bulunamadı." }, { status: 400 });
+  if (!base64 || !base64.startsWith("data:image/")) {
+    return NextResponse.json({ hata: "Geçersiz fotoğraf verisi." }, { status: 400 });
   }
-  if (dosya.size > 2 * 1024 * 1024) {
-    return NextResponse.json({ hata: "Dosya 2MB'dan büyük olamaz." }, { status: 400 });
-  }
-
-  const uzanti = dosya.name.split(".").pop().toLowerCase();
-  if (!["jpg", "jpeg", "png", "webp"].includes(uzanti)) {
-    return NextResponse.json({ hata: "Sadece JPG, PNG veya WEBP yüklenebilir." }, { status: 400 });
+  // ~300KB base64 sınırı (profil fotoğrafı için yeterli)
+  if (base64.length > 400 * 1024) {
+    return NextResponse.json({ hata: "Fotoğraf çok büyük, daha küçük bir dosya seçin." }, { status: 400 });
   }
 
-  const dosyaAdi = `doktor-profil-${session.id}-${Date.now()}.${uzanti}`;
+  await sql`UPDATE doktorlar SET foto_url = ${base64} WHERE id = ${session.id}`;
 
-  let blob;
-  try {
-    blob = await put(dosyaAdi, dosya, { access: "public", addRandomSuffix: false });
-  } catch (err) {
-    console.error("Vercel Blob hatası:", err);
-    return NextResponse.json(
-      { hata: `Blob yükleme hatası: ${err?.message || String(err)}` },
-      { status: 500 }
-    );
-  }
-
-  await sql`UPDATE doktorlar SET foto_url = ${blob.url} WHERE id = ${session.id}`;
-
-  return NextResponse.json({ tamam: true, url: blob.url });
+  return NextResponse.json({ tamam: true, url: base64 });
 }

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { gorselSikistir } from "@/utils/imageCompress";
 
 const TEMALAR = [
   {
@@ -137,10 +138,15 @@ export default function HesabimPage() {
     yukleniyorSetter(true);
     setHata(null);
     try {
-      const form = new FormData();
-      form.append("foto", dosya);
-      const url = tip === "profil" ? "/api/hesabim/profil-foto" : "/api/hesabim/arka-plan";
-      const r = await fetch(url, { method: "POST", body: form });
+      const base64 = tip === "profil"
+        ? await gorselSikistir(dosya, 300, 300, 0.85)
+        : await gorselSikistir(dosya, 800, 400, 0.82);
+      const apiUrl = tip === "profil" ? "/api/hesabim/profil-foto" : "/api/hesabim/arka-plan";
+      const r = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ base64 }),
+      });
       const data = await r.json().catch(() => ({}));
       if (!r.ok) {
         setHata(data.hata || `Yükleme başarısız (HTTP ${r.status}).`);

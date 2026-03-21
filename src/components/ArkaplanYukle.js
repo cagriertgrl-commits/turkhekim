@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { gorselSikistir } from "@/utils/imageCompress";
 
 export default function ArkaplanYukle({ arkaplanUrl: baslangic }) {
   const [url, setUrl] = useState(baslangic || null);
@@ -14,9 +15,12 @@ export default function ArkaplanYukle({ arkaplanUrl: baslangic }) {
     setYukleniyor(true);
     setMesaj(null);
     try {
-      const form = new FormData();
-      form.append("foto", dosya);
-      const r = await fetch("/api/hesabim/arka-plan", { method: "POST", body: form });
+      const base64 = await gorselSikistir(dosya, 800, 400, 0.82);
+      const r = await fetch("/api/hesabim/arka-plan", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ base64 }),
+      });
       const data = await r.json().catch(() => ({}));
       if (!r.ok) {
         setMesaj({ tip: "hata", metin: data.hata || `Hata (${r.status})` });
