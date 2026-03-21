@@ -1,11 +1,12 @@
+import { getSession } from "@/lib/session";
 import { put } from "@vercel/blob";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
@@ -27,7 +28,7 @@ export async function POST(request) {
     return NextResponse.json({ hata: "Sadece JPG, PNG veya WEBP yüklenebilir." }, { status: 400 });
   }
 
-  const dosyaAdi = `doktor-${session.user.id}-${Date.now()}.${uzanti}`;
+  const dosyaAdi = `doktor-${session.id}-${Date.now()}.${uzanti}`;
 
   const blob = await put(dosyaAdi, dosya, {
     access: "public",
@@ -35,7 +36,7 @@ export async function POST(request) {
   });
 
   await sql`
-    UPDATE doktorlar SET foto_url = ${blob.url} WHERE id = ${session.user.id}
+    UPDATE doktorlar SET foto_url = ${blob.url} WHERE id = ${session.id}
   `;
 
   return NextResponse.redirect(new URL("/panel", request.url));

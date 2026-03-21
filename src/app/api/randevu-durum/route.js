@@ -1,10 +1,11 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const { randevu_id, durum, doktor_notu } = await request.json();
@@ -14,7 +15,7 @@ export async function POST(request) {
   if (!izinliDurumlar.includes(durum)) return NextResponse.json({ hata: "Geçersiz durum." }, { status: 400 });
 
   // Sadece kendi randevusunu güncelleyebilir
-  const randevular = await sql`SELECT * FROM randevular WHERE id = ${randevu_id} AND doktor_id = ${session.user.id} LIMIT 1`;
+  const randevular = await sql`SELECT * FROM randevular WHERE id = ${randevu_id} AND doktor_id = ${session.id} LIMIT 1`;
   if (!randevular.length) return NextResponse.json({ hata: "Randevu bulunamadı." }, { status: 404 });
 
   const randevu = randevular[0];

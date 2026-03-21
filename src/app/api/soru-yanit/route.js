@@ -1,10 +1,11 @@
+import { getSession } from "@/lib/session";
 import sql from "@/lib/db";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const { soru_id, yanit } = await request.json();
@@ -17,7 +18,7 @@ export async function POST(request) {
   const result = await sql`
     UPDATE sorular
     SET yanit = ${yanit.trim()}
-    WHERE id = ${soru_id} AND doktor_id = ${session.user.id}
+    WHERE id = ${soru_id} AND doktor_id = ${session.id}
     RETURNING id
   `;
 

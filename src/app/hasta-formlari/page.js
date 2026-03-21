@@ -1,8 +1,9 @@
+import { getSession } from "@/lib/session";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { HASTA_FORMLARI, tumKategoriler } from "@/lib/hastaFormlari";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import { redirect } from "next/navigation";
 
 export const metadata = {
@@ -24,7 +25,7 @@ const KATEGORI_IKON = {
 };
 
 export default async function HastaFormlariSayfasi({ searchParams }) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) redirect("/giris?callbackUrl=/hasta-formlari");
 
   const sp = await searchParams;

@@ -1,6 +1,7 @@
+import { getSession } from "@/lib/session";
 import Anthropic from "@anthropic-ai/sdk";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
@@ -59,11 +60,11 @@ export async function POST(request) {
   const limitAsildi = await rateLimit(`ai:${ip}`, 20, 3600);
   if (limitAsildi) return NextResponse.json({ hata: "Çok fazla istek. Lütfen bir süre bekleyin." }, { status: 429 });
 
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Giriş yapmanız gerekiyor." }, { status: 401 });
 
   // Paket kontrolü — sadece premium ve üstü kullanabilir
-  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.user.id}`;
+  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.id}`;
   const yetkiliPaketler = ["premium", "pro", "kurumsal"];
   if (!doktor || !yetkiliPaketler.includes(doktor.paket)) {
     return NextResponse.json({
@@ -92,7 +93,7 @@ export async function POST(request) {
     // Geçmişe kaydet
     await sql`
       INSERT INTO ai_sohbet (doktor_id, soru, yanit, konu)
-      VALUES (${session.user.id}, ${sonMesaj.icerik}, ${yanitMetni}, ${konu || null})
+      VALUES (${session.id}, ${sonMesaj.icerik}, ${yanitMetni}, ${konu || null})
     `;
 
     return NextResponse.json({ yanit: yanitMetni });

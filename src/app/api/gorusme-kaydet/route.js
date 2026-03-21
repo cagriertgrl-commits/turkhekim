@@ -1,5 +1,6 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
@@ -18,10 +19,10 @@ async function tabloOlustur() {
 }
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Giriş yapmanız gerekiyor." }, { status: 401 });
 
-  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.user.id}`;
+  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.id}`;
   if (!doktor || !["pro", "kurumsal"].includes(doktor.paket)) {
     return NextResponse.json({ hata: "Bu özellik Pro ve Kurumsal paket içindir." }, { status: 403 });
   }
@@ -41,7 +42,7 @@ export async function POST(request) {
 
   await sql`
     INSERT INTO gorusme_ozetleri (doktor_id, hasta_ad, hasta_soyad, transkript, ozet)
-    VALUES (${session.user.id}, ${hastaAd || null}, ${hastaSoyad || null}, ${transkript}, ${ozet})
+    VALUES (${session.id}, ${hastaAd || null}, ${hastaSoyad || null}, ${transkript}, ${ozet})
   `;
 
   return NextResponse.json({ basarili: true });

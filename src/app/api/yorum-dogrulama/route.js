@@ -1,11 +1,12 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
 // Doktor: muayene onayı veya reddi
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   const { yorum_id, karar, admin_token } = await request.json();
 
   const adminToken = process.env.ADMIN_SECRET;
@@ -21,7 +22,7 @@ export async function POST(request) {
   const kayit = dogrulama[0];
 
   // Doktor kendi yorumuna onay/red verebilir
-  if (session && kayit.doktor_id !== session.user.id && !adminMi) {
+  if (session && kayit.doktor_id !== session.id && !adminMi) {
     return NextResponse.json({ hata: "Bu işlem için yetkiniz yok." }, { status: 403 });
   }
 

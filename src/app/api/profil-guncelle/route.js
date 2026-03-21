@@ -1,10 +1,11 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const formData = await request.formData();
@@ -44,7 +45,7 @@ export async function POST(request) {
       calisan_sayisi = ${calisan_sayisi},
       calisma_saatleri = ${calisma_saatleri || null},
       online_randevu = ${online_randevu}
-    WHERE id = ${session.user.id}
+    WHERE id = ${session.id}
   `;
 
   return NextResponse.redirect(new URL("/panel", request.url));

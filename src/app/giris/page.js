@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
 export default function Giris() {
@@ -18,15 +17,15 @@ export default function Giris() {
     setYukleniyor(true);
     setHata("");
 
-    const sonuc = await signIn("credentials", {
-      email: form.email,
-      sifre: form.sifre,
-      remember: beniHatirla ? "true" : "false",
-      redirect: false,
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: form.email, sifre: form.sifre, hatirla: beniHatirla }),
     });
 
-    if (sonuc?.error) {
-      setHata("Email veya şifre hatalı.");
+    if (!res.ok) {
+      const d = await res.json();
+      setHata(d.hata || "Email veya şifre hatalı.");
       setYukleniyor(false);
       return;
     }

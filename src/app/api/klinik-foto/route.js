@@ -1,12 +1,13 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import sql from "@/lib/db";
 import { put, del } from "@vercel/blob";
 import { NextResponse } from "next/server";
 
 // Fotoğraf yükle
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const formData = await request.formData();
@@ -27,7 +28,7 @@ export async function POST(request) {
 
   // Mevcut fotoğraf sayısını kontrol et
   const [doktor] = await sql`
-    SELECT id, klinik_foto_urls FROM doktorlar WHERE email = ${session.user.email}
+    SELECT id, klinik_foto_urls FROM doktorlar WHERE email = ${session.email}
   `;
   if (!doktor) return NextResponse.json({ hata: "Doktor bulunamadı." }, { status: 404 });
 
@@ -52,14 +53,14 @@ export async function POST(request) {
 
 // Fotoğraf sil
 export async function DELETE(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const { url } = await request.json();
   if (!url) return NextResponse.json({ hata: "URL gerekli." }, { status: 400 });
 
   const [doktor] = await sql`
-    SELECT id, klinik_foto_urls FROM doktorlar WHERE email = ${session.user.email}
+    SELECT id, klinik_foto_urls FROM doktorlar WHERE email = ${session.email}
   `;
   if (!doktor) return NextResponse.json({ hata: "Doktor bulunamadı." }, { status: 404 });
 

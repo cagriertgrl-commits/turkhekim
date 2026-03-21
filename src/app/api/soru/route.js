@@ -1,6 +1,7 @@
+import { getSession } from "@/lib/session";
 import sql from "@/lib/db";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import { rateLimit } from "@/lib/rateLimit";
 import { NextResponse } from "next/server";
 
@@ -36,11 +37,11 @@ export async function POST(request) {
 
 // Doktor kendi sorularını çeker (panel)
 export async function GET(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const sorular = await sql`
-    SELECT * FROM sorular WHERE doktor_id = ${session.user.id} ORDER BY created_at DESC
+    SELECT * FROM sorular WHERE doktor_id = ${session.id} ORDER BY created_at DESC
   `;
 
   return NextResponse.json({ sorular });

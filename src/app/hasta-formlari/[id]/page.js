@@ -1,9 +1,10 @@
+import { getSession } from "@/lib/session";
 import Navbar from "@/components/Navbar";
 import { HASTA_FORMLARI } from "@/lib/hastaFormlari";
 import { notFound, redirect } from "next/navigation";
 import FormIcerik from "./FormIcerik";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 
 export async function generateMetadata({ params }) {
   const { id } = await params;
@@ -16,7 +17,7 @@ export async function generateMetadata({ params }) {
 }
 
 export default async function FormDetay({ params }) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) redirect(`/giris?callbackUrl=/hasta-formlari`);
 
   const { id } = await params;

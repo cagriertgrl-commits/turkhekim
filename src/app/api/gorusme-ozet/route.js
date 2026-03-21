@@ -1,6 +1,7 @@
+import { getSession } from "@/lib/session";
 import Anthropic from "@anthropic-ai/sdk";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+
+
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
@@ -42,10 +43,10 @@ Eğer transkriptte bu kategorilere uygun bilgi yoksa o başlığı atla.
 Türkçe yaz. Net, kısa ve profesyonel ol. Gereksiz yorumlama yapma.`;
 
 export async function POST(request) {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Giriş yapmanız gerekiyor." }, { status: 401 });
 
-  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.user.id}`;
+  const [doktor] = await sql`SELECT paket FROM doktorlar WHERE id = ${session.id}`;
   const yetkiliPaketler = ["pro", "kurumsal"];
   if (!doktor || !yetkiliPaketler.includes(doktor.paket)) {
     return NextResponse.json({

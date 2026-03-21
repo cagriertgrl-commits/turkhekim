@@ -1,5 +1,6 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { getSession } from "@/lib/session";
+
+
 import { redirect } from "next/navigation";
 import sql from "@/lib/db";
 import FotoYukle from "@/components/FotoYukle";
@@ -25,10 +26,10 @@ const ADRES_TIPLERI = [
 
 
 export default async function Panel() {
-  const session = await getServerSession(authOptions);
+  const session = await getSession();
   if (!session) redirect("/giris");
 
-  const doktorlar = await sql`SELECT * FROM doktorlar WHERE id = ${session.user.id} LIMIT 1`;
+  const doktorlar = await sql`SELECT * FROM doktorlar WHERE id = ${session.id} LIMIT 1`;
   const doktor = doktorlar[0];
 
   const [yorumlar, sorular, analitkler, medyaListesi, dogrulamalar, gorusmeler] = await Promise.all([
@@ -77,7 +78,7 @@ export default async function Panel() {
             <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör
             </a>
-            <a href="/api/auth/signout" className="text-gray-400 hover:text-white text-sm">Çıkış</a>
+            <button onClick={async () => { await fetch("/api/auth/logout", { method: "POST" }); window.location.href = "/giris"; }} className="text-gray-400 hover:text-white text-sm cursor-pointer bg-transparent border-0">Çıkış</button>
           </div>
         </div>
       </nav>
