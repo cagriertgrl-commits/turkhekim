@@ -16,6 +16,7 @@ import SigortaSecici from "@/components/SigortaSecici";
 import HizmetSecici from "@/components/HizmetSecici";
 import HastalarPanel from "@/components/HastalarPanel";
 import PanelDilSecici from "@/components/PanelDilSecici";
+import CikisButonu from "@/components/CikisButonu";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -78,7 +79,7 @@ export default async function Panel() {
             <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör
             </a>
-            <button onClick={async () => { await fetch("/api/auth/logout", { method: "POST" }); window.location.href = "/giris"; }} className="text-gray-400 hover:text-white text-sm cursor-pointer bg-transparent border-0">Çıkış</button>
+            <CikisButonu />
           </div>
         </div>
       </nav>
