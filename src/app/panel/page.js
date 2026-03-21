@@ -19,7 +19,6 @@ import PanelDilSecici from "@/components/PanelDilSecici";
 import CikisButonu from "@/components/CikisButonu";
 import ArkaplanYukle from "@/components/ArkaplanYukle";
 import TemaSecici from "@/components/TemaSecici";
-import KapakFoto from "@/components/KapakFoto";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -86,8 +85,6 @@ export default async function Panel() {
           </div>
         </div>
       </nav>
-
-      <KapakFoto kapakUrl={doktor.arka_plan_foto_url} />
 
       <div className="max-w-6xl mx-auto px-6 py-8">
 

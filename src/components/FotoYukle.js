@@ -15,7 +15,7 @@ export default function FotoYukle({ fotoUrl: baslangic, initials }) {
     setYukleniyor(true);
     setMesaj(null);
     try {
-      const base64 = await gorselSikistir(dosya, 300, 300, 0.85);
+      const base64 = await gorselSikistir(dosya, 400, 400, 0.88);
       const r = await fetch("/api/foto-yukle", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -37,27 +37,41 @@ export default function FotoYukle({ fotoUrl: baslangic, initials }) {
   }
 
   return (
-    <div className="text-center mb-4">
-      {yukleniyor ? (
-        <div className="w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center mx-auto mb-2 border-4 border-gray-100">
-          <div className="w-6 h-6 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
-        </div>
-      ) : fotoUrl ? (
-        <img
-          src={fotoUrl}
-          alt="Profil fotoğrafı"
-          className="w-16 h-16 rounded-full object-cover mx-auto mb-2 border-4 border-gray-100"
-        />
-      ) : (
-        <div
-          style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }}
-          className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-2"
-        >
-          {initials}
-        </div>
-      )}
-      <label className="cursor-pointer text-xs text-teal-600 hover:underline">
-        {fotoUrl ? "Fotoğrafı Değiştir" : "Fotoğraf Yükle"}
+    <div className="mb-4">
+      <label className="relative block w-full cursor-pointer group" style={{ aspectRatio: "1/1" }}>
+        {/* Fotoğraf veya placeholder */}
+        {yukleniyor ? (
+          <div
+            className="w-full h-full rounded-2xl flex items-center justify-center"
+            style={{ backgroundColor: "#E8F5F5" }}
+          >
+            <div className="w-8 h-8 border-2 border-teal-500 border-t-transparent rounded-full animate-spin" />
+          </div>
+        ) : fotoUrl ? (
+          <img
+            src={fotoUrl}
+            alt="Profil fotoğrafı"
+            className="w-full h-full rounded-2xl object-cover"
+          />
+        ) : (
+          <div
+            className="w-full h-full rounded-2xl flex flex-col items-center justify-center gap-2"
+            style={{ backgroundColor: "#E8F5F5" }}
+          >
+            <span className="text-4xl font-bold" style={{ color: "#0E7C7B" }}>{initials}</span>
+            <span className="text-xs" style={{ color: "#0E7C7B" }}>Fotoğraf Yükle</span>
+          </div>
+        )}
+
+        {/* Hover overlay */}
+        {!yukleniyor && (
+          <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/35 transition-all duration-200 flex items-center justify-center">
+            <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 flex items-center gap-1.5">
+              📷 {fotoUrl ? "Değiştir" : "Yükle"}
+            </div>
+          </div>
+        )}
+
         <input
           type="file"
           accept="image/jpeg,image/png,image/webp"
@@ -65,12 +79,13 @@ export default function FotoYukle({ fotoUrl: baslangic, initials }) {
           onChange={dosyaSec}
         />
       </label>
+
       {mesaj && (
-        <p className={`text-xs mt-1 ${mesaj.tip === "hata" ? "text-red-500" : "text-green-600"}`}>
+        <p className={`text-xs mt-2 text-center ${mesaj.tip === "hata" ? "text-red-500" : "text-green-600"}`}>
           {mesaj.metin}
         </p>
       )}
-      <p className="text-xs text-gray-400 mt-0.5">Maks. 2MB · JPG/PNG/WEBP</p>
+      <p className="text-xs text-gray-400 mt-1 text-center">Maks. 2MB · JPG/PNG/WEBP</p>
     </div>
   );
 }
