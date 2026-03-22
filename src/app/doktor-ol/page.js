@@ -159,7 +159,7 @@ export default function DoktorOl() {
                 {adim > n ? "✓" : n}
               </div>
               <span className={`text-sm ${adim >= n ? "text-gray-900 font-medium" : "text-gray-400"}`}>
-                {n === 1 ? "Klinik Bilgileri" : n === 2 ? "İletişim" : "Hakkında"}
+                {n === 1 ? (meslek === "doktor" || meslek === "dis-hekimi" ? "Klinik Bilgileri" : "Profil Bilgileri") : n === 2 ? "İletişim" : "Hakkında"}
               </span>
               {n < 3 && <div style={{ backgroundColor: adim > n ? "#0E7C7B" : "#E5E7EB" }} className="flex-1 h-0.5 mx-2" />}
             </div>
@@ -172,7 +172,9 @@ export default function DoktorOl() {
           {/* ADIM 1 */}
           {adim === 1 && (
             <div className="space-y-5">
-              <h2 style={{ color: "#0D2137" }} className="text-xl font-bold mb-6">Klinik Bilgileriniz</h2>
+              <h2 style={{ color: "#0D2137" }} className="text-xl font-bold mb-6">
+                {meslek === "doktor" || meslek === "dis-hekimi" ? "Klinik Bilgileriniz" : "Profil Bilgileriniz"}
+              </h2>
 
               <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
@@ -197,7 +199,9 @@ export default function DoktorOl() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Uzmanlık Alanı <span className="text-red-500">*</span></label>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {meslek === "doktor" || meslek === "dis-hekimi" ? "Uzmanlık Alanı" : "Alan / Uzmanlık"} <span className="text-red-500">*</span>
+                </label>
                 <select
                   name="uzmanlik"
                   value={form.uzmanlik}
@@ -245,7 +249,9 @@ export default function DoktorOl() {
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Diploma No</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    {meslek === "doktor" || meslek === "dis-hekimi" ? "Diploma No" : "Sertifika / Lisans No"}
+                  </label>
                   <input name="diploma_no" value={form.diploma_no} onChange={guncelle} placeholder="123456"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
                   <p className="text-xs text-gray-400 mt-1">Doğrulama sürecini hızlandırır</p>
