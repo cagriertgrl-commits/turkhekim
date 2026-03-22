@@ -2,8 +2,10 @@ import { getSession } from "@/lib/session";
 import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { HASTA_FORMLARI, tumKategoriler } from "@/lib/hastaFormlari";
-
-
+import {
+  IkonEstetik, IkonDis, IkonPsikiyatri, IkonKardiyoloji,
+  IkonOrtopedi, IkonGoz, IkonDermatoloji, IkonKBB, IkonCocuk, IkonNoroloji,
+} from "@/components/UzmanlikIkonlari";
 import { redirect } from "next/navigation";
 
 export const metadata = {
@@ -11,17 +13,18 @@ export const metadata = {
   description: "Branşa özel hasta onam formları, KVKK formu ve tıbbi belgeler. PDF olarak görüntüleyin ve indirin.",
 };
 
-const KATEGORI_IKON = {
-  "Estetik Cerrahi": "✨",
-  "Diş Hekimliği": "🦷",
-  "Psikiyatri": "🧠",
-  "Kardiyoloji": "❤️",
-  "Ortopedi": "🦴",
-  "Göz Hastalıkları": "👁️",
-  "Dermatoloji": "🩺",
-  "KBB": "👂",
-  "Çocuk Sağlığı": "👶",
-  "Genel": "📄",
+const KATEGORI_BILGI = {
+  "Estetik Cerrahi": { Ikon: IkonEstetik,    renk: "#D97706", bg: "#FFFBEB" },
+  "Diş Hekimliği":   { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA" },
+  "Psikiyatri":      { Ikon: IkonPsikiyatri,  renk: "#7C3AED", bg: "#F5F3FF" },
+  "Kardiyoloji":     { Ikon: IkonKardiyoloji, renk: "#DC2626", bg: "#FFF1F2" },
+  "Ortopedi":        { Ikon: IkonOrtopedi,    renk: "#2563EB", bg: "#EFF6FF" },
+  "Göz Hastalıkları":{ Ikon: IkonGoz,        renk: "#0369A1", bg: "#E0F2FE" },
+  "Dermatoloji":     { Ikon: IkonDermatoloji, renk: "#BE185D", bg: "#FDF2F8" },
+  "KBB":             { Ikon: IkonKBB,         renk: "#0E7C7B", bg: "#E6F4F4" },
+  "Çocuk Sağlığı":   { Ikon: IkonCocuk,      renk: "#059669", bg: "#ECFDF5" },
+  "Nöroloji":        { Ikon: IkonNoroloji,    renk: "#1D4ED8", bg: "#EFF6FF" },
+  "Genel":           { Ikon: null,            renk: "#6B7280", bg: "#F3F4F6" },
 };
 
 export default async function HastaFormlariSayfasi({ searchParams }) {
@@ -64,31 +67,42 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
           >
             Tümü ({HASTA_FORMLARI.length})
           </Link>
-          {kategoriler.map((kat) => (
-            <Link
-              key={kat}
-              href={`/hasta-formlari?kategori=${encodeURIComponent(kat)}`}
-              style={{
-                backgroundColor: seciliKategori === kat ? "#0E7C7B" : "#fff",
-                color: seciliKategori === kat ? "#fff" : "#6B7280",
-                borderColor: seciliKategori === kat ? "#0E7C7B" : "#E5E7EB",
-              }}
-              className="border px-4 py-2 rounded-full text-sm font-semibold transition-all hover:opacity-80"
-            >
-              {KATEGORI_IKON[kat] || "📄"} {kat}
-            </Link>
-          ))}
+          {kategoriler.map((kat) => {
+            const bilgi = KATEGORI_BILGI[kat];
+            const aktif = seciliKategori === kat;
+            return (
+              <Link
+                key={kat}
+                href={`/hasta-formlari?kategori=${encodeURIComponent(kat)}`}
+                style={{
+                  backgroundColor: aktif ? (bilgi?.renk || "#0E7C7B") : "#fff",
+                  color: aktif ? "#fff" : (bilgi?.renk || "#6B7280"),
+                  borderColor: aktif ? (bilgi?.renk || "#0E7C7B") : "#E5E7EB",
+                }}
+                className="flex items-center gap-1.5 border px-4 py-2 rounded-full text-sm font-semibold transition-all hover:opacity-80"
+              >
+                {bilgi?.Ikon && <span className="opacity-90"><bilgi.Ikon /></span>}
+                {kat}
+              </Link>
+            );
+          })}
         </div>
 
         {/* Form Listesi */}
         <div className="grid md:grid-cols-2 gap-4">
-          {filtrelenmis.map((form) => (
+          {filtrelenmis.map((form) => {
+            const bilgi = KATEGORI_BILGI[form.kategori];
+            return (
             <div key={form.id} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:border-teal-200 transition-colors">
               <div className="flex items-start justify-between gap-3 mb-3">
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">
-                      {KATEGORI_IKON[form.kategori]} {form.kategori}
+                    <span
+                      style={{ backgroundColor: bilgi?.bg || "#E8F5F5", color: bilgi?.renk || "#0E7C7B" }}
+                      className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold"
+                    >
+                      {bilgi?.Ikon && <bilgi.Ikon />}
+                      {form.kategori}
                     </span>
                     <span style={{ backgroundColor: "#EFF6FF", color: "#1E40AF" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">
                       🇹🇷 TR
@@ -96,7 +110,13 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
                   </div>
                   <h3 style={{ color: "#0D2137" }} className="font-bold text-sm leading-snug">{form.baslik}</h3>
                 </div>
-                <span className="text-2xl flex-shrink-0">{KATEGORI_IKON[form.kategori] || "📄"}</span>
+                {bilgi?.Ikon ? (
+                  <span style={{ color: bilgi.renk, backgroundColor: bilgi.bg }} className="p-2.5 rounded-xl flex-shrink-0">
+                    <bilgi.Ikon />
+                  </span>
+                ) : (
+                  <span className="text-2xl flex-shrink-0">📄</span>
+                )}
               </div>
 
               <p className="text-gray-400 text-xs leading-relaxed mb-4">{form.aciklama}</p>
@@ -111,7 +131,8 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
                 </Link>
               </div>
             </div>
-          ))}
+          );
+          })}
         </div>
 
         {/* Bilgi Kutusu */}
