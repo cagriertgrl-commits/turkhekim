@@ -180,13 +180,16 @@ async function migrate() {
   `;
   console.log("✅ yorum_sikayetler tablosu oluşturuldu");
 
-  // ─── DOKTORLAR — soyad + egitim sütunları ───────────────────────────────────
+  // ─── DOKTORLAR — soyad + egitim + koordinat + video sütunları ──────────────
   await sql`
     ALTER TABLE doktorlar
     ADD COLUMN IF NOT EXISTS soyad TEXT,
-    ADD COLUMN IF NOT EXISTS egitim JSONB
+    ADD COLUMN IF NOT EXISTS egitim JSONB,
+    ADD COLUMN IF NOT EXISTS enlem TEXT,
+    ADD COLUMN IF NOT EXISTS boylam TEXT,
+    ADD COLUMN IF NOT EXISTS tanitim_video TEXT
   `;
-  console.log("✅ doktorlar.soyad + egitim eklendi");
+  console.log("✅ doktorlar.soyad + egitim + koordinat + video eklendi");
 
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);

@@ -252,6 +252,24 @@ export default async function Panel() {
                   <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
+                {/* Koordinat — isteğe bağlı, daha hassas harita için */}
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Enlem (opsiyonel)</label>
+                    <input name="enlem" defaultValue={doktor.enlem || ""} placeholder="41.0082" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  </div>
+                  <div>
+                    <label className="text-xs text-gray-400 block mb-1">Boylam (opsiyonel)</label>
+                    <input name="boylam" defaultValue={doktor.boylam || ""} placeholder="28.9784" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  </div>
+                </div>
+
+                <div>
+                  <label className="text-sm text-gray-500 block mb-1">Tanıtım Videosu (opsiyonel)</label>
+                  <input name="tanitim_video" defaultValue={doktor.tanitim_video || ""} placeholder="https://youtube.com/embed/..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  <p className="text-xs text-gray-400 mt-1">YouTube embed URL formatı: youtube.com/embed/VIDEO_ID</p>
+                </div>
+
                 <PanelDilSecici mevcutDiller={doktor.diller || ""} />
 
                 <HizmetSecici mevcutHizmetler={doktor.hizmetler || ""} />

@@ -28,6 +28,9 @@ export async function POST(request) {
   const online_randevu = formData.get("online_randevu") === "on";
   const medikal_turizm = formData.get("medikal_turizm") === "on";
   const medikal_turizm_komisyon = g("medikal_turizm_komisyon");
+  const enlem = g("enlem");
+  const boylam = g("boylam");
+  const tanitim_video = g("tanitim_video");
 
   // Eğitim bilgileri — form alanlarından JSON oluştur
   const egitim = {
@@ -81,7 +84,10 @@ export async function POST(request) {
         calisma_saatleri = ${calisma_saatleri || null},
         online_randevu = ${online_randevu},
         medikal_turizm = ${medikal_turizm},
-        medikal_turizm_komisyon = ${medikal_turizm_komisyon || null}
+        medikal_turizm_komisyon = ${medikal_turizm_komisyon || null},
+        enlem = ${enlem || null},
+        boylam = ${boylam || null},
+        tanitim_video = ${tanitim_video || null}
       WHERE id = ${session.id}
     `;
   } catch (err) {

@@ -281,12 +281,29 @@ export default async function DoktorProfil({ params }) {
                   {doktor.adres && (
                     <div className="flex items-start gap-3">
                       <span className="text-lg">📍</span>
-                      <div>
+                      <div className="flex-1">
                         <p className="text-xs text-gray-400 mb-1">Adres</p>
                         <p className="text-sm text-gray-700">{doktor.adres}</p>
                         <a href={`https://maps.google.com/?q=${encodeURIComponent(doktor.adres)}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--teal)" }} className="text-xs hover:underline mt-1 inline-block">
                           📌 Haritada Gör →
                         </a>
+                        {/* Harita embed */}
+                        <div className="mt-3 rounded-xl overflow-hidden border border-gray-100">
+                          <iframe
+                            src={
+                              doktor.enlem && doktor.boylam
+                                ? `https://maps.google.com/maps?q=${doktor.enlem},${doktor.boylam}&output=embed&z=16`
+                                : `https://maps.google.com/maps?q=${encodeURIComponent(doktor.adres)}&output=embed&z=15`
+                            }
+                            width="100%"
+                            height="220"
+                            style={{ border: 0 }}
+                            allowFullScreen=""
+                            loading="lazy"
+                            referrerPolicy="no-referrer-when-downgrade"
+                            title="Konum haritası"
+                          />
+                        </div>
                       </div>
                     </div>
                   )}
@@ -316,6 +333,24 @@ export default async function DoktorProfil({ params }) {
                       </div>
                     </div>
                   )}
+                </div>
+              </div>
+            )}
+
+            {/* Tanıtım Videosu */}
+            {doktor.tanitim_video && (
+              <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                <h2 className="font-bold text-gray-900 text-lg mb-4">🎥 Tanıtım Videosu</h2>
+                <div className="rounded-xl overflow-hidden">
+                  <iframe
+                    src={doktor.tanitim_video}
+                    width="100%"
+                    height="280"
+                    style={{ border: 0 }}
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowFullScreen
+                    title="Tanıtım videosu"
+                  />
                 </div>
               </div>
             )}
