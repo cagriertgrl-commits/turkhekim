@@ -52,7 +52,7 @@ const POPULER_SEHIRLER = [
   { ad: "Antalya", slug: "antalya", foto: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&h=300&q=80" },
   { ad: "Bursa", slug: "bursa", foto: "https://images.unsplash.com/photo-1506905925345-e44c4ea2c478?auto=format&fit=crop&w=400&h=300&q=80" },
   { ad: "Adana", slug: "adana", foto: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "Eskişehir", slug: "eskisehir", foto: null },
+  { ad: "Eskişehir", slug: "eskisehir", foto: "/eskisehir.jpg" },
 ];
 
 export default async function Home() {
