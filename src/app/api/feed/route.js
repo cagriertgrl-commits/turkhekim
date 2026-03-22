@@ -1,6 +1,6 @@
 import sql from "@/lib/db";
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
+import { authOptions } from "@/lib/auth";
 import { NextResponse } from "next/server";
 
 const KATEGORILER = ["saglik-ipucu", "haber", "duyuru", "tedavi", "beslenme", "egzersiz"];
