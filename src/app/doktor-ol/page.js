@@ -1,7 +1,7 @@
 "use client";
 
 import Navbar from "@/components/Navbar";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 
 
@@ -19,7 +19,7 @@ const sehirler = [
   "Eskişehir", "Adana", "Gaziantep", "Konya", "Kayseri",
 ];
 
-export default function DoktorOl() {
+function DoktorOlForm() {
   const [adim, setAdim] = useState(1);
   const [yukleniyor, setYukleniyor] = useState(false);
   const [tamamlandi, setTamamlandi] = useState(false);
@@ -436,4 +436,8 @@ export default function DoktorOl() {
       </div>
     </div>
   );
+}
+
+export default function DoktorOl() {
+  return <Suspense fallback={null}><DoktorOlForm /></Suspense>;
 }
