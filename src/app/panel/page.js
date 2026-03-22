@@ -196,6 +196,11 @@ export default async function Panel() {
               <form action="/api/profil-guncelle" method="POST" className="space-y-3">
 
                 <div>
+                  <label className="text-sm text-gray-500 block mb-1">Soyad</label>
+                  <input name="soyad" defaultValue={doktor.soyad || ""} placeholder="Soyadınız" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                </div>
+
+                <div>
                   <label className="text-sm text-gray-500 block mb-1">Unvan</label>
                   <select name="unvan" defaultValue={doktor.unvan || ""} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
                     <option value="">Seçiniz</option>
@@ -286,6 +291,76 @@ export default async function Panel() {
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                     <p className="text-xs text-gray-400 mt-1">🔒 Sadece yöneticiye görünür — profilinizde yayınlanmaz.</p>
+                  </div>
+                </div>
+
+                {/* Eğitim Bilgileri */}
+                <div className="pt-3 border-t border-gray-100">
+                  <p className="text-sm font-semibold text-gray-700 mb-3">🎓 Eğitim Bilgileri</p>
+
+                  {/* Lise */}
+                  <div className="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold text-gray-500 uppercase">Lise</p>
+                      <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                        <input type="checkbox" name="egitim_lise_goster" defaultChecked={doktor.egitim?.lise?.goster} className="rounded" />
+                        Profilde göster
+                      </label>
+                    </div>
+                    <input name="egitim_lise_okul" defaultValue={doktor.egitim?.lise?.okul || ""} placeholder="Okul adı" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input name="egitim_lise_sehir" defaultValue={doktor.egitim?.lise?.sehir || ""} placeholder="Şehir" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                      <input name="egitim_lise_yil" defaultValue={doktor.egitim?.lise?.yil || ""} placeholder="Mezuniyet yılı" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    </div>
+                  </div>
+
+                  {/* Üniversite */}
+                  <div className="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold text-gray-500 uppercase">Tıp Fakültesi</p>
+                      <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                        <input type="checkbox" name="egitim_universite_goster" defaultChecked={doktor.egitim?.universite?.goster ?? true} className="rounded" />
+                        Profilde göster
+                      </label>
+                    </div>
+                    <input name="egitim_universite_universite" defaultValue={doktor.egitim?.universite?.universite || ""} placeholder="Üniversite adı" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input name="egitim_universite_fakulte" defaultValue={doktor.egitim?.universite?.fakulte || ""} placeholder="Fakülte" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                      <input name="egitim_universite_yil" defaultValue={doktor.egitim?.universite?.yil || ""} placeholder="Mezuniyet yılı" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    </div>
+                  </div>
+
+                  {/* Uzmanlık */}
+                  <div className="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold text-gray-500 uppercase">Uzmanlık</p>
+                      <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                        <input type="checkbox" name="egitim_uzmanlik_goster" defaultChecked={doktor.egitim?.uzmanlik?.goster ?? true} className="rounded" />
+                        Profilde göster
+                      </label>
+                    </div>
+                    <input name="egitim_uzmanlik_kurum" defaultValue={doktor.egitim?.uzmanlik?.kurum || ""} placeholder="Hastane / Üniversite" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input name="egitim_uzmanlik_dal" defaultValue={doktor.egitim?.uzmanlik?.dal || ""} placeholder="Uzmanlık dalı" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                      <input name="egitim_uzmanlik_yil" defaultValue={doktor.egitim?.uzmanlik?.yil || ""} placeholder="Yıl" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    </div>
+                    <input name="egitim_uzmanlik_tez" defaultValue={doktor.egitim?.uzmanlik?.tez || ""} placeholder="Tez konusu (opsiyonel)" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  </div>
+
+                  {/* Yan Dal */}
+                  <div className="p-3 bg-gray-50 rounded-xl space-y-2">
+                    <div className="flex items-center justify-between">
+                      <p className="text-xs font-semibold text-gray-500 uppercase">Yan Dal / Fellowship</p>
+                      <label className="flex items-center gap-2 text-xs text-gray-500 cursor-pointer">
+                        <input type="checkbox" name="egitim_yandal_goster" defaultChecked={doktor.egitim?.yan_dal?.[0]?.goster} className="rounded" />
+                        Profilde göster
+                      </label>
+                    </div>
+                    <input name="egitim_yandal_kurum" defaultValue={doktor.egitim?.yan_dal?.[0]?.kurum || ""} placeholder="Kurum adı" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    <div className="grid grid-cols-2 gap-2">
+                      <input name="egitim_yandal_dal" defaultValue={doktor.egitim?.yan_dal?.[0]?.dal || ""} placeholder="Dal" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                      <input name="egitim_yandal_yil" defaultValue={doktor.egitim?.yan_dal?.[0]?.yil || ""} placeholder="Yıl" className="border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                    </div>
                   </div>
                 </div>
 

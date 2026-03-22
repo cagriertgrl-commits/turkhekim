@@ -24,9 +24,39 @@ export async function POST(request) {
   const klinik_adi = g("klinik_adi");
   const calisan_sayisi = parseInt(g("calisan_sayisi")) || null;
   const calisma_saatleri = g("calisma_saatleri");
+  const soyad = g("soyad");
   const online_randevu = formData.get("online_randevu") === "on";
   const medikal_turizm = formData.get("medikal_turizm") === "on";
   const medikal_turizm_komisyon = g("medikal_turizm_komisyon");
+
+  // Eğitim bilgileri — form alanlarından JSON oluştur
+  const egitim = {
+    lise: {
+      okul: g("egitim_lise_okul"),
+      sehir: g("egitim_lise_sehir"),
+      yil: g("egitim_lise_yil"),
+      goster: formData.get("egitim_lise_goster") === "on",
+    },
+    universite: {
+      universite: g("egitim_universite_universite"),
+      fakulte: g("egitim_universite_fakulte"),
+      yil: g("egitim_universite_yil"),
+      goster: formData.get("egitim_universite_goster") === "on",
+    },
+    uzmanlik: {
+      kurum: g("egitim_uzmanlik_kurum"),
+      dal: g("egitim_uzmanlik_dal"),
+      tez: g("egitim_uzmanlik_tez"),
+      yil: g("egitim_uzmanlik_yil"),
+      goster: formData.get("egitim_uzmanlik_goster") === "on",
+    },
+    yan_dal: g("egitim_yandal_dal") ? [{
+      kurum: g("egitim_yandal_kurum"),
+      dal: g("egitim_yandal_dal"),
+      yil: g("egitim_yandal_yil"),
+      goster: formData.get("egitim_yandal_goster") === "on",
+    }] : [],
+  };
 
   if (hakkinda.length > 3000) return NextResponse.json({ hata: "Hakkında 3000 karakteri geçemez." }, { status: 400 });
   if (website && !website.startsWith("http")) return NextResponse.json({ hata: "Website http:// ile başlamalı." }, { status: 400 });
@@ -34,6 +64,8 @@ export async function POST(request) {
   try {
     await sql`
       UPDATE doktorlar SET
+        soyad = ${soyad || ""},
+        egitim = ${JSON.stringify(egitim)},
         hakkinda = ${hakkinda},
         fiyat = ${fiyat},
         sigorta = ${sigorta},

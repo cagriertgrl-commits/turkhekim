@@ -31,6 +31,7 @@ export default function DoktorOl() {
 
   const [form, setForm] = useState({
     ad: "",
+    soyad: "",
     unvan: "",
     uzmanlik: baslangicUzmanlik,
     sehir: "",
@@ -55,7 +56,7 @@ export default function DoktorOl() {
 
   const ileriGit = () => {
     if (adim === 1) {
-      if (!form.ad || !form.uzmanlik || !form.sehir) {
+      if (!form.ad || !form.soyad || !form.uzmanlik || !form.sehir) {
         setHata("Lütfen tüm zorunlu alanları doldurun.");
         return;
       }
@@ -171,9 +172,14 @@ export default function DoktorOl() {
                     <option value="Op. Dr.">Op. Dr.</option>
                   </select>
                 </div>
-                <div className="col-span-2">
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Ad Soyad <span className="text-red-500">*</span></label>
-                  <input name="ad" value={form.ad} onChange={guncelle} placeholder="Adınız Soyadınız"
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Ad <span className="text-red-500">*</span></label>
+                  <input name="ad" value={form.ad} onChange={guncelle} placeholder="Adınız"
+                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Soyad <span className="text-red-500">*</span></label>
+                  <input name="soyad" value={form.soyad} onChange={guncelle} placeholder="Soyadınız"
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500" />
                 </div>
               </div>

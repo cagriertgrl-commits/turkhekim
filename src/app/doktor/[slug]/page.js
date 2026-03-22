@@ -12,7 +12,8 @@ export async function generateMetadata({ params }) {
   const doktorlar = await sql`SELECT ad, uzmanlik, sehir, unvan FROM doktorlar WHERE slug = ${slug}`;
   if (!doktorlar.length) return { title: "Doktor Bulunamadı" };
   const d = doktorlar[0];
-  const unvanAd = d.unvan ? `${d.unvan} ${d.ad}` : d.ad;
+  const tamIsim = [d.ad, d.soyad].filter(Boolean).join(" ");
+  const unvanAd = d.unvan ? `${d.unvan} ${tamIsim}` : tamIsim;
   return {
     title: `${unvanAd} — ${d.uzmanlik} | DoktorPusula`,
     description: `${unvanAd} profilini inceleyin. ${d.sehir} şehrinde ${d.uzmanlik}. Doğrulanmış yorumlar ve online randevu.`,
@@ -64,8 +65,9 @@ export default async function DoktorProfil({ params }) {
 
   sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme,0)+1 WHERE id=${doktor.id}`.catch(()=>{});
 
-  const initials = doktor.ad.split(" ").slice(1).map(n => n[0]).join("").slice(0,2) || "DR";
-  const unvanAd = doktor.unvan ? `${doktor.unvan} ${doktor.ad}` : doktor.ad;
+  const tamIsim = [doktor.ad, doktor.soyad].filter(Boolean).join(" ");
+  const initials = (tamIsim.split(" ").map(n => n[0]).join("").slice(0, 2) || "DR").toUpperCase();
+  const unvanAd = doktor.unvan ? `${doktor.unvan} ${tamIsim}` : tamIsim;
   const sehirSlug = slugify(doktor.sehir || "istanbul");
   const uzmanlikSlug = slugify(doktor.uzmanlik || "doktor");
 
@@ -218,6 +220,33 @@ export default async function DoktorProfil({ params }) {
                 <p className="text-gray-600 leading-relaxed text-sm">{doktor.hakkinda}</p>
               </div>
             )}
+
+            {/* Eğitim */}
+            {doktor.egitim && Object.keys(doktor.egitim).length > 0 && (() => {
+              const eg = doktor.egitim;
+              const satirlar = [];
+              if (eg.lise?.goster && eg.lise?.okul) satirlar.push({ ikon: "🏫", baslik: "Lise", deger: `${eg.lise.okul}${eg.lise.sehir ? ` — ${eg.lise.sehir}` : ""}${eg.lise.yil ? ` (${eg.lise.yil})` : ""}` });
+              if (eg.universite?.goster && eg.universite?.universite) satirlar.push({ ikon: "🎓", baslik: "Tıp Fakültesi", deger: `${eg.universite.universite}${eg.universite.fakulte ? ` / ${eg.universite.fakulte}` : ""}${eg.universite.yil ? ` (${eg.universite.yil})` : ""}` });
+              if (eg.uzmanlik?.goster && eg.uzmanlik?.dal) satirlar.push({ ikon: "⭐", baslik: "Uzmanlık", deger: `${eg.uzmanlik.dal}${eg.uzmanlik.kurum ? ` — ${eg.uzmanlik.kurum}` : ""}${eg.uzmanlik.yil ? ` (${eg.uzmanlik.yil})` : ""}` });
+              if (eg.yan_dal?.length) eg.yan_dal.filter(y => y.goster && y.dal).forEach(y => satirlar.push({ ikon: "🔬", baslik: "Yan Dal", deger: `${y.dal}${y.kurum ? ` — ${y.kurum}` : ""}${y.yil ? ` (${y.yil})` : ""}` }));
+              if (!satirlar.length) return null;
+              return (
+                <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+                  <h2 className="font-bold text-gray-900 text-lg mb-4">🎓 Eğitim</h2>
+                  <div className="space-y-3">
+                    {satirlar.map((s, i) => (
+                      <div key={i} className="flex items-start gap-3">
+                        <span className="text-lg">{s.ikon}</span>
+                        <div>
+                          <p className="text-xs text-gray-400 font-semibold uppercase tracking-wide">{s.baslik}</p>
+                          <p className="text-sm text-gray-700">{s.deger}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              );
+            })()}
 
             {/* Hizmetler */}
             {hizmetler.length > 0 && (

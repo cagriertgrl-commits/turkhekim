@@ -235,7 +235,8 @@ export default async function DoktorListesi({ params, searchParams }) {
               </div>
             ) : (
               doktorlar.map((doktor) => {
-                const initials = doktor.ad.split(" ").slice(1).map((n) => n[0]).join("").slice(0, 2);
+                const tamIsim = [doktor.ad, doktor.soyad].filter(Boolean).join(" ");
+                const initials = tamIsim.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase();
                 const rozetler = rozetHesapla(doktor);
                 return (
                   <div key={doktor.slug} className="bg-white rounded-2xl p-5 shadow-sm hover:shadow-md transition-all border border-gray-100 group">
@@ -261,7 +262,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                         <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-3">
                           <div>
                             <h2 className="font-bold text-gray-900 text-lg group-hover:text-teal-700 transition-colors">
-                              {doktor.ad}
+                              {doktor.unvan ? `${doktor.unvan} ${tamIsim}` : tamIsim}
                             </h2>
                             <p style={{ color: "var(--teal)" }} className="text-sm font-semibold">{doktor.uzmanlik}</p>
                             <p className="text-gray-500 text-sm mt-0.5">
