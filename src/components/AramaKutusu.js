@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { branşAra, BRANSLAR } from "@/lib/branslar";
 
 function slugYap(metin) {
   return metin
@@ -12,15 +13,6 @@ function slugYap(metin) {
     .replace(/\s+/g, "-")
     .replace(/[^a-z0-9-]/g, "");
 }
-
-const UZMANLIKLAR = [
-  "KBB Uzmanı", "Kardiyoloji", "Ortopedi", "Plastik Cerrahi",
-  "Göz Hastalıkları", "Diş Hekimi", "Dermatoloji", "Nöroloji",
-  "Üroloji", "Psikiyatri", "Çocuk Hastalıkları", "Estetik Cerrahi",
-  "Genel Cerrahi", "İç Hastalıkları", "Kadın Doğum", "Rinoplasti",
-  "Onkoloji", "Endokrinoloji", "Gastroenteroloji", "Fizik Tedavi",
-  "Radyoloji", "Anesteziyoloji", "Acil Tıp", "Aile Hekimi",
-];
 
 const SEHIRLER = [
   "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
@@ -36,6 +28,7 @@ const POPULER = [
   { etiket: "Göz · İstanbul", sehir: "istanbul", uzmanlik: "goz-hastaliklari" },
 ];
 
+// Şehir için basit string dropdown
 function DropdownInput({ value, onChange, placeholder, onaylar, label, icon }) {
   const [acik, setAcik] = useState(false);
   const ref = useRef(null);
@@ -83,15 +76,81 @@ function DropdownInput({ value, onChange, placeholder, onaylar, label, icon }) {
   );
 }
 
+// Uzmanlık için alias destekli dropdown — gorunum formatında gösterir
+function UzmanlikInput({ value, onChange, onSlugChange, placeholder }) {
+  const [acik, setAcik] = useState(false);
+  const ref = useRef(null);
+
+  // Alias araması: 1+ karakter yeterli
+  const sonuclar = value.length >= 1 ? branşAra(value) : [];
+  // Boşken popüler branşları göster
+  const varsayilan = BRANSLAR.slice(0, 8);
+
+  useEffect(() => {
+    function kapat(e) {
+      if (ref.current && !ref.current.contains(e.target)) setAcik(false);
+    }
+    document.addEventListener("mousedown", kapat);
+    return () => document.removeEventListener("mousedown", kapat);
+  }, []);
+
+  function secim(brans) {
+    onChange(brans.kanonikal);
+    onSlugChange(brans.slug);
+    setAcik(false);
+  }
+
+  const gosterilecek = value.length >= 1 ? sonuclar : varsayilan;
+
+  return (
+    <div className="flex-1 relative" ref={ref}>
+      <label className="block text-xs font-semibold text-gray-500 mb-1 text-left uppercase tracking-wide">
+        🔍 Uzmanlık
+      </label>
+      <input
+        type="text"
+        value={value}
+        onChange={(e) => { onChange(e.target.value); onSlugChange(""); setAcik(true); }}
+        onFocus={() => setAcik(true)}
+        placeholder={placeholder}
+        className="w-full border-2 border-gray-100 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 transition-colors bg-gray-50 focus:bg-white"
+      />
+      {acik && gosterilecek.length > 0 && (
+        <div className="absolute top-full left-0 right-0 bg-white border border-gray-100 rounded-xl shadow-xl mt-1 z-50 overflow-hidden">
+          {gosterilecek.map((brans) => {
+            // gorunum: "KBB (Kulak Burun Boğaz)" — ikiye ayır
+            const m = brans.gorunum.match(/^([^(]+?)(?:\s*\(([^)]+)\))?$/);
+            const ana = m?.[1]?.trim() || brans.gorunum;
+            const alt = m?.[2] || null;
+            return (
+              <button
+                key={brans.slug}
+                type="button"
+                onClick={() => secim(brans)}
+                className="w-full text-left px-4 py-2.5 hover:bg-teal-50 transition-colors flex items-baseline gap-2"
+              >
+                <span className="text-sm font-medium text-gray-800">{ana}</span>
+                {alt && <span className="text-xs text-gray-400">{alt}</span>}
+              </button>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AramaKutusu() {
   const router = useRouter();
   const [uzmanlik, setUzmanlik] = useState("");
+  const [uzmanlikSlug, setUzmanlikSlug] = useState(""); // alias aramasından gelen kesin slug
   const [sehir, setSehir] = useState("");
   const [mod, setMod] = useState("yuzyuze"); // "yuzyuze" | "online"
 
   function ara(e) {
     e.preventDefault();
-    const u = slugYap(uzmanlik || "doktor");
+    // Seçilmiş slug varsa onu kullan, yoksa serbest metin slug'ı
+    const u = uzmanlikSlug || slugYap(uzmanlik || "doktor");
     const s = slugYap(sehir || "turkiye");
     const query = mod === "online" ? "?online=1" : "";
     router.push(`/${s}/${u}${query}`);
@@ -125,13 +184,11 @@ export default function AramaKutusu() {
 
       <form onSubmit={ara}>
         <div className="flex flex-col md:flex-row gap-3">
-          <DropdownInput
-            label="Uzmanlık"
-            icon="🔍"
+          <UzmanlikInput
             value={uzmanlik}
             onChange={setUzmanlik}
-            placeholder="KBB, Kardiyoloji, Ortopedi..."
-            onaylar={UZMANLIKLAR}
+            onSlugChange={setUzmanlikSlug}
+            placeholder="KBB, Kardiyoloji, cildiye..."
           />
           <DropdownInput
             label="Şehir"
