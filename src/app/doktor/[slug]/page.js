@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import YorumFormu from "@/components/YorumFormu";
 import RandevuFormu from "@/components/RandevuFormu";
 import SoruFormu from "@/components/SoruFormu";
+import BaglantiKopyala from "@/components/BaglantiKopyala";
 import sql from "@/lib/db";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -202,12 +203,7 @@ export default async function DoktorProfil({ params }) {
                 >
                   WhatsApp
                 </a>
-                <button
-                  onClick={() => navigator.clipboard?.writeText(`https://doktorpusula.com/doktor/${slug}`)}
-                  className="flex-1 text-center text-xs py-2 rounded-xl font-semibold border border-gray-200 text-gray-600 hover:bg-gray-50"
-                >
-                  Bağlantıyı Kopyala
-                </button>
+                <BaglantiKopyala url={`https://doktorpusula.com/doktor/${slug}`} />
               </div>
             </div>
           </div>
