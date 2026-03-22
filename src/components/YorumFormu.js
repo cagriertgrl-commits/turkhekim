@@ -53,9 +53,9 @@ export default function YorumFormu({ doktorId }) {
       <div className="bg-white rounded-2xl p-6 shadow-sm text-center">
         <div className="text-4xl mb-3">🎉</div>
         <h3 className="font-bold text-gray-900 mb-2">Teşekkürler!</h3>
-        <p className="text-gray-500 text-sm">Yorumunuz kaydedildi. Diğer hastalara yardımcı oldu.</p>
-        <div style={{ backgroundColor: "#D1FAE5", borderColor: "#059669" }} className="border rounded-xl p-3 mt-4">
-          <p style={{ color: "#059669" }} className="text-xs font-medium">✓ Doğrulanmış yorum olarak işaretlendi</p>
+        <p className="text-gray-500 text-sm">Yorumunuz alındı. Doktor onayı ve moderasyon sonrasında yayınlanacak.</p>
+        <div style={{ backgroundColor: "#EFF6FF", borderColor: "#BFDBFE" }} className="border rounded-xl p-3 mt-4">
+          <p style={{ color: "#1D4ED8" }} className="text-xs font-medium">⏳ Doktor bu ziyareti onayladıktan sonra yorumunuz moderasyona alınacak</p>
         </div>
       </div>
     );

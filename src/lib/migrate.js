@@ -161,6 +161,28 @@ async function migrate() {
   `;
   console.log("✅ ai_sohbet tablosu oluşturuldu");
 
+  // ─── YORUM ŞİKAYETLER tablosu ───────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS yorum_sikayetler (
+      id SERIAL PRIMARY KEY,
+      yorum_id INTEGER NOT NULL,
+      kategori TEXT NOT NULL,
+      aciklama TEXT NOT NULL,
+      ip TEXT,
+      incelendi BOOLEAN DEFAULT false,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  console.log("✅ yorum_sikayetler tablosu oluşturuldu");
+
+  // ─── DOKTORLAR — soyad + egitim sütunları ───────────────────────────────────
+  await sql`
+    ALTER TABLE doktorlar
+    ADD COLUMN IF NOT EXISTS soyad TEXT,
+    ADD COLUMN IF NOT EXISTS egitim JSONB
+  `;
+  console.log("✅ doktorlar.soyad + egitim eklendi");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }
