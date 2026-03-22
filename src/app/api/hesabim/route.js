@@ -2,16 +2,9 @@ import { getSession } from "@/lib/session";
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 
-async function ensureColumns() {
-  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS arka_plan_foto_url TEXT`; } catch (_) {}
-  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS tema TEXT DEFAULT 'varsayilan'`; } catch (_) {}
-}
-
 export async function GET() {
   const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
-
-  await ensureColumns();
 
   // Try full select, fall back if new columns still don't exist
   try {
@@ -37,7 +30,6 @@ export async function PATCH(request) {
     return NextResponse.json({ hata: "Geçersiz tema." }, { status: 400 });
   }
 
-  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS tema TEXT DEFAULT 'varsayilan'`; } catch (_) {}
   await sql`UPDATE doktorlar SET tema = ${tema} WHERE id = ${session.id}`;
   return NextResponse.json({ tamam: true });
 }

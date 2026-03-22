@@ -31,10 +31,6 @@ export async function POST(request) {
   if (hakkinda.length > 3000) return NextResponse.json({ hata: "Hakkında 3000 karakteri geçemez." }, { status: 400 });
   if (website && !website.startsWith("http")) return NextResponse.json({ hata: "Website http:// ile başlamalı." }, { status: 400 });
 
-  // Yeni sütunları ekle (yoksa)
-  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS medikal_turizm BOOLEAN DEFAULT false`; } catch (_) {}
-  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS medikal_turizm_komisyon TEXT`; } catch (_) {}
-
   await sql`
     UPDATE doktorlar SET
       hakkinda = ${hakkinda},

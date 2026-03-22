@@ -50,8 +50,8 @@ export async function POST(request) {
     `;
 
   } else if (karar === "yayinla" && adminMi) {
-    // Admin yorumu yayınlıyor
-    await sql`UPDATE yorumlar SET dogrulama_durumu = 'onaylandi' WHERE id = ${yorum_id}`;
+    // Admin yorumu yayınlıyor — anasayfada ve profilde görünsün, "Doğrulanmış" badge yanıyor
+    await sql`UPDATE yorumlar SET dogrulama_durumu = 'onaylandi', yayinlandi = true, dogrulanmis = true WHERE id = ${yorum_id}`;
     await sql`UPDATE yorum_dogrulama SET durum = 'yayinlandi', guncellendi_at = NOW() WHERE yorum_id = ${yorum_id}`;
 
   } else if (karar === "reddet_admin" && adminMi) {

@@ -35,7 +35,11 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS klinik_foto_urls TEXT,
     ADD COLUMN IF NOT EXISTS calisan_sayisi INTEGER,
     ADD COLUMN IF NOT EXISTS calisma_saatleri TEXT,
-    ADD COLUMN IF NOT EXISTS paket TEXT DEFAULT 'ucretsiz'
+    ADD COLUMN IF NOT EXISTS paket TEXT DEFAULT 'ucretsiz',
+    ADD COLUMN IF NOT EXISTS arka_plan_foto_url TEXT,
+    ADD COLUMN IF NOT EXISTS tema TEXT DEFAULT 'varsayilan',
+    ADD COLUMN IF NOT EXISTS medikal_turizm BOOLEAN DEFAULT false,
+    ADD COLUMN IF NOT EXISTS medikal_turizm_komisyon TEXT
   `;
   console.log("✅ doktorlar tablosu güncellendi");
 

@@ -55,6 +55,7 @@ export async function PATCH(request) {
     SET
       dogrulama_durumu = ${karar},
       yayinlandi       = ${karar === "yayinlandi"},
+      dogrulanmis      = ${karar === "yayinlandi"},
       moderasyon_notu  = ${moderasyon_notu || null}
     WHERE id = ${yorum_id}
   `;
