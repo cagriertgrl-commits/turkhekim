@@ -2,6 +2,11 @@ import "./globals.css";
 import Footer from "@/components/Footer";
 import CerezBanner from "@/components/CerezBanner";
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
+
 export const metadata = {
   title: {
     default: "DoktorPusula — Türkiye'nin Sağlık Otoritesi",

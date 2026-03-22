@@ -19,6 +19,20 @@ export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAk
   }
 
   const SEHIRLER = ["istanbul", "ankara", "izmir", "bursa", "antalya"];
+  const UZMANLIKLAR = [
+    { label: "KBB Uzmanı", slug: "kbb-uzmani" },
+    { label: "Kardiyoloji", slug: "kardiyoloji" },
+    { label: "Ortopedi", slug: "ortopedi" },
+    { label: "Göz Hastalıkları", slug: "goz-hastaliklari" },
+    { label: "Diş Hekimi", slug: "dis-hekimi" },
+    { label: "Dermatoloji", slug: "dermatoloji" },
+    { label: "Psikiyatri", slug: "psikiyatri" },
+    { label: "Kadın Doğum", slug: "kadin-dogum" },
+    { label: "Çocuk Hastalıkları", slug: "cocuk-hastaliklari" },
+    { label: "Plastik Cerrahi", slug: "plastik-cerrahi" },
+    { label: "Rinoplasti", slug: "rinoplasti" },
+    { label: "Nöroloji", slug: "noroloji" },
+  ];
   const SIRALAMA_SECENEKLERI = [
     { label: "En Yüksek Puan", val: "puan" },
     { label: "En Fazla Yorum", val: "yorum" },
@@ -113,6 +127,29 @@ export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAk
                   <span className="text-sm font-medium">Online Randevu</span>
                   {onlineFiltreAktif && <span className="ml-auto text-xs font-bold">✓</span>}
                 </Link>
+              </div>
+            </div>
+
+            {/* Uzmanlık Alanları */}
+            <div className="mb-6">
+              <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Uzmanlık Alanları</p>
+              <div className="flex flex-wrap gap-2">
+                {UZMANLIKLAR.map((u) => {
+                  const aktif = uzmanlikParam === u.slug;
+                  return (
+                    <Link
+                      key={u.slug}
+                      href={`/${sehirParam}/${u.slug}`}
+                      onClick={() => setAcik(false)}
+                      className="text-sm px-3 py-1.5 rounded-full border transition-colors"
+                      style={aktif
+                        ? { backgroundColor: "var(--light-teal)", borderColor: "var(--teal)", color: "var(--teal)", fontWeight: 600 }
+                        : { borderColor: "#E5E7EB", color: "#374151" }}
+                    >
+                      {u.label}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 

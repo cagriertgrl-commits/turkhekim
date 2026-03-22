@@ -94,7 +94,7 @@ export default async function DoktorProfil({ params }) {
   );
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "#F5F7FA" }}>
+    <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: "#F5F7FA" }}>
       <Navbar />
 
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -106,7 +106,7 @@ export default async function DoktorProfil({ params }) {
       }) }} />
 
       {/* HERO */}
-      <div style={heroStyle} className="px-6 pt-10 pb-24 relative">
+      <div style={heroStyle} className="px-6 pt-10 pb-10 relative">
         {tema === "desen" && doktor.arka_plan_foto_url && (
           <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${doktor.arka_plan_foto_url})`, backgroundRepeat: "repeat", backgroundSize: "160px 160px", opacity: 0.07, pointerEvents: "none" }} />
         )}
@@ -130,11 +130,11 @@ export default async function DoktorProfil({ params }) {
               )}
             </div>
 
-            <div className="flex-1">
+            <div className="flex-1 min-w-0">
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                {doktor.onaylandi && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">✓ Doğrulanmış Doktor</span>}
-                {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">⭐ {/^\d+$/.test(doktor.deneyim.toString().trim()) ? `${doktor.deneyim} yıl` : doktor.deneyim} Deneyim</span>}
-                {doktor.online_randevu && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">🎥 Online Randevu</span>}
+                {doktor.onaylandi && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap">✓ Doğrulanmış Doktor</span>}
+                {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap">⭐ {/^\d+$/.test(doktor.deneyim.toString().trim()) ? `${doktor.deneyim} yıl` : doktor.deneyim} Deneyim</span>}
+                {doktor.online_randevu && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-2.5 py-1 rounded-full font-semibold whitespace-nowrap">🎥 Online Randevu</span>}
               </div>
 
               <h1 className="text-white text-2xl md:text-4xl font-bold mb-1">{unvanAd}</h1>
@@ -176,7 +176,7 @@ export default async function DoktorProfil({ params }) {
       </div>
 
       {/* İÇERİK */}
-      <div className="max-w-6xl mx-auto px-6 -mt-10 pb-16">
+      <div className="max-w-6xl mx-auto px-6 mt-6 pb-16">
         <div className="grid md:grid-cols-3 gap-6">
 
           {/* SIDEBAR */}

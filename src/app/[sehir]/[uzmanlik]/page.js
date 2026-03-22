@@ -135,8 +135,8 @@ export default async function DoktorListesi({ params, searchParams }) {
       <div className="max-w-6xl mx-auto px-6 py-8">
         <div className="grid md:grid-cols-4 gap-8">
 
-          {/* SOL — Filtreler */}
-          <div className="md:col-span-1 space-y-4">
+          {/* SOL — Filtreler (sadece masaüstü) */}
+          <div className="hidden md:block md:col-span-1 space-y-4">
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-5 text-sm">Filtrele</h3>
 
