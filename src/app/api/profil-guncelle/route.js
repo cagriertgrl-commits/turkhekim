@@ -31,26 +31,31 @@ export async function POST(request) {
   if (hakkinda.length > 3000) return NextResponse.json({ hata: "Hakkında 3000 karakteri geçemez." }, { status: 400 });
   if (website && !website.startsWith("http")) return NextResponse.json({ hata: "Website http:// ile başlamalı." }, { status: 400 });
 
-  await sql`
-    UPDATE doktorlar SET
-      hakkinda = ${hakkinda},
-      fiyat = ${fiyat},
-      sigorta = ${sigorta},
-      adres = ${adres},
-      adres_tipi = ${adres_tipi},
-      website = ${website || null},
-      diller = ${diller || null},
-      hizmetler = ${hizmetler || null},
-      whatsapp = ${whatsapp || null},
-      unvan = ${unvan || null},
-      klinik_adi = ${klinik_adi || null},
-      calisan_sayisi = ${calisan_sayisi},
-      calisma_saatleri = ${calisma_saatleri || null},
-      online_randevu = ${online_randevu},
-      medikal_turizm = ${medikal_turizm},
-      medikal_turizm_komisyon = ${medikal_turizm_komisyon || null}
-    WHERE id = ${session.id}
-  `;
+  try {
+    await sql`
+      UPDATE doktorlar SET
+        hakkinda = ${hakkinda},
+        fiyat = ${fiyat},
+        sigorta = ${sigorta},
+        adres = ${adres},
+        adres_tipi = ${adres_tipi},
+        website = ${website || null},
+        diller = ${diller || null},
+        hizmetler = ${hizmetler || null},
+        whatsapp = ${whatsapp || null},
+        unvan = ${unvan || null},
+        klinik_adi = ${klinik_adi || null},
+        calisan_sayisi = ${calisan_sayisi},
+        calisma_saatleri = ${calisma_saatleri || null},
+        online_randevu = ${online_randevu},
+        medikal_turizm = ${medikal_turizm},
+        medikal_turizm_komisyon = ${medikal_turizm_komisyon || null}
+      WHERE id = ${session.id}
+    `;
+  } catch (err) {
+    console.error("[profil-guncelle] DB hatası:", err.message);
+    return NextResponse.json({ hata: "Kayıt sırasında hata: " + err.message }, { status: 500 });
+  }
 
   return NextResponse.redirect(new URL("/panel", request.url));
 }
