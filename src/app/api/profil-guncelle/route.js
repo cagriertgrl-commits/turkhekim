@@ -25,9 +25,15 @@ export async function POST(request) {
   const calisan_sayisi = parseInt(g("calisan_sayisi")) || null;
   const calisma_saatleri = g("calisma_saatleri");
   const online_randevu = formData.get("online_randevu") === "on";
+  const medikal_turizm = formData.get("medikal_turizm") === "on";
+  const medikal_turizm_komisyon = g("medikal_turizm_komisyon");
 
   if (hakkinda.length > 3000) return NextResponse.json({ hata: "Hakkında 3000 karakteri geçemez." }, { status: 400 });
   if (website && !website.startsWith("http")) return NextResponse.json({ hata: "Website http:// ile başlamalı." }, { status: 400 });
+
+  // Yeni sütunları ekle (yoksa)
+  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS medikal_turizm BOOLEAN DEFAULT false`; } catch (_) {}
+  try { await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS medikal_turizm_komisyon TEXT`; } catch (_) {}
 
   await sql`
     UPDATE doktorlar SET
@@ -44,7 +50,9 @@ export async function POST(request) {
       klinik_adi = ${klinik_adi || null},
       calisan_sayisi = ${calisan_sayisi},
       calisma_saatleri = ${calisma_saatleri || null},
-      online_randevu = ${online_randevu}
+      online_randevu = ${online_randevu},
+      medikal_turizm = ${medikal_turizm},
+      medikal_turizm_komisyon = ${medikal_turizm_komisyon || null}
     WHERE id = ${session.id}
   `;
 

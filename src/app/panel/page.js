@@ -267,6 +267,28 @@ export default async function Panel() {
                   <span className="text-sm text-gray-700">Online Randevu Kabul Ediyorum</span>
                 </label>
 
+                {/* Medikal Turizm — gizli alan, profilde yayınlanmaz */}
+                <div className="pt-3 border-t border-gray-100">
+                  <p className="text-xs font-semibold text-gray-500 mb-2">🌍 Medikal Turizm</p>
+                  <label className="flex items-center gap-3 cursor-pointer py-1">
+                    <div className="relative flex-shrink-0">
+                      <input type="checkbox" name="medikal_turizm" defaultChecked={!!doktor.medikal_turizm} className="sr-only peer" />
+                      <div className="w-10 h-6 bg-gray-200 rounded-full peer-checked:bg-teal-600 transition-colors"></div>
+                      <div className="absolute top-1 left-1 w-4 h-4 bg-white rounded-full shadow transition-transform peer-checked:translate-x-4"></div>
+                    </div>
+                    <span className="text-sm text-gray-700">Yabancı Hasta Kabul Ediyorum</span>
+                  </label>
+                  <div className="mt-2">
+                    <input
+                      name="medikal_turizm_komisyon"
+                      defaultValue={doktor.medikal_turizm_komisyon || ""}
+                      placeholder="Aracı komisyon oranı (örn. %15)"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
+                    />
+                    <p className="text-xs text-gray-400 mt-1">🔒 Sadece yöneticiye görünür — profilinizde yayınlanmaz.</p>
+                  </div>
+                </div>
+
                 <button type="submit" style={{ backgroundColor: "#0D2137" }} className="w-full text-white py-2.5 rounded-lg text-sm font-medium hover:opacity-90">
                   Kaydet
                 </button>

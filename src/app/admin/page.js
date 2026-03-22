@@ -287,7 +287,7 @@ export default function AdminPanel() {
               <table className="w-full text-sm">
                 <thead style={{ backgroundColor: "#F5F7FA" }}>
                   <tr>
-                    {["Doktor", "Uzmanlık", "Şehir", "Paket", "Puan", "Durum", "İşlem"].map(h => (
+                    {["Doktor", "Uzmanlık", "Şehir", "Paket", "Puan", "Med.Tur.", "Durum", "İşlem"].map(h => (
                       <th key={h} className="text-left px-4 py-3 text-gray-500 font-semibold text-xs">{h}</th>
                     ))}
                   </tr>
@@ -323,6 +323,11 @@ export default function AdminPanel() {
                       </td>
                       <td className="px-4 py-3">
                         {d.yorum_sayisi > 0 ? <span className="text-yellow-500 font-bold">★ {d.puan}</span> : <span className="text-gray-300">—</span>}
+                      </td>
+                      <td className="px-4 py-3">
+                        {d.medikal_turizm
+                          ? <span className="text-xs text-teal-700 font-semibold">🌍 {d.medikal_turizm_komisyon || "Evet"}</span>
+                          : <span className="text-gray-300 text-xs">—</span>}
                       </td>
                       <td className="px-4 py-3">
                         {d.onaylandi
