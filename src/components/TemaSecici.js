@@ -9,7 +9,7 @@ const TEMALAR = [
   { id: "desen", ad: "Logo Deseni", stil: null }, // dinamik
 ];
 
-export default function TemaSecici({ mevcutTema, arkaplanUrl }) {
+export default function TemaSecici({ mevcutTema, arkaplanUrl, gizleBashlik = false }) {
   const [tema, setTema] = useState(mevcutTema || "varsayilan");
   const [kaydediliyor, setKaydediliyor] = useState(false);
   const [mesaj, setMesaj] = useState(null);
@@ -37,12 +37,20 @@ export default function TemaSecici({ mevcutTema, arkaplanUrl }) {
   }
 
   return (
-    <div className="mt-4 pt-4 border-t border-gray-100">
-      <div className="flex items-center justify-between mb-2">
-        <p className="text-xs text-gray-500 font-medium">Hesabım Teması</p>
-        {kaydediliyor && <span className="text-xs text-gray-400">Kaydediliyor…</span>}
-        {mesaj && !kaydediliyor && <span className={`text-xs ${mesaj.startsWith("✓") ? "text-green-600" : "text-red-600"}`}>{mesaj}</span>}
-      </div>
+    <div className={gizleBashlik ? "" : "mt-4 pt-4 border-t border-gray-100"}>
+      {!gizleBashlik && (
+        <div className="flex items-center justify-between mb-2">
+          <p className="text-xs text-gray-500 font-medium">Hesabım Teması</p>
+          {kaydediliyor && <span className="text-xs text-gray-400">Kaydediliyor…</span>}
+          {mesaj && !kaydediliyor && <span className={`text-xs ${mesaj.startsWith("✓") ? "text-green-600" : "text-red-600"}`}>{mesaj}</span>}
+        </div>
+      )}
+      {gizleBashlik && (kaydediliyor || mesaj) && (
+        <div className="flex justify-end mb-2">
+          {kaydediliyor && <span className="text-xs text-gray-400">Kaydediliyor…</span>}
+          {mesaj && !kaydediliyor && <span className={`text-xs ${mesaj.startsWith("✓") ? "text-green-600" : "text-red-600"}`}>{mesaj}</span>}
+        </div>
+      )}
       <div className="grid grid-cols-4 gap-1.5">
         {TEMALAR.map((t) => {
           const onizleme = t.id === "desen"

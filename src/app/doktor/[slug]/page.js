@@ -72,6 +72,14 @@ export default async function DoktorProfil({ params }) {
   const hizmetler = (doktor.hizmetler || "").split("\n").map(s => s.trim()).filter(Boolean);
   const diller = (doktor.diller || "").split(",").map(s => s.trim()).filter(Boolean);
 
+  // Profil teması
+  const tema = doktor.tema || "varsayilan";
+  const heroStyle = tema === "teal"
+    ? { background: "linear-gradient(135deg, #0E7C7B 0%, #059669 100%)" }
+    : tema === "koyu"
+    ? { background: "linear-gradient(135deg, #060f1a 0%, #0D2137 100%)" }
+    : { background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }; // varsayilan + desen
+
   const adresTipEtiket = {
     muayenehane: "🏠 Muayenehane",
     klinik: "🏥 Klinik",
@@ -97,7 +105,10 @@ export default async function DoktorProfil({ params }) {
       }) }} />
 
       {/* HERO */}
-      <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 pt-10 pb-24">
+      <div style={heroStyle} className="px-6 pt-10 pb-24 relative">
+        {tema === "desen" && doktor.arka_plan_foto_url && (
+          <div style={{ position: "absolute", inset: 0, backgroundImage: `url(${doktor.arka_plan_foto_url})`, backgroundRepeat: "repeat", backgroundSize: "160px 160px", opacity: 0.07, pointerEvents: "none" }} />
+        )}
         <div className="max-w-6xl mx-auto">
           <nav className="flex items-center gap-2 text-xs text-gray-400 mb-8">
             <Link href="/" className="hover:text-white">Ana Sayfa</Link>

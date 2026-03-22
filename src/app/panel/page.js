@@ -18,6 +18,7 @@ import HastalarPanel from "@/components/HastalarPanel";
 import PanelDilSecici from "@/components/PanelDilSecici";
 import CikisButonu from "@/components/CikisButonu";
 import WhatsappInput from "@/components/WhatsappInput";
+import TemaSecici from "@/components/TemaSecici";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -273,6 +274,13 @@ export default async function Panel() {
             </div>
 
             <SifreDegistir />
+
+            {/* Profil Teması */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm">
+              <h2 style={{ color: "#0D2137" }} className="font-bold text-lg mb-1">Profil Teması</h2>
+              <p className="text-xs text-gray-400 mb-3">Herkese açık profil sayfanızın görünümünü özelleştirin</p>
+              <TemaSecici mevcutTema={doktor.tema || "varsayilan"} arkaplanUrl={doktor.arka_plan_foto_url} gizleBashlik={true} />
+            </div>
 
             {/* Paket Yükselt kartı — sadece ücretsiz pakette */}
             {(!doktor.paket || doktor.paket === "ucretsiz") && (
