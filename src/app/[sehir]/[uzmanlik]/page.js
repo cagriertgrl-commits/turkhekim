@@ -3,14 +3,45 @@ import AramaKutusu from "@/components/AramaKutusu";
 import MobilFiltre from "@/components/MobilFiltre";
 import sql from "@/lib/db";
 import Link from "next/link";
+import Footer from "@/components/Footer";
+
+const SEHIR_MAP = {
+  istanbul: "İstanbul", ankara: "Ankara", izmir: "İzmir", bursa: "Bursa",
+  antalya: "Antalya", adana: "Adana", konya: "Konya", gaziantep: "Gaziantep",
+  mersin: "Mersin", kayseri: "Kayseri", trabzon: "Trabzon", diyarbakir: "Diyarbakır",
+  samsun: "Samsun", eskisehir: "Eskişehir",
+};
+
+const UZMANLIK_MAP = {
+  "kbb-uzmani": "KBB Uzmanı", "kardiyoloji": "Kardiyoloji", "ortopedi": "Ortopedi",
+  "dermatoloji": "Dermatoloji", "goz-hastaliklari": "Göz Hastalıkları",
+  "plastik-cerrahi": "Plastik Cerrahi", "noroloji": "Nöroloji", "psikiyatri": "Psikiyatri",
+  "dis-hekimi": "Diş Hekimi", "rinoplasti": "Rinoplasti", "onkoloji": "Onkoloji",
+  "genel-cerrahi": "Genel Cerrahi", "uroloji": "Üroloji", "endokrinoloji": "Endokrinoloji",
+  "gastroenteroloji": "Gastroenteroloji", "gogus-hastaliklari": "Göğüs Hastalıkları",
+  "fizik-tedavi": "Fizik Tedavi", "beyin-ve-sinir-cerrahisi": "Beyin ve Sinir Cerrahisi",
+  "kadin-hastaliklari-ve-dogum": "Kadın Hastalıkları ve Doğum",
+  "cocuk-hastaliklari": "Çocuk Hastalıkları", "aile-hekimi": "Aile Hekimi",
+  "estetik-cerrahi": "Estetik Cerrahi", "romatoloji": "Romatoloji",
+};
+
+function sehirGorunum(slug) {
+  return SEHIR_MAP[slug.toLowerCase()] || (slug.charAt(0).toUpperCase() + slug.slice(1));
+}
+
+function uzmanlikGorunum(slug) {
+  return UZMANLIK_MAP[slug.toLowerCase()] || slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
 
 export async function generateMetadata({ params }) {
   const { sehir, uzmanlik } = await params;
-  const sehirAd = sehir.charAt(0).toUpperCase() + sehir.slice(1);
-  const uzmanlikAd = uzmanlik.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const sehirAd = sehirGorunum(sehir);
+  const uzmanlikAd = uzmanlikGorunum(uzmanlik);
+  const doktorSayisi = await sql`SELECT COUNT(*) as sayi FROM doktorlar WHERE onaylandi = true`.then(r => parseInt(r[0].sayi)).catch(() => 0);
+  const sayi = doktorSayisi > 0 ? `${doktorSayisi}+` : "";
   return {
-    title: `${sehirAd} ${uzmanlikAd} — En İyi Doktorlar | DoktorPusula`,
-    description: `${sehirAd} şehrindeki en iyi ${uzmanlikAd} doktorlarını inceleyin. Doğrulanmış yorumlar ve kolay randevu. DoktorPusula güvencesiyle.`,
+    title: `${sehirAd} ${uzmanlikAd}${sayi ? ` — ${sayi} Doktor` : ""} | DoktorPusula`,
+    description: `${sehirAd} şehrinde ${sayi ? sayi + " " : ""}${uzmanlikAd} doktoru. Doğrulanmış yorumlar, şeffaf fiyatlar ve kolay randevu. DoktorPusula güvencesiyle.`,
     alternates: { canonical: `https://doktorpusula.com/${sehir}/${uzmanlik}` },
   };
 }
@@ -33,8 +64,8 @@ function rozetHesapla(doktor) {
 export default async function DoktorListesi({ params, searchParams }) {
   const { sehir: sehirParam, uzmanlik: uzmanlikParam } = await params;
   const sp = await searchParams;
-  const sehirAd = sehirParam.charAt(0).toUpperCase() + sehirParam.slice(1);
-  const uzmanlikAd = uzmanlikParam.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+  const sehirAd = sehirGorunum(sehirParam);
+  const uzmanlikAd = uzmanlikGorunum(uzmanlikParam);
 
   const onlineFiltreAktif = sp?.online === "1";
   const sigortaFiltreAktif = sp?.sigorta === "1";
@@ -193,9 +224,9 @@ export default async function DoktorListesi({ params, searchParams }) {
                   <Link
                     key={s}
                     href={`/${s}/${uzmanlikParam}`}
-                    className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-teal-400 hover:text-teal-700 transition-colors capitalize"
+                    className="text-xs px-3 py-1.5 rounded-full border border-gray-200 text-gray-600 hover:border-teal-400 hover:text-teal-700 transition-colors"
                   >
-                    {s.charAt(0).toUpperCase() + s.slice(1)}
+                    {sehirGorunum(s)}
                   </Link>
                 ))}
               </div>
@@ -204,6 +235,32 @@ export default async function DoktorListesi({ params, searchParams }) {
 
           {/* SAĞ — Doktor Listesi */}
           <div className="md:col-span-3 space-y-4">
+            {/* İstatistik Çubuğu */}
+            {doktorlar.length > 0 && (() => {
+              const onlineSayisi = doktorlar.filter(d => d.online_randevu).length;
+              const puanlilar = doktorlar.filter(d => d.puan && d.yorum_sayisi > 0);
+              const ortPuan = puanlilar.length > 0
+                ? (puanlilar.reduce((s, d) => s + parseFloat(d.puan), 0) / puanlilar.length).toFixed(1)
+                : null;
+              return (
+                <div className="bg-white rounded-2xl px-5 py-4 border border-gray-100 shadow-sm flex flex-wrap gap-4 text-sm">
+                  <span className="text-gray-600">
+                    <strong className="text-gray-900">{doktorlar.length}</strong> doktor
+                  </span>
+                  {onlineSayisi > 0 && (
+                    <span className="text-gray-600">
+                      <strong style={{ color: "var(--teal)" }}>{onlineSayisi}</strong> online randevu
+                    </span>
+                  )}
+                  {ortPuan && (
+                    <span className="text-gray-600">
+                      ★ <strong className="text-gray-900">{ortPuan}</strong> ortalama puan
+                    </span>
+                  )}
+                </div>
+              );
+            })()}
+
             <div className="flex items-center justify-between gap-3">
               <p className="text-sm text-gray-500">
                 <strong className="text-gray-700">{doktorlar.length}</strong> doktor listeleniyor
@@ -336,6 +393,7 @@ export default async function DoktorListesi({ params, searchParams }) {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
