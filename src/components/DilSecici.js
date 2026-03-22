@@ -1,24 +1,22 @@
 "use client";
-
-const DILLER = [
-  { kod: "tr", etiket: "🇹🇷 TR", href: "/" },
-  { kod: "en", etiket: "🇬🇧 EN", href: "/en" },
-  { kod: "ar", etiket: "🇸🇦 AR", href: "/ar" },
-  { kod: "fa", etiket: "🇮🇷 FA", href: "/fa" },
-];
+import { useState, useEffect } from "react";
+import { DILLER_LIST } from "@/lib/dilCeviriler";
 
 export default function DilSecici() {
-  const aktif = typeof window !== "undefined"
-    ? (window.location.pathname === "/" ? "tr"
-      : window.location.pathname.startsWith("/en") ? "en"
-      : window.location.pathname.startsWith("/ar") ? "ar"
-      : window.location.pathname.startsWith("/fa") ? "fa"
-      : "tr")
-    : "tr";
+  const [aktif, setAktif] = useState("tr");
+
+  useEffect(() => {
+    const p = window.location.pathname;
+    if (p === "/en" || p.startsWith("/en/")) setAktif("en");
+    else if (p === "/ru" || p.startsWith("/ru/")) setAktif("ru");
+    else if (p === "/ar" || p.startsWith("/ar/")) setAktif("ar");
+    else if (p === "/fa" || p.startsWith("/fa/")) setAktif("fa");
+    else setAktif("tr");
+  }, []);
 
   return (
     <div className="flex items-center gap-1">
-      {DILLER.map((dil) => (
+      {DILLER_LIST.map((dil) => (
         <a
           key={dil.kod}
           href={dil.href}
