@@ -1,5 +1,5 @@
 import { getSession } from "@/lib/session";
-import { sql } from "@/lib/db";
+import sql from "@/lib/db";
 import Navbar from "@/components/Navbar";
 import { HASTA_FORMLARI } from "@/lib/hastaFormlari";
 import { notFound, redirect } from "next/navigation";

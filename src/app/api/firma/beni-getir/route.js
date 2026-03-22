@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFirmaSession } from "@/lib/firmaSession";
-import { sql } from "@/lib/db";
+import sql from "@/lib/db";
 
 export async function GET() {
   const session = await getFirmaSession();

@@ -1,5 +1,5 @@
 import { notFound } from "next/navigation";
-import { sql } from "@/lib/db";
+import sql from "@/lib/db";
 import Navbar from "@/components/Navbar";
 
 export async function generateMetadata({ params }) {

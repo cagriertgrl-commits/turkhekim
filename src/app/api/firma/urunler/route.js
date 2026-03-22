@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getFirmaSession } from "@/lib/firmaSession";
-import { sql } from "@/lib/db";
+import sql from "@/lib/db";
 
 // GET — firma ürünlerini listele
 export async function GET() {
