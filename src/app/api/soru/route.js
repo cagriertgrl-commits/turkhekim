@@ -46,3 +46,38 @@ export async function GET(request) {
 
   return NextResponse.json({ sorular });
 }
+
+// Soruyu gizle/göster toggle
+export async function PATCH(request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
+
+  const { soru_id, gizli } = await request.json();
+  if (soru_id === undefined) return NextResponse.json({ hata: "soru_id gerekli." }, { status: 400 });
+
+  const result = await sql`
+    UPDATE sorular SET gizli = ${Boolean(gizli)}
+    WHERE id = ${soru_id} AND doktor_id = ${session.id}
+    RETURNING id
+  `;
+  if (!result.length) return NextResponse.json({ hata: "Soru bulunamadı." }, { status: 404 });
+
+  return NextResponse.json({ mesaj: gizli ? "Soru gizlendi." : "Soru yayına alındı." });
+}
+
+// Soruyu sil (sadece yanıtsız sorular)
+export async function DELETE(request) {
+  const session = await getSession();
+  if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
+
+  const { soru_id } = await request.json();
+  if (!soru_id) return NextResponse.json({ hata: "soru_id gerekli." }, { status: 400 });
+
+  const result = await sql`
+    DELETE FROM sorular WHERE id = ${soru_id} AND doktor_id = ${session.id} AND yanit IS NULL
+    RETURNING id
+  `;
+  if (!result.length) return NextResponse.json({ hata: "Soru bulunamadı veya yanıtlanmış sorular silinemez." }, { status: 404 });
+
+  return NextResponse.json({ mesaj: "Soru silindi." });
+}

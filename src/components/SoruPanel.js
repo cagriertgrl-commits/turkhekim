@@ -7,39 +7,60 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
   const [yanitlar, setYanitlar] = useState({});
   const [yukleniyor, setYukleniyor] = useState({});
   const [mesajlar, setMesajlar] = useState({});
+  const [duzenlenenId, setDuzenlenenId] = useState(null);
+  const [filtre, setFiltre] = useState("bekleyen"); // bekleyen | yanitlanan | gizli
 
   const bekleyenler = sorular.filter((s) => !s.yanit);
-  const yanitlananlar = sorular.filter((s) => s.yanit);
+  const yanitlananlar = sorular.filter((s) => s.yanit && !s.gizli);
+  const gizliler = sorular.filter((s) => s.gizli);
+
+  const gosterilenler = filtre === "bekleyen" ? bekleyenler : filtre === "yanitlanan" ? yanitlananlar : gizliler;
 
   async function yanitle(soruId) {
     const yanit = yanitlar[soruId]?.trim();
-    if (!yanit) return;
-
-    setYukleniyor((prev) => ({ ...prev, [soruId]: true }));
-
-    const res = await fetch("/api/soru-yanit", {
-      method: "POST",
+    if (!yanit || yanit.length < 5) return;
+    setYukleniyor((p) => ({ ...p, [soruId]: true }));
+    const endpoint = duzenlenenId === soruId ? "/api/soru-yanit" : "/api/soru-yanit";
+    const method = duzenlenenId === soruId ? "PATCH" : "POST";
+    const res = await fetch(endpoint, {
+      method,
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ soru_id: soruId, yanit }),
     });
-
     const data = await res.json();
-    setYukleniyor((prev) => ({ ...prev, [soruId]: false }));
-
+    setYukleniyor((p) => ({ ...p, [soruId]: false }));
     if (res.ok) {
-      setSorular((prev) =>
-        prev.map((s) => (s.id === soruId ? { ...s, yanit } : s))
-      );
-      setYanitlar((prev) => ({ ...prev, [soruId]: "" }));
-      setMesajlar((prev) => ({ ...prev, [soruId]: "basari" }));
+      setSorular((p) => p.map((s) => s.id === soruId ? { ...s, yanit } : s));
+      setYanitlar((p) => ({ ...p, [soruId]: "" }));
+      setDuzenlenenId(null);
+      setMesajlar((p) => ({ ...p, [soruId]: "basari" }));
     } else {
-      setMesajlar((prev) => ({ ...prev, [soruId]: data.hata || "Hata oluştu." }));
+      setMesajlar((p) => ({ ...p, [soruId]: data.hata || "Hata." }));
     }
+  }
+
+  async function gizleDegistir(soruId, gizli) {
+    await fetch("/api/soru", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ soru_id: soruId, gizli }),
+    });
+    setSorular((p) => p.map((s) => s.id === soruId ? { ...s, gizli } : s));
+  }
+
+  async function soruSil(soruId) {
+    if (!confirm("Bu soruyu silmek istiyor musunuz?")) return;
+    const res = await fetch("/api/soru", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ soru_id: soruId }),
+    });
+    if (res.ok) setSorular((p) => p.filter((s) => s.id !== soruId));
   }
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <h2 style={{ color: "#0D2137" }} className="font-bold text-lg">Hasta Soruları</h2>
         <div className="flex gap-2">
           {bekleyenler.length > 0 && (
@@ -53,15 +74,35 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
         </div>
       </div>
 
-      {sorular.length === 0 ? (
+      {/* Filtre */}
+      <div className="flex gap-1.5 mb-4">
+        {[
+          { k: "bekleyen", e: `⏳ Bekleyen (${bekleyenler.length})` },
+          { k: "yanitlanan", e: `✅ Yanıtlanan (${yanitlananlar.length})` },
+          { k: "gizli", e: `👁 Gizli (${gizliler.length})` },
+        ].map(({ k, e }) => (
+          <button
+            key={k}
+            onClick={() => setFiltre(k)}
+            className="text-xs px-3 py-1.5 rounded-full font-medium transition-colors"
+            style={filtre === k
+              ? { backgroundColor: "#0D2137", color: "white" }
+              : { backgroundColor: "#F5F7FA", color: "#6B7280" }}
+          >
+            {e}
+          </button>
+        ))}
+      </div>
+
+      {gosterilenler.length === 0 ? (
         <div className="text-center py-10">
           <p className="text-4xl mb-3">❓</p>
-          <p className="text-gray-400 text-sm">Henüz soru yok.</p>
+          <p className="text-gray-400 text-sm">Bu kategoride soru yok.</p>
         </div>
       ) : (
         <div className="space-y-4">
           {/* Bekleyen sorular */}
-          {bekleyenler.map((s) => (
+          {filtre === "bekleyen" && gosterilenler.map((s) => (
             <div key={s.id} className="rounded-xl p-4 border" style={{ borderColor: "#FED7AA", backgroundColor: "#FFFBEB" }}>
               <div className="flex items-start gap-2 mb-3">
                 <div style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
@@ -70,15 +111,18 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
                 <div className="flex-1">
                   <div className="flex items-center justify-between">
                     <span className="text-xs font-semibold text-gray-700">{s.soran_adi}</span>
-                    <span className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString("tr-TR")}</span>
+                    <div className="flex items-center gap-1">
+                      <span className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString("tr-TR")}</span>
+                      <button onClick={() => soruSil(s.id)} className="text-gray-300 hover:text-red-400 text-xs ml-1" title="Soruyu sil">🗑</button>
+                    </div>
                   </div>
                   <p className="text-sm text-gray-700 mt-0.5">{s.soru}</p>
                 </div>
               </div>
               <textarea
                 value={yanitlar[s.id] || ""}
-                onChange={(e) => setYanitlar((prev) => ({ ...prev, [s.id]: e.target.value }))}
-                placeholder="Yanıtınızı yazın..."
+                onChange={(e) => setYanitlar((p) => ({ ...p, [s.id]: e.target.value }))}
+                placeholder="Yanıtınızı yazın... (en az 5 karakter)"
                 rows={2}
                 className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none mb-2"
               />
@@ -87,7 +131,7 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
               )}
               <button
                 onClick={() => yanitle(s.id)}
-                disabled={yukleniyor[s.id] || !yanitlar[s.id]?.trim()}
+                disabled={yukleniyor[s.id] || (yanitlar[s.id]?.trim()?.length || 0) < 5}
                 style={{ backgroundColor: "#0E7C7B" }}
                 className="text-white px-4 py-1.5 rounded-lg text-xs font-medium hover:opacity-90 disabled:opacity-50"
               >
@@ -96,23 +140,61 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
             </div>
           ))}
 
-          {/* Yanıtlananlar */}
-          {yanitlananlar.map((s) => (
-            <div key={s.id} className="rounded-xl p-4 border border-gray-100" style={{ backgroundColor: "#F5F7FA" }}>
+          {/* Yanıtlananlar + gizliler */}
+          {(filtre === "yanitlanan" || filtre === "gizli") && gosterilenler.map((s) => (
+            <div key={s.id} className="rounded-xl p-4 border border-gray-100" style={{ backgroundColor: s.gizli ? "#FFF7ED" : "#F5F7FA" }}>
               <div className="flex items-start gap-2 mb-2">
                 <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0">
                   {s.soran_adi[0]}
                 </div>
-                <div>
-                  <div className="flex items-center justify-between gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center justify-between gap-2">
                     <span className="text-xs font-semibold text-gray-700">{s.soran_adi}</span>
-                    <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Yanıtlandı</span>
+                    <div className="flex items-center gap-1.5">
+                      {s.gizli
+                        ? <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-0.5 rounded-full">👁 Gizli</span>
+                        : <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Yayında</span>
+                      }
+                    </div>
                   </div>
                   <p className="text-sm text-gray-600 mt-0.5">{s.soru}</p>
                 </div>
               </div>
-              <div className="pl-3 border-l-2 mt-2" style={{ borderColor: "#0E7C7B" }}>
-                <p className="text-sm text-gray-700">{s.yanit}</p>
+
+              {duzenlenenId === s.id ? (
+                <div className="mt-2">
+                  <textarea
+                    value={yanitlar[s.id] ?? s.yanit}
+                    onChange={(e) => setYanitlar((p) => ({ ...p, [s.id]: e.target.value }))}
+                    rows={3}
+                    className="w-full border border-teal-300 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none mb-2"
+                  />
+                  <div className="flex gap-2">
+                    <button onClick={() => { setDuzenlenenId(null); setYanitlar((p) => ({ ...p, [s.id]: "" })); }} className="text-xs px-3 py-1.5 border border-gray-200 rounded-lg text-gray-600">İptal</button>
+                    <button onClick={() => yanitle(s.id)} disabled={yukleniyor[s.id]} style={{ backgroundColor: "#0E7C7B" }} className="text-xs px-3 py-1.5 rounded-lg text-white font-medium hover:opacity-90 disabled:opacity-50">
+                      {yukleniyor[s.id] ? "..." : "Kaydet"}
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <div className="pl-3 border-l-2 mt-2 mb-2" style={{ borderColor: "#0E7C7B" }}>
+                  <p className="text-sm text-gray-700">{s.yanit}</p>
+                </div>
+              )}
+
+              <div className="flex gap-2 mt-2">
+                <button
+                  onClick={() => { setDuzenlenenId(s.id); setYanitlar((p) => ({ ...p, [s.id]: s.yanit })); }}
+                  className="text-xs px-2.5 py-1 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50"
+                >
+                  ✏️ Düzenle
+                </button>
+                <button
+                  onClick={() => gizleDegistir(s.id, !s.gizli)}
+                  className="text-xs px-2.5 py-1 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50"
+                >
+                  {s.gizli ? "👁 Yayına Al" : "🚫 Gizle"}
+                </button>
               </div>
             </div>
           ))}

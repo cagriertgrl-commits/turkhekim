@@ -60,7 +60,7 @@ export default async function DoktorProfil({ params }) {
 
   const [yorumlar, sorular, medya] = await Promise.all([
     sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} AND dogrulama_durumu = 'onaylandi' ORDER BY created_at DESC`,
-    sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL ORDER BY created_at DESC LIMIT 10`,
+    sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL AND gizli = false ORDER BY created_at DESC LIMIT 10`,
     sql`SELECT * FROM doktor_medya WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
   ]);
 

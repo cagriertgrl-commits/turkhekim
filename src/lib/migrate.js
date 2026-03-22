@@ -76,9 +76,11 @@ async function migrate() {
       soran_adi TEXT NOT NULL,
       soru TEXT NOT NULL,
       yanit TEXT,
+      gizli BOOLEAN DEFAULT false,
       created_at TIMESTAMPTZ DEFAULT NOW()
     )
   `;
+  await sql`ALTER TABLE sorular ADD COLUMN IF NOT EXISTS gizli BOOLEAN DEFAULT false`;
   console.log("✅ sorular tablosu oluşturuldu");
 
   // ─── DOKTOR MEDYA tablosu ────────────────────────────────────────────────────
