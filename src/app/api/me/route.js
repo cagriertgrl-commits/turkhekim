@@ -7,7 +7,8 @@ export async function GET() {
   if (!session) return NextResponse.json({ kullanici: null });
   const rows = await sql`SELECT foto_url FROM doktorlar WHERE id = ${session.id} LIMIT 1`.catch(() => []);
   const doktor = rows[0] || {};
-  return NextResponse.json({
-    kullanici: { ad: session.ad, slug: session.slug, foto_url: doktor.foto_url },
-  });
+  return NextResponse.json(
+    { kullanici: { ad: session.ad, slug: session.slug, foto_url: doktor.foto_url } },
+    { headers: { "Cache-Control": "private, max-age=60, stale-while-revalidate=30" } }
+  );
 }
