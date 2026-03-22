@@ -42,6 +42,23 @@ export async function POST(request) {
       );
     }
 
+    // Aynı doktor, aynı tarih-saat çakışma kontrolü
+    if (tarih && saat) {
+      const cakisan = await sql`
+        SELECT id FROM randevular
+        WHERE doktor_id = ${doktor_id}
+          AND tarih = ${tarih}
+          AND saat = ${saat}
+          AND durum != 'iptal'
+      `;
+      if (cakisan.length > 0) {
+        return NextResponse.json(
+          { hata: "Bu tarih ve saatte başka bir randevu bulunuyor. Lütfen farklı bir saat seçin." },
+          { status: 400 }
+        );
+      }
+    }
+
     await sql`
       INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip, tarih, saat, iptal_token)
       VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi}, ${tarih || null}, ${saat || null}, ${iptalToken})
