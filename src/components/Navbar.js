@@ -25,6 +25,7 @@ export default function Navbar({ aktifSayfa }) {
     { href: "/feed", etiket: "Sağlık Haberleri" },
     { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
+    { href: "/medikal-firma", etiket: "Firmalar İçin" },
     { href: "/hasta-formlari", etiket: "Hasta Formları" },
   ];
 

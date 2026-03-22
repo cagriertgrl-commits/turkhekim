@@ -211,6 +211,24 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_paylasilar_kategori ON paylasilar(kategori)`;
   console.log("✅ paylasilar tablosu oluşturuldu");
 
+  // ─── FİRMA BAŞVURULAR tablosu ─────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS firma_basvurular (
+      id SERIAL PRIMARY KEY,
+      firma_adi TEXT NOT NULL,
+      yetkili_adi TEXT NOT NULL,
+      email TEXT NOT NULL,
+      telefon TEXT NOT NULL,
+      firma_tipi TEXT NOT NULL DEFAULT 'diger',
+      paket TEXT NOT NULL DEFAULT 'standart',
+      notlar TEXT,
+      durum TEXT DEFAULT 'bekliyor',
+      ip TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  console.log("✅ firma_basvurular tablosu oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }
