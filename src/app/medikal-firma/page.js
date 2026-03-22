@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import FirmaBaşvuruFormu from "./FirmaBasvuruFormu";
 
 export const metadata = {
@@ -149,7 +148,6 @@ export default function MedikalFirmaSayfasi() {
         </div>
       </div>
 
-      <Footer />
     </div>
   );
 }

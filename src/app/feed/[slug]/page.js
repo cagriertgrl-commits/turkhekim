@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import sql from "@/lib/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
@@ -164,7 +163,6 @@ export default async function FeedDetay({ params }) {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }

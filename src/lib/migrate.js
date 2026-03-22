@@ -229,6 +229,19 @@ async function migrate() {
   `;
   console.log("✅ firma_basvurular tablosu oluşturuldu");
 
+  // ─── API KULLANIM tablosu ──────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS api_kullanim (
+      id SERIAL PRIMARY KEY,
+      endpoint TEXT NOT NULL,
+      model TEXT NOT NULL,
+      input_tokens INTEGER NOT NULL,
+      output_tokens INTEGER NOT NULL,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  console.log("✅ api_kullanim tablosu oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }

@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import sql from "@/lib/db";
 import Link from "next/link";
 
@@ -167,7 +166,6 @@ export default async function FeedPage({ searchParams }) {
         )}
       </div>
 
-      <Footer />
     </div>
   );
 }

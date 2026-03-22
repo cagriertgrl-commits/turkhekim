@@ -3,7 +3,6 @@ import AramaKutusu from "@/components/AramaKutusu";
 import MobilFiltre from "@/components/MobilFiltre";
 import sql from "@/lib/db";
 import Link from "next/link";
-import Footer from "@/components/Footer";
 
 const SEHIR_MAP = {
   istanbul: "İstanbul", ankara: "Ankara", izmir: "İzmir", bursa: "Bursa",
@@ -393,7 +392,6 @@ export default async function DoktorListesi({ params, searchParams }) {
           </div>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }

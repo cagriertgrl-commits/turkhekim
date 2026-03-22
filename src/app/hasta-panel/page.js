@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import HastaPanelIstemci from "./HastaPanelIstemci";
 
 export const metadata = {
@@ -18,7 +17,6 @@ export default function HastaPanelSayfasi() {
         </div>
         <HastaPanelIstemci />
       </div>
-      <Footer />
     </div>
   );
 }
