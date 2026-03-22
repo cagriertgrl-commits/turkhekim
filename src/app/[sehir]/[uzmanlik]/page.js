@@ -1,5 +1,6 @@
 import Navbar from "@/components/Navbar";
 import AramaKutusu from "@/components/AramaKutusu";
+import MobilFiltre from "@/components/MobilFiltre";
 import sql from "@/lib/db";
 import Link from "next/link";
 
@@ -136,14 +137,23 @@ export default async function DoktorListesi({ params, searchParams }) {
               </div>
 
               <div>
-                <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Sigorta</p>
-                <Link
-                  href={`/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "" : "?sigorta=1"}`}
-                  className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
-                  style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
-                >
-                  🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
-                </Link>
+                <p className="text-xs text-gray-500 font-semibold mb-3 uppercase tracking-wide">Özellikler</p>
+                <div className="space-y-1">
+                  <Link
+                    href={sigortaFiltreAktif ? `/${sehirParam}/${uzmanlikParam}${onlineFiltreAktif ? "?online=1" : ""}` : `/${sehirParam}/${uzmanlikParam}?sigorta=1${onlineFiltreAktif ? "&online=1" : ""}`}
+                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
+                    style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                  >
+                    🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
+                  </Link>
+                  <Link
+                    href={onlineFiltreAktif ? `/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "?sigorta=1" : ""}` : `/${sehirParam}/${uzmanlikParam}?online=1${sigortaFiltreAktif ? "&sigorta=1" : ""}`}
+                    className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${onlineFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
+                    style={onlineFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                  >
+                    💻 Online Randevu {onlineFiltreAktif && "✓"}
+                  </Link>
+                </div>
               </div>
             </div>
 
@@ -166,10 +176,17 @@ export default async function DoktorListesi({ params, searchParams }) {
 
           {/* SAĞ — Doktor Listesi */}
           <div className="md:col-span-3 space-y-4">
-            <div className="flex items-center justify-between">
-              <p className="text-sm text-gray-400">
+            <div className="flex items-center justify-between gap-3">
+              <p className="text-sm text-gray-500">
                 <strong className="text-gray-700">{doktorlar.length}</strong> doktor listeleniyor
               </p>
+              <MobilFiltre
+                sehirParam={sehirParam}
+                uzmanlikParam={uzmanlikParam}
+                sigortaFiltreAktif={sigortaFiltreAktif}
+                onlineFiltreAktif={onlineFiltreAktif}
+                doktorSayisi={doktorlar.length}
+              />
             </div>
 
             {doktorlar.length === 0 ? (
@@ -218,7 +235,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                               {doktor.ad}
                             </h2>
                             <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold">{doktor.uzmanlik}</p>
-                            <p className="text-gray-400 text-sm mt-0.5">
+                            <p className="text-gray-500 text-sm mt-0.5">
                               📍 {doktor.sehir}{doktor.ilce ? ` · ${doktor.ilce}` : ""}
                             </p>
 
@@ -232,7 +249,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                                     ))}
                                   </div>
                                   <span className="font-bold text-sm text-gray-900">{doktor.puan}</span>
-                                  <span className="text-gray-400 text-xs">({doktor.yorum_sayisi} yorum)</span>
+                                  <span className="text-gray-500 text-xs">({doktor.yorum_sayisi} yorum)</span>
                                 </>
                               ) : (
                                 <span className="text-gray-400 text-xs">Henüz yorum yok</span>

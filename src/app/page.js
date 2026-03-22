@@ -3,19 +3,20 @@ import AramaKutusu from "@/components/AramaKutusu";
 import sql from "@/lib/db";
 import Link from "next/link";
 
+const UZMANLIK_RENK = ["#E8F5F5", "#EFF6FF", "#FFFBEB", "#F5F3FF"];
 const UZMANLIK_GRID = [
-  { ad: "KBB", slug: "kbb-uzmani", ikon: "👂", renk: "#EFF6FF" },
-  { ad: "Kardiyoloji", slug: "kardiyoloji", ikon: "❤️", renk: "#FFF1F2" },
-  { ad: "Ortopedi", slug: "ortopedi", ikon: "🦴", renk: "#FFFBEB" },
-  { ad: "Plastik Cerrahi", slug: "plastik-cerrahi", ikon: "✨", renk: "#F0FDF4" },
-  { ad: "Göz", slug: "goz-hastaliklari", ikon: "👁️", renk: "#EFF6FF" },
-  { ad: "Diş Hekimi", slug: "dis-hekimi", ikon: "🦷", renk: "#F0FDFA" },
-  { ad: "Dermatoloji", slug: "dermatoloji", ikon: "🩺", renk: "#FDF4FF" },
-  { ad: "Nöroloji", slug: "noroloji", ikon: "🧠", renk: "#FFF7ED" },
-  { ad: "Psikiyatri", slug: "psikiyatri", ikon: "🧘", renk: "#F0FDF4" },
-  { ad: "Çocuk Sağlığı", slug: "cocuk-hastaliklari", ikon: "👶", renk: "#FFFBEB" },
-  { ad: "Estetik Cerrahi", slug: "estetik-cerrahi", ikon: "🌟", renk: "#FFF1F2" },
-  { ad: "Rinoplasti", slug: "rinoplasti", ikon: "👃", renk: "#F0FDFA" },
+  { ad: "KBB", slug: "kbb-uzmani", ikon: "👂" },
+  { ad: "Kardiyoloji", slug: "kardiyoloji", ikon: "❤️" },
+  { ad: "Ortopedi", slug: "ortopedi", ikon: "🦴" },
+  { ad: "Plastik Cerrahi", slug: "plastik-cerrahi", ikon: "✨" },
+  { ad: "Göz", slug: "goz-hastaliklari", ikon: "👁️" },
+  { ad: "Diş Hekimi", slug: "dis-hekimi", ikon: "🦷" },
+  { ad: "Dermatoloji", slug: "dermatoloji", ikon: "🩺" },
+  { ad: "Nöroloji", slug: "noroloji", ikon: "🧠" },
+  { ad: "Psikiyatri", slug: "psikiyatri", ikon: "🧘" },
+  { ad: "Çocuk Sağlığı", slug: "cocuk-hastaliklari", ikon: "👶" },
+  { ad: "Estetik Cerrahi", slug: "estetik-cerrahi", ikon: "🌟" },
+  { ad: "Rinoplasti", slug: "rinoplasti", ikon: "👃" },
 ];
 
 function rozetHesapla(doktor) {
@@ -150,12 +151,12 @@ export default async function Home() {
             <p className="text-gray-400 text-sm">İhtiyacınıza göre doğru uzmana ulaşın</p>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
-            {UZMANLIK_GRID.map((u) => (
+            {UZMANLIK_GRID.map((u, i) => (
               <Link
                 key={u.slug}
                 href={`/istanbul/${u.slug}`}
                 className="flex flex-col items-center gap-2 p-4 rounded-2xl hover:shadow-md transition-all hover:-translate-y-0.5 border border-gray-100 hover:border-teal-200 group"
-                style={{ backgroundColor: u.renk }}
+                style={{ backgroundColor: UZMANLIK_RENK[i % UZMANLIK_RENK.length] }}
               >
                 <span className="text-3xl">{u.ikon}</span>
                 <span className="text-xs font-semibold text-gray-700 text-center group-hover:text-teal-700 leading-tight">
@@ -173,7 +174,7 @@ export default async function Home() {
           <div className="flex items-center justify-between mb-10">
             <div>
               <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold">Öne Çıkan Doktorlar</h2>
-              <p className="text-gray-400 text-sm mt-1">Doğrulanmış, en yüksek puanlı hekimler</p>
+              <p className="text-gray-500 text-sm mt-1">Doğrulanmış, en yüksek puanlı hekimler</p>
             </div>
             <Link href="/istanbul/doktor" style={{ color: "#0E7C7B" }} className="text-sm font-semibold hover:underline hidden md:block">
               Tümünü Gör →
@@ -209,7 +210,7 @@ export default async function Home() {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-gray-900 group-hover:text-teal-700 transition-colors truncate">{doktor.ad}</h3>
                         <p style={{ color: "#0E7C7B" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
-                        <p className="text-gray-400 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${doktor.deneyim} deneyim` : ""}</p>
+                        <p className="text-gray-500 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${doktor.deneyim} deneyim` : ""}</p>
                       </div>
                     </div>
 
@@ -234,10 +235,10 @@ export default async function Home() {
                           <>
                             <span className="text-yellow-400">★</span>
                             <span className="font-bold text-sm text-gray-900">{doktor.puan}</span>
-                            <span className="text-gray-400 text-xs">({doktor.yorum_sayisi} yorum)</span>
+                            <span className="text-gray-500 text-xs">({doktor.yorum_sayisi} yorum)</span>
                           </>
                         ) : (
-                          <span className="text-gray-400 text-xs">Henüz yorum yok</span>
+                          <span className="text-gray-500 text-xs">Henüz yorum yok</span>
                         )}
                       </div>
                       <span
@@ -324,7 +325,7 @@ export default async function Home() {
       </section>
 
       {/* POPÜLER ŞEHİRLER */}
-      <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-14">
+      <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
             <h2 style={{ color: "#0D2137" }} className="text-xl font-bold">Şehir Seçin</h2>
@@ -363,7 +364,7 @@ export default async function Home() {
             <div className="flex items-center justify-between mb-10">
               <div>
                 <h2 style={{ color: "#0D2137" }} className="text-2xl font-bold">Gerçek Hasta Yorumları</h2>
-                <p className="text-gray-400 text-sm mt-1">Telefon ile doğrulanmış, değiştirilemeyen yorumlar</p>
+                <p className="text-gray-500 text-sm mt-1">Telefon ile doğrulanmış, değiştirilemeyen yorumlar</p>
               </div>
             </div>
             <div className="grid md:grid-cols-3 gap-5">
@@ -454,7 +455,7 @@ export default async function Home() {
       {/* MEDİKAL TURİZM BANNER */}
       <section
         style={{ background: "linear-gradient(135deg, #0E7C7B, #065f5e)" }}
-        className="px-6 py-14"
+        className="px-6 py-16"
       >
         <div className="max-w-6xl mx-auto text-center text-white">
           <p className="text-teal-200 text-sm font-semibold mb-2 uppercase tracking-widest">Uluslararası Hastalar</p>

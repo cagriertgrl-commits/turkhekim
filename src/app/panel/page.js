@@ -92,7 +92,7 @@ export default async function Panel() {
           <h1 style={{ color: "#0D2137" }} className="text-2xl font-bold">
             Hoş geldiniz, {doktor.ad.split(" ").slice(1).join(" ") || doktor.ad} 👋
           </h1>
-          <p className="text-gray-400 text-sm mt-1">Doktor panelinize genel bakış</p>
+          <p className="text-gray-500 text-sm mt-1">Doktor panelinize genel bakış</p>
         </div>
 
         {/* ÖZET KARTLAR */}
@@ -106,7 +106,7 @@ export default async function Panel() {
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
               <span className="text-2xl">{kart.icon}</span>
               <p style={{ color: kart.renk }} className="text-xl font-bold mt-3">{kart.deger}</p>
-              <p className="text-gray-500 text-xs mt-1">{kart.baslik}</p>
+              <p className="text-gray-600 text-sm mt-1">{kart.baslik}</p>
             </div>
           ))}
         </div>
@@ -123,7 +123,7 @@ export default async function Panel() {
                 <span className="text-xl">{kart.icon}</span>
               </div>
               <p style={{ color: kart.renk }} className="text-2xl font-bold">{kart.deger.toLocaleString("tr-TR")}</p>
-              <p className="text-gray-500 text-xs mt-1">{kart.baslik}</p>
+              <p className="text-gray-600 text-sm mt-1">{kart.baslik}</p>
             </div>
           ))}
         </div>
@@ -289,7 +289,7 @@ export default async function Panel() {
                   </div>
                 </div>
 
-                <button type="submit" style={{ backgroundColor: "#0D2137" }} className="w-full text-white py-2.5 rounded-lg text-sm font-medium hover:opacity-90">
+                <button type="submit" style={{ backgroundColor: "#0D2137" }} className="w-full text-white py-3 rounded-xl text-sm font-semibold hover:opacity-90">
                   Kaydet
                 </button>
               </form>
@@ -366,7 +366,7 @@ export default async function Panel() {
               {yorumlar.length === 0 ? (
                 <div className="text-center py-10">
                   <p className="text-4xl mb-3">💬</p>
-                  <p className="text-gray-400 text-sm">Henüz yorum yok.</p>
+                  <p className="text-gray-500 text-sm">Henüz yorum yok.</p>
                 </div>
               ) : (
                 <div className="space-y-4">
