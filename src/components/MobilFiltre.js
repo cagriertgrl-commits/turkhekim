@@ -2,20 +2,28 @@
 import { useState } from "react";
 import Link from "next/link";
 
-export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAktif, onlineFiltreAktif, doktorSayisi }) {
+export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAktif, onlineFiltreAktif, siralamaPrm = "puan", doktorSayisi }) {
   const [acik, setAcik] = useState(false);
-  const aktifSayisi = (sigortaFiltreAktif ? 1 : 0) + (onlineFiltreAktif ? 1 : 0);
+  const aktifSayisi = (sigortaFiltreAktif ? 1 : 0) + (onlineFiltreAktif ? 1 : 0) + (siralamaPrm !== "puan" ? 1 : 0);
 
-  function sigortaHref() {
-    if (sigortaFiltreAktif) return `/${sehirParam}/${uzmanlikParam}${onlineFiltreAktif ? "?online=1" : ""}`;
-    return `/${sehirParam}/${uzmanlikParam}?sigorta=1${onlineFiltreAktif ? "&online=1" : ""}`;
-  }
-  function onlineHref() {
-    if (onlineFiltreAktif) return `/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "?sigorta=1" : ""}`;
-    return `/${sehirParam}/${uzmanlikParam}?online=1${sigortaFiltreAktif ? "&sigorta=1" : ""}`;
+  function buildUrl(params = {}) {
+    const base = `/${sehirParam}/${uzmanlikParam}`;
+    const merged = {
+      siralama: siralamaPrm !== "puan" ? siralamaPrm : null,
+      sigorta: sigortaFiltreAktif ? "1" : null,
+      online: onlineFiltreAktif ? "1" : null,
+      ...params,
+    };
+    const qs = Object.entries(merged).filter(([, v]) => v).map(([k, v]) => `${k}=${v}`).join("&");
+    return qs ? `${base}?${qs}` : base;
   }
 
   const SEHIRLER = ["istanbul", "ankara", "izmir", "bursa", "antalya"];
+  const SIRALAMA_SECENEKLERI = [
+    { label: "En Yüksek Puan", val: "puan" },
+    { label: "En Fazla Yorum", val: "yorum" },
+    { label: "En Deneyimli", val: "deneyim" },
+  ];
 
   return (
     <>
@@ -62,12 +70,22 @@ export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAk
             <div className="mb-6">
               <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Sıralama</p>
               <div className="space-y-1">
-                {["En Yüksek Puan", "En Fazla Yorum", "En Deneyimli"].map((opt) => (
-                  <label key={opt} className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-gray-50 cursor-pointer">
-                    <input type="radio" name="siralama_mobil" className="accent-teal-600 w-4 h-4" defaultChecked={opt === "En Yüksek Puan"} />
-                    <span className="text-sm text-gray-700">{opt}</span>
-                  </label>
-                ))}
+                {SIRALAMA_SECENEKLERI.map((opt) => {
+                  const aktif = siralamaPrm === opt.val;
+                  return (
+                    <Link
+                      key={opt.val}
+                      href={buildUrl({ siralama: opt.val !== "puan" ? opt.val : null })}
+                      onClick={() => setAcik(false)}
+                      className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-colors"
+                      style={aktif ? { backgroundColor: "var(--light-teal)", color: "var(--teal)" } : { color: "#374151" }}
+                    >
+                      <span className="text-xs opacity-60">{aktif ? "●" : "○"}</span>
+                      <span className="text-sm font-medium">{opt.label}</span>
+                      {aktif && <span className="ml-auto text-xs font-bold">✓</span>}
+                    </Link>
+                  );
+                })}
               </div>
             </div>
 
@@ -76,20 +94,20 @@ export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAk
               <p className="text-xs text-gray-400 font-semibold mb-3 uppercase tracking-wide">Özellikler</p>
               <div className="space-y-2">
                 <Link
-                  href={sigortaHref()}
+                  href={buildUrl({ sigorta: sigortaFiltreAktif ? null : "1" })}
                   onClick={() => setAcik(false)}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
-                  style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : { backgroundColor: "#F9FAFB", color: "#374151" }}
+                  style={sigortaFiltreAktif ? { backgroundColor: "var(--light-teal)", color: "var(--teal)" } : { backgroundColor: "#F9FAFB", color: "#374151" }}
                 >
                   <span>🛡️</span>
                   <span className="text-sm font-medium">Sigorta Kabul Ediyor</span>
                   {sigortaFiltreAktif && <span className="ml-auto text-xs font-bold">✓</span>}
                 </Link>
                 <Link
-                  href={onlineHref()}
+                  href={buildUrl({ online: onlineFiltreAktif ? null : "1" })}
                   onClick={() => setAcik(false)}
                   className="flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
-                  style={onlineFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : { backgroundColor: "#F9FAFB", color: "#374151" }}
+                  style={onlineFiltreAktif ? { backgroundColor: "var(--light-teal)", color: "var(--teal)" } : { backgroundColor: "#F9FAFB", color: "#374151" }}
                 >
                   <span>💻</span>
                   <span className="text-sm font-medium">Online Randevu</span>
