@@ -196,8 +196,8 @@ export default async function Panel() {
               <form action="/api/profil-guncelle" method="POST" className="space-y-3">
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Unvan</label>
-                  <select name="unvan" defaultValue={doktor.unvan || ""} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none">
+                  <label className="text-sm text-gray-500 block mb-1">Unvan</label>
+                  <select name="unvan" defaultValue={doktor.unvan || ""} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
                     <option value="">Seçiniz</option>
                     <option value="Pratisyen Dr.">Pratisyen Dr.</option>
                     <option value="Uzm. Dr.">Uzm. Dr. — Uzman Doktor</option>
@@ -209,28 +209,28 @@ export default async function Panel() {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Hakkında</label>
+                  <label className="text-sm text-gray-500 block mb-1">Hakkında</label>
                   <textarea name="hakkinda" defaultValue={doktor.hakkinda || ""} rows={4} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none" />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Muayene Ücreti</label>
-                  <input name="fiyat" defaultValue={doktor.fiyat || ""} placeholder="1200 TL" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <label className="text-sm text-gray-500 block mb-1">Muayene Ücreti</label>
+                  <input name="fiyat" defaultValue={doktor.fiyat || ""} placeholder="1200 TL" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Web Sitesi</label>
-                  <input name="website" defaultValue={doktor.website || ""} placeholder="https://dradi.com" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <label className="text-sm text-gray-500 block mb-1">Web Sitesi</label>
+                  <input name="website" defaultValue={doktor.website || ""} placeholder="https://dradi.com" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">WhatsApp Numarası</label>
+                  <label className="text-sm text-gray-500 block mb-1">WhatsApp Numarası</label>
                   <WhatsappInput mevcutDeger={doktor.whatsapp || ""} />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Kurum Tipi</label>
-                  <select name="adres_tipi" defaultValue={doktor.adres_tipi || "muayenehane"} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none">
+                  <label className="text-sm text-gray-500 block mb-1">Kurum Tipi</label>
+                  <select name="adres_tipi" defaultValue={doktor.adres_tipi || "muayenehane"} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500">
                     {ADRES_TIPLERI.map((t) => (
                       <option key={t.deger} value={t.deger}>{t.etiket}</option>
                     ))}
@@ -238,13 +238,13 @@ export default async function Panel() {
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Klinik / Hastane Adı</label>
-                  <input name="klinik_adi" defaultValue={doktor.klinik_adi || ""} placeholder="Örn: Sağlık Kliniği" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <label className="text-sm text-gray-500 block mb-1">Klinik / Hastane Adı</label>
+                  <input name="klinik_adi" defaultValue={doktor.klinik_adi || ""} placeholder="Örn: Sağlık Kliniği" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
                 <div>
-                  <label className="text-xs text-gray-500 block mb-1">Adres</label>
-                  <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none" />
+                  <label className="text-sm text-gray-500 block mb-1">Adres</label>
+                  <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
                 <PanelDilSecici mevcutDiller={doktor.diller || ""} />
@@ -283,7 +283,7 @@ export default async function Panel() {
                       name="medikal_turizm_komisyon"
                       defaultValue={doktor.medikal_turizm_komisyon || ""}
                       placeholder="Aracı komisyon oranı (örn. %15)"
-                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none"
+                      className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
                     <p className="text-xs text-gray-400 mt-1">🔒 Sadece yöneticiye görünür — profilinizde yayınlanmaz.</p>
                   </div>

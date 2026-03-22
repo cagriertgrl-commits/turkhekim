@@ -227,7 +227,7 @@ export default async function DoktorProfil({ params }) {
             {hizmetler.length > 0 && (
               <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
                 <h2 className="font-bold text-gray-900 text-lg mb-4">🩺 Hizmetler & İşlemler</h2>
-                <div className="grid grid-cols-2 gap-2">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {hizmetler.map((h, i) => (
                     <div key={i} style={{ backgroundColor: "#F0FDFA", borderColor: "#CCFBF1" }} className="border rounded-xl px-3 py-2 text-sm text-gray-700 flex items-center gap-2">
                       <span style={{ color: "#0E7C7B" }}>✓</span> {h}

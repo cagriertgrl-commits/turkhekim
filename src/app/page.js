@@ -329,7 +329,7 @@ export default async function Home() {
           <div className="text-center mb-8">
             <h2 style={{ color: "#0D2137" }} className="text-xl font-bold">Şehir Seçin</h2>
           </div>
-          <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {POPULER_SEHIRLER.map((sehir) => (
               <Link
                 key={sehir.slug}

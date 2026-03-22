@@ -157,7 +157,7 @@ export default function DoktorOl() {
             <div className="space-y-5">
               <h2 style={{ color: "#0D2137" }} className="text-xl font-bold mb-6">Klinik Bilgileriniz</h2>
 
-              <div className="grid grid-cols-3 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Unvan</label>
                   <select name="unvan" value={form.unvan} onChange={guncelle}
@@ -193,7 +193,7 @@ export default function DoktorOl() {
                 </select>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Şehir <span className="text-red-500">*</span></label>
                   <select
