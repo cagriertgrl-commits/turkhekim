@@ -6,54 +6,11 @@ export const metadata = {
   description: "DoktorPusula'nın 10.000+ doktor ağına ulaşın. İlaç firmaları, medikal cihaz şirketleri ve sağlık hizmet sağlayıcıları için özel çözümler.",
 };
 
-const PAKETLER = [
-  {
-    isim: "Başlangıç",
-    slug: "baslangic",
-    fiyat: "₺299",
-    periyot: "/ay",
-    ozellikler: [
-      "5 doktor hedefleme",
-      "Firma profil sayfası",
-      "Temel istatistikler",
-      "E-posta desteği",
-    ],
-    renk: "#6B7280",
-    bg: "#F3F4F6",
-    one_cikan: false,
-  },
-  {
-    isim: "Standart",
-    slug: "standart",
-    fiyat: "₺799",
-    periyot: "/ay",
-    ozellikler: [
-      "20 doktor hedefleme",
-      "Şehir & uzmanlık filtreleme",
-      "Detaylı analitik",
-      "Mümessil randevu modülü",
-      "Öncelikli destek",
-    ],
-    renk: "var(--teal)",
-    bg: "var(--light-teal)",
-    one_cikan: true,
-  },
-  {
-    isim: "Premium",
-    slug: "premium",
-    fiyat: "₺1999",
-    periyot: "/ay",
-    ozellikler: [
-      "Sınırsız doktor hedefleme",
-      "Özel içerik entegrasyonu",
-      "API erişimi",
-      "Dedicated account manager",
-      "7/24 destek",
-    ],
-    renk: "var(--navy)",
-    bg: "#EFF6FF",
-    one_cikan: false,
-  },
+const OZELLIKLER = [
+  { ikon: "📢", baslik: "Haftada 1 Akış Reklamı", aciklama: "Her hafta seçtiğiniz bir ürün, doktor akışında öne çıkarılır. Gösterim garantili." },
+  { ikon: "🔔", baslik: "Takipçi Bildirimleri", aciklama: "Ürününüzde indirim veya kampanya açtığınızda sizi takip eden doktorlara anında bildirim gönderilir." },
+  { ikon: "🔌", baslik: "API Erişimi", aciklama: "Doktor ağına kendi CRM sisteminizden erişin. Şehir, uzmanlık ve klinik bazlı filtreleme yapın." },
+  { ikon: "🕐", baslik: "7/24 Destek", aciklama: "Öncelikli destek hattı. Yayın takvimi, reklam içeriği ve teknik sorularınız için daima yanınızdayız." },
 ];
 
 export default function MedikalFirmaSayfasi() {
@@ -97,46 +54,45 @@ export default function MedikalFirmaSayfasi() {
           ))}
         </div>
 
-        {/* PAKETLER */}
-        <div className="mt-12">
-          <h2 className="text-gray-900 text-2xl font-bold text-center mb-2">Fiyatlandırma</h2>
-          <p className="text-gray-500 text-center text-sm mb-8">Yıllık ödemede %17 indirim</p>
-          <div className="grid md:grid-cols-3 gap-6">
-            {PAKETLER.map((paket) => (
-              <div
-                key={paket.slug}
-                className={`bg-white rounded-2xl p-6 border shadow-sm relative ${paket.one_cikan ? "border-teal-400 shadow-md" : "border-gray-100"}`}
-              >
-                {paket.one_cikan && (
-                  <div
-                    style={{ backgroundColor: "var(--teal)", color: "white" }}
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 text-xs font-bold px-4 py-1 rounded-full"
-                  >
-                    En Popüler
-                  </div>
-                )}
-                <h3 className="font-bold text-gray-900 text-lg">{paket.isim}</h3>
-                <div className="flex items-baseline gap-1 mt-3 mb-5">
-                  <span className="text-3xl font-bold" style={{ color: paket.renk }}>{paket.fiyat}</span>
-                  <span className="text-gray-500 text-sm">{paket.periyot}</span>
-                </div>
-                <ul className="space-y-2 mb-6">
-                  {paket.ozellikler.map((o) => (
-                    <li key={o} className="flex items-start gap-2 text-sm text-gray-600">
-                      <span style={{ color: "var(--teal)" }} className="mt-0.5">✓</span>
-                      {o}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="#basvuru"
-                  className="block text-center py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90"
-                  style={{ backgroundColor: paket.one_cikan ? "var(--teal)" : "var(--navy)", color: "white" }}
-                >
-                  Başvur
-                </a>
+        {/* TEK PAKET */}
+        <div className="mt-14">
+          <div className="text-center mb-10">
+            <h2 className="text-gray-900 text-2xl font-bold mb-2">Kurumsal Üyelik</h2>
+            <p className="text-gray-500 text-sm">Tek plan, tüm özellikler — fazlası yok, eksiği yok.</p>
+          </div>
+
+          <div className="max-w-2xl mx-auto">
+            {/* Fiyat kartı */}
+            <div className="bg-white rounded-3xl border-2 shadow-lg p-8 text-center mb-8" style={{ borderColor: "var(--teal)" }}>
+              <div className="inline-flex items-center gap-2 mb-4 px-4 py-1.5 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "var(--teal)" }}>
+                ✦ Tek Plan
               </div>
-            ))}
+              <div className="flex items-baseline justify-center gap-2 mb-2">
+                <span className="text-5xl font-bold" style={{ color: "var(--navy)" }}>₺3.000</span>
+                <span className="text-gray-400 text-lg">/ay</span>
+              </div>
+              <p className="text-gray-400 text-sm mb-8">Aylık veya yıllık — fiyat değişmez.</p>
+              <a
+                href="#basvuru"
+                className="inline-block text-white px-10 py-3.5 rounded-xl font-semibold text-sm hover:opacity-90 transition-opacity"
+                style={{ backgroundColor: "var(--teal)" }}
+              >
+                Hemen Başvur
+              </a>
+            </div>
+
+            {/* Özellikler */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              {OZELLIKLER.map((o) => (
+                <div key={o.baslik} className="bg-white rounded-2xl p-5 border border-gray-100 shadow-sm flex gap-4">
+                  <div className="text-2xl flex-shrink-0">{o.ikon}</div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900 text-sm mb-1">{o.baslik}</h3>
+                    <p className="text-gray-500 text-xs leading-relaxed">{o.aciklama}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
 

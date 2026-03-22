@@ -11,11 +11,6 @@ const FIRMA_TIPLERI = [
   { deger: "diger", etiket: "📦 Diğer" },
 ];
 
-const PAKETLER = [
-  { deger: "baslangic", etiket: "Başlangıç — ₺299/ay" },
-  { deger: "standart", etiket: "Standart — ₺799/ay" },
-  { deger: "premium", etiket: "Premium — ₺1999/ay" },
-];
 
 export default function FirmaBaşvuruFormu() {
   const [form, setForm] = useState({
@@ -24,7 +19,6 @@ export default function FirmaBaşvuruFormu() {
     email: "",
     telefon: "",
     firmaType: "ilac",
-    paket: "standart",
     notlar: "",
   });
 
@@ -57,7 +51,7 @@ export default function FirmaBaşvuruFormu() {
         setSonuc({ tip: "hata", metin: data.hata || "Bir hata oluştu." });
       } else {
         setSonuc({ tip: "basari", metin: "Başvurunuz alındı! Ekibimiz en kısa sürede sizinle iletişime geçecek." });
-        setForm({ firmaAdi: "", yetkiliAdi: "", email: "", telefon: "", firmaType: "ilac", paket: "standart", notlar: "" });
+        setForm({ firmaAdi: "", yetkiliAdi: "", email: "", telefon: "", firmaType: "ilac", notlar: "" });
       }
     } catch {
       setSonuc({ tip: "hata", metin: "Bağlantı hatası. Lütfen tekrar deneyin." });
@@ -118,31 +112,17 @@ export default function FirmaBaşvuruFormu() {
         </div>
       </div>
 
-      <div className="grid md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">Firma Tipi *</label>
-          <select
-            value={form.firmaType}
-            onChange={(e) => guncelle("firmaType", e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
-          >
-            {FIRMA_TIPLERI.map((t) => (
-              <option key={t.deger} value={t.deger}>{t.etiket}</option>
-            ))}
-          </select>
-        </div>
-        <div>
-          <label className="block text-sm font-medium text-gray-700 mb-1">İlgilenilen Paket</label>
-          <select
-            value={form.paket}
-            onChange={(e) => guncelle("paket", e.target.value)}
-            className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
-          >
-            {PAKETLER.map((p) => (
-              <option key={p.deger} value={p.deger}>{p.etiket}</option>
-            ))}
-          </select>
-        </div>
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Kuruluş Tipi *</label>
+        <select
+          value={form.firmaType}
+          onChange={(e) => guncelle("firmaType", e.target.value)}
+          className="w-full border border-gray-200 rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+        >
+          {FIRMA_TIPLERI.map((t) => (
+            <option key={t.deger} value={t.deger}>{t.etiket}</option>
+          ))}
+        </select>
       </div>
 
       <div>
