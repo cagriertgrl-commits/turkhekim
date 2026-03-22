@@ -6,18 +6,82 @@ import { useSearchParams } from "next/navigation";
 
 
 
-const uzmanliklar = [
-  "KBB Uzmanı", "Plastik Cerrah", "Göz Hastalıkları", "Ortopedi",
-  "Kardiyoloji", "Nöroloji", "Dermatoloji", "Diş Hekimi",
-  "Genel Cerrahi", "Üroloji", "Kadın Hastalıkları ve Doğum",
-  "Çocuk Sağlığı ve Hastalıkları", "Psikiyatri", "Fizik Tedavi",
-  "Onkoloji", "Endokrinoloji", "Gastroenteroloji", "Diğer",
+// Mesleğe göre uzmanlık/alan seçenekleri
+const UZMANLIK_LISTELERI = {
+  doktor: [
+    "Aile Hekimi", "Beyin ve Sinir Cerrahisi", "Çocuk Sağlığı ve Hastalıkları",
+    "Dermatoloji", "Endokrinoloji", "Fizik Tedavi ve Rehabilitasyon",
+    "Gastroenteroloji", "Genel Cerrahi", "Göz Hastalıkları", "İç Hastalıkları",
+    "Kadın Hastalıkları ve Doğum", "Kardiyoloji", "KBB Uzmanı",
+    "Nöroloji", "Onkoloji", "Ortopedi ve Travmatoloji",
+    "Plastik ve Estetik Cerrahi", "Psikiyatri", "Radyoloji",
+    "Rinoplasti", "Üroloji", "Diğer",
+  ],
+  "dis-hekimi": [
+    "Genel Diş Hekimliği", "Ortodonti", "Periodontoloji",
+    "Endodonti (Kanal Tedavisi)", "Oral Cerrahi", "İmplant",
+    "Pedodonti (Çocuk Diş)", "Protetik Diş Tedavisi", "Diğer",
+  ],
+  psikolog: [
+    "Klinik Psikoloji", "Çocuk ve Ergen Psikolojisi", "Aile ve Çift Terapisi",
+    "Bağımlılık Psikolojisi", "Nöropsikiyatri", "Psikiyatri", "Diğer",
+  ],
+  fizyoterapist: [
+    "Ortopedik Rehabilitasyon", "Nörolojik Rehabilitasyon",
+    "Sporcu Rehabilitasyon", "Manuel Terapi", "Pediatrik Fizyoterapi", "Diğer",
+  ],
+  diyetisyen: [
+    "Klinik Beslenme", "Sporcu Beslenmesi", "Çocuk Beslenmesi",
+    "Obezite ve Zayıflama", "Diyabet Beslenmesi", "Gebelik Beslenmesi", "Diğer",
+  ],
+  eczaci: [
+    "Eczane Hizmetleri", "Klinik Eczacılık", "Hastane Eczacılığı",
+    "Kozmetik ve Dermofarmasi", "Bitkisel Ürünler", "Diğer",
+  ],
+  optisyen: [
+    "Refraksiyon Uzmanı", "Kontakt Lens Uzmanı", "Düşük Görme Uzmanı", "Diğer",
+  ],
+  diger: ["Hemşirelik", "Diyabetoloji", "Osteopati", "Akupunktur", "Diğer"],
+};
+
+// 81 İl
+const sehirler = [
+  "Adana", "Adıyaman", "Afyonkarahisar", "Ağrı", "Amasya", "Ankara", "Antalya",
+  "Artvin", "Aydın", "Balıkesir", "Bilecik", "Bingöl", "Bitlis", "Bolu",
+  "Burdur", "Bursa", "Çanakkale", "Çankırı", "Çorum", "Denizli", "Diyarbakır",
+  "Edirne", "Elazığ", "Erzincan", "Erzurum", "Eskişehir", "Gaziantep", "Giresun",
+  "Gümüşhane", "Hakkari", "Hatay", "Isparta", "İçel (Mersin)", "İstanbul",
+  "İzmir", "Kars", "Kastamonu", "Kayseri", "Kırklareli", "Kırşehir", "Kocaeli",
+  "Konya", "Kütahya", "Malatya", "Manisa", "Kahramanmaraş", "Mardin", "Muğla",
+  "Muş", "Nevşehir", "Niğde", "Ordu", "Rize", "Sakarya", "Samsun", "Siirt",
+  "Sinop", "Sivas", "Tekirdağ", "Tokat", "Trabzon", "Tunceli", "Şanlıurfa",
+  "Uşak", "Van", "Yozgat", "Zonguldak", "Aksaray", "Bayburt", "Karaman",
+  "Kırıkkale", "Batman", "Şırnak", "Bartın", "Ardahan", "Iğdır", "Yalova",
+  "Karabük", "Kilis", "Osmaniye", "Düzce",
 ];
 
-const sehirler = [
-  "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
-  "Eskişehir", "Adana", "Gaziantep", "Konya", "Kayseri",
-];
+// İl → İlçe haritası
+const ILCE_MAP = {
+  "İstanbul": ["Adalar","Arnavutköy","Ataşehir","Avcılar","Bağcılar","Bahçelievler","Bakırköy","Başakşehir","Bayrampaşa","Beşiktaş","Beykoz","Beylikdüzü","Beyoğlu","Büyükçekmece","Çatalca","Çekmeköy","Esenler","Esenyurt","Eyüpsultan","Fatih","Gaziosmanpaşa","Güngören","Kadıköy","Kağıthane","Kartal","Küçükçekmece","Maltepe","Pendik","Sancaktepe","Sarıyer","Silivri","Sultanbeyli","Sultangazi","Şile","Şişli","Tuzla","Ümraniye","Üsküdar","Zeytinburnu"],
+  "Ankara": ["Altındağ","Ayaş","Balâ","Beypazarı","Çamlıdere","Çankaya","Çubuk","Elmadağ","Etimesgut","Evren","Gölbaşı","Güdül","Haymana","Kalecik","Kazan","Keçiören","Kızılcahamam","Mamak","Nallıhan","Polatlı","Pursaklar","Sincan","Şereflikoçhisar","Yenimahalle"],
+  "İzmir": ["Aliağa","Balçova","Bayındır","Bayraklı","Bergama","Beydağ","Bornova","Buca","Çeşme","Çiğli","Dikili","Foça","Gaziemir","Güzelbahçe","Karabağlar","Karaburun","Karşıyaka","Kemalpaşa","Kınık","Kiraz","Konak","Menderes","Menemen","Narlıdere","Ödemiş","Seferihisar","Selçuk","Tire","Torbalı","Urla"],
+  "Bursa": ["Büyükorhan","Gemlik","Gürsu","Harmancık","İnegöl","İznik","Karacabey","Keles","Kestel","Mudanya","Mustafakemalpaşa","Nilüfer","Orhaneli","Orhangazi","Osmangazi","Yenişehir","Yıldırım"],
+  "Antalya": ["Akseki","Aksu","Alanya","Demre","Döşemealtı","Elmalı","Finike","Gazipaşa","Gündoğmuş","İbradı","Kaş","Kemer","Kepez","Konyaaltı","Korkuteli","Kumluca","Manavgat","Muratpaşa","Serik"],
+  "Adana": ["Aladağ","Ceyhan","Çukurova","Feke","İmamoğlu","Karaisalı","Karataş","Kozan","Pozantı","Saimbeyli","Sarıçam","Seyhan","Tufanbeyli","Yumurtalık","Yüreğir"],
+  "Gaziantep": ["Araban","İslahiye","Karkamış","Nizip","Nurdağı","Oğuzeli","Şahinbey","Şehitkamil","Yavuzeli"],
+  "Konya": ["Ahırlı","Akören","Akşehir","Altınekin","Beyşehir","Bozkır","Cihanbeyli","Çeltik","Çumra","Derbent","Derebucak","Doğanhisar","Emirgazi","Ereğli","Güneysinir","Hadim","Halkapınar","Hüyük","Ilgın","Kadınhanı","Karapınar","Karatay","Kulu","Meram","Sarayönü","Selçuklu","Seydişehir","Taşkent","Tuzlukçu","Yalıhüyük","Yunak"],
+  "Kayseri": ["Akkışla","Bünyan","Develi","Felahiye","Hacılar","İncesu","Kocasinan","Melikgazi","Özvatan","Pınarbaşı","Sarıoğlan","Sarız","Talas","Tomarza","Yahyalı","Yeşilhisar"],
+  "Trabzon": ["Akçaabat","Araklı","Arsin","Beşikdüzü","Çarşıbaşı","Çaykara","Dernekpazarı","Düzköy","Hayrat","Köprübaşı","Maçka","Of","Ortahisar","Sürmene","Şalpazarı","Tonya","Vakfıkebir","Yomra"],
+  "Samsun": ["Alaçam","Asarcık","Atakum","Ayvacık","Bafra","Canik","Çarşamba","Havza","İlkadım","Kavak","Ladik","Salıpazarı","Tekkeköy","Terme","Vezirköprü","Yakakent"],
+  "Diyarbakır": ["Bağlar","Bismil","Çermik","Çınar","Çüngüş","Dicle","Eğil","Ergani","Hani","Hazro","Kayapınar","Kocaköy","Kulp","Lice","Silvan","Sur","Yenişehir"],
+  "Eskişehir": ["Alpu","Beylikova","Çifteler","Günyüzü","Han","İnönü","Mahmudiye","Mihalgazi","Mihallıççık","Odunpazarı","Sarıcakaya","Seyitgazi","Sivrihisar","Tepebaşı"],
+  "Mersin": ["Akdeniz","Anamur","Aydıncık","Bozyazı","Çamlıyayla","Erdemli","Gülnar","Mezitli","Mut","Silifke","Tarsus","Toroslar","Yenişehir"],
+  "Kocaeli": ["Başiskele","Çayırova","Darıca","Derince","Dilovası","Gebze","Gölcük","İzmit","Kandıra","Karamürsel","Kartepe","Körfez"],
+};
+
+function getIlceler(sehir) {
+  return ILCE_MAP[sehir] || [];
+}
 
 function DoktorOlForm() {
   const [adim, setAdim] = useState(1);
@@ -207,7 +271,7 @@ function DoktorOlForm() {
                   className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 bg-white"
                 >
                   <option value="">Seçiniz...</option>
-                  {uzmanliklar.map((u) => (
+                  {(UZMANLIK_LISTELERI[meslek] || UZMANLIK_LISTELERI["diger"]).map((u) => (
                     <option key={u} value={u}>{u}</option>
                   ))}
                 </select>
@@ -219,7 +283,7 @@ function DoktorOlForm() {
                   <select
                     name="sehir"
                     value={form.sehir}
-                    onChange={guncelle}
+                    onChange={(e) => setForm({ ...form, sehir: e.target.value, ilce: "" })}
                     className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 bg-white"
                   >
                     <option value="">Seçiniz...</option>
@@ -230,13 +294,27 @@ function DoktorOlForm() {
                 </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">İlçe</label>
-                  <input
-                    name="ilce"
-                    value={form.ilce}
-                    onChange={guncelle}
-                    placeholder="Kadıköy"
-                    className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
-                  />
+                  {getIlceler(form.sehir).length > 0 ? (
+                    <select
+                      name="ilce"
+                      value={form.ilce}
+                      onChange={guncelle}
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500 bg-white"
+                    >
+                      <option value="">Seçiniz...</option>
+                      {getIlceler(form.sehir).map((ilce) => (
+                        <option key={ilce} value={ilce}>{ilce}</option>
+                      ))}
+                    </select>
+                  ) : (
+                    <input
+                      name="ilce"
+                      value={form.ilce}
+                      onChange={guncelle}
+                      placeholder="İlçe adı"
+                      className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-teal-500"
+                    />
+                  )}
                 </div>
               </div>
 
