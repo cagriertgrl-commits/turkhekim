@@ -191,6 +191,26 @@ async function migrate() {
   `;
   console.log("✅ doktorlar.soyad + egitim + koordinat + video eklendi");
 
+  // ─── PAYLASILAR tablosu (Doktor Feed) ────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS paylasilar (
+      id SERIAL PRIMARY KEY,
+      doktor_id INTEGER REFERENCES doktorlar(id) ON DELETE CASCADE,
+      baslik TEXT NOT NULL,
+      slug TEXT NOT NULL,
+      icerik TEXT NOT NULL,
+      kategori TEXT NOT NULL DEFAULT 'saglik-ipucu',
+      okunma INTEGER DEFAULT 0,
+      yayinda BOOLEAN DEFAULT true,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      updated_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_paylasilar_doktor ON paylasilar(doktor_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_paylasilar_slug ON paylasilar(slug)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_paylasilar_kategori ON paylasilar(kategori)`;
+  console.log("✅ paylasilar tablosu oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }

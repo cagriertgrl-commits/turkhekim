@@ -15,6 +15,7 @@ import KlinikFotoYukle from "@/components/KlinikFotoYukle";
 import SigortaSecici from "@/components/SigortaSecici";
 import HizmetSecici from "@/components/HizmetSecici";
 import HastalarPanel from "@/components/HastalarPanel";
+import FeedPanel from "@/components/FeedPanel";
 import PanelDilSecici from "@/components/PanelDilSecici";
 import CikisButonu from "@/components/CikisButonu";
 import WhatsappInput from "@/components/WhatsappInput";
@@ -439,6 +440,11 @@ export default async function Panel() {
 
             {/* Soru Panel */}
             <SoruPanel sorular={sorular} />
+
+            {/* Feed / Paylaşımlar */}
+            <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
+              <FeedPanel doktorId={doktor.id} />
+            </div>
 
             {/* Medya Panel */}
             <MedyaPanel baslangicMedya={medyaListesi} />
