@@ -6,10 +6,11 @@ export const HASTA_FORMLARI = [
   // ─── ESTETİK & PLASTİK ───────────────────────────────────────────────
   {
     id: "rinoplasti-onam",
-    uzmanliklar: ["rinoplasti", "plastik-cerrahi", "estetik-cerrahi"],
+    uzmanliklar: ["rinoplasti", "plastik-cerrahi", "estetik-cerrahi", "kbb-uzmani"],
     baslik: "Rinoplasti (Burun Estetiği) Aydınlatılmış Onam Formu",
     aciklama: "Burun estetiği operasyonu öncesi hastanın okuyup imzalaması gereken standart onam formu.",
     kategori: "Estetik Cerrahi",
+    ekKategoriler: ["KBB"],
     dil: "tr",
   },
   {

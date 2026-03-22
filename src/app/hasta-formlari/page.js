@@ -36,7 +36,9 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
   const kategoriler = tumKategoriler();
 
   const filtrelenmis = seciliKategori
-    ? HASTA_FORMLARI.filter((f) => f.kategori === seciliKategori)
+    ? HASTA_FORMLARI.filter((f) =>
+        f.kategori === seciliKategori || f.ekKategoriler?.includes(seciliKategori)
+      )
     : HASTA_FORMLARI;
 
   return (
@@ -104,6 +106,14 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
                       {bilgi?.Ikon && <bilgi.Ikon />}
                       {form.kategori}
                     </span>
+                    {form.ekKategoriler?.map((ek) => {
+                      const ekBilgi = KATEGORI_BILGI[ek];
+                      return ekBilgi ? (
+                        <span key={ek} style={{ backgroundColor: ekBilgi.bg, color: ekBilgi.renk }} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold">
+                          {ekBilgi.Ikon && <ekBilgi.Ikon />} {ek}
+                        </span>
+                      ) : null;
+                    })}
                     <span style={{ backgroundColor: "#EFF6FF", color: "#1E40AF" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">
                       🇹🇷 TR
                     </span>
