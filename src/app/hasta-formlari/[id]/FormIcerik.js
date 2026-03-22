@@ -1432,10 +1432,11 @@ export default function FormIcerik({ form, hekim }) {
         hastaVasi: hasta.vasi,
         hastaTabin: hasta.tanik,
       });
-      const pencere = window.open("", "_blank");
+      const blob = new Blob([formHtml(form.baslik, doldurulmus)], { type: "text/html;charset=utf-8" });
+      const url = URL.createObjectURL(blob);
+      const pencere = window.open(url, "_blank");
       if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
-      pencere.document.write(formHtml(form.baslik, doldurulmus));
-      pencere.document.close();
+      setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch (err) {
       alert("Form oluşturulurken hata: " + err.message);
       console.error(err);
