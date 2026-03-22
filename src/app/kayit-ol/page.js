@@ -135,6 +135,26 @@ export default function KayitOl() {
           })}
         </div>
 
+        {/* HASTA GİRİŞİ */}
+        <div className="mt-6 border-t border-gray-100 pt-6">
+          <p className="text-center text-gray-400 text-xs mb-4">Sağlık profesyoneli değil misiniz?</p>
+          <Link
+            href="/hasta-panel"
+            className="group flex items-center gap-5 bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all max-w-sm mx-auto"
+          >
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-3xl flex-shrink-0" style={{ backgroundColor: "#EFF6FF" }}>
+              🏥
+            </div>
+            <div className="text-left flex-1">
+              <h3 className="font-bold text-gray-900 text-sm mb-0.5">Hasta Girişi</h3>
+              <p className="text-xs text-gray-400">Randevularınızı görüntüleyin, hasta formlarına erişin</p>
+            </div>
+            <div className="text-xs font-semibold py-1.5 px-3 rounded-full" style={{ backgroundColor: "#EFF6FF", color: "#2563EB" }}>
+              Giriş →
+            </div>
+          </Link>
+        </div>
+
         {/* ALT BİLGİ */}
         <div className="grid grid-cols-3 gap-4 mt-12">
           {[

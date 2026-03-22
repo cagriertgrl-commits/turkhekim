@@ -22,10 +22,8 @@ export default function Navbar({ aktifSayfa }) {
 
   const linkler = [
     { href: "/istanbul/kbb-uzmani", etiket: "Doktor Bul" },
-    { href: "/feed", etiket: "Sağlık Haberleri" },
     { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
-    { href: "/medikal-firma", etiket: "Firmalar İçin" },
     { href: "/hasta-formlari", etiket: "Hasta Formları" },
   ];
 
@@ -88,12 +86,6 @@ export default function Navbar({ aktifSayfa }) {
                   )}
                 </div>
               </a>
-              <button
-                onClick={cikisYap}
-                className="text-gray-400 hover:text-white text-sm bg-transparent border-0 cursor-pointer"
-              >
-                Çıkış
-              </button>
             </>
           ) : (
             // Giriş yapılmamış

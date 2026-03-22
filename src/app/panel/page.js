@@ -73,11 +73,6 @@ export default async function Panel() {
           </a>
           <div className="flex items-center gap-3">
             <BildirimZili />
-            {["pro", "kurumsal"].includes(doktor.paket) && (
-              <a href="/gorusme-ozet" style={{ backgroundColor: "#7C3AED" }} className="text-white text-xs px-3 py-1.5 rounded-lg hover:opacity-90 hidden md:flex items-center gap-1.5">
-                🎙️ Görüşme Özetle
-              </a>
-            )}
             <span className="text-gray-300 text-sm hidden md:block">{doktor.ad}</span>
             <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "var(--teal)", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör

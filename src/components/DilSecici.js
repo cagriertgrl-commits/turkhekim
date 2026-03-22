@@ -1,23 +1,27 @@
 "use client";
-import { useState } from "react";
 
 const DILLER = [
-  { kod: "tr", etiket: "🇹🇷 TR" },
-  { kod: "en", etiket: "🇬🇧 EN" },
-  { kod: "ru", etiket: "🇷🇺 RU" },
-  { kod: "ar", etiket: "🇸🇦 AR" },
-  { kod: "fa", etiket: "🇮🇷 FA" },
+  { kod: "tr", etiket: "🇹🇷 TR", href: "/" },
+  { kod: "en", etiket: "🇬🇧 EN", href: "/en" },
+  { kod: "ar", etiket: "🇸🇦 AR", href: "/ar" },
+  { kod: "fa", etiket: "🇮🇷 FA", href: "/fa" },
 ];
 
 export default function DilSecici() {
-  const [aktif, setAktif] = useState("tr");
+  const aktif = typeof window !== "undefined"
+    ? (window.location.pathname === "/" ? "tr"
+      : window.location.pathname.startsWith("/en") ? "en"
+      : window.location.pathname.startsWith("/ar") ? "ar"
+      : window.location.pathname.startsWith("/fa") ? "fa"
+      : "tr")
+    : "tr";
 
   return (
     <div className="flex items-center gap-1">
       {DILLER.map((dil) => (
-        <button
+        <a
           key={dil.kod}
-          onClick={() => setAktif(dil.kod)}
+          href={dil.href}
           className="text-xs px-2 py-1 rounded-md transition-all"
           style={
             aktif === dil.kod
@@ -26,7 +30,7 @@ export default function DilSecici() {
           }
         >
           {dil.etiket}
-        </button>
+        </a>
       ))}
     </div>
   );
