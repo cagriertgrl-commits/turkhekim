@@ -28,6 +28,22 @@ export default function DoktorOl() {
   const baslangicUzmanlik = typeof window !== "undefined"
     ? new URLSearchParams(window.location.search).get("uzmanlik") || ""
     : "";
+  const meslek = typeof window !== "undefined"
+    ? new URLSearchParams(window.location.search).get("meslek") || "doktor"
+    : "doktor";
+
+  const MESLEK_BASLIK = {
+    doktor: { baslik: "Doktor / Uzman Hekim", alt: "180.000 Türk hekimi arasında öne çıkın.", unvanlar: ["", "Pratisyen Dr.", "Uzm. Dr.", "Asst. Dr.", "Doç. Dr.", "Prof. Dr.", "Op. Dr."] },
+    "dis-hekimi": { baslik: "Diş Hekimi", alt: "Binlerce hasta adayına ulaşın.", unvanlar: ["", "Dt.", "Uzm. Dt.", "Doç. Dt.", "Prof. Dt."] },
+    psikolog: { baslik: "Psikolog / Psikiyatrist", alt: "Hastalarınıza daha kolay ulaşın.", unvanlar: ["", "Psk.", "Klinik Psk.", "Uzm. Dr.", "Doç. Dr.", "Prof. Dr."] },
+    fizyoterapist: { baslik: "Fizyoterapist", alt: "Profilinizi oluşturun, hastalar sizi bulsun.", unvanlar: ["", "Fzt.", "Uzm. Fzt."] },
+    diyetisyen: { baslik: "Diyetisyen", alt: "Beslenme ve diyet danışmanlığınızı büyütün.", unvanlar: ["", "Dyt.", "Uzm. Dyt."] },
+    eczaci: { baslik: "Eczacı", alt: "Eczanenizi platforma ekleyin.", unvanlar: ["", "Ecz.", "Uzm. Ecz."] },
+    optisyen: { baslik: "Optisyen", alt: "Profilinizi oluşturun.", unvanlar: ["", "Opt."] },
+    diger: { baslik: "Sağlık Uzmanı", alt: "Profilinizi oluşturun, hastalar sizi bulsun.", unvanlar: ["", "Uzm.", "Dr.", "Doç.", "Prof."] },
+  };
+
+  const meslekBilgi = MESLEK_BASLIK[meslek] || MESLEK_BASLIK["diger"];
 
   const [form, setForm] = useState({
     ad: "",
@@ -126,8 +142,8 @@ export default function DoktorOl() {
       {/* BAŞLIK */}
       <div style={{ backgroundColor: "#0D2137" }} className="px-6 py-12">
         <div className="max-w-2xl mx-auto text-center">
-          <h1 className="text-white text-3xl font-bold mb-3">Ücretsiz Profilinizi Oluşturun</h1>
-          <p className="text-gray-300">180.000 Türk hekimi arasında öne çıkın. Kayıt ücretsiz.</p>
+          <h1 className="text-white text-3xl font-bold mb-3">{meslekBilgi.baslik} — Ücretsiz Profil</h1>
+          <p className="text-gray-300">{meslekBilgi.alt} Kayıt ücretsiz.</p>
         </div>
       </div>
 
@@ -163,13 +179,9 @@ export default function DoktorOl() {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Unvan</label>
                   <select name="unvan" value={form.unvan} onChange={guncelle}
                     className="w-full border border-gray-200 rounded-xl px-3 py-3 text-sm focus:outline-none focus:border-teal-500 bg-white">
-                    <option value="">Seçiniz</option>
-                    <option value="Pratisyen Dr.">Pratisyen Dr.</option>
-                    <option value="Uzm. Dr.">Uzm. Dr.</option>
-                    <option value="Asst. Dr.">Asst. Dr.</option>
-                    <option value="Doç. Dr.">Doç. Dr.</option>
-                    <option value="Prof. Dr.">Prof. Dr.</option>
-                    <option value="Op. Dr.">Op. Dr.</option>
+                    {meslekBilgi.unvanlar.map((u) => (
+                      <option key={u} value={u}>{u || "Seçiniz"}</option>
+                    ))}
                   </select>
                 </div>
                 <div>

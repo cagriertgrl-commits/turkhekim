@@ -105,9 +105,9 @@ export default function KayitOl() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {MESLEK_GRUPLARI.map((meslek) => {
             const uzmanlik = MESLEK_UZMANLIK_MAP[meslek.slug];
-            const href = uzmanlik
-              ? `/doktor-ol?uzmanlik=${encodeURIComponent(uzmanlik)}`
-              : "/doktor-ol";
+            const params = new URLSearchParams({ meslek: meslek.slug });
+            if (uzmanlik) params.set("uzmanlik", uzmanlik);
+            const href = `/doktor-ol?${params.toString()}`;
 
             return (
               <Link
