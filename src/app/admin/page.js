@@ -370,7 +370,7 @@ export default function AdminPanel() {
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm">{y.hasta_adi?.[0]}</div>
+                          <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-9 h-9 rounded-full flex items-center justify-center font-bold text-sm flex-shrink-0">{y.hasta_adi?.[0]}</div>
                           <div>
                             <span className="font-semibold text-sm text-gray-900">{y.hasta_adi}</span>
                             <span className="text-gray-400 text-xs ml-2">{y.tarih}</span>

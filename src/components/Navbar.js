@@ -29,20 +29,20 @@ export default function Navbar({ aktifSayfa }) {
   ];
 
   return (
-    <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4 relative z-50">
+    <nav style={{ backgroundColor: "var(--navy)" }} className="px-6 py-4 relative z-50">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
 
         {/* LOGO */}
         <a href="/" className="flex items-center gap-2.5">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
+            <circle cx="16" cy="16" r="16" fill="var(--teal)"/>
             <circle cx="16" cy="16" r="1.8" fill="white"/>
-            <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
+            <polygon points="16,4 14.2,15 17.8,15" fill="var(--gold)"/>
             <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
             <text x="14.5" y="11" fontSize="5" fill="white" fontWeight="bold" fontFamily="sans-serif">N</text>
           </svg>
           <span className="text-white font-bold text-xl tracking-tight">
-            Doktor<span style={{ color: "#C9A84C" }}>Pusula</span>
+            Doktor<span style={{ color: "var(--gold)" }}>Pusula</span>
           </span>
         </a>
 
@@ -52,7 +52,7 @@ export default function Navbar({ aktifSayfa }) {
             <a
               key={link.href}
               href={link.href}
-              style={aktifSayfa === link.etiket ? { color: "#0E7C7B" } : {}}
+              style={aktifSayfa === link.etiket ? { color: "var(--teal)" } : {}}
               className="text-gray-300 hover:text-white text-sm transition-colors"
             >
               {link.etiket}
@@ -73,14 +73,14 @@ export default function Navbar({ aktifSayfa }) {
               <a href="/panel" title="Panelim" className="flex-shrink-0">
                 <div
                   className="w-8 h-8 rounded-full overflow-hidden border-2 hover:border-teal-300 transition-colors"
-                  style={{ borderColor: "#0E7C7B" }}
+                  style={{ borderColor: "var(--teal)" }}
                 >
                   {kullanici.foto_url ? (
                     <img src={kullanici.foto_url} alt="" className="w-full h-full object-cover" />
                   ) : (
                     <div
                       className="w-full h-full flex items-center justify-center text-white text-xs font-bold"
-                      style={{ backgroundColor: "#0E7C7B" }}
+                      style={{ backgroundColor: "var(--teal)" }}
                     >
                       {kullanici.ad?.charAt(0)}
                     </div>
@@ -102,7 +102,7 @@ export default function Navbar({ aktifSayfa }) {
               </a>
               <a
                 href="/doktor-ol"
-                style={{ backgroundColor: "#0E7C7B" }}
+                style={{ backgroundColor: "var(--teal)" }}
                 className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
               >
                 Kayıt Ol
@@ -137,7 +137,7 @@ export default function Navbar({ aktifSayfa }) {
               key={link.href}
               href={link.href}
               onClick={() => setMenuAcik(false)}
-              style={aktifSayfa === link.etiket ? { color: "#0E7C7B" } : {}}
+              style={aktifSayfa === link.etiket ? { color: "var(--teal)" } : {}}
               className="block text-gray-300 hover:text-white py-3 text-sm border-b border-white border-opacity-10 transition-colors"
             >
               {link.etiket}
@@ -163,7 +163,7 @@ export default function Navbar({ aktifSayfa }) {
                 </a>
                 <a
                   href="/doktor-ol"
-                  style={{ backgroundColor: "#0E7C7B" }}
+                  style={{ backgroundColor: "var(--teal)" }}
                   className="block text-white text-center py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Kayıt Ol

@@ -17,9 +17,9 @@ export async function generateMetadata({ params }) {
 
 function rozetHesapla(doktor) {
   const rozetler = [];
-  if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış", renk: "#059669", bg: "#D1FAE5" });
+  if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış", renk: "var(--success)", bg: "#D1FAE5" });
   if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
-  if (doktor.online_randevu) rozetler.push({ ad: "💻 Online Randevu", renk: "#0E7C7B", bg: "#E8F5F5" });
+  if (doktor.online_randevu) rozetler.push({ ad: "💻 Online Randevu", renk: "var(--teal)", bg: "var(--light-teal)" });
   if (doktor.sigorta) rozetler.push({ ad: "🛡️ Sigorta", renk: "#7C3AED", bg: "#EDE9FE" });
   return rozetler;
 }
@@ -85,7 +85,7 @@ export default async function DoktorListesi({ params, searchParams }) {
       <Navbar aktifSayfa="Doktor Bul" />
 
       {/* BAŞLIK */}
-      <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-12">
+      <div style={{ background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%)" }} className="px-6 py-12">
         <div className="max-w-6xl mx-auto">
           <p className="text-gray-400 text-sm mb-3">
             <Link href="/" className="hover:text-white transition-colors">Ana Sayfa</Link>
@@ -142,14 +142,14 @@ export default async function DoktorListesi({ params, searchParams }) {
                   <Link
                     href={sigortaFiltreAktif ? `/${sehirParam}/${uzmanlikParam}${onlineFiltreAktif ? "?online=1" : ""}` : `/${sehirParam}/${uzmanlikParam}?sigorta=1${onlineFiltreAktif ? "&online=1" : ""}`}
                     className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${sigortaFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
-                    style={sigortaFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                    style={sigortaFiltreAktif ? { backgroundColor: "var(--light-teal)", color: "var(--teal)" } : {}}
                   >
                     🛡️ Sigorta Kabul Ediyor {sigortaFiltreAktif && "✓"}
                   </Link>
                   <Link
                     href={onlineFiltreAktif ? `/${sehirParam}/${uzmanlikParam}${sigortaFiltreAktif ? "?sigorta=1" : ""}` : `/${sehirParam}/${uzmanlikParam}?online=1${sigortaFiltreAktif ? "&sigorta=1" : ""}`}
                     className={`flex items-center gap-2 text-sm px-3 py-2 rounded-lg transition-colors ${onlineFiltreAktif ? "font-semibold" : "text-gray-600 hover:bg-gray-50"}`}
-                    style={onlineFiltreAktif ? { backgroundColor: "#E8F5F5", color: "#0E7C7B" } : {}}
+                    style={onlineFiltreAktif ? { backgroundColor: "var(--light-teal)", color: "var(--teal)" } : {}}
                   >
                     💻 Online Randevu {onlineFiltreAktif && "✓"}
                   </Link>
@@ -198,7 +198,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                 </p>
                 <Link
                   href="/"
-                  style={{ backgroundColor: "#0E7C7B" }}
+                  style={{ backgroundColor: "var(--teal)" }}
                   className="inline-block text-white px-6 py-2 rounded-xl text-sm font-medium hover:opacity-90"
                 >
                   Yeni Arama Yap
@@ -221,7 +221,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                         />
                       ) : (
                         <div
-                          style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }}
+                          style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }}
                           className="w-20 h-20 rounded-2xl flex items-center justify-center font-bold text-2xl flex-shrink-0"
                         >
                           {initials}
@@ -234,7 +234,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                             <h2 className="font-bold text-gray-900 text-lg group-hover:text-teal-700 transition-colors">
                               {doktor.ad}
                             </h2>
-                            <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold">{doktor.uzmanlik}</p>
+                            <p style={{ color: "var(--teal)" }} className="text-sm font-semibold">{doktor.uzmanlik}</p>
                             <p className="text-gray-500 text-sm mt-0.5">
                               📍 {doktor.sehir}{doktor.ilce ? ` · ${doktor.ilce}` : ""}
                             </p>
@@ -280,7 +280,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                               </span>
                             )}
                             {doktor.musait ? (
-                              <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-3 py-1 rounded-full font-semibold">
+                              <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-3 py-1 rounded-full font-semibold">
                                 ● Bu hafta müsait
                               </span>
                             ) : (
@@ -290,7 +290,7 @@ export default async function DoktorListesi({ params, searchParams }) {
                             )}
                             <Link
                               href={`/doktor/${doktor.slug}`}
-                              style={{ backgroundColor: "#0D2137" }}
+                              style={{ backgroundColor: "var(--navy)" }}
                               className="text-white px-5 py-2 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity mt-1"
                             >
                               Profili İncele →

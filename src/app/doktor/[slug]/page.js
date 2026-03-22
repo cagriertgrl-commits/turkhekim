@@ -25,7 +25,7 @@ function YildizBar({ puan, toplam }) {
     <div className="flex items-center gap-2 text-xs">
       <span className="text-gray-500 w-4">{puan}★</span>
       <div className="flex-1 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-        <div style={{ width: `${yuzde}%`, backgroundColor: "#C9A84C" }} className="h-full rounded-full" />
+        <div style={{ width: `${yuzde}%`, backgroundColor: "var(--gold)" }} className="h-full rounded-full" />
       </div>
       <span className="text-gray-400 w-4">{puan}</span>
     </div>
@@ -75,10 +75,10 @@ export default async function DoktorProfil({ params }) {
   // Profil teması
   const tema = doktor.tema || "varsayilan";
   const heroStyle = tema === "teal"
-    ? { background: "linear-gradient(135deg, #0E7C7B 0%, #059669 100%)" }
+    ? { background: "linear-gradient(135deg, var(--teal) 0%, var(--success) 100%)" }
     : tema === "koyu"
-    ? { background: "linear-gradient(135deg, #060f1a 0%, #0D2137 100%)" }
-    : { background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }; // varsayilan + desen
+    ? { background: "linear-gradient(135deg, #060f1a 0%, var(--navy) 100%)" }
+    : { background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%)" }; // varsayilan + desen
 
   const adresTipEtiket = {
     muayenehane: "🏠 Muayenehane",
@@ -121,9 +121,9 @@ export default async function DoktorProfil({ params }) {
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex-shrink-0">
               {doktor.foto_url ? (
-                <img src={doktor.foto_url} alt={unvanAd} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: "#0E7C7B" }} />
+                <img src={doktor.foto_url} alt={unvanAd} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: "var(--teal)" }} />
               ) : (
-                <div style={{ backgroundColor: "#0E7C7B" }} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center font-bold text-4xl text-white shadow-xl">
+                <div style={{ backgroundColor: "var(--teal)" }} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center font-bold text-4xl text-white shadow-xl">
                   {initials}
                 </div>
               )}
@@ -131,9 +131,9 @@ export default async function DoktorProfil({ params }) {
 
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-2">
-                {doktor.onaylandi && <span style={{ backgroundColor: "#059669" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">✓ Doğrulanmış Doktor</span>}
+                {doktor.onaylandi && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">✓ Doğrulanmış Doktor</span>}
                 {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">⭐ {doktor.deneyim} Deneyim</span>}
-                {doktor.online_randevu && <span style={{ backgroundColor: "#059669" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">🎥 Online Randevu</span>}
+                {doktor.online_randevu && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">🎥 Online Randevu</span>}
               </div>
 
               <h1 className="text-white text-2xl md:text-4xl font-bold mb-1">{unvanAd}</h1>
@@ -154,7 +154,7 @@ export default async function DoktorProfil({ params }) {
                 )}
                 {doktor.fiyat && (
                   <div style={{ backgroundColor: "#ffffff15", borderColor: "#ffffff20" }} className="border rounded-xl px-4 py-2 text-center">
-                    <div style={{ color: "#C9A84C" }} className="font-bold text-sm">{doktor.fiyat}</div>
+                    <div style={{ color: "var(--gold)" }} className="font-bold text-sm">{doktor.fiyat}</div>
                     <div className="text-gray-400 text-xs">Muayene</div>
                   </div>
                 )}
@@ -230,7 +230,7 @@ export default async function DoktorProfil({ params }) {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
                   {hizmetler.map((h, i) => (
                     <div key={i} style={{ backgroundColor: "#F0FDFA", borderColor: "#CCFBF1" }} className="border rounded-xl px-3 py-2 text-sm text-gray-700 flex items-center gap-2">
-                      <span style={{ color: "#0E7C7B" }}>✓</span> {h}
+                      <span style={{ color: "var(--teal)" }}>✓</span> {h}
                     </div>
                   ))}
                 </div>
@@ -258,7 +258,7 @@ export default async function DoktorProfil({ params }) {
                       <div>
                         <p className="text-xs text-gray-400 mb-1">Adres</p>
                         <p className="text-sm text-gray-700">{doktor.adres}</p>
-                        <a href={`https://maps.google.com/?q=${encodeURIComponent(doktor.adres)}`} target="_blank" rel="noopener noreferrer" style={{ color: "#0E7C7B" }} className="text-xs hover:underline mt-1 inline-block">
+                        <a href={`https://maps.google.com/?q=${encodeURIComponent(doktor.adres)}`} target="_blank" rel="noopener noreferrer" style={{ color: "var(--teal)" }} className="text-xs hover:underline mt-1 inline-block">
                           📌 Haritada Gör →
                         </a>
                       </div>
@@ -284,7 +284,7 @@ export default async function DoktorProfil({ params }) {
                         <p className="text-xs text-gray-400 mb-1">Kabul Edilen Sigortalar</p>
                         <div className="flex flex-wrap gap-1.5">
                           {sigortalar.map((s) => (
-                            <span key={s} style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-xs px-2 py-1 rounded-full font-medium">{s}</span>
+                            <span key={s} style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="text-xs px-2 py-1 rounded-full font-medium">{s}</span>
                           ))}
                         </div>
                       </div>
@@ -308,17 +308,17 @@ export default async function DoktorProfil({ params }) {
                         </span>
                         <div className="flex-1">
                           {m.url ? (
-                            <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "#0D2137" }} className="font-semibold text-sm hover:underline">
+                            <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--navy)" }} className="font-semibold text-sm hover:underline">
                               {m.baslik}
                             </a>
                           ) : (
-                            <p style={{ color: "#0D2137" }} className="font-semibold text-sm">{m.baslik}</p>
+                            <p style={{ color: "var(--navy)" }} className="font-semibold text-sm">{m.baslik}</p>
                           )}
                           {m.aciklama && <p className="text-gray-400 text-xs mt-0.5">{m.aciklama}</p>}
                           {m.yayin_tarihi && <p className="text-gray-300 text-xs mt-0.5">{new Date(m.yayin_tarihi).toLocaleDateString("tr-TR")}</p>}
                         </div>
                         {m.url && (
-                          <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "#0E7C7B" }} className="text-xs hover:underline flex-shrink-0">
+                          <a href={m.url} target="_blank" rel="noopener noreferrer" style={{ color: "var(--teal)" }} className="text-xs hover:underline flex-shrink-0">
                             →
                           </a>
                         )}
@@ -370,13 +370,13 @@ export default async function DoktorProfil({ params }) {
                     <div key={yorum.id} className="p-4 rounded-xl border border-gray-100 hover:border-teal-100 transition-colors">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2.5">
-                          <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
+                          <div style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                             {yorum.hasta_adi[0]}
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="font-semibold text-sm text-gray-900">{yorum.hasta_adi}</span>
-                              {yorum.dogrulanmis && <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>}
+                              {yorum.dogrulanmis && <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>}
                             </div>
                             <span className="text-xs text-gray-400">{yorum.tarih}</span>
                           </div>

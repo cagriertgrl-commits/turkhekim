@@ -3,7 +3,7 @@ import AramaKutusu from "@/components/AramaKutusu";
 import sql from "@/lib/db";
 import Link from "next/link";
 
-const UZMANLIK_RENK = ["#E8F5F5", "#EFF6FF", "#FFFBEB", "#F5F3FF"];
+const UZMANLIK_RENK = ["var(--light-teal)", "#EFF6FF", "#FFFBEB", "#F5F3FF"];
 const UZMANLIK_GRID = [
   { ad: "KBB", slug: "kbb-uzmani", ikon: "👂" },
   { ad: "Kardiyoloji", slug: "kardiyoloji", ikon: "❤️" },
@@ -21,7 +21,7 @@ const UZMANLIK_GRID = [
 
 function rozetHesapla(doktor) {
   const rozetler = [];
-  if (doktor.onaylandi) rozetler.push({ ad: "Doğrulanmış", renk: "#059669", bg: "#D1FAE5" });
+  if (doktor.onaylandi) rozetler.push({ ad: "Doğrulanmış", renk: "var(--success)", bg: "#D1FAE5" });
   if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
   return rozetler;
 }
@@ -84,23 +84,23 @@ export default async function Home() {
       {/* HERO */}
       <section
         style={{
-          background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 50%, #0D2137 100%)",
+          background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 50%, var(--navy) 100%)",
         }}
         className="relative px-6 py-24 overflow-hidden"
       >
         {/* Dekoratif arka plan elementleri */}
         <div
           className="absolute top-0 right-0 w-96 h-96 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #0E7C7B, transparent)", transform: "translate(30%, -30%)" }}
+          style={{ background: "radial-gradient(circle, var(--teal), transparent)", transform: "translate(30%, -30%)" }}
         />
         <div
           className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10"
-          style={{ background: "radial-gradient(circle, #C9A84C, transparent)", transform: "translate(-30%, 30%)" }}
+          style={{ background: "radial-gradient(circle, var(--gold), transparent)", transform: "translate(-30%, 30%)" }}
         />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
           <div
-            style={{ backgroundColor: "#0E7C7B20", borderColor: "#0E7C7B50" }}
+            style={{ backgroundColor: "rgba(14,124,123,0.12)", borderColor: "rgba(14,124,123,0.31)" }}
             className="inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6"
           >
             <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
@@ -111,7 +111,7 @@ export default async function Home() {
 
           <h1 className="text-white text-4xl md:text-6xl font-bold mb-6 leading-tight">
             Doğru Hekime<br />
-            <span style={{ color: "#0E7C7B" }}>Güvenle Ulaş</span>
+            <span style={{ color: "var(--teal)" }}>Güvenle Ulaş</span>
           </h1>
           <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
             Doğrulanmış yorumlar, şeffaf profiller ve kolay randevu.
@@ -123,7 +123,7 @@ export default async function Home() {
       </section>
 
       {/* İSTATİSTİKLER */}
-      <section style={{ backgroundColor: "#0E7C7B" }} className="px-6 py-10">
+      <section style={{ backgroundColor: "var(--teal)" }} className="px-6 py-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
             {[
@@ -145,7 +145,7 @@ export default async function Home() {
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold mb-2">
+            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold mb-2">
               Uzmanlık Alanı Seçin
             </h2>
             <p className="text-gray-400 text-sm">İhtiyacınıza göre doğru uzmana ulaşın</p>
@@ -173,10 +173,10 @@ export default async function Home() {
         <div className="max-w-6xl mx-auto">
           <div className="flex items-center justify-between mb-10">
             <div>
-              <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold">Öne Çıkan Doktorlar</h2>
+              <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold">Öne Çıkan Doktorlar</h2>
               <p className="text-gray-500 text-sm mt-1">Doğrulanmış, en yüksek puanlı hekimler</p>
             </div>
-            <Link href="/istanbul/doktor" style={{ color: "#0E7C7B" }} className="text-sm font-semibold hover:underline hidden md:block">
+            <Link href="/istanbul/doktor" style={{ color: "var(--teal)" }} className="text-sm font-semibold hover:underline hidden md:block">
               Tümünü Gör →
             </Link>
           </div>
@@ -201,7 +201,7 @@ export default async function Home() {
                         />
                       ) : (
                         <div
-                          style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }}
+                          style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }}
                           className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-xl flex-shrink-0"
                         >
                           {initials}
@@ -209,7 +209,7 @@ export default async function Home() {
                       )}
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-gray-900 group-hover:text-teal-700 transition-colors truncate">{doktor.ad}</h3>
-                        <p style={{ color: "#0E7C7B" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
+                        <p style={{ color: "var(--teal)" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
                         <p className="text-gray-500 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${doktor.deneyim} deneyim` : ""}</p>
                       </div>
                     </div>
@@ -242,7 +242,7 @@ export default async function Home() {
                         )}
                       </div>
                       <span
-                        style={{ backgroundColor: "#F0FDFA", color: "#0E7C7B" }}
+                        style={{ backgroundColor: "#F0FDFA", color: "var(--teal)" }}
                         className="text-xs font-semibold px-3 py-1 rounded-full group-hover:bg-teal-600 group-hover:text-white transition-colors"
                       >
                         Profili Gör
@@ -266,17 +266,17 @@ export default async function Home() {
                   className="bg-white rounded-2xl p-5 hover:shadow-lg transition-all border border-gray-100 group"
                 >
                   <div className="flex items-start gap-4 mb-4">
-                    <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-xl flex-shrink-0">
+                    <div style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-xl flex-shrink-0">
                       {doktor.ad.split(" ")[1][0]}
                     </div>
                     <div>
                       <h3 className="font-bold text-gray-900">{doktor.ad}</h3>
-                      <p style={{ color: "#0E7C7B" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
+                      <p style={{ color: "var(--teal)" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
                       <p className="text-gray-400 text-xs mt-0.5">📍 {doktor.sehir} · {doktor.deneyim}</p>
                     </div>
                   </div>
                   <div className="flex flex-wrap gap-1.5 mb-3">
-                    <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">Doğrulanmış</span>
+                    <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">Doğrulanmış</span>
                   </div>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-1.5">
@@ -284,7 +284,7 @@ export default async function Home() {
                       <span className="font-bold text-sm">{doktor.puan}</span>
                       <span className="text-gray-400 text-xs">({doktor.yorum} yorum)</span>
                     </div>
-                    <span style={{ backgroundColor: "#F0FDFA", color: "#0E7C7B" }} className="text-xs font-semibold px-3 py-1 rounded-full">Profili Gör</span>
+                    <span style={{ backgroundColor: "#F0FDFA", color: "var(--teal)" }} className="text-xs font-semibold px-3 py-1 rounded-full">Profili Gör</span>
                   </div>
                 </Link>
               ))}
@@ -297,8 +297,8 @@ export default async function Home() {
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold mb-2 uppercase tracking-widest">Basit ve Hızlı</p>
-            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold">Nasıl Çalışır?</h2>
+            <p style={{ color: "var(--teal)" }} className="text-sm font-semibold mb-2 uppercase tracking-widest">Basit ve Hızlı</p>
+            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold">Nasıl Çalışır?</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6 relative">
             {/* Bağlantı çizgisi (masaüstü) */}
@@ -310,13 +310,13 @@ export default async function Home() {
             ].map((adim, i) => (
               <div key={adim.adim} className="relative text-center">
                 <div
-                  style={{ backgroundColor: i === 1 ? "#0E7C7B" : "#F0FDFA", color: i === 1 ? "white" : "#0E7C7B" }}
+                  style={{ backgroundColor: i === 1 ? "var(--teal)" : "#F0FDFA", color: i === 1 ? "white" : "var(--teal)" }}
                   className="w-20 h-20 rounded-2xl flex flex-col items-center justify-center mx-auto mb-5 shadow-sm"
                 >
                   <span className="text-2xl">{adim.icon}</span>
                   <span className="text-xs font-bold mt-0.5 opacity-70">Adım {adim.adim}</span>
                 </div>
-                <h3 style={{ color: "#0D2137" }} className="font-bold text-lg mb-2">{adim.baslik}</h3>
+                <h3 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-2">{adim.baslik}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed max-w-xs mx-auto">{adim.aciklama}</p>
               </div>
             ))}
@@ -328,7 +328,7 @@ export default async function Home() {
       <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
-            <h2 style={{ color: "#0D2137" }} className="text-xl font-bold">Şehir Seçin</h2>
+            <h2 style={{ color: "var(--navy)" }} className="text-xl font-bold">Şehir Seçin</h2>
           </div>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
             {POPULER_SEHIRLER.map((sehir) => (
@@ -363,7 +363,7 @@ export default async function Home() {
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 style={{ color: "#0D2137" }} className="text-2xl font-bold">Gerçek Hasta Yorumları</h2>
+                <h2 style={{ color: "var(--navy)" }} className="text-2xl font-bold">Gerçek Hasta Yorumları</h2>
                 <p className="text-gray-500 text-sm mt-1">Telefon ile doğrulanmış, değiştirilemeyen yorumlar</p>
               </div>
             </div>
@@ -379,9 +379,9 @@ export default async function Home() {
                   <div className="flex items-center justify-between">
                     <div>
                       <div className="text-xs font-semibold text-gray-700">{yorum.hasta_adi}</div>
-                      <div style={{ color: "#0E7C7B" }} className="text-xs">{yorum.doktor_ad} · {yorum.uzmanlik}</div>
+                      <div style={{ color: "var(--teal)" }} className="text-xs">{yorum.doktor_ad} · {yorum.uzmanlik}</div>
                     </div>
-                    <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">✓ Doğrulanmış</span>
+                    <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">✓ Doğrulanmış</span>
                   </div>
                 </Link>
               ))}
@@ -394,7 +394,7 @@ export default async function Home() {
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold mb-3">Neden DoktorPusula?</h2>
+            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold mb-3">Neden DoktorPusula?</h2>
             <p className="text-gray-500 max-w-xl mx-auto text-sm leading-relaxed">
               Mevcut platformların çözemediği sorunları çözüyoruz.
             </p>
@@ -444,7 +444,7 @@ export default async function Home() {
                 style={{ backgroundColor: kart.renk }}
               >
                 <div className="text-3xl mb-4">{kart.icon}</div>
-                <h3 style={{ color: "#0D2137" }} className="font-bold text-base mb-2">{kart.baslik}</h3>
+                <h3 style={{ color: "var(--navy)" }} className="font-bold text-base mb-2">{kart.baslik}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{kart.aciklama}</p>
               </div>
             ))}
@@ -454,14 +454,14 @@ export default async function Home() {
 
       {/* MEDİKAL TURİZM BANNER */}
       <section
-        style={{ background: "linear-gradient(135deg, #0E7C7B, #065f5e)" }}
+        style={{ background: "linear-gradient(135deg, var(--teal), #065f5e)" }}
         className="px-6 py-16"
       >
         <div className="max-w-6xl mx-auto text-center text-white">
           <p className="text-teal-200 text-sm font-semibold mb-2 uppercase tracking-widest">Uluslararası Hastalar</p>
           <h2 className="text-2xl md:text-4xl font-bold mb-4">
             Turkey's Best Medical Care<br />
-            <span style={{ color: "#C9A84C" }}>in Your Language</span>
+            <span style={{ color: "var(--gold)" }}>in Your Language</span>
           </h2>
           <p className="text-teal-100 mb-8 max-w-xl mx-auto text-sm leading-relaxed">
             Hair transplant, rhinoplasty, dental implants, eye surgery and more.
@@ -485,11 +485,11 @@ export default async function Home() {
       </section>
 
       {/* DOKTOR İÇİN CTA */}
-      <section style={{ backgroundColor: "#0D2137" }} className="px-6 py-16">
+      <section style={{ backgroundColor: "var(--navy)" }} className="px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <p style={{ color: "#0E7C7B" }} className="text-sm font-semibold mb-3 uppercase tracking-wide">Hekimler İçin</p>
+              <p style={{ color: "var(--teal)" }} className="text-sm font-semibold mb-3 uppercase tracking-wide">Hekimler İçin</p>
               <h2 className="text-white text-2xl md:text-3xl font-bold mb-4">
                 Siz de DoktorPusula'da<br />Yerinizi Alın
               </h2>
@@ -506,7 +506,7 @@ export default async function Home() {
                 ].map((madde) => (
                   <div key={madde} className="flex items-center gap-3">
                     <span
-                      style={{ backgroundColor: "#0E7C7B20", color: "#0E7C7B" }}
+                      style={{ backgroundColor: "rgba(14,124,123,0.12)", color: "var(--teal)" }}
                       className="w-5 h-5 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
                     >
                       ✓
@@ -517,7 +517,7 @@ export default async function Home() {
               </div>
               <Link
                 href="/doktor-ol"
-                style={{ backgroundColor: "#0E7C7B" }}
+                style={{ backgroundColor: "var(--teal)" }}
                 className="inline-block text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg"
               >
                 Ücretsiz Kayıt Ol

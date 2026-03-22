@@ -59,16 +59,16 @@ export default async function Panel() {
     <div className="min-h-screen bg-gray-50">
 
       {/* NAVBAR */}
-      <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4 sticky top-0 z-40">
+      <nav style={{ backgroundColor: "var(--navy)" }} className="px-6 py-4 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <a href="/" className="flex items-center gap-2.5">
             <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="16" fill="#0E7C7B"/>
+              <circle cx="16" cy="16" r="16" fill="var(--teal)"/>
               <circle cx="16" cy="16" r="1.8" fill="white"/>
-              <polygon points="16,4 14.2,15 17.8,15" fill="#C9A84C"/>
+              <polygon points="16,4 14.2,15 17.8,15" fill="var(--gold)"/>
               <polygon points="16,28 17.8,17 14.2,17" fill="white" opacity="0.6"/>
             </svg>
-            <span className="text-white font-bold text-lg">Doktor<span style={{ color: "#C9A84C" }}>Pusula</span></span>
+            <span className="text-white font-bold text-lg">Doktor<span style={{ color: "var(--gold)" }}>Pusula</span></span>
           </a>
           <div className="flex items-center gap-3">
             <BildirimZili />
@@ -78,7 +78,7 @@ export default async function Panel() {
               </a>
             )}
             <span className="text-gray-300 text-sm hidden md:block">{doktor.ad}</span>
-            <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
+            <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "var(--teal)", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör
             </a>
             <CikisButonu />
@@ -89,7 +89,7 @@ export default async function Panel() {
       <div className="max-w-6xl mx-auto px-6 py-8">
 
         <div className="mb-6">
-          <h1 style={{ color: "#0D2137" }} className="text-2xl font-bold">
+          <h1 style={{ color: "var(--navy)" }} className="text-2xl font-bold">
             Hoş geldiniz, {doktor.ad.split(" ").slice(1).join(" ") || doktor.ad} 👋
           </h1>
           <p className="text-gray-500 text-sm mt-1">Doktor panelinize genel bakış</p>
@@ -99,8 +99,8 @@ export default async function Panel() {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {[
             { baslik: "Ortalama Puan", deger: doktor.puan || "—", icon: "⭐", renk: "#D97706", bg: "#FFFBEB" },
-            { baslik: "Toplam Yorum", deger: yorumlar.length, icon: "💬", renk: "#0E7C7B", bg: "#F0FDFA" },
-            { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "#059669" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
+            { baslik: "Toplam Yorum", deger: yorumlar.length, icon: "💬", renk: "var(--teal)", bg: "#F0FDFA" },
+            { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "var(--success)" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
             { baslik: "Bekleyen Randevu", deger: Number(analitik.bekleyen_randevu) || 0, icon: "📅", renk: Number(analitik.bekleyen_randevu) > 0 ? "#DC2626" : "#6B7280", bg: Number(analitik.bekleyen_randevu) > 0 ? "#FFF1F2" : "#F5F7FA" },
           ].map((kart) => (
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
@@ -114,9 +114,9 @@ export default async function Panel() {
         {/* ANALİTİK */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { baslik: "Bu Ay Randevu", deger: Number(analitik.bu_ay_randevu) || 0, icon: "📊", renk: "#0D2137", bg: "#EFF6FF" },
+            { baslik: "Bu Ay Randevu", deger: Number(analitik.bu_ay_randevu) || 0, icon: "📊", renk: "var(--navy)", bg: "#EFF6FF" },
             { baslik: "Bu Ay Yorum", deger: Number(analitik.bu_ay_yorum) || 0, icon: "💬", renk: "#7C3AED", bg: "#F5F3FF" },
-            { baslik: "Profil Görüntülenme", deger: Number(analitik.profil_goruntulenme) || 0, icon: "👁️", renk: "#059669", bg: "#F0FDF4" },
+            { baslik: "Profil Görüntülenme", deger: Number(analitik.profil_goruntulenme) || 0, icon: "👁️", renk: "var(--success)", bg: "#F0FDF4" },
           ].map((kart) => (
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
               <div className="flex items-center justify-between mb-2">
@@ -142,12 +142,12 @@ export default async function Panel() {
           ];
           const tamamlanan = alanlar.filter((a) => a.tamam).length;
           const yuzde = Math.round((tamamlanan / alanlar.length) * 100);
-          const renk = yuzde === 100 ? "#059669" : yuzde >= 60 ? "#0E7C7B" : "#D97706";
+          const renk = yuzde === 100 ? "var(--success)" : yuzde >= 60 ? "var(--teal)" : "#D97706";
           if (yuzde === 100) return null;
           return (
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 mb-6">
               <div className="flex items-center justify-between mb-3">
-                <h3 style={{ color: "#0D2137" }} className="font-bold text-sm">Profil Tamamlama</h3>
+                <h3 style={{ color: "var(--navy)" }} className="font-bold text-sm">Profil Tamamlama</h3>
                 <span style={{ color: renk }} className="font-bold text-sm">%{yuzde}</span>
               </div>
               <div className="h-2 bg-gray-100 rounded-full overflow-hidden mb-3">
@@ -169,7 +169,7 @@ export default async function Panel() {
 
             {/* Profil Bilgileri */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 style={{ color: "#0D2137" }} className="font-bold text-lg mb-4">Profilim</h2>
+              <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-4">Profilim</h2>
               <FotoYukle fotoUrl={doktor.foto_url} initials={doktor.ad?.split(" ").slice(1).map(n => n[0]).join("").slice(0,2) || "DR"} />
               <div className="space-y-2 text-sm mt-3">
                 {[
@@ -185,14 +185,14 @@ export default async function Panel() {
                   </div>
                 ))}
               </div>
-              <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }} className="block mt-4 border text-center py-2 rounded-xl text-sm font-medium hover:bg-gray-50">
+              <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "var(--teal)", color: "var(--teal)" }} className="block mt-4 border text-center py-2 rounded-xl text-sm font-medium hover:bg-gray-50">
                 Profilimi Gör →
               </a>
             </div>
 
             {/* Profil Düzenle */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 style={{ color: "#0D2137" }} className="font-bold text-lg mb-4">Profil Düzenle</h2>
+              <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-4">Profil Düzenle</h2>
               <form action="/api/profil-guncelle" method="POST" className="space-y-3">
 
                 <div>
@@ -289,7 +289,7 @@ export default async function Panel() {
                   </div>
                 </div>
 
-                <button type="submit" style={{ backgroundColor: "#0D2137" }} className="w-full text-white py-3 rounded-xl text-sm font-semibold hover:opacity-90">
+                <button type="submit" style={{ backgroundColor: "var(--navy)" }} className="w-full text-white py-3 rounded-xl text-sm font-semibold hover:opacity-90">
                   Kaydet
                 </button>
               </form>
@@ -299,20 +299,20 @@ export default async function Panel() {
 
             {/* Profil Teması */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 style={{ color: "#0D2137" }} className="font-bold text-lg mb-1">Profil Teması</h2>
+              <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-1">Profil Teması</h2>
               <p className="text-xs text-gray-400 mb-3">Herkese açık profil sayfanızın görünümünü özelleştirin</p>
               <TemaSecici mevcutTema={doktor.tema || "varsayilan"} arkaplanUrl={doktor.arka_plan_foto_url} gizleBashlik={true} />
             </div>
 
             {/* Paket Yükselt kartı — sadece ücretsiz pakette */}
             {(!doktor.paket || doktor.paket === "ucretsiz") && (
-              <div style={{ background: "linear-gradient(135deg, #0D2137, #0a3d62)" }} className="rounded-2xl p-5 text-center">
+              <div style={{ background: "linear-gradient(135deg, var(--navy), #0a3d62)" }} className="rounded-2xl p-5 text-center">
                 <div className="text-2xl mb-2">🚀</div>
                 <h3 className="text-white font-bold text-sm mb-1">Premium'a Yükselt</h3>
                 <p className="text-gray-300 text-xs mb-4 leading-relaxed">
                   AI Asistan, öne çıkarma ve analitik dashboard için paketi yükseltin.
                 </p>
-                <a href="/paketler" style={{ backgroundColor: "#0E7C7B" }}
+                <a href="/paketler" style={{ backgroundColor: "var(--teal)" }}
                   className="block text-white text-xs font-semibold py-2.5 rounded-xl hover:opacity-90 transition-opacity">
                   Paketleri İncele →
                 </a>
@@ -358,8 +358,8 @@ export default async function Panel() {
             {/* Yorumlar */}
             <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
               <div className="flex items-center justify-between mb-6">
-                <h2 style={{ color: "#0D2137" }} className="font-bold text-lg">Hasta Yorumları</h2>
-                <span style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-sm font-bold px-3 py-1 rounded-full">
+                <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg">Hasta Yorumları</h2>
+                <span style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="text-sm font-bold px-3 py-1 rounded-full">
                   {yorumlar.length} yorum
                 </span>
               </div>
@@ -374,14 +374,14 @@ export default async function Panel() {
                     <div key={yorum.id} style={{ borderColor: "#F5F7FA" }} className="border-b pb-4 last:border-0">
                       <div className="flex items-start justify-between mb-2">
                         <div className="flex items-center gap-2">
-                          <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold">
+                          <div style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="w-9 h-9 rounded-full flex items-center justify-center text-sm font-bold flex-shrink-0">
                             {yorum.hasta_adi[0]}
                           </div>
                           <div>
                             <div className="flex items-center gap-2">
                               <span className="font-medium text-sm">{yorum.hasta_adi}</span>
                               {yorum.dogrulanmis && (
-                                <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>
+                                <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>
                               )}
                               {yorum.dogrulama_durumu === "moderasyon_bekliyor" && (
                                 <span style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }} className="text-xs px-2 py-0.5 rounded-full">🔍 Moderasyonda</span>
