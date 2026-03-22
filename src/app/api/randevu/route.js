@@ -25,6 +25,9 @@ export async function POST(request) {
 
     const randevuTipi = ["yuzyuze", "online"].includes(tip) ? tip : "yuzyuze";
 
+    // Hasta iptal token'ı
+    const iptalToken = Array.from({ length: 32 }, () => Math.floor(Math.random() * 16).toString(16)).join("");
+
     // Aynı numaradan aynı doktora 24 saat içinde tekrar randevu engeli
     const mevcutRandevu = await sql`
       SELECT id FROM randevular
@@ -40,11 +43,14 @@ export async function POST(request) {
     }
 
     await sql`
-      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip, tarih, saat)
-      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi}, ${tarih || null}, ${saat || null})
+      INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip, tarih, saat, iptal_token)
+      VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi}, ${tarih || null}, ${saat || null}, ${iptalToken})
     `;
 
-    return NextResponse.json({ mesaj: "Randevu talebiniz alındı. Doktor en kısa sürede sizi arayacak." });
+    return NextResponse.json({
+      mesaj: "Randevu talebiniz alındı. Doktor en kısa sürede sizi arayacak.",
+      iptal_linki: `/randevu-iptal/${iptalToken}`,
+    });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ hata: "Sunucu hatası." }, { status: 500 });

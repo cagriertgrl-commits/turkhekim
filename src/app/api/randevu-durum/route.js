@@ -8,7 +8,7 @@ export async function POST(request) {
   const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
-  const { randevu_id, durum, doktor_notu } = await request.json();
+  const { randevu_id, durum, doktor_notu, iptal_sebep } = await request.json();
   if (!randevu_id || !durum) return NextResponse.json({ hata: "Eksik parametre." }, { status: 400 });
 
   const izinliDurumlar = ["onaylandi", "reddedildi", "iptal", "tamamlandi"];
@@ -21,7 +21,11 @@ export async function POST(request) {
   const randevu = randevular[0];
 
   await sql`
-    UPDATE randevular SET durum = ${durum}, doktor_notu = ${doktor_notu || null}
+    UPDATE randevular
+    SET durum = ${durum},
+        doktor_notu = ${doktor_notu || null},
+        iptal_sebep = ${(durum === "iptal" && iptal_sebep) ? iptal_sebep : null},
+        tamamlandi_at = ${durum === "tamamlandi" ? new Date().toISOString() : null}
     WHERE id = ${randevu_id}
   `;
 

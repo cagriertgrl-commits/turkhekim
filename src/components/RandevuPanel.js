@@ -3,39 +3,135 @@
 import { useState, useEffect } from "react";
 
 const DURUM_RENK = {
-  bekliyor: { bg: "#FEF3C7", text: "#92400E", etiket: "Bekliyor" },
-  onaylandi: { bg: "#D1FAE5", text: "#065F46", etiket: "Onaylandı" },
-  iptal: { bg: "#FEE2E2", text: "#991B1B", etiket: "İptal" },
+  bekliyor: { bg: "#FEF3C7", text: "#92400E", etiket: "⏳ Bekliyor" },
+  onaylandi: { bg: "#D1FAE5", text: "#065F46", etiket: "✅ Onaylandı" },
+  iptal: { bg: "#FEE2E2", text: "#991B1B", etiket: "❌ İptal" },
+  tamamlandi: { bg: "#EDE9FE", text: "#5B21B6", etiket: "🏁 Tamamlandı" },
 };
+
+const IPTAL_SEBEPLER = [
+  { deger: "hasta_istedigi", etiket: "Hasta isteği ile" },
+  { deger: "doktor_istedigi", etiket: "Doktor isteği ile" },
+  { deger: "hasta_gelmedi", etiket: "Hasta gelmedi" },
+  { deger: "yanlis_randevu", etiket: "Yanlış randevu" },
+  { deger: "diger", etiket: "Diğer" },
+];
+
+function IptalModal({ randevu, onKapat, onOnayla }) {
+  const [sebep, setSebep] = useState("");
+  const [not, setNot] = useState("");
+
+  return (
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" style={{ backgroundColor: "rgba(0,0,0,0.5)" }}>
+      <div className="bg-white rounded-2xl p-6 w-full max-w-md shadow-2xl">
+        <h3 className="font-bold text-gray-900 mb-1">Randevuyu İptal Et</h3>
+        <p className="text-sm text-gray-500 mb-4">{randevu.hasta_adi} adlı hastanın randevusu iptal edilecek.</p>
+        <div className="space-y-3">
+          <div>
+            <label className="text-xs text-gray-500 block mb-1">İptal Sebebi <span className="text-red-500">*</span></label>
+            <div className="space-y-1.5">
+              {IPTAL_SEBEPLER.map((s) => (
+                <label key={s.deger} className="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="sebep"
+                    value={s.deger}
+                    checked={sebep === s.deger}
+                    onChange={() => setSebep(s.deger)}
+                    className="accent-red-500"
+                  />
+                  <span className="text-sm text-gray-700">{s.etiket}</span>
+                </label>
+              ))}
+            </div>
+          </div>
+          <div>
+            <label className="text-xs text-gray-500 block mb-1">Ek Not (opsiyonel)</label>
+            <textarea
+              value={not}
+              onChange={(e) => setNot(e.target.value)}
+              rows={2}
+              placeholder="Hastaya iletilecek not..."
+              className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:border-red-400 resize-none"
+            />
+          </div>
+          <div className="flex gap-2 pt-1">
+            <button onClick={onKapat} className="flex-1 border border-gray-200 text-gray-600 py-2 rounded-xl text-sm font-medium hover:bg-gray-50">
+              Vazgeç
+            </button>
+            <button
+              onClick={() => sebep && onOnayla(randevu.id, sebep, not)}
+              disabled={!sebep}
+              style={{ backgroundColor: "#DC2626" }}
+              className="flex-1 text-white py-2 rounded-xl text-sm font-medium hover:opacity-90 disabled:opacity-40"
+            >
+              İptal Et
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function RandevuPanel({ doktorId }) {
   const [randevular, setRandevular] = useState([]);
   const [yukleniyor, setYukleniyor] = useState(true);
+  const [iptalRandevu, setIptalRandevu] = useState(null);
+  const [filtre, setFiltre] = useState("bekliyor");
 
   useEffect(() => {
     fetch(`/api/randevu?doktor_id=${doktorId}`)
       .then((r) => r.json())
-      .then((data) => { setRandevular(data); setYukleniyor(false); });
+      .then((data) => { setRandevular(Array.isArray(data) ? data : []); setYukleniyor(false); });
   }, [doktorId]);
 
-  async function durumGuncelle(id, yeniDurum) {
-    await fetch("/api/randevu", {
-      method: "PATCH",
+  async function durumGuncelle(id, yeniDurum, sebep, not) {
+    await fetch("/api/randevu-durum", {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id, durum: yeniDurum }),
+      body: JSON.stringify({ randevu_id: id, durum: yeniDurum, doktor_notu: not || null, iptal_sebep: sebep || null }),
     });
     setRandevular((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, durum: yeniDurum } : r))
+      prev.map((r) => r.id === id ? { ...r, durum: yeniDurum, doktor_notu: not || r.doktor_notu, iptal_sebep: sebep || null } : r)
     );
+    setIptalRandevu(null);
   }
+
+  const filtreliler = filtre === "hepsi" ? randevular : randevular.filter((r) => r.durum === filtre);
+  const bekleyenSayi = randevular.filter((r) => r.durum === "bekliyor").length;
 
   return (
     <div className="bg-white rounded-2xl p-6 shadow-sm">
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4">
         <h2 style={{ color: "#0D2137" }} className="font-bold text-lg">Randevu Talepleri</h2>
-        <span style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-sm font-bold px-3 py-1 rounded-full">
-          {randevular.filter((r) => r.durum === "bekliyor").length} bekliyor
-        </span>
+        {bekleyenSayi > 0 && (
+          <span style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="text-sm font-bold px-3 py-1 rounded-full">
+            {bekleyenSayi} bekliyor
+          </span>
+        )}
+      </div>
+
+      {/* Filtre */}
+      <div className="flex gap-1.5 mb-4 flex-wrap">
+        {[
+          { k: "bekliyor", e: "⏳ Bekliyor" },
+          { k: "onaylandi", e: "✅ Onaylı" },
+          { k: "tamamlandi", e: "🏁 Tamamlanan" },
+          { k: "iptal", e: "❌ İptal" },
+          { k: "hepsi", e: "Tümü" },
+        ].map(({ k, e }) => (
+          <button
+            key={k}
+            onClick={() => setFiltre(k)}
+            className="text-xs px-3 py-1.5 rounded-full font-medium transition-colors"
+            style={filtre === k
+              ? { backgroundColor: "#0D2137", color: "white" }
+              : { backgroundColor: "#F5F7FA", color: "#6B7280" }}
+          >
+            {e}
+          </button>
+        ))}
       </div>
 
       {yukleniyor ? (
@@ -44,14 +140,14 @@ export default function RandevuPanel({ doktorId }) {
             <div key={i} style={{ backgroundColor: "#F5F7FA" }} className="h-16 rounded-xl animate-pulse" />
           ))}
         </div>
-      ) : randevular.length === 0 ? (
+      ) : filtreliler.length === 0 ? (
         <div className="text-center py-12">
           <p className="text-4xl mb-3">📅</p>
-          <p className="text-gray-400 text-sm">Henüz randevu talebi yok.</p>
+          <p className="text-gray-400 text-sm">Bu kategoride randevu yok.</p>
         </div>
       ) : (
         <div className="space-y-3">
-          {randevular.map((r) => {
+          {filtreliler.map((r) => {
             const d = DURUM_RENK[r.durum] || DURUM_RENK.bekliyor;
             return (
               <div key={r.id} style={{ borderColor: "#F0F4F8" }} className="border rounded-xl p-4">
@@ -75,34 +171,70 @@ export default function RandevuPanel({ doktorId }) {
                     {r.sikayet && (
                       <p className="text-xs text-gray-400 mt-1 truncate">💬 {r.sikayet}</p>
                     )}
+                    {r.iptal_sebep && (
+                      <p className="text-xs text-red-400 mt-1">
+                        İptal sebebi: {IPTAL_SEBEPLER.find(s => s.deger === r.iptal_sebep)?.etiket || r.iptal_sebep}
+                      </p>
+                    )}
+                    {r.doktor_notu && (
+                      <p className="text-xs text-gray-400 mt-1 italic">Not: {r.doktor_notu}</p>
+                    )}
                     <p className="text-xs text-gray-300 mt-1">
                       {new Date(r.created_at).toLocaleDateString("tr-TR", { day: "numeric", month: "long", hour: "2-digit", minute: "2-digit" })}
                     </p>
                   </div>
 
-                  {r.durum === "bekliyor" && (
-                    <div className="flex gap-2 flex-shrink-0">
-                      <button
-                        onClick={() => durumGuncelle(r.id, "onaylandi")}
-                        style={{ backgroundColor: "#D1FAE5", color: "#065F46" }}
-                        className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80 transition-opacity"
-                      >
-                        Onayla
-                      </button>
-                      <button
-                        onClick={() => durumGuncelle(r.id, "iptal")}
-                        style={{ backgroundColor: "#FEE2E2", color: "#991B1B" }}
-                        className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80 transition-opacity"
-                      >
-                        İptal
-                      </button>
-                    </div>
-                  )}
+                  <div className="flex flex-col gap-2 flex-shrink-0">
+                    {r.durum === "bekliyor" && (
+                      <>
+                        <button
+                          onClick={() => durumGuncelle(r.id, "onaylandi")}
+                          style={{ backgroundColor: "#D1FAE5", color: "#065F46" }}
+                          className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80"
+                        >
+                          Onayla
+                        </button>
+                        <button
+                          onClick={() => setIptalRandevu(r)}
+                          style={{ backgroundColor: "#FEE2E2", color: "#991B1B" }}
+                          className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80"
+                        >
+                          İptal
+                        </button>
+                      </>
+                    )}
+                    {r.durum === "onaylandi" && (
+                      <>
+                        <button
+                          onClick={() => durumGuncelle(r.id, "tamamlandi")}
+                          style={{ backgroundColor: "#EDE9FE", color: "#5B21B6" }}
+                          className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80"
+                        >
+                          Tamamlandı
+                        </button>
+                        <button
+                          onClick={() => setIptalRandevu(r)}
+                          style={{ backgroundColor: "#FEE2E2", color: "#991B1B" }}
+                          className="text-xs px-3 py-1.5 rounded-lg font-medium hover:opacity-80"
+                        >
+                          İptal
+                        </button>
+                      </>
+                    )}
+                  </div>
                 </div>
               </div>
             );
           })}
         </div>
+      )}
+
+      {iptalRandevu && (
+        <IptalModal
+          randevu={iptalRandevu}
+          onKapat={() => setIptalRandevu(null)}
+          onOnayla={durumGuncelle}
+        />
       )}
     </div>
   );
