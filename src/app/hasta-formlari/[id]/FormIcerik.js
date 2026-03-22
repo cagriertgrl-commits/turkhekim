@@ -1407,7 +1407,6 @@ function formHtml(baslik, icerik) {
 <body>
   <h1>${escapeHtml(baslik)}</h1>
   <pre>${escapeHtml(icerik)}</pre>
-  <div class="footer">DoktorPusula — doktorpusula.com | Bu form bilgilendirme amaçlıdır.</div>
   <script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>
 </body>
 </html>`;
@@ -1576,13 +1575,6 @@ export default function FormIcerik({ form, hekim }) {
           {sablonIcerik}
         </pre>
 
-        <div className="mt-8 pt-4 border-t border-gray-100 text-center">
-          <p className="text-xs text-gray-400">
-            Bu form DoktorPusula tarafından bilgilendirme amaçlı hazırlanmıştır.
-            Hukuki geçerlilik için yetkili hekim onayı gereklidir. •{" "}
-            <a href="mailto:hukuk@doktorpusula.com" style={{ color: "#0E7C7B" }}>hukuk@doktorpusula.com</a>
-          </p>
-        </div>
       </div>
         </div> {/* flex-1 */}
       </div> {/* flex row */}
