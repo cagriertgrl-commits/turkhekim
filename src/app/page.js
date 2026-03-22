@@ -48,7 +48,7 @@ export default async function Home() {
 
   try {
     doktorlar = await sql`
-      SELECT id, ad, uzmanlik, sehir, puan, yorum_sayisi, deneyim, slug, foto_url, onaylandi
+      SELECT id, ad, soyad, unvan, uzmanlik, sehir, puan, yorum_sayisi, deneyim, slug, foto_url, onaylandi
       FROM doktorlar
       WHERE onaylandi = true
       ORDER BY yorum_sayisi DESC, puan DESC
@@ -190,7 +190,9 @@ export default async function Home() {
           {doktorlar.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
               {doktorlar.map((doktor) => {
-                const initials = doktor.ad.split(" ").slice(1).map((n) => n[0]).join("").slice(0, 2);
+                const tamIsim = [doktor.ad, doktor.soyad].filter(Boolean).join(" ");
+                const initials = tamIsim.split(" ").map((n) => n[0]).join("").slice(0, 2).toUpperCase() || "DR";
+                const unvanAd = doktor.unvan ? `${doktor.unvan} ${tamIsim}` : tamIsim;
                 const rozetler = rozetHesapla(doktor);
                 return (
                   <Link
@@ -214,9 +216,10 @@ export default async function Home() {
                         </div>
                       )}
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-gray-900 group-hover:text-teal-700 transition-colors truncate">{doktor.ad}</h3>
+                        <h3 className="font-bold text-gray-900 group-hover:text-teal-700 transition-colors truncate">{unvanAd}</h3>
                         <p style={{ color: "var(--teal)" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
                         <p className="text-gray-500 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${formatDeneyim(doktor.deneyim)} deneyim` : ""}</p>
+                        <p style={{ color: "var(--teal)" }} className="text-xs font-medium">{doktor.uzmanlik}</p>
                       </div>
                     </div>
 
