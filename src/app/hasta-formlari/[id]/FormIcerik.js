@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 // Form şablonları — gerçek klinik içerik
 const FORM_SABLONLARI = {
@@ -1094,6 +1094,45 @@ Tarih       : .......................................
 İmza/Kaşe   : .......................................`;
 }
 
+// Placeholder değiştirici — nokta/alt çizgi/boşluk dizilerini gerçek değerle doldurur
+function formDoldur(metin, { hekimAdi, diplomaNo, tarih, hastaAdi, hastaTc, hastaVasi }) {
+  const BOL = "[._]{5,}"; // nokta veya alt çizgi dizisi
+
+  // Hekim adı/unvanı
+  metin = metin.replace(/(Hekim\/Yetkili Adı\s*:|Hekim Adı\/Unvanı\s*:|Hekim Adı\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${hekimAdi}`);
+
+  // Diploma no
+  metin = metin.replace(/(Diploma No\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${diplomaNo}`);
+
+  // Tarih/İmza/Kaşe
+  metin = metin.replace(/(Tarih\/İmza\/Kaşe\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${tarih}  _____________ / _______________`);
+
+  // Hasta ad soyad + tarih (aynı satırda)
+  metin = metin.replace(/(Ad Soyad\s*:)\s*[._]{5,}(\s+Tarih:\s*)[._]{5,}/g,
+    (_, l1, mid) => `${l1} ${hastaAdi || ".".repeat(30)}${mid}${tarih}`);
+
+  // T.C. Kimlik No + İmza
+  metin = metin.replace(/(T\.C\. Kimlik No\s*:)\s*[._]{5,}(\s+İmza\s*:)/g,
+    (_, l1, l2) => `${l1} ${hastaTc || ".".repeat(30)}${l2}`);
+
+  // Veli/Vasi / Vasi/Yakını / Yakını (+ İmza)
+  metin = metin.replace(/(Veli\/Vasi[^:\n]*:|Vasi\/Yakını\s*:|Yakını[^:\n]*:)\s*[._]{5,}(\s+İmza\s*:)/g,
+    (_, l1, l2) => `${l1} ${hastaVasi || ".".repeat(30)}${l2}`);
+
+  // Ebeveyn/Vasi adı soyadı
+  metin = metin.replace(/(Ebeveyn\/Vasi Adı Soyadı\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${hastaVasi || ".".repeat(30)}`);
+
+  // Tek başına Tarih satırı (satır başında)
+  metin = metin.replace(/^(Tarih\s*:)\s*[._]{5,}/gm,
+    (_, l) => `${l} ${tarih}`);
+
+  return metin;
+}
+
 function formHtml(baslik, icerik) {
   return `<!DOCTYPE html>
 <html lang="tr">
@@ -1116,14 +1155,26 @@ function formHtml(baslik, icerik) {
 </html>`;
 }
 
-export default function FormIcerik({ form }) {
+export default function FormIcerik({ form, hekim }) {
   const yazdirilacakRef = useRef(null);
+  const bugunStr = new Date().toLocaleDateString("tr-TR");
+
+  const [hasta, setHasta] = useState({ ad: "", tc: "", vasi: "" });
+  const [tarih, setTarih] = useState(bugunStr);
 
   function yazdir() {
-    const icerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
+    const hamIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
+    const doldurulmus = formDoldur(hamIcerik, {
+      hekimAdi: hekim?.adUnvan || "",
+      diplomaNo: hekim?.diplomaNo || "",
+      tarih,
+      hastaAdi: hasta.ad,
+      hastaTc: hasta.tc,
+      hastaVasi: hasta.vasi,
+    });
     const pencere = window.open("", "_blank");
     if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
-    pencere.document.write(formHtml(form.baslik, icerik) + `<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>`);
+    pencere.document.write(formHtml(form.baslik, doldurulmus) + `<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>`);
     pencere.document.close();
   }
 
@@ -1131,24 +1182,94 @@ export default function FormIcerik({ form }) {
 
   return (
     <div>
-      {/* Başlık & Butonlar */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-6">
-        <div>
-          <a href="/hasta-formlari" style={{ color: "#0E7C7B" }} className="text-sm hover:underline">← Tüm Formlar</a>
-          <h1 style={{ color: "#0D2137" }} className="text-xl font-bold mt-2">{form.baslik}</h1>
-          <p className="text-gray-400 text-sm mt-1">{form.aciklama}</p>
-        </div>
-        <div className="flex gap-2 flex-shrink-0">
-          <button
-            onClick={yazdir}
-            style={{ backgroundColor: "#0D2137" }}
-            className="flex items-center gap-2 text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 print:hidden"
-          >
-            🖨️ Yazdır / PDF İndir
-          </button>
-        </div>
+      {/* Başlık */}
+      <div className="mb-6">
+        <a href="/hasta-formlari" style={{ color: "#0E7C7B" }} className="text-sm hover:underline">← Tüm Formlar</a>
+        <h1 style={{ color: "#0D2137" }} className="text-xl font-bold mt-2">{form.baslik}</h1>
+        <p className="text-gray-400 text-sm mt-1">{form.aciklama}</p>
       </div>
 
+      <div className="flex flex-col lg:flex-row gap-6 items-start">
+        {/* ── Sağ panel (hasta + hekim bilgileri) ── */}
+        <div className="w-full lg:w-72 flex-shrink-0 lg:sticky lg:top-6">
+          <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-5 space-y-5">
+            <div>
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3">Form Bilgileri</p>
+
+              {/* Tarih */}
+              <div className="mb-4">
+                <label className="block text-xs font-medium text-gray-600 mb-1">Form Tarihi</label>
+                <input
+                  type="text"
+                  value={tarih}
+                  onChange={(e) => setTarih(e.target.value)}
+                  placeholder="GG.AA.YYYY"
+                  className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                />
+              </div>
+
+              {/* Hasta bilgileri */}
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 mt-4">Hasta Bilgileri</p>
+              <div className="space-y-3">
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Ad Soyad</label>
+                  <input
+                    type="text"
+                    value={hasta.ad}
+                    onChange={(e) => setHasta((p) => ({ ...p, ad: e.target.value }))}
+                    placeholder="Hasta adı soyadı"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">T.C. Kimlik No</label>
+                  <input
+                    type="text"
+                    value={hasta.tc}
+                    onChange={(e) => setHasta((p) => ({ ...p, tc: e.target.value }))}
+                    placeholder="00000000000"
+                    maxLength={11}
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  />
+                </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Veli / Vasi / Yakını</label>
+                  <input
+                    type="text"
+                    value={hasta.vasi}
+                    onChange={(e) => setHasta((p) => ({ ...p, vasi: e.target.value }))}
+                    placeholder="(varsa) ad soyad"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  />
+                </div>
+              </div>
+
+              {/* Hekim bilgileri (read-only) */}
+              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-3 mt-5">Hekim (Otomatik)</p>
+              <div className="space-y-2">
+                <div className="bg-gray-50 rounded-xl px-3 py-2">
+                  <p className="text-xs text-gray-400">Ad / Unvan</p>
+                  <p className="text-sm font-medium text-gray-800 truncate">{hekim?.adUnvan || "—"}</p>
+                </div>
+                <div className="bg-gray-50 rounded-xl px-3 py-2">
+                  <p className="text-xs text-gray-400">Diploma No</p>
+                  <p className="text-sm font-medium text-gray-800">{hekim?.diplomaNo || "—"}</p>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={yazdir}
+              style={{ backgroundColor: "#0D2137" }}
+              className="w-full flex items-center justify-center gap-2 text-white px-4 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90"
+            >
+              🖨️ Yazdır / PDF İndir
+            </button>
+          </div>
+        </div>
+
+        {/* ── Sol: form önizleme ── */}
+        <div className="flex-1 min-w-0">
       {/* Form İçeriği */}
       <div
         ref={yazdirilacakRef}
@@ -1166,7 +1287,7 @@ export default function FormIcerik({ form }) {
             <span style={{ color: "#0D2137" }} className="font-bold">DoktorPusula</span>
           </div>
           <h2 style={{ color: "#0D2137" }} className="font-bold text-base">{form.baslik}</h2>
-          <p className="text-gray-400 text-xs mt-1">doktorpusula.com | Tarih: {new Date().toLocaleDateString("tr-TR")}</p>
+          <p className="text-gray-400 text-xs mt-1">doktorpusula.com | Tarih: {tarih}</p>
         </div>
 
         <pre style={{ fontFamily: "inherit", whiteSpace: "pre-wrap", lineHeight: "1.8", color: "#374151", fontSize: "13px" }}>
@@ -1181,7 +1302,8 @@ export default function FormIcerik({ form }) {
           </p>
         </div>
       </div>
-
+        </div> {/* flex-1 */}
+      </div> {/* flex row */}
     </div>
   );
 }

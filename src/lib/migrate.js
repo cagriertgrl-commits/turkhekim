@@ -242,6 +242,57 @@ async function migrate() {
   `;
   console.log("✅ api_kullanim tablosu oluşturuldu");
 
+  // ─── FİRMALAR tablosu ─────────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS firmalar (
+      id SERIAL PRIMARY KEY,
+      slug TEXT UNIQUE NOT NULL,
+      ad TEXT NOT NULL,
+      tip TEXT DEFAULT 'ilac',
+      aciklama TEXT,
+      logo_url TEXT,
+      website TEXT,
+      email TEXT UNIQUE NOT NULL,
+      sifre_hash TEXT NOT NULL,
+      telefon TEXT,
+      aktif BOOLEAN DEFAULT false,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  console.log("✅ firmalar tablosu oluşturuldu");
+
+  // ─── FİRMA ÜRÜNLER tablosu ────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS firma_urunler (
+      id SERIAL PRIMARY KEY,
+      firma_id INTEGER REFERENCES firmalar(id) ON DELETE CASCADE,
+      ad TEXT NOT NULL,
+      aciklama TEXT,
+      kategori TEXT DEFAULT 'ilac',
+      resim_url TEXT,
+      aktif BOOLEAN DEFAULT true,
+      indirimde BOOLEAN DEFAULT false,
+      indirim_detay TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_firma_urunler_firma ON firma_urunler(firma_id)`;
+  console.log("✅ firma_urunler tablosu oluşturuldu");
+
+  // ─── FİRMA TAKİP tablosu ──────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS firma_takip (
+      id SERIAL PRIMARY KEY,
+      firma_id INTEGER REFERENCES firmalar(id) ON DELETE CASCADE,
+      doktor_id INTEGER REFERENCES doktorlar(id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      UNIQUE(firma_id, doktor_id)
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_firma_takip_firma ON firma_takip(firma_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_firma_takip_doktor ON firma_takip(doktor_id)`;
+  console.log("✅ firma_takip tablosu oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }
