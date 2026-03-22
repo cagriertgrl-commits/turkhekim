@@ -21,6 +21,8 @@ export async function POST(request) {
   const hizmetler = g("hizmetler");
   const whatsapp = g("whatsapp");
   const unvan = g("unvan");
+  const diploma_no = g("diploma_no");
+  const sicil_no = g("sicil_no");
   const klinik_adi = g("klinik_adi");
   const calisan_sayisi = parseInt(g("calisan_sayisi")) || null;
   const calisma_saatleri = g("calisma_saatleri");
@@ -79,6 +81,8 @@ export async function POST(request) {
         hizmetler = ${hizmetler || null},
         whatsapp = ${whatsapp || null},
         unvan = ${unvan || null},
+        diploma_no = ${diploma_no || null},
+        sicil_no = ${sicil_no || null},
         klinik_adi = ${klinik_adi || null},
         calisan_sayisi = ${calisan_sayisi},
         calisma_saatleri = ${calisma_saatleri || null},

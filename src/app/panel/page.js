@@ -209,6 +209,17 @@ export default async function Panel() {
                   </select>
                 </div>
 
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="text-sm text-gray-500 block mb-1">Diploma No</label>
+                    <input name="diploma_no" defaultValue={doktor.diploma_no || ""} placeholder="Diploma numaranız" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  </div>
+                  <div>
+                    <label className="text-sm text-gray-500 block mb-1">Sicil / Tescil No</label>
+                    <input name="sicil_no" defaultValue={doktor.sicil_no || ""} placeholder="Sicil numaranız" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                  </div>
+                </div>
+
                 <div>
                   <label className="text-sm text-gray-500 block mb-1">Hakkında</label>
                   <textarea name="hakkinda" defaultValue={doktor.hakkinda || ""} rows={4} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none resize-none" />
