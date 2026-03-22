@@ -41,11 +41,14 @@ export default async function TedaviDetay({ params }) {
 
   const uzmanlikSlug = uzmanlikSlugYap(tedavi.uzmanlik);
 
-  // Bu uzmanlıkta onaylı doktorları çek
+  // Bu uzmanlıkta onaylı doktorları çek (eslesimler regex ile geniş eşleşim)
+  const pattern = tedavi.eslesimler || tedavi.uzmanlik.toLowerCase()
+    .replace(/ğ/g,"g").replace(/ü/g,"u").replace(/ş/g,"s")
+    .replace(/ı/g,"i").replace(/ö/g,"o").replace(/ç/g,"c");
   const doktorlar = await sql`
     SELECT id, ad, uzmanlik, sehir, ilce, puan, yorum_sayisi, deneyim, slug, foto_url, onaylandi, fiyat, online_randevu
     FROM doktorlar
-    WHERE LOWER(uzmanlik) LIKE ${"%" + tedavi.uzmanlik.toLowerCase().replace(/ı/g,"i").replace(/ö/g,"o").replace(/ü/g,"u").replace(/ş/g,"s").replace(/ğ/g,"g").replace(/ç/g,"c") + "%"}
+    WHERE translate(LOWER(uzmanlik),'ğüşıöçâîûê ','gusiocaiue-') ~* ${pattern}
       AND onaylandi = true
     ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST
     LIMIT 8
@@ -81,7 +84,9 @@ export default async function TedaviDetay({ params }) {
             <span className="text-white">{tedavi.ad}</span>
           </nav>
           <div className="flex items-center gap-5">
-            <div className="text-5xl">{tedavi.ikon}</div>
+            <div style={{ backgroundColor: tedavi.bg, color: tedavi.renk }} className="p-3 rounded-2xl">
+              <tedavi.Ikon />
+            </div>
             <div>
               <span style={{ backgroundColor: "#0E7C7B20", color: "#4DD9D8" }} className="text-xs px-3 py-1 rounded-full font-semibold mb-2 inline-block">
                 {tedavi.kategori}
@@ -183,7 +188,9 @@ export default async function TedaviDetay({ params }) {
                     href={`/tedaviler/${t.slug}`}
                     className="flex items-center gap-3 p-3 rounded-xl hover:bg-gray-50 transition-colors"
                   >
-                    <span className="text-2xl">{t.ikon}</span>
+                    <span style={{ backgroundColor: t.bg, color: t.renk }} className="p-1.5 rounded-lg flex-shrink-0 flex items-center justify-center">
+                      <t.Ikon />
+                    </span>
                     <div>
                       <p className="font-medium text-sm text-gray-900">{t.ad}</p>
                       <p className="text-xs text-gray-400">{t.aciklama}</p>
