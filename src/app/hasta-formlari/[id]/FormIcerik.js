@@ -1386,12 +1386,16 @@ function formDoldur(metin, { hekimAdi, diplomaNo, sicilNo, tarih, hastaAdi, hast
   return metin;
 }
 
+function escapeHtml(str) {
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
 function formHtml(baslik, icerik) {
   return `<!DOCTYPE html>
 <html lang="tr">
 <head>
   <meta charset="UTF-8"/>
-  <title>${baslik}</title>
+  <title>${escapeHtml(baslik)}</title>
   <style>
     body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 20px; font-size: 13px; line-height: 1.8; color: #1a1a1a; }
     h1 { font-size: 16px; text-align: center; border-bottom: 2px solid #0E7C7B; padding-bottom: 12px; margin-bottom: 24px; }
@@ -1401,9 +1405,10 @@ function formHtml(baslik, icerik) {
   </style>
 </head>
 <body>
-  <h1>${baslik}</h1>
-  <pre>${icerik}</pre>
+  <h1>${escapeHtml(baslik)}</h1>
+  <pre>${escapeHtml(icerik)}</pre>
   <div class="footer">DoktorPusula — doktorpusula.com | Bu form bilgilendirme amaçlıdır.</div>
+  <script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>
 </body>
 </html>`;
 }
@@ -1416,21 +1421,26 @@ export default function FormIcerik({ form, hekim }) {
   const [tarih, setTarih] = useState(bugunStr);
 
   function yazdir() {
-    const hamIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
-    const doldurulmus = formDoldur(hamIcerik, {
-      hekimAdi: hekim?.adUnvan || "",
-      diplomaNo: hekim?.diplomaNo || "",
-      sicilNo: hekim?.sicilNo || "",
-      tarih,
-      hastaAdi: hasta.ad,
-      hastaTc: hasta.tc,
-      hastaVasi: hasta.vasi,
-      hastaTabin: hasta.tanik,
-    });
-    const pencere = window.open("", "_blank");
-    if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
-    pencere.document.write(formHtml(form.baslik, doldurulmus) + `<script>window.onload=function(){window.print();window.onafterprint=function(){window.close();}}<\/script>`);
-    pencere.document.close();
+    try {
+      const hamIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
+      const doldurulmus = formDoldur(hamIcerik, {
+        hekimAdi: hekim?.adUnvan || "",
+        diplomaNo: hekim?.diplomaNo || "",
+        sicilNo: hekim?.sicilNo || "",
+        tarih,
+        hastaAdi: hasta.ad,
+        hastaTc: hasta.tc,
+        hastaVasi: hasta.vasi,
+        hastaTabin: hasta.tanik,
+      });
+      const pencere = window.open("", "_blank");
+      if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
+      pencere.document.write(formHtml(form.baslik, doldurulmus));
+      pencere.document.close();
+    } catch (err) {
+      alert("Form oluşturulurken hata: " + err.message);
+      console.error(err);
+    }
   }
 
   const sablonIcerik = FORM_SABLONLARI[form.id]?.icerik || varsayilanForm(form);
