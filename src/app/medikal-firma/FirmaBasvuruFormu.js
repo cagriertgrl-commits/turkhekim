@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const FIRMA_TIPLERI = [
   { deger: "ilac", etiket: "💊 İlaç Firması" },
-  { deger: "tibbi_cihaz", etiket: "🔬 Tıbbi Cihaz" },
+  { deger: "tibbi_cihaz", etiket: "🔬 Tıbbi Cihaz Firması" },
+  { deger: "utt", etiket: "🩺 Ürün Tanıtım Temsilcisi (ÜTT)" },
   { deger: "saglik_hizmeti", etiket: "🏥 Sağlık Hizmeti" },
   { deger: "sigorta", etiket: "🛡️ Sigorta" },
   { deger: "diger", etiket: "📦 Diğer" },
@@ -26,6 +27,14 @@ export default function FirmaBaşvuruFormu() {
     paket: "standart",
     notlar: "",
   });
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const tip = params.get("tip");
+    if (tip && FIRMA_TIPLERI.some((f) => f.deger === tip)) {
+      setForm((prev) => ({ ...prev, firmaType: tip }));
+    }
+  }, []);
   const [gonderiyor, setGonderiyor] = useState(false);
   const [sonuc, setSonuc] = useState(null);
 

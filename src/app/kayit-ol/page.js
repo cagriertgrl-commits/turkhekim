@@ -135,8 +135,46 @@ export default function KayitOl() {
           })}
         </div>
 
-        {/* HASTA GİRİŞİ */}
+        {/* KURUMSAL */}
         <div className="mt-6 border-t border-gray-100 pt-6">
+          <p className="text-center text-gray-400 text-xs mb-4 uppercase tracking-wider font-medium">Kurumsal Üyelik</p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 max-w-2xl mx-auto">
+            <Link
+              href="/medikal-firma"
+              className="group flex items-center gap-4 bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-teal-100 transition-all"
+            >
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: "#EFF6FF" }}>
+                🏢
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-gray-900 text-sm mb-0.5">İlaç & Medikal Cihaz Firması</h3>
+                <p className="text-xs text-gray-400 leading-snug">Doktor ağına ulaşın, ürünlerinizi tanıtın</p>
+              </div>
+              <div className="text-xs font-semibold py-1.5 px-3 rounded-full flex-shrink-0" style={{ backgroundColor: "#EFF6FF", color: "#2563EB" }}>
+                Başvur →
+              </div>
+            </Link>
+
+            <Link
+              href="/medikal-firma?tip=utt"
+              className="group flex items-center gap-4 bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-teal-100 transition-all"
+            >
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center text-2xl flex-shrink-0" style={{ backgroundColor: "#F0FDFA" }}>
+                🩺
+              </div>
+              <div className="flex-1">
+                <h3 className="font-bold text-gray-900 text-sm mb-0.5">Ürün Tanıtım Temsilcisi</h3>
+                <p className="text-xs text-gray-400 leading-snug">Hedef doktorlara ulaşın, ürün tanıtımı yapın</p>
+              </div>
+              <div className="text-xs font-semibold py-1.5 px-3 rounded-full flex-shrink-0" style={{ backgroundColor: "#F0FDFA", color: "#0E7C7B" }}>
+                Başvur →
+              </div>
+            </Link>
+          </div>
+        </div>
+
+        {/* HASTA GİRİŞİ */}
+        <div className="mt-4 border-t border-gray-100 pt-6">
           <p className="text-center text-gray-400 text-xs mb-4">Sağlık profesyoneli değil misiniz?</p>
           <Link
             href="/hasta-panel"
