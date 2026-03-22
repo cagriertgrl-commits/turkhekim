@@ -133,7 +133,7 @@ export default async function DoktorProfil({ params }) {
             <div className="flex-1">
               <div className="flex flex-wrap items-center gap-2 mb-2">
                 {doktor.onaylandi && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">✓ Doğrulanmış Doktor</span>}
-                {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">⭐ {doktor.deneyim} Deneyim</span>}
+                {doktor.deneyim && <span style={{ backgroundColor: "#1E40AF" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">⭐ {/^\d+$/.test(doktor.deneyim.toString().trim()) ? `${doktor.deneyim} yıl` : doktor.deneyim} Deneyim</span>}
                 {doktor.online_randevu && <span style={{ backgroundColor: "var(--success)" }} className="text-white text-xs px-3 py-1 rounded-full font-semibold">🎥 Online Randevu</span>}
               </div>
 

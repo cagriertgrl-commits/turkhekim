@@ -15,10 +15,16 @@ export async function generateMetadata({ params }) {
   };
 }
 
+function formatDeneyim(d) {
+  if (!d) return d;
+  const s = d.toString().trim();
+  return /^\d+$/.test(s) ? `${s} yıl` : s;
+}
+
 function rozetHesapla(doktor) {
   const rozetler = [];
   if (doktor.onaylandi) rozetler.push({ ad: "✓ Doğrulanmış", renk: "var(--success)", bg: "#D1FAE5" });
-  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
+  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${formatDeneyim(doktor.deneyim)} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
   if (doktor.online_randevu) rozetler.push({ ad: "💻 Online Randevu", renk: "var(--teal)", bg: "var(--light-teal)" });
   if (doktor.sigorta) rozetler.push({ ad: "🛡️ Sigorta", renk: "#7C3AED", bg: "#EDE9FE" });
   return rozetler;

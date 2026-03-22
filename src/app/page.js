@@ -19,10 +19,16 @@ const UZMANLIK_GRID = [
   { ad: "Rinoplasti", slug: "rinoplasti", ikon: "👃" },
 ];
 
+function formatDeneyim(d) {
+  if (!d) return d;
+  const s = d.toString().trim();
+  return /^\d+$/.test(s) ? `${s} yıl` : s;
+}
+
 function rozetHesapla(doktor) {
   const rozetler = [];
   if (doktor.onaylandi) rozetler.push({ ad: "Doğrulanmış", renk: "var(--success)", bg: "#D1FAE5" });
-  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${doktor.deneyim} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
+  if (doktor.deneyim) rozetler.push({ ad: `⭐ ${formatDeneyim(doktor.deneyim)} Deneyim`, renk: "#2563EB", bg: "#DBEAFE" });
   return rozetler;
 }
 
@@ -210,7 +216,7 @@ export default async function Home() {
                       <div className="flex-1 min-w-0">
                         <h3 className="font-bold text-gray-900 group-hover:text-teal-700 transition-colors truncate">{doktor.ad}</h3>
                         <p style={{ color: "var(--teal)" }} className="text-sm font-medium">{doktor.uzmanlik}</p>
-                        <p className="text-gray-500 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${doktor.deneyim} deneyim` : ""}</p>
+                        <p className="text-gray-500 text-xs mt-0.5">📍 {doktor.sehir}{doktor.deneyim ? ` · ${formatDeneyim(doktor.deneyim)} deneyim` : ""}</p>
                       </div>
                     </div>
 
