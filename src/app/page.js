@@ -92,7 +92,7 @@ export default async function Home() {
         style={{
           background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 50%, var(--navy) 100%)",
         }}
-        className="relative px-6 py-24 overflow-hidden"
+        className="relative px-6 py-24 overflow-x-hidden"
       >
         {/* Dekoratif arka plan elementleri */}
         <div
