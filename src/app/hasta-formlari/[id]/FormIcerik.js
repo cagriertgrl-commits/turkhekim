@@ -7,7 +7,7 @@ const FORM_SABLONLARI = {
     basliklar: ["FOTOĞRAF/VİDEO SOSYAL MEDYA PAYLAŞIM AYDINLATILMIŞ ONAM FORMU"],
     icerik: `Sayın Hastamız,
 
-Bu form; 6698 Sayılı Kişisel Verilerin Korunması Kanunu (KVKK) madde 6, 1219 Sayılı Kanun, Hasta Hakları Yönetmeliği ve Sağlık Hizmetlerinde Tanıtım ve Bilgilendirme Faaliyetleri Yönetmeliği (Resmî Gazete, 12.11.2025) kapsamında hazırlanmıştır.
+Bu form; 6698 Sayılı Kişisel Verilerin Korunması Kanunu (KVKK) madde 6, 1219 Sayılı Kanun, Hasta Hakları Yönetmeliği ve Sağlık Hizmetlerinde Tanıtım ve Bilgilendirme Faaliyetleri Hakkında Yönetmelik kapsamında hazırlanmıştır.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 1. KAPSAM — NE PAYLAŞILACAK?
@@ -332,8 +332,9 @@ Diş dizilimi bozukluklarının, çapraşıklıkların ve çene-diş uyumsuzlukl
 • Sert/yapışkan gıdalardan kaçınma
 • Tedavi sonrası retainer kullanımına uyma
 
-5. TEDAVİNİN SONLANDIRILMASI
-Hasta uyumsuzluğu veya kendi isteğiyle tedaviyi bırakması halinde o ana kadar yapılan işlemler ücretlendirilir. Yarım kalan tedavi olumsuz sonuçlara yol açabilir.
+5. MALİ KOŞULLAR
+Tedavi ücreti, seans sayısı ve ödeme planı randevu sırasında ayrıca bildirilmiştir: .......................................
+Hasta uyumsuzluğu veya kendi isteğiyle tedaviyi bırakması halinde o ana kadar yapılan işlemler ücretlendirilir. Yarım kalan tedavi olumsuz sonuçlara yol açabilir. Tüketicinin Korunması Hakkında Kanun (6502) kapsamındaki haklarınız saklıdır.
 
 6. HASTA BEYANI
 Tedavi planı, süresi, riskleri ve yükümlülüklerim hakkında yeterince bilgilendirildim. Özgür irademle onay veriyorum.
@@ -586,7 +587,7 @@ Tarih/İmza/Kaşe  : .......................................`,
     basliklar: ["PRP / KÖK HÜCRE TEDAVİSİ ONAM FORMU"],
     icerik: `Sayın Hastamız,
 
-Bu form, planlanan PRP (Trombositten Zengin Plazma) ve/veya kök hücre tedavisi hakkında bilgilendirme ve onay alınması amacıyla düzenlenmiştir.
+Bu form, planlanan PRP (Trombositten Zengin Plazma) ve/veya kök hücre tedavisi hakkında bilgilendirme ve onay alınması amacıyla, 1219 Sayılı Kanun, Hasta Hakları Yönetmeliği ve Sağlık Bakanlığı Kök Hücre Nakli Yönetmeliği kapsamında düzenlenmiştir. Kök hücre tedavisi Sağlık Bakanlığı'nın ruhsatlandırdığı merkezlerde, onaylı endikasyonlar dahilinde uygulanabilir.
 
 1. PLANLANAN İŞLEM
 □ PRP (Trombositten Zengin Plazma) enjeksiyonu
@@ -926,9 +927,10 @@ Aşı öncesinde çocuğunuzun aktif hastalığı, bilinen alerjisi veya immün 
 • 38.5°C üstü ateş veya ciddi reaksiyon halinde hekime başvurunuz.
 
 7. EBEVEYNİN BEYANI
-Çocuğumun velisi/vasisi sıfatıyla yukarıdaki bilgileri okudum, anladım. Aşı uygulamasına onay veriyorum.
+Çocuğumun velisi/vasisi sıfatıyla yukarıdaki bilgileri okudum ve anladım.
 
-□ Bilgileri okudum, anladım ve kabul ediyorum.
+□ Bilgileri okudum, anladım. Aşı uygulamasına ONAY VERİYORUM.
+□ Bilgileri okudum. Aşı uygulamasını REDDEDIYORUM; aşı ret beyan formunu ayrıca imzalamayı kabul ederim.
 □ KVKK kapsamında çocuğumun sağlık verilerinin işlenmesine onay veriyorum.
 
 Çocuğun Adı Soyadı : .......................................    Doğum Tarihi: ................
@@ -1021,6 +1023,218 @@ KVKK'nın 11. maddesi kapsamında verilerinize erişim, düzeltme, silme ve akta
 Ad Soyad: ___________________________    Tarih: _______________
 T.C. Kimlik No: _______________________    İmza: _______________`,
   },
+  "anestezi-sedasyon-onam": {
+    basliklar: ["ANESTEZİ / SEDASYON AYDINLATILMIŞ ONAM FORMU"],
+    icerik: `Sayın Hastamız,
+
+Bu form, planlanan cerrahi operasyon veya girişimsel işlem için uygulanacak anestezi/sedasyon hakkında 1219 Sayılı Kanun ve Hasta Hakları Yönetmeliği kapsamında bilgilendirme ve onay alınması amacıyla düzenlenmiştir.
+
+1. PLANLANAN ANESTEZİ TİPİ
+□ Genel anestezi (entübasyon)
+□ Spinal / Epidural anestezi
+□ Lokal anestezi / Sinir bloğu
+□ Sedasyon (bilinçli / derin)
+□ Monitörize anestezi bakımı (MAC)
+
+Anestezi uygulanacak işlem: .......................................
+
+2. ANESTEZİYE BAĞLI RİSKLER
+Hafif / Geçici (sık):
+• Bulantı, kusma
+• Boğaz ağrısı, ses kısıklığı (entübasyon sonrası)
+• Uyku hali, baş dönmesi
+• Kas ağrısı
+
+Orta (nadir):
+• Diş hasarı (entübasyon sırasında)
+• Alerjik reaksiyon
+• Kan basıncı dalgalanması
+
+Ciddi (çok nadir):
+• Aspirasyon (açlık kuralı ihlalinde risk artar)
+• Malign hipertermi (genetik yatkınlık)
+• Anafilaksi
+• Kalıcı nörolojik hasar
+• Ölüm (genel popülasyonda 1/100.000 – 1/200.000)
+
+3. SPİNAL / EPİDURAL ANESTEZİYE ÖZGÜ RİSKLER
+• Şiddetli baş ağrısı (post-dural ponksiyon) — istirahatle düzelir
+• Geçici alt ekstremite güçsüzlüğü
+• İdrar tutulması — sonda gerektirebilir
+• Sinir hasarı (çok nadir)
+
+4. ANESTEZİ ÖNCESİ ZORUNLU KURALLAR
+• Operasyondan 6 saat önce katı gıda, 2 saat önce sıvı alınmamalıdır (acil haller hariç).
+• Kan sulandırıcı ilaçlar için anestezist onayı alınmalıdır.
+• Bilinen ilaç/uyuşturucu alerjileri mutlaka bildirilmelidir.
+• Daha önce anesteziye bağlı sorun yaşandıysa belirtiniz.
+• Takma diş, lens ve takı çıkarılmalıdır.
+
+5. ALTERNATİFLER
+• Farklı anestezi tipi (klinik değerlendirmeye bağlı)
+• Sadece lokal anestezi ile işlem (uygunsa)
+• Operasyonun ertelenmesi veya vazgeçilmesi
+
+6. HASTA BEYANI
+Planlanan anestezi/sedasyon, riskleri ve alternatifleri hakkında yeterince bilgilendirildim. Açlık kurallarına uyacağımı ve tüm ilaç/alerji bilgilerimi bildirdiğimi beyan ederim. Özgür irademle onay veriyorum.
+
+□ Bilgileri okudum, anladım ve kabul ediyorum.
+□ KVKK kapsamında sağlık verilerimin işlenmesine onay veriyorum.
+
+Ad Soyad       : .......................................    Tarih: ................
+T.C. Kimlik No : .......................................    İmza : ................
+Veli/Vasi (18 yaş altı): ...........................    İmza : ................
+
+Anestezist Adı/Unvanı : .......................................
+Diploma No            : .......................................
+Tarih/İmza/Kaşe       : .......................................`,
+  },
+  "kan-transfuzyon-onam": {
+    basliklar: ["KAN / KAN ÜRÜNÜ TRANSFÜZYONU AYDINLATILMIŞ ONAM FORMU"],
+    icerik: `Sayın Hastamız,
+
+Bu form, planlanan kan veya kan ürünü transfüzyonu hakkında 1219 Sayılı Kanun ve Hasta Hakları Yönetmeliği kapsamında bilgilendirme ve onay alınması amacıyla düzenlenmiştir.
+
+1. TRANSFÜZYON GEREKÇESİ
+.......................................
+
+2. UYGULANACAK KAN ÜRÜNÜ
+□ Tam kan
+□ Eritrosit süspansiyonu (ES)
+□ Taze donmuş plazma (TDP)
+□ Trombosit süspansiyonu
+□ Albümin
+□ Diğer: .......................................
+
+3. TRANSFÜZYONUN AMACI
+Hemoglobin düzeyinin yükseltilmesi, pıhtılaşma faktörlerinin tamamlanması veya kan volümünün desteklenmesi.
+
+4. RİSKLER
+Hafif (sık):
+• Ateş, titreme (febril non-hemolitik reaksiyon)
+• Lokal cilt reaksiyonu
+
+Orta (nadir):
+• Alerjik reaksiyon (ürtiker, kaşıntı)
+• Volüm yüklenmesi (kalp/böbrek hastaları)
+
+Ciddi (çok nadir):
+• Hemolitik transfüzyon reaksiyonu (kan grubu uyumsuzluğu)
+• Akut akciğer hasarı (TRALI)
+• Enfeksiyon bulaşı (HIV, Hepatit B/C) — modern tarama yöntemleriyle risk çok düşük
+• Anafilaksi
+
+5. KAN REDDİ HAKKI
+Kan/kan ürünü transfüzyonunu reddetme hakkınız vardır. Reddetmeniz durumunda tedavinin olası sonuçları hakkında bilgilendirildiniz.
+
+□ Transfüzyon gerekirse ONAY VERİYORUM.
+□ Dini/kişisel gerekçeyle transfüzyonu REDDEDIYORUM ve bu kararın tıbbi sonuçlarını kabul ediyorum.
+
+6. HASTA BEYANI
+Transfüzyon, riskleri ve alternatifleri hakkında yeterince bilgilendirildim. Özgür irademle beyanımı bildiriyorum.
+
+□ Bilgileri okudum, anladım ve kabul ediyorum.
+□ KVKK kapsamında sağlık verilerimin işlenmesine onay veriyorum.
+
+Ad Soyad       : .......................................    Tarih: ................
+T.C. Kimlik No : .......................................    İmza : ................
+Veli/Vasi (18 yaş altı): ...........................    İmza : ................
+
+Hekim Adı/Unvanı : .......................................
+Diploma No       : .......................................
+Tarih/İmza/Kaşe  : .......................................`,
+  },
+  "online-muayene-onam": {
+    basliklar: ["UZAKTAN SAĞLIK HİZMETİ (TELETıP) AYDINLATILMIŞ ONAM FORMU"],
+    icerik: `Sayın Hastamız,
+
+Bu form, Sağlık Bakanlığı Uzaktan Sağlık Hizmetleri Yönetmeliği kapsamında sunulacak uzaktan muayene/danışmanlık hizmetine ilişkin bilgilendirme ve onay alınması amacıyla düzenlenmiştir.
+
+1. HİZMETİN KAPSAMI
+□ Video görüşme ile muayene / konsültasyon
+□ Takip muayenesi
+□ İkinci görüş / danışma
+
+Kullanılacak platform: .......................................
+
+2. UZAKTAN MUAYENENİN SINIRLILIKLARI
+• Fizik muayene yapılamamaktadır; bazı klinik bulgular değerlendirilemeyebilir.
+• Bağlantı kalitesi tanı sürecini etkileyebilir.
+• Acil ve hayati durumlarda uzaktan hizmet yetersiz kalır; 112'yi arayınız.
+• Reçete ve rapor düzenlenmesi yasal kısıtlara tabidir.
+
+3. GİZLİLİK VE VERİ GÜVENLİĞİ
+• Görüşmeler şifreli bağlantı üzerinden gerçekleştirilir.
+• Görüşmeler kaydedilmez; ekran görüntüsü/kayıt almak yasaktır.
+• Üçüncü kişilerin bulunduğu ortamlarda görüşme yapılmaması önerilir.
+• Paylaşılan sağlık verileri hasta dosyasına işlenir; KVKK md. 6 kapsamında korunur.
+
+4. ACİL DURUM BİLDİRİMİ
+Görüşme sırasında acil belirti saptanırsa hekim 112'ye yönlendirme yapacaktır.
+
+5. ÜCRET
+Uzaktan muayene ücreti: .......................................
+Teknik sorun nedeniyle gerçekleşmeyen görüşmelerde ücret alınmaz.
+
+6. HASTA BEYANI
+Uzaktan sağlık hizmetinin kapsam ve sınırlılıkları hakkında bilgilendirildim. Özgür irademle onay veriyorum.
+
+□ Bilgileri okudum, anladım ve kabul ediyorum.
+□ KVKK kapsamında verilerimin işlenmesine onay veriyorum.
+□ Acil durumda 112'yi arayacağımı kabul ediyorum.
+
+Ad Soyad       : .......................................    Tarih: ................
+T.C. Kimlik No : .......................................    İmza : ................
+
+Hekim Adı/Unvanı : .......................................
+Diploma No       : .......................................
+Tarih/İmza/Kaşe  : .......................................`,
+  },
+  "asi-ret-formu": {
+    basliklar: ["AŞI REDDİ BEYAN FORMU"],
+    icerik: `Sayın Ebeveyn / Hastamız,
+
+Bu form, önerilen aşı uygulamasını reddeden ebeveyn/vasi veya yetişkin hastanın 1593 Sayılı Umumi Hıfzıssıhha Kanunu kapsamında bilgilendirildiğini ve reddi kendi iradesiyle gerçekleştirdiğini belgelemek amacıyla düzenlenmiştir.
+
+1. REDDEDİLEN AŞI
+Aşı adı ve dozu : .......................................
+Planlanan uygulama tarihi: .......................................
+
+2. HEKİM BİLGİLENDİRMESİ
+Aşağıdaki konularda bilgilendirme yapılmıştır:
+• Reddedilen aşının koruduğu hastalık(lar) ve bulaş yolları
+• Aşılanmama halinde oluşabilecek hastalık riski ve komplikasyonlar
+• Hastalığın toplum sağlığına olası etkisi (sürü bağışıklığının bozulması)
+• Aşıya bağlı yan etkiler ve bunların geçici/nadir niteliği
+• Ulusal aşı takvimindeki yeri ve Sağlık Bakanlığı tavsiyesi
+
+3. RED GEREKÇESİ (isteğe bağlı)
+□ Dini gerekçe
+□ Kişisel inanç / felsefi gerekçe
+□ Önceki aşı reaksiyonu
+□ Tıbbi kontrendikasyon (belirtiniz: ...................................)
+□ Diğer: .......................................
+
+4. YASAL UYARI
+• 1593 Sayılı Kanun kapsamında salgın durumlarında zorunlu aşılama kararı alınabilir.
+• Aşısız birey, bağışıklığı zayıf bireyler için risk oluşturabilir.
+• Aşı reddi, kreş/okul kayıt süreçlerini etkileyebilir (ilgili yönetmeliklere bağlı olarak).
+
+5. BEYAN
+Yukarıdaki bilgileri okudum ve anladım. Hekimim tarafından sözlü olarak da bilgilendirildim. Olası sonuçların sorumluluğunu kabul ederek belirtilen aşı uygulamasını REDDEDIYORUM.
+
+□ Bilgileri okudum, anladım. Aşıyı REDDEDIYORUM.
+□ KVKK kapsamında sağlık verilerimin işlenmesine onay veriyorum.
+
+Ad Soyad                    : .......................................    Tarih: ................
+T.C. Kimlik No              : .......................................    İmza : ................
+Çocuğun Adı Soyadı (varsa) : .......................................
+Ebeveyn/Vasi Yakınlığı     : .......................................
+
+Hekim Adı/Unvanı : .......................................
+Diploma No       : .......................................
+Tarih/İmza/Kaşe  : .......................................`,
+  },
   "genel-muayene-onam": {
     basliklar: ["GENEL MUAYENE VE TEDAVİ AYDINLATILMIŞ ONAM FORMU"],
     icerik: `Sayın Hastamız,
@@ -1094,41 +1308,80 @@ Tarih       : .......................................
 İmza/Kaşe   : .......................................`;
 }
 
-// Placeholder değiştirici — nokta/alt çizgi/boşluk dizilerini gerçek değerle doldurur
-function formDoldur(metin, { hekimAdi, diplomaNo, tarih, hastaAdi, hastaTc, hastaVasi }) {
-  const BOL = "[._]{5,}"; // nokta veya alt çizgi dizisi
+// Placeholder değiştirici — tüm form alanlarını gerçek değerlerle doldurur
+function formDoldur(metin, { hekimAdi, diplomaNo, sicilNo, tarih, hastaAdi, hastaTc, hastaVasi, hastaTabin }) {
+  // 1. Hekim / Anestezist / Uzman adı
+  metin = metin.replace(
+    /(Hekim\/Yetkili Adı\s*:|Hekim Adı\/Unvanı\s*:|Hekim Adı\s*:|Anestezist Adı\/Unvanı\s*:|Uzman Adı\/Unvanı\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${hekimAdi}`
+  );
 
-  // Hekim adı/unvanı
-  metin = metin.replace(/(Hekim\/Yetkili Adı\s*:|Hekim Adı\/Unvanı\s*:|Hekim Adı\s*:)\s*[._]{5,}/g,
-    (_, l) => `${l} ${hekimAdi}`);
-
-  // Diploma no
+  // 2. Diploma no → artı sicil/tescil no satırı ekle
   metin = metin.replace(/(Diploma No\s*:)\s*[._]{5,}/g,
-    (_, l) => `${l} ${diplomaNo}`);
+    (_, l) => `${l} ${diplomaNo || ".".repeat(20)}\nSicil/Tescil No     : ${sicilNo || ".".repeat(20)}`
+  );
 
-  // Tarih/İmza/Kaşe
+  // 3. Tarih/İmza/Kaşe + hekim sözlü bilgilendirme beyanı
   metin = metin.replace(/(Tarih\/İmza\/Kaşe\s*:)\s*[._]{5,}/g,
-    (_, l) => `${l} ${tarih}  _____________ / _______________`);
+    (_, l) => `Hastayı planlanan işlem hakkında sözlü olarak bilgilendirdim, sorularını yanıtladım ve yazılı onamını aldım.\n${l} ${tarih}  _____________ / _______________`
+  );
 
-  // Hasta ad soyad + tarih (aynı satırda)
+  // 4. Tarih/İmza (psikoloji formu — kaşe yok)
+  metin = metin.replace(/(Tarih\/İmza\s*:)\s*[._]{5,}/g,
+    (_, l) => `${l} ${tarih}  _____________ / _______________`
+  );
+
+  // 5. Hasta ad soyad + tarih (aynı satır — nokta versiyonu)
   metin = metin.replace(/(Ad Soyad\s*:)\s*[._]{5,}(\s+Tarih:\s*)[._]{5,}/g,
-    (_, l1, mid) => `${l1} ${hastaAdi || ".".repeat(30)}${mid}${tarih}`);
+    (_, l1, mid) => `${l1} ${hastaAdi || ".".repeat(30)}${mid}${tarih}`
+  );
 
-  // T.C. Kimlik No + İmza
+  // 6. Hasta ad soyad + tarih (aynı satır — alt çizgi versiyonu, genel-muayene)
+  metin = metin.replace(/(Ad Soyad:)\s*[_]{10,}(\s+Tarih:\s*)[_]{5,}/g,
+    (_, l1, mid) => `${l1} ${hastaAdi || "_".repeat(25)}${mid}${tarih}`
+  );
+
+  // 7. T.C. Kimlik No + İmza (nokta)
   metin = metin.replace(/(T\.C\. Kimlik No\s*:)\s*[._]{5,}(\s+İmza\s*:)/g,
-    (_, l1, l2) => `${l1} ${hastaTc || ".".repeat(30)}${l2}`);
+    (_, l1, l2) => `${l1} ${hastaTc || ".".repeat(30)}${l2}`
+  );
 
-  // Veli/Vasi / Vasi/Yakını / Yakını (+ İmza)
-  metin = metin.replace(/(Veli\/Vasi[^:\n]*:|Vasi\/Yakını\s*:|Yakını[^:\n]*:)\s*[._]{5,}(\s+İmza\s*:)/g,
-    (_, l1, l2) => `${l1} ${hastaVasi || ".".repeat(30)}${l2}`);
+  // 8. T.C. Kimlik No + İmza (alt çizgi, kvkk/genel)
+  metin = metin.replace(/(T\.C\. Kimlik No:)\s*[_]{10,}(\s+İmza:)/g,
+    (_, l1, l2) => `${l1} ${hastaTc || "_".repeat(25)}${l2}`
+  );
 
-  // Ebeveyn/Vasi adı soyadı
+  // 9. Veli/Vasi + İmza
+  metin = metin.replace(/(Veli\/Vasi[^:\n]*:|Vasi\/Yakını\s*:)\s*[._]{5,}(\s+İmza\s*:)/g,
+    (_, l1, l2) => `${l1} ${hastaVasi || ".".repeat(30)}${l2}`
+  );
+
+  // 10. Yakını ... İmza (ortopedi/bilinç)
+  metin = metin.replace(/(Yakını[^:\n]*:)\s*[._]{5,}(\s+İmza\s*:)/g,
+    (_, l1, l2) => `${l1} ${hastaVasi || ".".repeat(30)}${l2}`
+  );
+
+  // 11. Yakını (18 yaş altı) + Yakın İmzası (genel-muayene)
+  metin = metin.replace(/(Yakını \(18 yaş altı\):)\s*[_]+([ ]+Yakın İmzası:)/g,
+    (_, l1, l2) => `${l1} ${hastaVasi || "_".repeat(20)}${l2}`
+  );
+
+  // 12. Ebeveyn/Vasi adı
   metin = metin.replace(/(Ebeveyn\/Vasi Adı Soyadı\s*:)\s*[._]{5,}/g,
-    (_, l) => `${l} ${hastaVasi || ".".repeat(30)}`);
+    (_, l) => `${l} ${hastaVasi || ".".repeat(30)}`
+  );
 
-  // Tek başına Tarih satırı (satır başında)
+  // 13. Tanık imzası — hekim bölümünden hemen önce enjekte et
+  const tanikSatiri = `Tanık Adı Soyadı (imza yetersizse) : ${hastaTabin ? hastaTabin.padEnd(28) : ".".repeat(28)}    İmza : ................`;
+  const hekimBolumu = /(\n{1,3})((?:Hekim(?:\/Yetkili)? Adı|Anestezist Adı)[^\n]*:)/;
+  if (hekimBolumu.test(metin)) {
+    metin = metin.replace(hekimBolumu, (_, nl, hLine) => `\n${tanikSatiri}${nl}${hLine}`);
+  }
+
+  // 14. Tek başına Tarih satırı (satır başında)
   metin = metin.replace(/^(Tarih\s*:)\s*[._]{5,}/gm,
-    (_, l) => `${l} ${tarih}`);
+    (_, l) => `${l} ${tarih}`
+  );
 
   return metin;
 }
@@ -1159,7 +1412,7 @@ export default function FormIcerik({ form, hekim }) {
   const yazdirilacakRef = useRef(null);
   const bugunStr = new Date().toLocaleDateString("tr-TR");
 
-  const [hasta, setHasta] = useState({ ad: "", tc: "", vasi: "" });
+  const [hasta, setHasta] = useState({ ad: "", tc: "", vasi: "", tanik: "" });
   const [tarih, setTarih] = useState(bugunStr);
 
   function yazdir() {
@@ -1167,10 +1420,12 @@ export default function FormIcerik({ form, hekim }) {
     const doldurulmus = formDoldur(hamIcerik, {
       hekimAdi: hekim?.adUnvan || "",
       diplomaNo: hekim?.diplomaNo || "",
+      sicilNo: hekim?.sicilNo || "",
       tarih,
       hastaAdi: hasta.ad,
       hastaTc: hasta.tc,
       hastaVasi: hasta.vasi,
+      hastaTabin: hasta.tanik,
     });
     const pencere = window.open("", "_blank");
     if (!pencere) { alert("Lütfen tarayıcı popup engelini kaldırın."); return; }
@@ -1242,6 +1497,16 @@ export default function FormIcerik({ form, hekim }) {
                     className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
                   />
                 </div>
+                <div>
+                  <label className="block text-xs font-medium text-gray-600 mb-1">Tanık (imza yetersizse)</label>
+                  <input
+                    type="text"
+                    value={hasta.tanik}
+                    onChange={(e) => setHasta((p) => ({ ...p, tanik: e.target.value }))}
+                    placeholder="(varsa) tanık ad soyad"
+                    className="w-full border border-gray-200 rounded-xl px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  />
+                </div>
               </div>
 
               {/* Hekim bilgileri (read-only) */}
@@ -1254,6 +1519,13 @@ export default function FormIcerik({ form, hekim }) {
                 <div className="bg-gray-50 rounded-xl px-3 py-2">
                   <p className="text-xs text-gray-400">Diploma No</p>
                   <p className="text-sm font-medium text-gray-800">{hekim?.diplomaNo || "—"}</p>
+                </div>
+                <div className={`rounded-xl px-3 py-2 ${hekim?.sicilNo ? "bg-gray-50" : "bg-yellow-50 border border-yellow-100"}`}>
+                  <p className="text-xs text-gray-400">Sicil / Tescil No</p>
+                  <p className="text-sm font-medium text-gray-800">{hekim?.sicilNo || "—"}</p>
+                  {!hekim?.sicilNo && (
+                    <p className="text-xs text-yellow-600 mt-0.5">Profilden ekleyebilirsiniz</p>
+                  )}
                 </div>
               </div>
             </div>

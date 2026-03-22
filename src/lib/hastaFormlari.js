@@ -164,6 +164,39 @@ export const HASTA_FORMLARI = [
     kategori: "Çocuk Sağlığı",
     dil: "tr",
   },
+  // ─── CERRAHİ DESTEK ──────────────────────────────────────────────────
+  {
+    id: "anestezi-sedasyon-onam",
+    uzmanliklar: ["plastik-cerrahi", "estetik-cerrahi", "ortopedi", "kbb-uzmani", "goz-hastaliklari", "genel-cerrahi"],
+    baslik: "Anestezi / Sedasyon Aydınlatılmış Onam Formu",
+    aciklama: "Her türlü cerrahi operasyon öncesi anestezist tarafından imzalatılacak onam formu.",
+    kategori: "Genel",
+    dil: "tr",
+  },
+  {
+    id: "kan-transfuzyon-onam",
+    uzmanliklar: ["*"],
+    baslik: "Kan / Kan Ürünü Transfüzyonu Onam Formu",
+    aciklama: "Kan transfüzyonu öncesi hastanın onayını veya reddini belgeleyen form.",
+    kategori: "Genel",
+    dil: "tr",
+  },
+  {
+    id: "online-muayene-onam",
+    uzmanliklar: ["*"],
+    baslik: "Uzaktan Sağlık Hizmeti (Teletıp) Onam Formu",
+    aciklama: "Video/online muayene hizmeti öncesi imzalanacak onam ve gizlilik formu.",
+    kategori: "Genel",
+    dil: "tr",
+  },
+  {
+    id: "asi-ret-formu",
+    uzmanliklar: ["cocuk-hastaliklari", "aile-hekimligi"],
+    baslik: "Aşı Reddi Beyan Formu",
+    aciklama: "Aşı uygulamasını reddeden ebeveyn/hasta için 1593 sayılı Kanun kapsamında belgeleme formu.",
+    kategori: "Çocuk Sağlığı",
+    dil: "tr",
+  },
   // ─── GENEL ──────────────────────────────────────────────────────────
   {
     id: "sosyal-medya-onam",

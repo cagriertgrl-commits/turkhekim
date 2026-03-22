@@ -24,12 +24,13 @@ export default async function FormDetay({ params }) {
   if (!form) notFound();
 
   const [doktor] = await sql`
-    SELECT ad, unvan, diploma_no FROM doktorlar WHERE id = ${session.id}
+    SELECT ad, unvan, diploma_no, sicil_no FROM doktorlar WHERE id = ${session.id}
   `;
 
   const hekimBilgisi = {
     adUnvan: [doktor?.unvan, doktor?.ad].filter(Boolean).join(" ") || session.ad || "",
     diplomaNo: doktor?.diploma_no || "",
+    sicilNo: doktor?.sicil_no || "",
   };
 
   return (

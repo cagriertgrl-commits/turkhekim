@@ -30,6 +30,7 @@ async function migrate() {
     ADD COLUMN IF NOT EXISTS whatsapp TEXT,
     ADD COLUMN IF NOT EXISTS unvan TEXT,
     ADD COLUMN IF NOT EXISTS diploma_no TEXT,
+    ADD COLUMN IF NOT EXISTS sicil_no TEXT,
     ADD COLUMN IF NOT EXISTS klinik_adi TEXT,
     ADD COLUMN IF NOT EXISTS klinik_logo_url TEXT,
     ADD COLUMN IF NOT EXISTS klinik_foto_urls TEXT,
