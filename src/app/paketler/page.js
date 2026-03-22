@@ -26,7 +26,7 @@ const PAKETLER = [
       { metin: "Medya / Makale yayını", var: false },
     ],
     cta: "Ücretsiz Başla",
-    href: "/doktor-ol",
+    href: "/kayit-ol",
     populer: false,
   },
   {

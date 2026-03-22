@@ -2,6 +2,7 @@
 
 import Navbar from "@/components/Navbar";
 import { useState } from "react";
+import { useSearchParams } from "next/navigation";
 
 
 
@@ -25,12 +26,9 @@ export default function DoktorOl() {
   const [profilSlug, setProfilSlug] = useState("");
   const [hata, setHata] = useState("");
 
-  const baslangicUzmanlik = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("uzmanlik") || ""
-    : "";
-  const meslek = typeof window !== "undefined"
-    ? new URLSearchParams(window.location.search).get("meslek") || "doktor"
-    : "doktor";
+  const searchParams = useSearchParams();
+  const baslangicUzmanlik = searchParams.get("uzmanlik") || "";
+  const meslek = searchParams.get("meslek") || "doktor";
 
   const MESLEK_BASLIK = {
     doktor: { baslik: "Doktor / Uzman Hekim", alt: "180.000 Türk hekimi arasında öne çıkın.", unvanlar: ["", "Pratisyen Dr.", "Uzm. Dr.", "Asst. Dr.", "Doç. Dr.", "Prof. Dr.", "Op. Dr."] },

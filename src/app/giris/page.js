@@ -117,7 +117,7 @@ export default function Giris() {
 
           <p className="text-center text-sm text-gray-400 mt-6">
             Hesabınız yok mu?{" "}
-            <a href="/doktor-ol" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+            <a href="/kayit-ol" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
               Ücretsiz kayıt olun
             </a>
           </p>

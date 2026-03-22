@@ -525,7 +525,7 @@ export default async function Home() {
                 ))}
               </div>
               <Link
-                href="/doktor-ol"
+                href="/kayit-ol"
                 style={{ backgroundColor: "var(--teal)" }}
                 className="inline-block text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg"
               >

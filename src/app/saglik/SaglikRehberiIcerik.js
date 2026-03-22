@@ -138,7 +138,7 @@ export default function SaglikRehberiIcerik({ makaleler }) {
           <p className="text-gray-500 text-sm mb-5 max-w-md mx-auto">
             Uzman doktor olarak sağlık içerikleri üretin, hasta tabanınızı genişletin ve otoritenizi artırın.
           </p>
-          <Link href="/doktor-ol" style={{ backgroundColor: "#0E7C7B" }} className="inline-block text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90">
+          <Link href="/kayit-ol" style={{ backgroundColor: "#0E7C7B" }} className="inline-block text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90">
             Doktor Olarak Katıl
           </Link>
         </div>

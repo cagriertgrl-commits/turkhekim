@@ -191,7 +191,7 @@ export default function Hakkimizda() {
 
             <div className="mt-10 flex flex-col sm:flex-row gap-3 justify-center">
               <Link
-                href="/doktor-ol"
+                href="/kayit-ol"
                 style={{ backgroundColor: "#0E7C7B" }}
                 className="text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity"
               >

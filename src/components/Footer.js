@@ -11,7 +11,7 @@ const LINKLER = {
     { href: "/sss", ad: "Sıkça Sorulan Sorular" },
   ],
   "Doktorlar İçin": [
-    { href: "/doktor-ol", ad: "Ücretsiz Kayıt Ol" },
+    { href: "/kayit-ol", ad: "Ücretsiz Kayıt Ol" },
     { href: "/giris", ad: "Doktor Girişi" },
     { href: "/paketler", ad: "Paketler & Fiyatlar" },
     { href: "/panel", ad: "Doktor Paneli" },
