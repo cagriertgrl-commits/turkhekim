@@ -9,44 +9,6 @@ const tedaviler = [
   { icon: "💉", ad: "Estetik Cerrahi", fiyat: "2.000 - 6.000 USD", sure: "1-3 gün hastane" },
 ];
 
-const paketler = [
-  {
-    ad: "Temel Paket",
-    fiyat: "150 - 300 USD",
-    renk: "#0E7C7B",
-    ozellikler: [
-      "Doktor randevusu koordinasyonu",
-      "Farsça / Arapça tercüman",
-      "Temel yönlendirme desteği",
-      "WhatsApp iletişim hattı",
-    ],
-  },
-  {
-    ad: "Tam Paket",
-    fiyat: "600 - 1.500 USD",
-    renk: "#0D2137",
-    populer: true,
-    ozellikler: [
-      "Temel paket dahil",
-      "Havalimanı transferi",
-      "Anlaşmalı otel rezervasyonu",
-      "Pre-op & post-op takip",
-      "7/24 WhatsApp destek",
-    ],
-  },
-  {
-    ad: "VIP Paket",
-    fiyat: "1.500 - 3.000 USD",
-    renk: "#C9A84C",
-    ozellikler: [
-      "Tam paket dahil",
-      "Özel şoför",
-      "5 yıldızlı otel",
-      "Aile için ayrı konaklama",
-      "Türkiye gezi turu (isteğe bağlı)",
-    ],
-  },
-];
 
 const yorumlar = [
   {
@@ -96,11 +58,11 @@ export default function MediakalTurizm() {
                 Farsça, Arapça ve Türkçe destek ile Türkiye'nin en iyi doktorlarına ulaşın. Randevu, tercüman, transfer ve konaklama — hepsi tek elden.
               </p>
               <div className="flex flex-wrap gap-3">
-                <a href="#paketler" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-6 py-3 rounded-xl font-medium hover:opacity-90 transition-opacity">
-                  Paketleri İncele
-                </a>
-                <a href="https://wa.me/905000000000" style={{ borderColor: "#25D366", color: "#25D366" }} className="border px-6 py-3 rounded-xl font-medium hover:opacity-80 transition-opacity flex items-center gap-2">
+                <a href="https://wa.me/905000000000" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-6 py-3 rounded-xl font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
                   <span>💬</span> WhatsApp ile Yaz
+                </a>
+                <a href="/istanbul/kbb-uzmani" style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border px-6 py-3 rounded-xl font-medium hover:opacity-80 transition-opacity">
+                  Doktor Bul →
                 </a>
               </div>
             </div>
@@ -155,48 +117,6 @@ export default function MediakalTurizm() {
                 <h3 style={{ color: "#0D2137" }} className="font-bold text-lg mb-1">{t.ad}</h3>
                 <p style={{ color: "#0E7C7B" }} className="text-sm font-medium mb-1">{t.fiyat}</p>
                 <p className="text-gray-400 text-xs">⏱ {t.sure}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* PAKETLER */}
-      <section id="paketler" className="px-6 py-20 bg-white">
-        <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 style={{ color: "#0D2137" }} className="text-3xl font-bold mb-4">Hizmet Paketlerimiz</h2>
-            <p className="text-gray-500">İhtiyacınıza göre paket seçin, gerisini biz halledelim</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-6">
-            {paketler.map((paket) => (
-              <div
-                key={paket.ad}
-                style={{ borderColor: paket.populer ? paket.renk : "#E5E7EB" }}
-                className={`border-2 rounded-2xl p-7 relative ${paket.populer ? "shadow-xl" : "shadow-sm"}`}
-              >
-                {paket.populer && (
-                  <div style={{ backgroundColor: paket.renk }} className="absolute -top-3 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-4 py-1 rounded-full">
-                    EN POPÜLER
-                  </div>
-                )}
-                <h3 style={{ color: paket.renk }} className="font-bold text-xl mb-2">{paket.ad}</h3>
-                <p style={{ color: "#0D2137" }} className="text-2xl font-bold mb-6">{paket.fiyat}</p>
-                <ul className="space-y-3 mb-8">
-                  {paket.ozellikler.map((oz) => (
-                    <li key={oz} className="flex items-start gap-2 text-sm text-gray-600">
-                      <span style={{ color: "#059669" }} className="flex-shrink-0 mt-0.5">✓</span>
-                      {oz}
-                    </li>
-                  ))}
-                </ul>
-                <a
-                  href="https://wa.me/905000000000"
-                  style={{ backgroundColor: paket.renk }}
-                  className="block text-center text-white py-3 rounded-xl font-medium hover:opacity-90 transition-opacity"
-                >
-                  Bilgi Al
-                </a>
               </div>
             ))}
           </div>
