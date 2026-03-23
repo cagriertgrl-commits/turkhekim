@@ -394,7 +394,7 @@ export default async function Home() {
         </section>
       )}
 
-      {/* NEDEN TURKHEKİM */}
+      {/* NEDEN DOKTORPusula */}
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
@@ -406,48 +406,50 @@ export default async function Home() {
           <div className="grid md:grid-cols-3 gap-5">
             {[
               {
-                icon: "✅",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9,12 11,14 15,10"/></svg>,
                 baslik: "Doğrulanmış Yorumlar",
                 aciklama: "Her yorum telefon numarasıyla doğrulanır. Hiçbir yorum silinemez. Şeffaflık ilkemiz vazgeçilmezdir.",
-                renk: "#F0FDF4",
+                ikonRenk: "#059669", ikonBg: "#DCFCE7", bg: "#F0FDF4",
               },
               {
-                icon: "🇹🇷",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M9 10h1m3 0h1M12 8v4"/></svg>,
                 baslik: "Tamamen Yerli",
                 aciklama: "Hiçbir yabancı sermaye veya platform bağlantısı yok. Türk doktorların güvendiği, Türk hastalar için.",
-                renk: "#EFF6FF",
+                ikonRenk: "#DC2626", ikonBg: "#FEE2E2", bg: "#FFF5F5",
               },
               {
-                icon: "🌍",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 1 0 20M2 12h20"/><path d="M12 2C9.5 6.5 9 10 9 12s.5 5.5 3 10M12 2c2.5 4.5 3 8 3 10s-.5 5.5-3 10"/></svg>,
                 baslik: "Çok Dilli Destek",
                 aciklama: "Türkçe, Farsça, Arapça, Azerbaycan Türkçesi. Medikal turistler kendi dilinde rehberlik alır.",
-                renk: "#FFF7ED",
+                ikonRenk: "#0369A1", ikonBg: "#DBEAFE", bg: "#EFF6FF",
               },
               {
-                icon: "📅",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M9 16l2 2 4-4"/></svg>,
                 baslik: "Kolay Randevu",
                 aciklama: "Doktor profilinden direkt randevu al. SMS ve email ile otomatik hatırlatma.",
-                renk: "#F0FDFA",
+                ikonRenk: "#0E7C7B", ikonBg: "#CCFBF1", bg: "#F0FDFA",
               },
               {
-                icon: "🏥",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-3.41-3.41 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 6.73 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L10.91 9.5a16 16 0 0 0 5.59 5.59l1.06-1.06a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/><path d="M17 2l1.5 1.5L20 2M18.5 2v4"/></svg>,
                 baslik: "Medikal Turizm",
                 aciklama: "İranlı, Arap ve Orta Asyalı hastalar için özel portal. Paket hizmetler, tercüman, transfer.",
-                renk: "#FDF4FF",
+                ikonRenk: "#7C3AED", ikonBg: "#EDE9FE", bg: "#F5F3FF",
               },
               {
-                icon: "🔒",
+                Ikon: () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/><circle cx="12" cy="16" r="1" fill="currentColor" stroke="none"/><line x1="12" y1="17" x2="12" y2="19"/></svg>,
                 baslik: "KVKK Uyumlu",
                 aciklama: "Sağlık verileriniz Türkiye sunucularında şifreli tutulur. Kişisel verileriniz güvende.",
-                renk: "#FFFBEB",
+                ikonRenk: "#0D2137", ikonBg: "#E2E8F0", bg: "#F8FAFC",
               },
             ].map((kart) => (
               <div
                 key={kart.baslik}
-                className="rounded-2xl p-6 hover:shadow-md transition-shadow border border-gray-100"
-                style={{ backgroundColor: kart.renk }}
+                className="rounded-2xl p-6 hover:shadow-lg transition-all hover:-translate-y-0.5 border border-gray-100"
+                style={{ backgroundColor: kart.bg }}
               >
-                <div className="text-3xl mb-4">{kart.icon}</div>
+                <div style={{ backgroundColor: kart.ikonBg, color: kart.ikonRenk }} className="w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <kart.Ikon />
+                </div>
                 <h3 style={{ color: "var(--navy)" }} className="font-bold text-base mb-2">{kart.baslik}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{kart.aciklama}</p>
               </div>
