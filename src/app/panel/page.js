@@ -187,8 +187,13 @@ export default async function Panel() {
             </div>
 
             {/* Profil Düzenle */}
-            <div className="bg-white rounded-2xl p-6 shadow-sm">
-              <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-4">Profil Düzenle</h2>
+            <details className="bg-white rounded-2xl shadow-sm group">
+              <summary style={{ color: "var(--navy)" }} className="font-bold text-lg p-6 cursor-pointer flex items-center justify-between select-none list-none">
+                Profil Düzenle
+                <span className="text-gray-400 text-sm font-normal group-open:hidden">▼ Düzenle</span>
+                <span className="text-gray-400 text-sm font-normal hidden group-open:inline">▲ Kapat</span>
+              </summary>
+              <div className="px-6 pb-6">
               <form action="/api/profil-guncelle" method="POST" className="space-y-3">
 
                 <div>
@@ -259,17 +264,6 @@ export default async function Panel() {
                   <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
                 </div>
 
-                {/* Koordinat — isteğe bağlı, daha hassas harita için */}
-                <div className="grid grid-cols-2 gap-2">
-                  <div>
-                    <label className="text-xs text-gray-400 block mb-1">Enlem (opsiyonel)</label>
-                    <input name="enlem" defaultValue={doktor.enlem || ""} placeholder="41.0082" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
-                  </div>
-                  <div>
-                    <label className="text-xs text-gray-400 block mb-1">Boylam (opsiyonel)</label>
-                    <input name="boylam" defaultValue={doktor.boylam || ""} placeholder="28.9784" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:ring-2 focus:ring-teal-500" />
-                  </div>
-                </div>
 
                 <div>
                   <label className="text-sm text-gray-500 block mb-1">Tanıtım Videosu (opsiyonel)</label>
@@ -393,7 +387,8 @@ export default async function Panel() {
                   Kaydet
                 </button>
               </form>
-            </div>
+              </div>
+            </details>
 
             <SifreDegistir />
 

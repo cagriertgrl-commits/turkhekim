@@ -294,6 +294,26 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_firma_takip_doktor ON firma_takip(doktor_id)`;
   console.log("✅ firma_takip tablosu oluşturuldu");
 
+  // ─── PAYLASILAR genişletme (akış/feed) ────────────────────────────────────────
+  await sql`ALTER TABLE paylasilar
+    ADD COLUMN IF NOT EXISTS firma_id INTEGER REFERENCES firmalar(id) ON DELETE CASCADE,
+    ADD COLUMN IF NOT EXISTS kaynak_tipi TEXT NOT NULL DEFAULT 'doktor',
+    ADD COLUMN IF NOT EXISTS resim_url TEXT,
+    ADD COLUMN IF NOT EXISTS begeni_sayisi INTEGER DEFAULT 0,
+    ADD COLUMN IF NOT EXISTS etiketler TEXT
+  `;
+  await sql`
+    CREATE TABLE IF NOT EXISTS paylasi_begeni (
+      id SERIAL PRIMARY KEY,
+      paylasi_id INTEGER REFERENCES paylasilar(id) ON DELETE CASCADE,
+      doktor_id INTEGER REFERENCES doktorlar(id) ON DELETE CASCADE,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      UNIQUE(paylasi_id, doktor_id)
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_paylasi_begeni_paylasi ON paylasi_begeni(paylasi_id)`;
+  console.log("✅ paylasilar feed kolonları + paylasi_begeni oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }

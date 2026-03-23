@@ -5,6 +5,7 @@ import RandevuFormu from "@/components/RandevuFormu";
 import SoruFormu from "@/components/SoruFormu";
 import BaglantiKopyala from "@/components/BaglantiKopyala";
 import sql from "@/lib/db";
+import { getSession } from "@/lib/session";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 
@@ -54,9 +55,13 @@ function slugify(s = "") {
 export default async function DoktorProfil({ params }) {
   const { slug } = await params;
 
-  const doktorlar = await sql`SELECT * FROM doktorlar WHERE slug = ${slug}`;
+  const [doktorlar, session] = await Promise.all([
+    sql`SELECT * FROM doktorlar WHERE slug = ${slug}`,
+    getSession(),
+  ]);
   if (!doktorlar.length) notFound();
   const doktor = doktorlar[0];
+  const kendiProfili = session?.id === doktor.id;
 
   const [yorumlar, sorular, medya] = await Promise.all([
     sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} AND dogrulama_durumu = 'onaylandi' ORDER BY created_at DESC`,
@@ -184,7 +189,17 @@ export default async function DoktorProfil({ params }) {
 
           {/* SIDEBAR */}
           <div className="md:col-span-1 space-y-4 md:order-2">
-            <RandevuFormu doktorId={doktor.id} doktorAd={unvanAd} onlineRandevu={doktor.online_randevu} />
+            {kendiProfili ? (
+              <div style={{ backgroundColor: "#F0FDF4", borderColor: "#86EFAC" }} className="border rounded-2xl p-5">
+                <p className="font-bold text-green-800 mb-1 text-sm">👋 Kendi profilindesiniz</p>
+                <p className="text-xs text-green-700 mb-3">Yorum yapma, soru sorma ve randevu butonları sadece hastalar için görünür.</p>
+                <Link href="/panel" style={{ backgroundColor: "#0D2137" }} className="block text-center text-white text-xs py-2 rounded-xl font-semibold hover:opacity-90">
+                  Panele Git →
+                </Link>
+              </div>
+            ) : (
+              <RandevuFormu doktorId={doktor.id} doktorAd={unvanAd} onlineRandevu={doktor.online_randevu} />
+            )}
 
             {/* Çalışma Saatleri */}
             {doktor.calisma_saatleri && (
@@ -423,8 +438,8 @@ export default async function DoktorProfil({ params }) {
               <YorumListesi yorumlar={yorumlar} />
             </div>
 
-            <YorumFormu doktorId={doktor.id} />
-            <SoruFormu doktorId={doktor.id} sorular={sorular} />
+            {!kendiProfili && <YorumFormu doktorId={doktor.id} />}
+            {!kendiProfili && <SoruFormu doktorId={doktor.id} sorular={sorular} />}
 
           </div>
         </div>

@@ -22,6 +22,7 @@ export default function Navbar({ aktifSayfa }) {
 
   const linkler = [
     { href: "/istanbul/kbb-uzmani", etiket: "Doktor Bul" },
+    { href: "/akis", etiket: "Akış" },
     { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
     { href: "/hasta-formlari", etiket: "Hasta Formları" },
