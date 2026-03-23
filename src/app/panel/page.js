@@ -20,6 +20,7 @@ import PanelDilSecici from "@/components/PanelDilSecici";
 import CikisButonu from "@/components/CikisButonu";
 import WhatsappInput from "@/components/WhatsappInput";
 import TemaSecici from "@/components/TemaSecici";
+import HaritaSecici from "@/components/HaritaSecici";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "🏠 Muayenehane" },
@@ -262,6 +263,12 @@ export default async function Panel() {
                 <div>
                   <label className="text-sm text-gray-500 block mb-1">Adres</label>
                   <input name="adres" defaultValue={doktor.adres || ""} placeholder="Mahalle, Sokak, Bina No..." className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500" />
+                </div>
+
+                <div>
+                  <label className="text-sm text-gray-500 block mb-1">Harita Konumu</label>
+                  <p className="text-xs text-gray-400 mb-2">Haritada konumunuzu seçin — hastalar profilinizden yol tarifi alabilir.</p>
+                  <HaritaSecici mevcutEnlem={doktor.enlem} mevcutBoylam={doktor.boylam} />
                 </div>
 
 

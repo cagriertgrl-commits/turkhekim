@@ -209,6 +209,30 @@ export default async function DoktorProfil({ params }) {
               </div>
             )}
 
+            {/* Harita */}
+            {doktor.enlem && doktor.boylam && (
+              <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
+                <h3 className="font-bold text-gray-900 mb-3 text-sm">📍 Konum</h3>
+                <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}>
+                  <iframe
+                    title="Konum"
+                    width="100%"
+                    height="200"
+                    style={{ display: "block" }}
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${doktor.boylam - 0.01},${doktor.enlem - 0.01},${parseFloat(doktor.boylam) + 0.01},${parseFloat(doktor.enlem) + 0.01}&layer=mapnik&marker=${doktor.enlem},${doktor.boylam}`}
+                  />
+                </div>
+                <a
+                  href={`https://www.openstreetmap.org/?mlat=${doktor.enlem}&mlon=${doktor.boylam}#map=16/${doktor.enlem}/${doktor.boylam}`}
+                  target="_blank" rel="noopener noreferrer"
+                  style={{ color: "#0E7C7B" }}
+                  className="text-xs font-semibold mt-2 inline-block hover:underline"
+                >
+                  Haritada Aç →
+                </a>
+              </div>
+            )}
+
             {/* Paylaş */}
             <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-3 text-sm">Profili Paylaş</h3>
