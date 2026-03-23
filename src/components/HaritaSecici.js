@@ -48,6 +48,14 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
       });
 
       setYuklendi(true);
+
+      // details açıldığında haritayı yeniden boyutlandır
+      const ro = new ResizeObserver(() => {
+        if (mapRef.current?.offsetWidth > 0) {
+          map.invalidateSize();
+        }
+      });
+      if (mapRef.current) ro.observe(mapRef.current.parentElement || mapRef.current);
     });
 
     return () => {
