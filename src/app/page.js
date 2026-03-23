@@ -444,13 +444,15 @@ export default async function Home() {
             ].map((kart) => (
               <div
                 key={kart.baslik}
-                className="rounded-2xl p-6 hover:shadow-lg transition-all hover:-translate-y-0.5 border border-gray-100"
-                style={{ backgroundColor: kart.bg }}
+                className="rounded-2xl p-6 hover:shadow-lg transition-all hover:-translate-y-1 border border-gray-100 relative overflow-hidden"
+                style={{ backgroundColor: kart.bg, borderTop: `3px solid ${kart.ikonRenk}` }}
               >
-                <div style={{ backgroundColor: kart.ikonBg, color: kart.ikonRenk }} className="w-12 h-12 rounded-xl flex items-center justify-center mb-4">
-                  <kart.Ikon />
+                <div className="flex items-center gap-3 mb-4">
+                  <div style={{ backgroundColor: kart.ikonBg, color: kart.ikonRenk }} className="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <kart.Ikon />
+                  </div>
+                  <h3 style={{ color: "var(--navy)" }} className="font-bold text-base leading-tight">{kart.baslik}</h3>
                 </div>
-                <h3 style={{ color: "var(--navy)" }} className="font-bold text-base mb-2">{kart.baslik}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{kart.aciklama}</p>
               </div>
             ))}

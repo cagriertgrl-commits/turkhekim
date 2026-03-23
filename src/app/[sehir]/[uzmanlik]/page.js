@@ -89,47 +89,31 @@ export default async function DoktorListesi({ params, searchParams }) {
   const EN = "gusiocaiue-";
   const sehirLike = "%" + sehirParam.toLowerCase() + "%";
   const uzmanlikLike = "%" + uzmanlikParam.toLowerCase() + "%";
-  const tumTurkiye = sehirParam === "turkiye"; // şehir filtresi yok
-  const tumDoktor = uzmanlikParam === "doktor"; // uzmanlık filtresi yok
+  const tumTurkiye = sehirParam === "turkiye";
+  const tumDoktor = uzmanlikParam === "doktor";
 
-  let doktorlar;
-  if (onlineFiltreAktif && sigortaFiltreAktif) {
-    if (tumTurkiye && tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumTurkiye)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-  } else if (onlineFiltreAktif) {
-    if (tumTurkiye && tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumTurkiye)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND online_randevu = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-  } else if (sigortaFiltreAktif) {
-    if (tumTurkiye && tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumTurkiye)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true AND sigorta IS NOT NULL AND sigorta != '' ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-  } else {
-    if (tumTurkiye && tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumTurkiye)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else if (tumDoktor)
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
-    else
-      doktorlar = await sql`SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE translate(LOWER(sehir),${TR},${EN}) LIKE ${sehirLike} AND translate(LOWER(uzmanlik),${TR},${EN}) LIKE ${uzmanlikLike} AND onaylandi = true ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`;
+  // Dinamik sorgu: uzmanlik VEYA hizmetler alanında arama (örn. rinoplasti için plastik cerrah da çıksın)
+  const conditions = ["onaylandi = true"];
+  const qParams = [];
+
+  if (!tumDoktor) {
+    qParams.push(uzmanlikLike);
+    const i = qParams.length;
+    conditions.push(`(translate(LOWER(uzmanlik),'${TR}','${EN}') LIKE $${i} OR translate(LOWER(COALESCE(hizmetler,'')),'${TR}','${EN}') LIKE $${i})`);
   }
+  if (!tumTurkiye) {
+    qParams.push(sehirLike);
+    const i = qParams.length;
+    conditions.push(`translate(LOWER(sehir),'${TR}','${EN}') LIKE $${i}`);
+  }
+  if (onlineFiltreAktif) conditions.push("online_randevu = true");
+  if (sigortaFiltreAktif) conditions.push("sigorta IS NOT NULL AND sigorta != ''");
+
+  const whereClause = conditions.join(" AND ");
+  let doktorlar = await sql(
+    `SELECT id, slug, ad, soyad, unvan, uzmanlik, sehir, ilce, foto_url, puan, yorum_sayisi, hakkinda, fiyat, online_randevu, sigorta, klinik_adi, adres_tipi, deneyim FROM doktorlar WHERE ${whereClause} ORDER BY puan DESC NULLS LAST, yorum_sayisi DESC NULLS LAST`,
+    qParams
+  );
 
   // Post-sort: DB puan'a göre sıraladı; diğer seçenekler JS'te uygulanır
   if (siralamaPrm === "yorum") {
