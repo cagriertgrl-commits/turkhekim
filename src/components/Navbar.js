@@ -25,7 +25,7 @@ export default function Navbar({ aktifSayfa }) {
     { href: "/akis", etiket: "Akış" },
     { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
-    { href: "/hasta-formlari", etiket: "Hasta Formları" },
+    { href: "/hasta-formlari", etiket: "Onam Formları" },
   ];
 
   return (

@@ -1259,6 +1259,1839 @@ Ad Soyad: ___________________________    Tarih: _______________
 Doğum Tarihi: _______________________    İmza: _______________
 Yakını (18 yaş altı): _________________    Yakın İmzası: ________`,
   },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ESTETİK CERRAHİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "meme-buyutme-onam": {
+    icerik: `MEME BÜYÜTME (AUGMENTASYON MAMMOPLASTİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Meme büyütme ameliyatı (augmentasyon mammoplasti); silikon jel veya tuzlu su doldurulan implantların meme bezi altına ya da göğüs kası altına yerleştirilmesi yoluyla meme hacim ve şeklinin artırılması işlemidir.
+
+2. AMAÇ VE BEKLENTİLER
+• Meme hacminin artırılması ve simetrisinin iyileştirilmesi
+• Emzirme, kilo kaybı veya yaşlanma sonrası meme dokusunun yenilenmesi
+• Estetik beklentilerin doktor-hasta iletişimiyle belirlendiği öznel bir sonuçtur; kesin ölçü garantisi verilemez
+
+3. AMELİYAT ÖNCESİ HAZIRLIK
+• Aspirin ve kan sulandırıcılar 10 gün öncesinden kesilmelidir
+• Sigara kullanımı yara iyileşmesini olumsuz etkiler; en az 4 hafta bırakılmalıdır
+• Mamografi veya ultrasonografi istenebilir
+
+4. OLASI RİSKLER VE KOMPLİKASYONLAR
+Genel cerrahi riskleri: kanama, enfeksiyon, anestezi komplikasyonları, yara izi.
+İmplanta özgü riskler:
+• Kapsüler kontraktür (implant etrafında sertleşme)
+• İmplant pozisyon değişikliği veya rüptürü
+• Asimetri, duyu değişikliği, emzirme kapasitesinde azalma
+• BIA-ALCL (implant ilişkili lenfoma — son derece nadir)
+• Revizyon ameliyatı gereksinimi
+
+5. ALTERNATİFLER
+İmplant kullanmaksızın yağ enjeksiyonu, korse/medikal bra kullanımı veya cerrahi yapmama seçenekleri mevcuttur.
+
+6. İMPLANT BİLGİSİ
+Kullanılacak implant markası: ........................  Hacim: ............cc  Profil: ............
+Yerleştirme planı: □ Submüsküler  □ Submammarian  □ Dual plane
+Kesi yeri: □ İnframmarian  □ Periareolar  □ Aksiller
+
+7. HASTA BEYANI
+Yukarıdaki bilgileri okudum, anladım ve sorularım yanıtlandı. Meme büyütme ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+Veli/Vasi (18 yaş altı): ...............................    Veli/Vasi İmzası: ........
+
+Tanık Adı Soyadı: ......................................    Tanık İmzası: ...........
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "meme-kucultme-onam": {
+    icerik: `MEME KÜÇÜLTME (REDÜKSİYON MAMMOPLASTİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Meme küçültme ameliyatı; fazla meme dokusu, yağ ve derinin cerrahi olarak çıkarılması ile meme hacminin küçültülmesi ve şeklin yeniden biçimlendirilmesi işlemidir.
+
+2. AMAÇ
+• Omuz, boyun ve sırt ağrısının azaltılması
+• Postür bozukluğunun giderilmesi
+• Cilt tahrişinin önlenmesi
+• Estetik iyileşme
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, yara iyileşme güçlüğü
+• Meme başı ve areola duyu kaybı (geçici veya kalıcı)
+• Meme başı kanlanma bozukluğu (nadir)
+• Emzirme kapasitesinde azalma veya kayıp
+• Asimetri, yara izi, şekil memnuniyetsizliği
+• Seroma, hematom
+
+4. BEYAN
+Meme küçültme ameliyatı hakkında yeterince bilgilendirildim.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "blefaroplasti-onam": {
+    icerik: `GÖZ KAPAĞI ESTETİĞİ (BLEFAROPLASTİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Blefaroplasti; sarkmış, yorgun görünümlü göz kapaklarının cerrahi olarak düzeltilmesi işlemidir. Üst kapak, alt kapak veya her ikisine birden uygulanabilir.
+
+2. AMAÇ
+• Sarkık üst kapak nedeniyle daralan görme alanının genişletilmesi
+• Göz altı torbalaşması ve şişliğinin giderilmesi
+• Yorgun ve yaşlı görünümün iyileştirilmesi
+
+3. OLASI RİSKLER
+• Geçici kuru göz, yaşarma, ışık hassasiyeti
+• Asimetri, iz, skar
+• Kapak kapanma güçlüğü (lagoftalmi — geçici)
+• Görme değişikliği (son derece nadir)
+• Ekimoz ve ödem (birkaç haftada düzelir)
+
+4. BEYAN
+Blefaroplasti ameliyatına ilişkin bilgilendirmeyi aldım ve onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "abdominoplasti-onam": {
+    icerik: `KARIN GERME (ABDOMİNOPLASTİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Abdominoplasti; karın bölgesindeki fazla deri ve yağ dokusunun çıkarılması ve karın kaslarının sıkılaştırılması ile karın bölgesinin düzleştirilmesi ameliyatıdır. Tam veya mini abdominoplasti olarak planlanabilir.
+
+2. AMAÇ
+• Gebelik veya kilo kaybı sonrası oluşan gevşek karın cildinin giderilmesi
+• Diastazis rekti (karın kası ayrışması) onarımı
+• Karın profilinin iyileştirilmesi
+
+3. OLASI RİSKLER
+• Derin ven trombozu ve pulmoner emboli (en ciddi risk)
+• Yara açılması, geniş yara izi (özellikle sigara kullananlar)
+• Seroma, enfeksiyon, kanama
+• Göbek pozisyonu değişikliği veya nekrozu
+• His kaybı, ödem (uzun sürebilir)
+• Revizyon ihtiyacı
+
+4. BEYAN
+Ameliyat hakkında kapsamlı bilgilendirme aldım ve onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // DİŞ HEKİMLİĞİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "dis-cekimi-onam": {
+    icerik: `DİŞ ÇEKİMİ / GÖMÜLÜ DİŞ AMELİYATI ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Diş çekimi; çeşitli nedenlerle (çürük, kırık, periyodontal hastalık, ortodontik endikasyon) dişin ağız boşluğundan uzaklaştırılması işlemidir. Gömülü diş (özellikle yirmi yaş dişleri) çekimi ise lokal anestezi altında yapılan küçük cerrahi bir girişimdir.
+
+2. OLASI RİSKLER
+• Kanama, şişlik, ağrı (birkaç günde normale döner)
+• Kuru soket (alveolar osteitis) — 20 yaş dişi çekimlerinde %5-10
+• Komşu diş, sinir veya sinüse yakınlık — mentalis siniri geçici/kalıcı uyuşma (nadir)
+• Çene kırığı (gömülü diş cerrahisinde son derece nadir)
+• Enfeksiyon
+
+3. GENEL BİLGİLER
+• İşlem sonrası 24 saat boyunca gazlı bez ısırılmalıdır
+• İlk gün sigara, alkol ve sıcak yiyeceklerden kaçınılmalıdır
+• Verilen antibiyotik ve ağrı kesiciler kullanılmalıdır
+
+4. BEYAN
+Diş çekimi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "zirkonyum-kaplama-onam": {
+    icerik: `ZİRKONYUM / PORSELEN KAPLAMA ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Zirkonyum ve porselen kaplamalar; mevcut dişlerin ince bir tabaka traşlanması (preparasyon) ardından üzerine estetik kron/kaplama yapıştırılması işlemidir. Renk, şekil ve fonksiyon iyileştirmesi sağlar.
+
+2. OLASI RİSKLER VE KISITLAMALAR
+• Preparasyon sonrası geçici hassasiyet
+• Kaplama altında çürük oluşumu (ağız hijyeni ihmalinde)
+• Kırılma riski (sert cisimler ısırma, gıcırdatma)
+• İkincil tedavide daha fazla diş materyali kaybı
+• Renk uyumu zamanla değişebilir
+• Gece dişçe takarsa koruyucu plak önerilir
+
+3. BAKIM
+• Diş ipi ve arayüz fırçası düzenli kullanılmalıdır
+• Yılda iki kez diş hekimi kontrolü önerilir
+
+4. BEYAN
+Zirkonyum/porselen kaplama tedavisine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "dis-beyazlatma-onam": {
+    icerik: `DİŞ BEYAZLATMA (BLEACHING) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Diş beyazlatma; diş yüzeyindeki ve mine içindeki renk pigmentlerini peroksit bazlı ajanlar aracılığıyla açma işlemidir. Ofis tipi (klinkte 1-2 seans) veya ev tipi (gecelik plak+jel) olarak uygulanabilir.
+
+2. BEKLENTİ YÖNETİMİ
+• Sonuç mevcut diş rengine, yaşa ve boyaya bağlıdır; garanti verilemez
+• Kaplama, implant ve dolgu rengini değiştirmez
+• Etki 1-3 yıl sürebilir; sigara, çay, kahve tüketimi kalıcılığı kısaltır
+
+3. OLASI RİSKLER
+• Geçici diş hassasiyeti (soğuk/sıcak — genellikle 24-72 saat sürer)
+• Diş eti tahrişi
+• Başlangıçta düzensiz beyazlaşma
+• Ağrı/hassasiyet varlığında tedaviye ara verilmesi gerekebilir
+
+4. KONTRENDİKASYONLAR
+• Gebelik ve emzirme döneminde uygulanmamalıdır
+• 16 yaş altı hastalar için uygun değildir
+• Aşırı hassas dişlerde dikkatli değerlendirme gerekir
+
+5. BEYAN
+Diş beyazlatma işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // KBB — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "septoplasti-onam": {
+    icerik: `SEPTOPLASTİ / SEPTUM AMELİYATI AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Septoplasti; burun septumunun (burunu ikiye ayıran kıkırdak-kemik yapı) eğrilik veya deformitesinin cerrahi olarak düzeltilmesi işlemidir. Nefes almayı güçleştiren septal deviasyonlarda endikedir.
+
+2. AMAÇ
+• Nazal pasaj obstrüksiyonunun giderilmesi
+• Horlama ve uyku bozukluğunun azaltılması
+• Tekrarlayan sinüzit ataklarının önlenmesi
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, yara iyileşmesi sorunları
+• Septal perforasyon (septumda delik oluşumu — nadir)
+• His kaybı (burun ucu veya üst diş bölgesi — genellikle geçici)
+• Burun biçiminde değişme (istenmeyen)
+• Sonucun yetersiz kalması ve revizyon ihtiyacı
+• Koku alma duyusunda geçici değişim
+
+4. AMELİYAT SONRASI
+• Burun tamponları 24-48 saat sonra alınır
+• 2 hafta fiziksel aktiviteden kaçınılmalıdır
+• Güneş gözlüğü ve gözlük 6 hafta boyunca kullanılmamalıdır
+
+5. BEYAN
+Septoplasti ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "tonsillektomi-onam": {
+    icerik: `TONSİLLEKTOMİ / ADENOİDEKTOMİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Tonsillektomi bademcik (tonsil) ameliyatı, adenoidektomi ise geniz eti (adenoid) ameliyatıdır. Genel anestezi altında uygulanır; birlikte veya ayrı ayrı yapılabilir.
+
+2. ENDİKASYONLAR
+• Yılda 3+ kez tekrarlayan tonsillit atakları
+• Tonsil büyüklüğüne bağlı uyku apnesi / horlama
+• Peritonsillar apse öyküsü
+• Adenoid hipertrofisine bağlı kulak enfeksiyonu / solunum güçlüğü
+
+3. OLASI RİSKLER
+• Primer kanama (ameliyat sırasında — nadir)
+• Sekonder kanama (ameliyat sonrası 5-10. günlerde — %1-2)
+• Enfeksiyon, ateş
+• Geçici yutma güçlüğü ve ağız kokusu
+• Dişlerde geçici uyuşma
+• Anestezi komplikasyonları (çocuklarda daha dikkatli izlem)
+
+4. AMELİYAT SONRASI
+• İlk hafta soğuk ve yumuşak gıdalar tüketilmelidir
+• Kanama olursa acile başvurulmalıdır
+• 2 hafta fiziksel aktiviteden kaçınılmalıdır
+
+5. BEYAN
+Tonsillektomi / Adenoidektomi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+Veli/Vasi (18 yaş altı): ...............................    Veli/Vasi İmzası: ........
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "timpanoplasti-onam": {
+    icerik: `KULAK ZARI AMELİYATI (TİMPANOPLASTİ / MASTOİDEKTOMİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Timpanoplasti; perfore (delik) kulak zarının ve/veya orta kulak yapılarının onarılması ameliyatıdır. Mastoidektomi ise mastoid kemiğin havalanma hücrelerindeki kronik enfeksiyon veya kolesteatom nedeniyle temizlenmesi işlemidir.
+
+2. AMAÇ
+• Kulak zarı perforasyonunun kapatılarak işitmenin iyileştirilmesi
+• Kulaktan akıntı ve enfeksiyonun önlenmesi
+• Kolesteatom varlığında hastalığın temizlenmesi
+
+3. OLASI RİSKLER
+• İşitme düzeyinde değişme (iyileşme veya nadiren kötüleşme)
+• Yüz siniri zayıflığı (fasiyal paralizi — çok nadir)
+• Tad bozukluğu (korda timpani hasarı — geçici/kalıcı)
+• Baş dönmesi, denge bozukluğu
+• Kulak çınlaması artışı
+• Kolesteatom nüksü (mastoidektomide)
+
+4. BEYAN
+Timpanoplasti / Mastoidektomi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "fess-sinüs-onam": {
+    icerik: `ENDOSKOPİK SİNÜS CERRAHİSİ (FESS) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+FESS (Fonksiyonel Endoskopik Sinüs Cerrahisi); kronik sinüzit, nazal polipozis veya sinüs kistlerinin endoskop yardımıyla minimal invaziv olarak temizlenmesi işlemidir.
+
+2. AMAÇ
+• Sinüs açıklığının sağlanması ve doğal drenajın yeniden kazandırılması
+• Nazal poliplerin çıkarılması
+• İlaç tedavisine yanıtsız kronik sinüzitin tedavisi
+
+3. OLASI RİSKLER
+• Kanama (ciddi hemoraji nadir ama mümkündür)
+• Göz çevresine yayılan şişlik ve ekimoz (geçici)
+• Göz sorunları: diplopi, görme bulanıklığı (çok nadir)
+• BOS (beyin omurilik sıvısı) kaçağı (çok nadir, <0,5%)
+• Koku alma duyusunda değişme
+• Polip nüksü — düzenli kontrol ve tıbbi tedavi gerektirebilir
+
+4. AMELİYAT SONRASI
+• Burun tamponları/rinoloji değerlendirmesi hekiminiz tarafından planlanır
+• Düzenli nazal yıkama önerilir
+• 6-12 ay düzenli kontrol gereklidir
+
+5. BEYAN
+Endoskopik sinüs cerrahisi (FESS) ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // KARDİYOLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "kalp-pili-onam": {
+    icerik: `KALICI KALP PİLİ (PACEMAKER) TAKMA AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Kalıcı kalp pili; yavaş veya düzensiz kalp ritmi nedeniyle kalbe elektriksel uyarı göndererek normal ritmi sağlayan küçük elektronik cihazdır. Genellikle sol köprücük kemiği altına yerleştirilir.
+
+2. AMAÇ
+• Bradikardiye (yavaş kalp atışı) bağlı baş dönmesi, bayılma, nefes darlığının giderilmesi
+• Kalp bloğunun tedavisi
+
+3. OLASI RİSKLER
+• Enfeksiyon (cep bölgesi veya elektrot ucu)
+• Kanama, hematom
+• Pnömotoraks (akciğer zedelenmesi — %1-2)
+• Elektrot yer değişikliği veya kırılması
+• Cihaz arızası (son derece nadir, periyodik kontrol gerekir)
+• Deri erozyonu
+
+4. YAŞAM KISITLAMALARI
+• Güçlü manyetik alanlara (MR — koşullara bağlı) dikkat
+• Güvenlik kapılarından hızlı geçilmeli, uzun süre durulmamalıdır
+• Cihaz kimlik kartı her zaman taşınmalıdır
+
+5. BEYAN
+Kalıcı kalp pili implantasyonuna onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "kardiyoversiyon-onam": {
+    icerik: `ELEKTRİKSEL KARDİYOVERSİYON AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Elektriksel kardiyoversiyon; atrial fibrilasyon (AF), atrial flutter veya diğer ritim bozukluklarını düzeltmek amacıyla kısa süreli genel anestezi (sedasyon) altında göğse uygulanan elektrik şoku tedavisidir.
+
+2. AMAÇ
+Normal sinüs ritminin yeniden sağlanması ve buna bağlı semptomların (çarpıntı, nefes darlığı, yorgunluk) giderilmesi.
+
+3. OLASI RİSKLER
+• Cilt yanığı (nadir, elektrot bölgesinde)
+• Ritim bozukluğunun geri dönmesi (%50-60 tekrarlama riski, ilaç desteğiyle azalır)
+• Tromboembolik olay / inme (işlem öncesi antikoagülan tedavi zorunludur)
+• Sedasyon komplikasyonları
+• Sinüs nodu disfonksiyonu (nadir)
+
+4. BEYAN
+Elektriksel kardiyoversiyon işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ORTOPEDİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "diz-protezi-onam": {
+    icerik: `DİZ PROTEZİ (TOTAL / PARSİYEL) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Diz protezi ameliyatı; ileri evre diz kireçlenmesi (gonartrozis) nedeniyle hasarlı diz eklem yüzeylerinin metal ve plastik komponentlerden oluşan yapay implantlarla değiştirilmesi işlemidir.
+
+2. AMAÇ
+• Ağrının ortadan kaldırılması veya belirgin azaltılması
+• Diz fonksiyonunun yeniden kazandırılması
+• Yürüme ve günlük yaşam aktivitelerinin iyileştirilmesi
+
+3. OLASI RİSKLER
+• Derin ven trombozu ve pulmoner emboli (en ciddi risk, antikoagülan profilaksi uygulanır)
+• Enfeksiyon (erken veya geç — protez çıkarımı gerektirebilir)
+• Protez instabilitesi, eklem sertliği
+• Sinir ve damar hasarı
+• Bacak uzunluğu eşitsizliği
+• Protez gevşemesi (10-20 yıl uzun vadede)
+• Revizyon ameliyatı ihtiyacı
+
+4. REHABİLİTASYON
+Ameliyat sonrası fizyoterapi programı başarı için kritiktir. Yük verme ve egzersiz planı doktorunuz tarafından belirlenecektir.
+
+5. BEYAN
+Diz protezi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "omurga-cerrahisi-onam": {
+    icerik: `OMURGA CERRAHİSİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Omurga cerrahisi; disk hernisi, spinal stenoz, spondiloliste­zis, omurga tümörü veya travma gibi nedenlerle yapılan cerrahi müdahaleleri kapsar. Disk ameliyatı (mikrodiskektomi, TLIF), dekompresyon, spinal füzyon veya enstrümantasyon içerebilir.
+
+2. AMAÇ
+• Sinir/omurilik basısının giderilmesi
+• Ağrı, uyuşukluk ve felç belirtilerinin tedavisi
+• Omurga stabilitesinin sağlanması
+
+3. OLASI RİSKLER
+Cerrahi genel riskleri: kanama, enfeksiyon, anestezi komplikasyonları.
+Omurgaya özgü riskler:
+• Nörolojik kötüleşme (son derece nadir, <1%)
+• Sinir hasarı, kalıcı uyuşukluk veya güçsüzlük
+• Dura yırtığı ve BOS kaçağı (%1-3)
+• İmplant yer değişikliği veya kırılması
+• Füzyon gerçekleşmemesi
+• Komşu segment hastalığı (uzun vadede)
+
+4. BEYAN
+Omurga cerrahisi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // GÖZ HASTALIKLARI — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "glokom-tedavi-onam": {
+    icerik: `GLOKOM (GÖZ TANSİYONU) TEDAVİ ONAM FORMU
+
+1. TANIM
+Glokom; göz içi basıncının yükselmesine bağlı optik sinir hasarı ile karakterli, tedavi edilmezse körlüğe yol açabilen kronik bir göz hastalığıdır.
+
+2. TEDAVİ SEÇENEKLERİ
+a) İlaç tedavisi (damla/hap): Göz içi basıncını düşürür. Ömür boyu kullanım gerektirebilir.
+b) Lazer trabekuloplasti (SLT/ALT): Drenaj kanalını açmaya yönelik lazer işlemi.
+c) Cerrahi (trabekülektomi, tüp implantı): İlaç/lazere yanıtsız olgularda.
+
+3. OLASI RİSKLER (İlaç)
+• Göz kızarıklığı, yanma, kirpik uzaması (bazı damlaların yan etkisi)
+• Sistemik etkiler (nabız yavaşlaması, nefes darlığı — beta bloker damlalarda)
+
+4. OLASI RİSKLER (Cerrahi)
+• Enfeksiyon, kanama, katarakt hızlanması
+• Basınç aşırı düşmesi (hipotoni)
+• İşlem yeterliliğinin sınırlı kalması ve tekrar cerrahi
+
+5. BEYAN
+Glokom tedavisi için önerilen seçeneği kabul ediyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "intravitreal-onam": {
+    icerik: `İNTRAVİTREAL ENJEKSİYON ONAM FORMU
+
+1. İŞLEMİN TANIMI
+İntravitreal enjeksiyon; anti-VEGF ilaçlar (bevacizumab, ranibizumab, aflibercept), kortikosteroidler veya antibiyotiklerin göz içine (vitreus boşluğuna) ince iğne ile enjekte edilmesi işlemidir. Yaşa bağlı maküla dejenerasyonu (YBMD), diyabetik retinopati ve retinal ven tıkanıklıklarında kullanılır.
+
+2. SEANS SAYISI
+Tedavi süreci genellikle tekrarlayan enjeksiyonlar gerektirir (yükleme dozu + idame). Hastalık durumuna göre ayarlanır.
+
+3. OLASI RİSKLER
+• Göz içi enfeksiyon (endoftalmi — <1/1000, çok nadir ama ciddi)
+• Retinal dekolman (son derece nadir)
+• Göz içi basıncında geçici yükselme
+• Subkonjonktival kanama (kırmızı nokta — zararsız, geçici)
+• Enjeksiyon bölgesinde ağrı, geçici görme bulanıklığı
+• Sistemik vasküler olaylar (felç — teorik risk, çok düşük)
+
+4. BEYAN
+İntravitreal enjeksiyon işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // DERMATOLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "lazer-epilasyon-onam": {
+    icerik: `LAZER EPİLASYON ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Lazer epilasyon; seçici fototermoliz prensibiyle lazer enerjisinin kıl köklerini hedef alarak tüy büyümesini kalıcı olarak azaltması işlemidir. Aleksandrit, diyot veya Nd:YAG lazerler kullanılır.
+
+2. SEÇİLEN TEDAVİ BÖLGESİ: .........................................
+
+3. SEANS BİLGİSİ
+• Kalıcı azaltma için ortalama 6-10 seans gerekir
+• Seanslar arasında 4-8 hafta beklenmelidir
+• Hormonal bozuklukta yanıt değişkendir
+
+4. OLASI RİSKLER
+• Geçici kızarıklık, ödem (1-2 gün)
+• Hiperpigmentasyon (özellikle koyu tenlilerde UV maruziyeti sonrası)
+• Hipopigmentasyon (nadir, genellikle geçici)
+• Yanık, kabuklanma (tekniğe bağlı nadir)
+• Tam epilasyon garantisi verilemez
+
+5. KONTRENDİKASYONLAR
+• Güneşli sezon, bronzlaşmış cilt — işlem yapılmamalıdır
+• İşlem öncesi 4 hafta ve sonrası 4 hafta güneşten kaçınılmalıdır
+
+6. BEYAN
+Lazer epilasyon tedavisine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "kimyasal-peeling-onam": {
+    icerik: `KİMYASAL PEELİNG (CİLT SOYMA) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Kimyasal peeling; glikolik asit, salisilik asit, TCA (triklorasetik asit) veya fenol gibi kimyasal ajanların cilde uygulanarak kontrollü soyma ve cilt yenilenmesinin sağlanması işlemidir.
+
+2. PEELİNG DERİNLİĞİ
+□ Yüzeyel (glikolik/salisilik asit — 5-7 gün iyileşme)
+□ Orta derinlikte (TCA — 7-14 gün iyileşme)
+□ Derin (fenol — 2-3 hafta iyileşme, sedasyon gerekebilir)
+
+3. HEDEF
+• Akne izleri, leke, kırışıklık ve cilt dokusunun iyileştirilmesi
+
+4. OLASI RİSKLER
+• Kızarıklık, soyulma, kabuklanma (beklenen)
+• Hiperpigmentasyon (özellikle koyu tenlilerde, UVB'ye bağlı)
+• Uçuk (herpes simpleks) reaktivasyonu — önceden ilaç alınabilir
+• Skar, kalıcı renk değişikliği (derin peeling)
+• Enfeksiyon
+
+5. BAKIM
+• Nemlendirici ve güneş koruyucu (SPF 50+) zorunludur
+• İşlem sonrası 4 hafta doğrudan güneş maruziyetinden kaçınılmalıdır
+
+6. BEYAN
+Kimyasal peeling uygulamasına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "dermatoloji-prp-onam": {
+    icerik: `DERMATOLOJİK PRP / MEZOTERAPİ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+PRP (Trombositten Zengin Plazma) tedavisinde hastanın kendi kanından elde edilen trombosit konsantresi, saç dökülmesi veya cilt yenileme amacıyla ilgili bölgeye enjekte edilir. Mezoterapi'de vitamin, mineral ve hyaluronik asit karışımı deri altına çok sayıda küçük enjeksiyonla verilir.
+
+2. HEDEF BÖLGE VE ENDİKASYON
+□ Androgenetik alopesi (saç dökülmesi)
+□ Yüz/boyun cilt yenileme
+□ Cilt altı dolgunluk ve nemlendirme
+
+3. SEANS SAYISI
+PRP: Genellikle 3-6 seans, aylık aralıklarla başlangıç; ardından 3-6 ayda bir idame.
+
+4. OLASI RİSKLER
+• Enjeksiyon bölgesinde kızarıklık, ödem (1-3 gün)
+• Ekimoz, geçici hassasiyet
+• Enfeksiyon (steril teknikle minimize edilir)
+• Yetersiz yanıt — kişiden kişiye farklılık gösterir
+• Alerjik reaksiyon (kendi kanı için çok nadir; mezoterapi karışımı için olası)
+
+5. BEYAN
+PRP / Mezoterapi tedavisine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // PSİKİYATRİ — YENİ FORM
+  // ════════════════════════════════════════════════════════════════════════
+
+  "ect-onam": {
+    icerik: `ELEKTROKONVÜLSİF TERAPİ (EKT) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Elektrokonvülsif Terapi (EKT); kısa süreli genel anestezi ve kas gevşetici altında beyne kısa süreli elektrik akımı uygulanarak kontrollü bir konvülsiyon oluşturulması esasına dayanan psikiyatrik bir tedavi yöntemidir.
+
+2. ENDİKASYONLAR
+• İlaç tedavisine yanıtsız ağır depresyon
+• Psikotik özellikli depresyon
+• Katatonik şizofreni
+• Mani ve ciddi intihar riski
+
+3. TEDAVİ PLANI
+Genellikle haftada 3 seans, toplam 6-12 seans uygulanır.
+
+4. OLASI YAN ETKİLER VE RİSKLER
+• Bellek bozukluğu (özellikle yakın dönem — tedaviden sonra büyük ölçüde düzelir)
+• Konfüzyon, baş ağrısı, kas ağrısı (seans sonrası geçici)
+• Kardiyovasküler değişiklikler (anestezi ekibi tarafından izlenir)
+• Anestezi komplikasyonları
+• Diş/dil zedelenmesi (nadir, koruyucu önlem alınır)
+
+5. YETKİ DURUMU
+Hasta karar verme ehliyetine sahip değilse yasal temsilci imzası gereklidir.
+
+6. BEYAN
+EKT tedavisine onay veriyorum / veriyoruz.
+
+Hasta / Yasal Temsilci Adı Soyadı: .................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+Yakınlık Derecesi (temsilci ise): .....................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ÇOCUK SAĞLIĞI — YENİ FORM
+  // ════════════════════════════════════════════════════════════════════════
+
+  "cocuk-ameliyat-onam": {
+    icerik: `PEDİATRİK CERRAHİ ONAM FORMU (VELİ / VASİ)
+
+ÖNEMLİ NOT: Bu form 18 yaş altı hastalar için veli veya yasal vasi tarafından imzalanmalıdır.
+
+1. PLANLANAN İŞLEM
+İşlem adı: .................................................
+Tarih: ......................   Hekim: .....................
+
+2. AMAÇ VE FAYDA
+Planlanan cerrahi girişim çocuğunuzun mevcut sağlık sorununu gidermeye/azaltmaya yönelik olup hekim tarafından tıbben gerekli görülmüştür.
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, yara iyileşmesi sorunları
+• Anestezi komplikasyonları (çocuk anestezisi uzmanı eşliğinde yürütülecektir)
+• Planlanan işleme özgü riskler hekiminiz tarafından açıklanmıştır
+• Ameliyat sırasında planın değişmesi gerekebilir
+
+4. ALTERNATİFLER
+İlaç tedavisi, bekleme politikası veya farklı cerrahi teknikler hekiminizle tartışılmıştır.
+
+5. VELİ / VASİ BEYANI
+Çocuğumun ameliyatı ve anestezi uygulaması hakkında yeterince bilgilendirildim. Sorularım yanıtlandı. Ameliyata onay veriyorum.
+
+Çocuğun Adı Soyadı: ..................................    Doğum Tarihi: ..........
+T.C. Kimlik No (Çocuk): ...............................
+
+Veli / Vasinin Adı Soyadı: ...........................    Tarih: ..................
+T.C. Kimlik No (Veli): .................................    İmza: ..................
+Çocukla Yakınlık Derecesi: ..........................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ÜROLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "prostat-ameliyat-onam": {
+    icerik: `PROSTAT AMELİYATI (TUR-P / HoLEP / AÇIK) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Prostat ameliyatı; iyi huylu prostat büyümesi (BPH) veya prostat kanseri nedeniyle prostat dokusunun tümüyle veya kısmen çıkarılması ya da küçültülmesi işlemidir.
+• TUR-P: Endoskopik rezeksiyon (en sık)
+• HoLEP: Holmiyum lazer enükleasyon
+• Açık / Robotik prostatektomi: Prostat kanseri için radikal çıkarım
+
+2. AMAÇ
+• İdrar akım güçlüğü ve mesane retansiyonunun giderilmesi
+• Böbrek hasarını önlemek
+• Prostat kanseri tedavisi
+
+3. OLASI RİSKLER
+• Kanama (transfüzyon gerekebilir)
+• Enfeksiyon (üriner sistem enfeksiyonu, sepsis)
+• Geriye idrar kaçağı (retrograd ejakülasyon) — TUR-P'de %80-90 sık
+• Ereksiyon bozukluğu (radikal prostatektomide daha belirgin)
+• İdrar kaçırma (inkontinans — geçici veya kalıcı)
+• Darlık (üretral strictür — geç komplikasyon)
+• TUR sendromu (seyreltici sıvı emilimi — endoskopik yöntemlerde nadir)
+
+4. BEYAN
+Prostat ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "tas-kirma-eswl-onam": {
+    icerik: `BÖBREK TAŞI KIRMA (ESWL) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+ESWL (Ekstrakorporeal Şok Dalgası Litotripsi); vücut dışından odaklanan şok dalgalarıyla böbrek veya üreter taşının parçalanması işlemidir. Taş boyutu ve konumuna göre tekrar seans gerekebilir.
+
+2. AMAÇ
+Böbrek koliği, tıkanıklık ve böbrek hasarına yol açan taşın parçalanarak idrar yoluyla atılmasının sağlanması.
+
+3. OLASI RİSKLER
+• İşlem sırasında ağrı ve rahatsızlık (sedasyon/anestezi uygulanabilir)
+• Böbrek çevresi hematom (kanama) — %1-2, çoğu konservatif tedaviyle çözülür
+• Taş parçalarının üreterde takılması (Steinstrasse) — ek işlem gerekebilir
+• Tam parçalanmama — yeniden seans veya cerrahi gerekebilir
+• Geçici kan idrarda (hematüri) — normaldir
+• Kardiyak ritim bozukluğu (altta yatan kalp hastalığında önlem alınır)
+
+4. BEYAN
+ESWL işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "sistoskopi-onam": {
+    icerik: `SİSTOSKOPİ / ÜRETEROSKOPİ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Sistoskopi; esnek veya rijid sistoskop ile mesane ve üretra iç yüzeyinin görüntülenmesi işlemidir. Üreterorenoskopi (URS) ise üreter veya böbrek içine girerek taş kırmayı da kapsar.
+
+2. ENDİKASYONLAR
+• İdrarda kan (hematüri) araştırması
+• Tekrarlayan idrar yolu enfeksiyonu araştırması
+• Mesane tümörü kontrolü veya biyopsisi
+• Üreter taşı tedavisi (lazer litotripsi)
+
+3. OLASI RİSKLER
+• İşlem sonrası yakma, sık idrara çıkma (1-3 gün)
+• İdrar yolu enfeksiyonu
+• Kanama
+• Üretral/üreteral yaralanma (nadir)
+• Anestezi komplikasyonları
+
+4. BEYAN
+Sistoskopi / Üreterorenoskopi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "sunnet-onam": {
+    icerik: `SÜNNET ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Sünnet; glans penisin üzerini örten prepüsyum dokusunun cerrahi olarak çıkarılması işlemidir. Lokal veya genel anestezi altında yapılır.
+
+2. ENDİKASYON
+□ Tıbbi endikasyon (fimozis, tekrarlayan enfeksiyon, balanitis)
+□ Dini/kültürel tercih
+□ Ebeveyn talebi (çocuklarda)
+
+3. OLASI RİSKLER
+• Kanama (hemostaz sağlanır, ciddi kanama nadir)
+• Enfeksiyon
+• Yara iyileşmesi sorunları
+• Kozmetik sonuç memnuniyetsizliği
+• Cilt fazlalığı veya az cilt kalması (revizyon gerektirebilir)
+• Anestezi komplikasyonları
+
+4. İYİLEŞME
+• 7-10 günde genellikle tam iyileşme sağlanır
+• Suya temas 48 saat sonra mümkündür
+
+5. BEYAN (VELİ / HASTA)
+Sünnet işlemine onay veriyorum.
+
+Hasta / Çocuğun Adı Soyadı: .......................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+Veli Adı Soyadı (18 yaş altı): ......................    Veli İmzası: ............
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "vazektomi-onam": {
+    icerik: `VAZEKTOMİ (GERİ DÖNÜŞÜMSÜZ KONTRASEPSİYON) ONAM FORMU
+
+ÖNEMLİ UYARI: Vazektomi geri dönüşümsüz bir doğum kontrol yöntemi olarak kabul edilmelidir. Mikro-cerrahi geri döndürme (vazo-vazostomi) her zaman mümkün değildir veya başarısız olabilir.
+
+1. İŞLEMİN TANIMI
+Vazektomi; vas deferens kanallarının bağlanması, kesilmesi veya kauterize edilmesi yoluyla sperm iletiminin engellenmesi işlemidir. Skrotuma lokal anestezi uygulanarak yapılır.
+
+2. ETKİ
+• İşlem sonrası sperm olmayan ejakülat → kalıcı kısırlık
+• İşlem hemen etkili değildir; 3 ay veya 20 ejakülasyon sonrası sperm sıfır olmalıdır
+• Kontrol spermogramı şarttır
+
+3. OLASI RİSKLER
+• Hematom, enfeksiyon (%1-2)
+• Kronik ağrı sendromu (nadir, %1)
+• Sperm granülomu
+• Spontan rekanalizasyon (kendiliğinden tekrar açılma — <1%)
+• Kalıcı kısırlık — bu bilinçli bir tercihtir
+
+4. BEYANI
+Vazektomi işleminin kalıcı kısırlığa yol açacağını anlıyorum ve onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // KADIN HASTALIKLARI & DOĞUM — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "dogum-sezaryen-onam": {
+    icerik: `NORMAL / SEZARYEN DOĞUM AYDINLATILMIŞ ONAM FORMU
+
+1. DOĞUM PLANI
+□ Vajinal (Normal) Doğum
+□ Elektif Sezaryen
+□ Acil Sezaryen
+
+2. NORMAL DOĞUM BİLGİLERİ
+Normal vajinal doğumda riskler: perineal yırtık, epiziyotomi, uzamış eylem, fetal distres, instrumental doğum (vakum/forseps) ihtiyacı. Gerektiğinde sezaryene geçilebilir.
+
+3. SEZARYEN BİLGİLERİ
+Sezaryen bir cerrahi operasyondur. Spinal/genel anestezi altında uygulanır.
+Riskler:
+• Anestezi komplikasyonları
+• Kanama, mesane/bağırsak yaralanması
+• Enfeksiyon, yara açılması
+• Derin ven trombozu
+• Sonraki gebeliklerde plasenta komplikasyonları
+• Bebekte geçici solunum güçlüğü
+
+4. BEYAN
+Doğum şekli ve anestezi hakkında yeterince bilgilendirildim.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "laparoskopi-jinekoloji": {
+    icerik: `JİNEKOLOJİK LAPAROSKOPİ / HİSTEROSKOPİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+• Laparoskopi: Karın duvarına küçük kesilerden girilmesiyle yapılan kapalı karın cerrahisi (miyomektomi, endometriozis tedavisi, over kisti, tüp bağlama).
+• Histeroskopi: Rahim içine girilmesiyle yapılan tanısal/operatif işlem (polip, miyom, yapışıklık).
+
+2. AMAÇ
+Tanı konulması ve/veya tedavi amacıyla minimal invaziv girişim.
+
+3. OLASI RİSKLER (Laparoskopi)
+• İç organ yaralanması (bağırsak, mesane, damar — nadir, <%1)
+• Laparotomiye geçiş (açık ameliyat gerektirebilir)
+• CO₂ gazı emboliyeleri (son derece nadir)
+• Port yeri fıtığı, enfeksiyon
+
+4. OLASI RİSKLER (Histeroskopi)
+• Uterus perforasyonu
+• Distansiyon ortamı komplikasyonları
+• Enfeksiyon, kanama
+
+5. BEYAN
+Laparoskopi / Histeroskopi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "kuretaj-onam": {
+    icerik: `KÜRETAJ / RAHİM TAHLİYESİ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Küretaj (dilatasyon ve küretaj - D&C); rahim içi dokunun araçlarla veya vakumla temizlenmesi işlemidir. Diagnostik (biyopsi) veya terapötik (moloz, düşük artığı temizliği, gebelik sonlandırma) amaçlı yapılabilir.
+
+2. ENDİKASYON
+□ Tamamlanmamış düşük / istemli düşük
+□ Rahim içi polip / miyom
+□ Anormal rahim kanaması — biyopsi
+□ Molar gebelik
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon
+• Uterus perforasyonu (nadir, <%1)
+• Asherman sendromu (rahim içi yapışıklık — tekrarlayan küretajlarda)
+• Servikal yaralanma
+
+4. YASAL NOT
+İstemli gebelik sonlandırma T.C. hukukunda belirli koşul ve süre sınırlarına tabidir (Nüfus Planlaması Hakkında Kanun).
+
+5. BEYAN
+Küretaj işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "ria-onam": {
+    icerik: `RİA (RAHİM İÇİ ARAÇ) UYGULAMA ONAM FORMU
+
+1. İŞLEMİN TANIMI
+RİA (Rahim İçi Araç / İUC); uzun etkili geri dönüşümlü bir kontrasepsiyon yöntemidir. Bakırlı veya hormonlu (levonorgestrel salgılayan) çeşitleri mevcuttur.
+
+2. ETKİNLİK
+RİA, yüksek etkinlikli (%99,2-99,9) bir doğum kontrol yöntemidir. Takıldıktan hemen sonra etkilidir.
+
+3. BAKIR RİA vs. HORMONLUi RİA
+• Bakırlı: 10 yıla kadar koruma, hormonsuz, adet düzensizliği olabilir
+• Hormonlu: 3-5 yıl, adet azalır/kesilir, sistemik hormon düşük
+
+4. OLASI RİSKLER VE YAN ETKİLER
+• Takma sırasında kramp ve ağrı (geçici)
+• Adet düzensizliği, ağır adet (bakırlı)
+• RİA atılması (%2-10 ilk yıl)
+• Pelvik inflamatuvar hastalık riski (özellikle cinsel yolla bulaşan enfeksiyon varsa)
+• Uterus perforasyonu (nadiren — <1/1000)
+• Ektopik gebelik riski (gebelik oluşursa)
+
+5. BEYAN
+RİA takılmasına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "kolposkopi-onam": {
+    icerik: `KOLPOSKOPİ VE BİYOPSİ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Kolposkopi; anormal smear (PAP test) veya HPV pozitifliği sonrası serviksin büyütülmüş görüntülenmesi ve gerekirse biyopsi alınması işlemidir.
+
+2. AMAÇ
+Servikal displazi veya erken evre serviks kanseri tespiti / dışlanması.
+
+3. İŞLEM
+• Vajinal yol ile kolposkop ile serviks incelenir
+• Anormal alan görünürse küçük biyopsi alınır (2-3 mm)
+• Endoservikal küretaj (ECC) gerekebilir
+
+4. OLASI RİSKLER
+• Biyopsi bölgesinde kanama (nadir, tampon uygulanır)
+• Hafif kramp ve rahatsızlık
+• Enfeksiyon (son derece nadir)
+• Biyopsi sırasında baygınlık (vazovagal reaksiyon)
+
+5. SONUÇLAR
+Biyopsi sonucu 1-2 haftada raporlanır. Sonuca göre ek tedavi (LEEP, konizasyon) gerekebilir.
+
+6. BEYAN
+Kolposkopi ve biyopsi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // GENEL CERRAHİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "kolesistektomi-onam": {
+    icerik: `KOLESİSTEKTOMİ (SAFRA KESESİ AMELİYATI) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Kolesistektomi; safra kesesi taşları, safra kesesi iltihabı (kolesistit) veya polip nedeniyle safra kesesinin cerrahi olarak çıkarılması işlemidir. Laparoskopik (kapalı, tercih edilen) veya açık teknikle yapılabilir.
+
+2. AMAÇ
+Safra taşı koliği, kolesistit ve olası komplikasyonların (sarılık, pankreatit) önlenmesi.
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, port yeri fıtığı
+• Safra yolu yaralanması (laparoskopik'te %0,3-0,5 — en ciddi komplikasyon)
+• Safra sızıntısı
+• Açık ameliyata geçiş (%5)
+• İnce bağırsak veya damar yaralanması (nadir)
+• Rezidü taş (safra kanalında kalan taş)
+
+4. BEYAN
+Kolesistektomi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "herni-ameliyat-onam": {
+    icerik: `FITIK (HERNİ) AMELİYATI AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Herni (fıtık); karın duvarındaki zayıf noktadan organların çıkması durumudur. Ameliyatta fıtık kesesi yerine konularak karın duvarı onarılır. Mesh (ağ) kullanılabilir.
+Fıtık tipi: □ İnguinal  □ Umbilikal  □ İnsizyonel  □ Femoral  □ Diğer: .........
+
+2. AMAÇ
+• İnkarserasyon (sıkışma) ve strangulosyon (boğulma) riskini ortadan kaldırma
+• Ağrı ve şişliğin giderilmesi
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, seroma
+• Mesh enfeksiyonu veya reddedilmesi (nadir)
+• Nöralji (ağrılı sinir hasarı — %1-3)
+• Vasal/testiküler komplikasyon (inguinal hernide)
+• Nüks (fıtığın tekrarlaması — mesh kullanımında <%1)
+• Bağırsak veya mesane yaralanması (nadir)
+
+4. BEYAN
+Fıtık ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "apendektomi-onam": {
+    icerik: `APENDEKTOMİ (APANDİS AMELİYATI) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Apendektomi; akut apandisit tanısıyla apendiksin cerrahi olarak çıkarılması işlemidir. Laparoskopik veya açık teknikle yapılabilir.
+
+2. ACİLİYET
+Akut apandisit acil bir durumdur. Ameliyat geciktirilmesi halinde apendiks perforasyonu (yırtılma), peritonit ve hayati tehlike oluşabilir.
+
+3. OLASI RİSKLER
+• Kanama, enfeksiyon, yara iyileşmesi sorunları
+• Perforasyon durumunda karın içi apse, peritonit riski artar
+• Bağırsak yaralanması (nadir)
+• İleus (bağırsak tıkanması)
+• Port yeri komplikasyonları
+
+4. BEYAN
+Apendektomi ameliyatına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "hemoroid-cerrahisi-onam": {
+    icerik: `HEMOROİD CERRAHİSİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Hemoroid cerrahisi; iç ve/veya dış hemoroid (basur) tedavisini kapsar. Açık / kapalı hemoroidektomi, stapler hemoroidopeksi, lazer hemoroid ablasyonu veya bant ligasyonu gibi yöntemler uygulanabilir.
+
+2. AMAÇ
+Ağrı, kanama ve kitleyi ortadan kaldırarak yaşam kalitesinin iyileştirilmesi.
+
+3. OLASI RİSKLER
+• Kanama (erken veya geç — %1-2)
+• Enfeksiyon
+• Anal inkontinans (gaz/dışkı kaçırma — nadir, özellikle mevcut sfinkter hasarında)
+• Anal darlık (strictür — uzun vadede)
+• Hemoroid nüksü
+• Ağrı (özellikle ilk hafta belirgin, medikasyon gerektirir)
+• Üriner retansiyon (erkeklerde, geçici)
+
+4. BEYAN
+Hemoroid cerrahisi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "meme-biyopsi-onam": {
+    icerik: `MEME KİTLESİ BİYOPSİSİ / EKSİZYONU AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+• İnce iğne aspirasyon biyopsisi (İİAB): Görüntüleme eşliğinde ince iğne ile hücre örneği alınması.
+• Tru-cut / core biyopsi: Doku silindiri alınması.
+• Eksizyonel biyopsi / lumpektomi: Kitlenin cerrahi olarak çıkarılması.
+
+2. AMAÇ
+Meme kitlesinin iyi huylu mu kötü huylu mu olduğunun belirlenmesi ve/veya çıkarılması.
+
+3. OLASI RİSKLER
+• Kanama, hematom, enfeksiyon
+• Meme şeklinde minimal değişiklik (özellikle eksizyonda)
+• Pnömotoraks (derin biyopsilerde son derece nadir)
+• Yetersiz doku alınması, tekrar biyopsi ihtiyacı
+
+4. BEYAN
+Meme biyopsisi / eksizyonu işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // NÖROLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "emg-onam": {
+    icerik: `EMG / SİNİR İLETİM ÇALIŞMASI ONAM FORMU
+
+1. İŞLEMİN TANIMI
+• Sinir iletim çalışması (NCS): Ciltle temas eden elektrotlarla sinir iletim hızı ve amplitüdü ölçülür.
+• Elektromiyografi (EMG): Kas içine ince iğne elektrodu ile kasın elektriksel aktivitesi değerlendirilir.
+
+2. AMAÇ
+Periferik sinir hastalıkları (karpal tünel, diskopati, nöropati, myopati) tanısı için kullanılan temel nörofizyolojik testlerdir.
+
+3. RİSK VE RAHATSIZLIK
+• NCS: Hafif elektrik şoku hissi, rahatsızlık.
+• İğne EMG: İğne girişi sırasında ağrı ve baskı; kas içinde kasılma hissi.
+• Kanama (antikoagülan kullananlarda dikkat), enfeksiyon (son derece nadir).
+• Pnömotoraks (göğüs kası EMG'sinde çok nadir).
+
+4. BEYAN
+EMG / Sinir İletim Çalışması işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "lomber-ponksiyon-onam": {
+    icerik: `LOMBER PONKSİYON (BEL DELİĞİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Lomber ponksiyon (LP / spinal tap); bel bölgesinden ince bir iğne ile beyin omurilik sıvısı (BOS) alınması veya ilaç uygulanması işlemidir. Lokal anestezi altında oturur/yan yatar pozisyonda yapılır.
+
+2. AMAÇ
+• Menenjit, ensefalit, subaraknoid kanama tanısı
+• Multiple skleroz ve diğer nörolojik hastalık tanısı
+• İdiyopatik intrakranyal hipertansiyon tedavisi (BOS basıncı düşürme)
+• İntratekal ilaç uygulaması
+
+3. OLASI RİSKLER
+• Ponksiyon baş ağrısı (post-LP headache) — %10-30, genellikle yatarak 1-2 gün geçer; nadir olarak kan yaması (blood patch) gerekebilir
+• Bel ağrısı, bacağa vuran geçici ağrı (parestezi)
+• Kanama (antikoagülan kullananlarda risk artar)
+• Enfeksiyon (menenjit — son derece nadir)
+• Sinir hasarı (çok nadir)
+• Herniasyon (artmış kafa içi basıncı varsa LP kontrendikedir — önceden görüntüleme yapılır)
+
+4. BEYAN
+Lomber ponksiyon işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "noroloji-botoks-onam": {
+    icerik: `BOTULİNUM TOKSİN UYGULAMASI (NÖROLOJİ) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Botulinum toksini (BTX-A); kas içine enjeksiyon yoluyla nöromusküler iletimi geçici olarak bloke eder. Nörolojide kronik migren profilaksisi, servikal distoni, spastisite ve blefarospazm tedavisinde kullanılır.
+
+2. HEDEF ENDİKASYON
+□ Kronik migren (>15 gün/ay)
+□ Servikal distoni (tortikollis)
+□ Spastisite (inme/MS sonrası)
+□ Blefarospazm / Hemifasiyal spazm
+□ Diğer: .........................
+
+3. SEANS ARALIĞI
+Etki 3-6 ay sürer; tekrar enjeksiyon gereklidir.
+
+4. OLASI RİSKLER
+• Enjeksiyon bölgesinde ağrı, ekimoz
+• Komşu kaslara difüzyon — kas zayıflığı (geçici)
+• Servikal enjeksiyonda yutma güçlüğü (geçici)
+• Migren enjeksiyonlarında alın / kaş sarkması (geçici)
+• Anafilaksi (son derece nadir)
+• Uzak yayılım (FDA uyarısı — son derece nadir, terapötik dozlarda çok düşük risk)
+
+5. BEYAN
+Botulinum toksini enjeksiyonuna onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // FİZİK TEDAVİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "fizik-tedavi-onam": {
+    icerik: `FİZİK TEDAVİ VE REHABİLİTASYON ONAM FORMU
+
+1. PROGRAMIN KAPSAMI
+Fizik tedavi programı; elektroterapi (TENS, interferansiyel akım, ultrason, lazer), sıcak/soğuk uygulama, traksiyon, egzersiz tedavisi ve manuel terapi gibi yöntemleri içerebilir.
+
+2. AMAÇ
+• Ağrı azaltımı
+• Kas kuvveti ve esneklik artışı
+• Eklem hareket açıklığının iyileştirilmesi
+• Günlük yaşam aktivitelerine dönüş
+
+3. OLASI RİSKLER VE YAN ETKİLER
+• Uygulama bölgesinde geçici ağrı artışı (ilk birkaç seans)
+• Cilt tahrişi veya hafif yanma (elektrot bölgesinde)
+• Kalp pili, metal implant, gebelik: Bazı uygulamalar kontrendike olabilir (hekiminizi bilgilendirin)
+• Egzersiz sırasında kas yorgunluğu
+
+4. HASTA SORUMLULUKLARI
+• Seans sayısı ve periyodunu aksatmamak
+• Ev egzersiz programını uygulamak
+• Ağrı/şikâyetin artması halinde terapisti bilgilendirmek
+
+5. BEYAN
+Fizik tedavi programına katılmayı onaylıyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "eklem-enjeksiyon-onam": {
+    icerik: `EKLEM İÇİ / YUMUŞAK DOKU ENJEKSİYONU ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Eklem içine veya yumuşak dokuya kortikosteroid, hyaluronik asit, PRP ya da lokal anestezik enjeksiyonunu kapsar.
+Uygulama bölgesi: .........................................
+Uygulanan ajan: □ Kortikosteroid  □ Hyaluronik asit  □ PRP  □ Lokal anestezik
+
+2. AMAÇ
+• Eklem ağrısı ve inflamasyonunun kısa/orta vadeli kontrolü
+• Kıkırdak sağlığının desteklenmesi (hyaluronik asit / PRP)
+
+3. OLASI RİSKLER
+• Enjeksiyon sonrası geçici ağrı artışı ("flare") — 1-2 gün
+• Enfeksiyon (septik artrit — <1/10.000)
+• Kortikosteroid etkisi: Cilt renginde açılma, yağ dokusu atrofisi (tekrarlayan enjeksiyonlarda)
+• Diyabetik hastalarda geçici kan şekeri yükselmesi
+• Tendon rüptürü (tendon içine enjeksiyondan kaçınılır)
+
+4. BEYAN
+Eklem içi enjeksiyon işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "eswt-sok-dalgasi-onam": {
+    icerik: `ESWT (ŞOK DALGASI TEDAVİSİ) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+ESWT (Ekstrakorporeal Şok Dalgası Tedavisi); cilt üzerinden uygulanan yüksek enerjili ses dalgalarının tendon ve yumuşak dokuda iyileşmeyi uyarması prensibine dayanır.
+
+2. ENDİKASYONLAR
+□ Plantar fasiit (topuk dikeni)
+□ Tendinopati (Aşil, rotator cuff, patellar)
+□ Kalsifik tendinit
+□ Lateral epikondilit (tenis dirseği)
+□ Miyofasiyal ağrı
+
+3. SEANS PLANI
+Genellikle 3-5 seans, haftalık aralıklarla.
+
+4. OLASI YAN ETKİLER
+• Uygulama sırasında ve sonrasında ağrı (özellikle ilk 24-48 saat)
+• Ciltte kızarıklık, hafif ekimoz (geçici)
+• Geçici ağrı artışı (1-2 gün — tedavi sürecinin normal parçasıdır)
+• Sinir hasarı (son derece nadir, yüksek enerji uygulamalarında)
+
+5. KONTRENDİKASYONLAR
+• Gebelik, kanama bozukluğu, aktif enfeksiyon bölgesi, malignite, kalp pili.
+
+6. BEYAN
+ESWT tedavisine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // GASTROENTEROLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "kolonoskopi-onam": {
+    icerik: `KOLONOSKOPİ / SİGMOİDOSKOPİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Kolonoskopi; anüsten girilmesi yoluyla kalın bağırsağın (kolon) tümüyle, sigmoid­oskopide ise sadece son bölümünün kamera ile görüntülenmesi işlemidir. Gerektiğinde biyopsi alınır veya polip çıkarılır.
+
+2. AMAÇ
+• Kolorektal kanser taraması
+• Dışkıda kan, anemi, açıklanamayan kilo kaybı araştırması
+• Polip saptama ve çıkarma (polipektomi)
+• Kronik ishal veya karın ağrısı araştırması
+
+3. HAZIRLIK
+• İşlem öncesi 24-48 saat berrak sıvı diyeti
+• Bağırsak temizleyici (laksatif) kullanımı zorunludur
+• Demir içeren ilaçlar 1 hafta öncesinden kesilmelidir
+
+4. OLASI RİSKLER
+• Perforasyon (bağırsak delinmesi) — %0,1 (polipektomide %0,5'e çıkar)
+• Kanama (özellikle polipektomiden sonra — %0,5-2)
+• Hazırlık ilaçları nedeniyle elektrolit bozukluğu
+• Anestezi / sedasyon komplikasyonları
+• İşlemin tamamlanamaması (%5-10 teknik nedenle)
+
+5. BEYAN
+Kolonoskopi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "gastroskopi-onam": {
+    icerik: `ÜST GİS ENDOSKOPİ (GASTROSKOPİ) AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Gastroskopi (özofagogastroduodenoskopi — ÖGD); ağızdan girilen ince kamera ile yemek borusu (özofagus), mide ve onikiparmak bağırsağının görüntülenmesi işlemidir. Biyopsi alınabilir veya tedavi uygulanabilir.
+
+2. AMAÇ
+• Mide ağrısı, yanması, yutma güçlüğü araştırması
+• Gastrointestinal kanama kaynağı tespiti
+• H. Pylori biyopsisi
+• Polipin veya yabancı cismin çıkarılması
+
+3. HAZIRLIK
+• İşlem öncesi 6-8 saat aç kalınmalıdır
+• Gün içi araç kullanımı sınırlandırılmalıdır (sedasyon uygulanırsa)
+
+4. OLASI RİSKLER
+• Boğaz ağrısı, şişkinlik (geçici)
+• Kanama (biyopsi sonrası — nadir)
+• Perforasyon (yemek borusu/mide delinmesi — çok nadir, <%0,1)
+• Sedasyon komplikasyonları
+
+5. BEYAN
+Gastroskopi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "ercp-onam": {
+    icerik: `ERCP (ENDOSKOPİK RETROGRAD KOLANJİOPANKREATOGRAFİ) AYDINLATILMIŞ ONAM FORMU
+
+ÖNEMLİ: ERCP, yüksek risk taşıyan bir girişimsel işlemdir. Lütfen aşağıdaki bilgileri dikkatlice okuyun.
+
+1. İŞLEMİN TANIMI
+ERCP; endoskop aracılığıyla safra yolu ve pankreas kanalına girilerek görüntüleme yapılması, taş çıkarılması, darlık açılması veya stent yerleştirilmesi işlemidir. Sedasyon veya genel anestezi altında yapılır.
+
+2. ENDİKASYON
+□ Safra yolu taşı
+□ Safra yolu darlığı / tıkanma sarılığı
+□ Pankreas kanalı hastalıkları
+□ Tanısal amaç
+
+3. OLASI RİSKLER (DİĞER ENDOSKOPİLERE GÖRE DAHA YÜKSEK RİSK)
+• Post-ERCP pankreatiti — %3-5, ciddi olabilir, hastane yatışı gerektirebilir
+• Kanama (sfinkterotomi sonrası — %1-2)
+• Perforasyon (%0,3-1)
+• Kolanjit (safra yolu enfeksiyonu)
+• Kontrast madde reaksiyonu (nadir, önceden antihistaminik verilebilir)
+• Stent tıkanması / yer değiştirmesi
+
+4. ALTERNATİF
+MRCP (görüntüleme amaçlı, non-invazif), perkütan transhepatik girişim veya cerrahi.
+
+5. BEYAN
+ERCP işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // İÇ HASTALIKLARI — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "bobrek-biyopsi-onam": {
+    icerik: `BÖBREK BİYOPSİSİ AYDINLATILMIŞ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Perkütan böbrek biyopsisi; ultrasonografi veya BT eşliğinde ince iğne ile böbrek dokusundan örnek alınması işlemidir. Lokal anestezi altında yapılır.
+
+2. AMAÇ
+Proteinüri, hematüri, böbrek yetmezliği veya böbrek hastalığı kuşkusunda kesin tanı konulması.
+
+3. OLASI RİSKLER
+• İdrarda kan (hematüri) — %5-10 belirgin, genellikle 24-48 saatte düzelir
+• Perirenal hematom — %50-85 küçük (çoğu asemptomatik), %0,5-1 transfüzyon gerektirir
+• Arteriyovenöz fistül (nadir, çoğu kendiliğinden kapanır)
+• Ağrı (biyopsi bölgesinde)
+• Enfeksiyon (nadir)
+• Komşu organ yaralanması (çok nadir)
+
+4. AMELİYAT SONRASI
+• 6-24 saat yatak istirahati
+• İlk 48 saat yoğun egzersizden kaçınılmalıdır
+• İdrar rengindeki artış hekime bildirilmelidir
+
+5. BEYAN
+Böbrek biyopsisi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "iv-infuzyon-onam": {
+    icerik: `İNTRAVENÖZ TEDAVİ / İNFÜZYON ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Damar yolu açılarak (intravenöz kateter / kanül) ilaç, sıvı, kan ürünü veya beslenme solüsyonunun doğrudan dolaşım sistemine verilmesi işlemidir.
+
+2. VERİLECEK TEDAVİ
+□ Antibiyotik infüzyonu    □ Demir infüzyonu
+□ Biyolojik ilaç           □ Vitamin/destek tedavisi
+□ Serum/sıvı replasmanı    □ Diğer: .......................
+
+3. OLASI RİSKLER
+• Damar yolu komplikasyonları: flebit (damar iltihabı), hematom, infiltrasyon
+• İlaç reaksiyonu: alerjik reaksiyon / anafilaksi (acil müdahale hazır tutulur)
+• Enfeksiyon (santral kateter kullanımında daha dikkatli)
+• Sıvı yüklenmesi (kalp/böbrek yetmezliğinde)
+• İlaç-ilaç etkileşimi
+
+4. BEYAN
+İntravenöz tedaviye onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "diyabet-izlem-onam": {
+    icerik: `DİYABETES MELLİTUS İZLEM VE TEDAVİ ONAM FORMU
+
+1. TANI VE TEDAVİ PLANI
+Diabetes Mellitus Tip: □ Tip 1  □ Tip 2  □ Gestasyonel  □ Diğer
+Planlanan tedavi: □ Diyet/Egzersiz  □ Oral antidiyabetik  □ İnsülin  □ GLP-1 agonist
+
+2. HEDEFLER
+• HbA1c hedefi: ............  Açlık kan şekeri hedefi: ............
+• Lipid ve tansiyon kontrolü, komplikasyon taraması planlanmaktadır.
+
+3. OLASI YAN ETKİLER (Tedaviye Göre)
+İnsülin / sülfonilüre: Hipoglisemi (kan şekeri düşmesi) — dikkatli izlem gerektirir.
+Metformin: Bulantı, ishal (başlangıçta), laktik asidoz (nadir, böbrek fonksiyonu izlenmeli).
+GLP-1 agonist: Bulantı, kilo kaybı (istenilen), tiroid kanseri (hayvan çalışmalarında, insanda risk belirsiz).
+SGLT-2 inhibitörü: İdrar yolu enfeksiyonu, DKA riski.
+
+4. HASTA SORUMLULULUKLARI
+• Düzenli kan şekeri takibi
+• Beslenme ve egzersiz kurallarına uyum
+• Belirlenen kontrol tarihlerine uyma
+• İlaç yan etkisi durumunda hemen bilgilendirme
+
+5. BEYAN
+Diyabet tedavisi ve izlem programına onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ONKOLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "kemoterapi-onam": {
+    icerik: `KEMOTERAPİ AYDINLATILMIŞ ONAM FORMU
+
+ÖNEMLİ: Bu form her kemoterapi protokolü için ayrıca düzenlenmelidir.
+
+1. PROTOKOL BİLGİSİ
+İlaç/Protokol adı: .........................................
+Siklus sayısı: ............   Siklus aralığı: ............
+Uygulama yolu: □ IV infüzyon  □ Oral  □ Subkütan
+
+2. AMAÇ
+□ Küratif (tedavi edici) amaç
+□ Adjuvan / Neoadjuvan (ameliyat öncesi/sonrası)
+□ Palyatif (hastalığı kontrol altında tutma)
+
+3. BEKLENEN YAN ETKİLER (Genel)
+• Kemik iliği baskılanması → Enfeksiyona yatkınlık, kanama, anemi
+• Bulantı, kusma (antiemetik ilaçlarla kontrol edilir)
+• Saç dökülmesi (reversibl — tedavi bitince geri döner)
+• Yorgunluk, iştahsızlık
+• Ağız yaraları (mukozit)
+• Nöropati (uyuşukluk, karıncalanma)
+• Kardiyotoksisite (bazı ajanlarda — EKG/EKO takibi gerekebilir)
+• Bulantı
+
+4. ACİL BAŞVURU GEREKTİREN DURUMLAR
+38°C üzeri ateş (febril nötropeni), ciddi kanama, nefes darlığı, göğüs ağrısı.
+
+5. BEYAN
+Kemoterapi tedavisini anladım ve onaylıyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "doku-biyopsisi-onam": {
+    icerik: `DOKU BİYOPSİSİ VE PATOLOJİ ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Biyopsi; tanı amacıyla vücuttan doku veya hücre örneği alınması işlemidir.
+Biyopsi bölgesi: .........................................
+Yöntem: □ İnce iğne  □ Core/Tru-cut  □ Punch biyopsi  □ Eksizyonel biyopsi
+Görüntüleme rehberliği: □ USG  □ BT  □ Palpasyon
+
+2. AMAÇ
+Lezyonun iyi huylu veya kötü huylu olup olmadığını belirlemek; tanıya ulaşmak ve tedavi planlamak.
+
+3. OLASI RİSKLER
+• Biyopsi bölgesinde ağrı, ekimoz, şişlik
+• Kanama (antikoagülan kullananlarda risk artar)
+• Enfeksiyon
+• Yetersiz doku alınması, tekrar biyopsi ihtiyacı
+• Organ yaralanması (bölgeye özgü)
+
+4. SONUÇ SÜRECİ
+Patoloji sonucu genellikle 5-10 iş gününde hazır olur. Bazı özel testler (IHK, genetik) ek süre gerektirebilir.
+
+5. BEYAN
+Doku biyopsisi işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "paliatif-bakim-onam": {
+    icerik: `PALYATİF BAKIM VE DESTEK TEDAVİ ONAM FORMU
+
+1. PALYATİF BAKIMIN TANIMI
+Palyatif bakım; yaşamı tehdit eden hastalıklarda hastanın ve ailesinin yaşam kalitesini iyileştirmeye odaklanan, ağrı ve diğer semptomları kontrol altına alan, psikolojik, sosyal ve manevi destek sunan bir yaklaşımdır. Palyatif bakım, küratif tedavinin yanında veya yerine uygulanabilir.
+
+2. KAPSAM
+• Ağrı yönetimi (güçlü opioid analjezikler dahil)
+• Semptom kontrolü (bulantı, nefes darlığı, yorgunluk)
+• Psikososyal destek
+• Beslenme desteği
+• Gerektiğinde evde bakım
+
+3. OPIOID KULLANIMINA İLİŞKİN BİLGİLENDİRME
+Güçlü ağrı kesiciler (morfin, oksikodon vb.) reçetelenebildiğinde bağımlılık riski mevcut olmakla birlikte, ağrı yönetiminde terapötik kullanım medikal açıdan kabul görmektedir.
+
+4. HASTA HAKLARI
+• İstediğiniz zaman palyatif bakımdan vazgeçme hakkınız vardır
+• İkinci görüş alma hakkınız mevcuttur
+• Resüsitasyon kararları ayrıca görüşülecektir (DNR/DNİ direktifleri)
+
+5. BEYAN
+Palyatif bakım programına dahil olmayı onaylıyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ROMATOLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "biyolojik-ilac-onam": {
+    icerik: `BİYOLOJİK İLAÇ TEDAVİSİ (Anti-TNF / IL-6 / JAK İnhibitörü vb.) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Biyolojik ilaçlar; immün sistemin belirli bileşenlerini hedef alan, protein bazlı tedavilerdir. Romatoid artrit, ankilozan spondilit, psöriatik artrit ve diğer otoimmün hastalıklarda kullanılır.
+
+Planlanan ilaç: .........................................
+Uygulama şekli: □ SC enjeksiyon  □ IV infüzyon  □ Oral
+
+2. AMAÇ
+Hastalık aktivitesinin kontrol altına alınması, eklem hasarının önlenmesi ve yaşam kalitesinin artırılması.
+
+3. OLASI RİSKLER
+• Enfeksiyona yatkınlık (özellikle TB — tedavi öncesi PPD/IGRA zorunlu)
+• İnjeksiyon bölgesi reaksiyonu
+• Alerjik/infüzyon reaksiyonu
+• Lenfoma riski artışı (uzun dönemde — çok düşük mutlak risk)
+• Kalp yetmezliğinin kötüleşmesi (anti-TNF)
+• Nörolojik komplikasyonlar (çok nadir)
+• Yaygın mantar enfeksiyonu riski (JAK inhibitörleri)
+
+4. ZORUNLU TESTLER
+TB taraması, hepatit B/C serolojisi, tam kan, biyokimya işlem öncesi tamamlanmıştır.
+
+5. BEYAN
+Biyolojik ilaç tedavisini anladım ve onaylıyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "romatoloji-enjeksiyon": {
+    icerik: `ROMATOİD EKLEM İÇİ KORTİKOSTEROİD ENJEKSİYON ONAM FORMU
+
+1. İŞLEMİN TANIMI
+Romatizmal hastalıklarda inflamasyon gösteren eklem boşluğuna kortikosteroid (metilprednizolon, betametazon vb.) enjeksiyonu yapılır. Aspirasyon eşlik edebilir.
+
+Enjeksiyon yapılacak eklem: .........................................
+
+2. AMAÇ
+• Akut eklem inflamasyonunun ve ağrısının hızla giderilmesi
+• Sistemik tedavi etkisi beklenmeden lokal rahatlama sağlanması
+
+3. OLASI RİSKLER
+• Post-enjeksiyon flare (1-2 gün ağrı artışı — %2-10)
+• Eklem enfeksiyonu (septik artrit — çok nadir, <1/10.000)
+• Cilt atrofisi, depigmentasyon (subkütan yağa sızma)
+• Tendon rüptürü (tendon içine enjeksiyondan kaçınılır)
+• Kan şekeri geçici yükselmesi (diyabetiklerde)
+• Aynı ekleme yılda 3-4 enjeksiyondan fazlası önerilmez
+
+4. BEYAN
+Eklem içi kortikosteroid enjeksiyonuna onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  // ════════════════════════════════════════════════════════════════════════
+  // ENDOKRİNOLOJİ — YENİ FORMLAR
+  // ════════════════════════════════════════════════════════════════════════
+
+  "tiroid-biyopsi-onam": {
+    icerik: `TİROİD İNCE İĞNE ASPİRASYON BİYOPSİSİ (TİİAB) ONAM FORMU
+
+1. İŞLEMİN TANIMI
+TİİAB (Tiroid İnce İğne Aspirasyon Biyopsisi); ultrasonografi eşliğinde tiroid nodülünden hücre ve sıvı örneği alınması işlemidir. Lokal anestezi genellikle gerekmez.
+
+2. AMAÇ
+Tiroid nodülünün iyi huylu veya kötü huylu olup olmadığını belirlemek.
+
+3. OLASI RİSKLER
+• İğne giriş bölgesinde hafif ağrı ve ekimoz (1-2 gün)
+• Kanama (hematom — nadir, baskı uygulanır)
+• Enfeksiyon (son derece nadir)
+• Yetersiz örnek alınması (%5-10) — tekrar biyopsi gerekebilir
+• Ses kısıklığı (larenks siniri yakınındaki nodüllerde geçici — nadir)
+
+4. BETHESDA SINIFLANDIRMASI
+Biyopsi sonuçları Bethesda Sistemi'ne göre raporlanır; sonucunuzu hekiminiz sizinle yorumlayacaktır.
+
+5. BEYAN
+TİİAB işlemine onay veriyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
+
+  "insülin-baslama-onam": {
+    icerik: `İNSÜLİN VE ANTİDİYABETİK İLAÇ BAŞLAMA ONAM FORMU
+
+1. TEDAVİ PLANI
+Tip: □ Bazal insülin  □ Bazal-bolus insülin  □ İnsülin pompası  □ GLP-1 agonist
+Önerilen ilaç/doz: .........................................
+
+2. İNSÜLİN KULLANIMINA HAZIRLIK
+• İnsülin enjeksiyon tekniği (açı, bölge rotasyonu) eğitimi verilecektir
+• Kan şekeri ölçüm cihazı kullanımı öğretilecektir
+• Hipoglisemi tanıma ve tedavisi (hızlı şeker kaynağı bulundurma) anlatılacaktır
+
+3. HİPOGLİSEMİ (KAN ŞEKERİ DÜŞÜKLÜĞÜ)
+• Belirtiler: Titreme, terleme, baş dönmesi, çarpıntı, bilinç bulanıklığı
+• Hafif: 15 g hızlı etki eden karbonhidrat (şeker, meyve suyu)
+• Ağır/Bilinçsiz: Glukagon enjeksiyon veya acil servise başvuru
+
+4. İZLEM
+HbA1c her 3 ayda bir, böbrek fonksiyonu ve lipid profili yılda en az bir kez izlenecektir.
+
+5. BEYAN
+İnsülin / antidiyabetik ilaç başlama tedavisini anladım ve onaylıyorum.
+
+Hasta Adı Soyadı: .....................................    Tarih: ..................
+T.C. Kimlik No: ..........................................    İmza: ..................
+
+Hekim Adı Soyadı / Unvanı: ..........................    Tarih: ..................
+Diploma No: .............................................    İmza / Kaşe: ...........`,
+  },
 };
 
 // Şablon yoksa varsayılan form oluştur

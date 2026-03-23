@@ -3,28 +3,39 @@ import Navbar from "@/components/Navbar";
 import Link from "next/link";
 import { HASTA_FORMLARI, tumKategoriler } from "@/lib/hastaFormlari";
 import {
-  IkonEstetik, IkonDis, IkonPsikiyatri, IkonKardiyoloji,
-  IkonOrtopedi, IkonGoz, IkonDermatoloji, IkonKBB, IkonCocuk, IkonNoroloji,
+  IkonEstetik, IkonDis, IkonPsikiyatri, IkonKardiyoloji, IkonOrtopedi,
+  IkonGoz, IkonDermatoloji, IkonKBB, IkonCocuk, IkonNoroloji,
+  IkonUroloji, IkonKadin, IkonGenelCerrahi, IkonFizikTedavi,
+  IkonGastro, IkonIcHastaliklari, IkonOnkoloji, IkonRomatoloji, IkonEndokrin,
 } from "@/components/UzmanlikIkonlari";
 import { redirect } from "next/navigation";
 
 export const metadata = {
-  title: "Hasta Formları — DoktorPusula",
+  title: "Hasta Onam Formları — DoktorPusula",
   description: "Branşa özel hasta onam formları, KVKK formu ve tıbbi belgeler. PDF olarak görüntüleyin ve indirin.",
 };
 
 const KATEGORI_BILGI = {
-  "Estetik Cerrahi": { Ikon: IkonEstetik,    renk: "#D97706", bg: "#FFFBEB" },
-  "Diş Hekimliği":   { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA" },
-  "Psikiyatri":      { Ikon: IkonPsikiyatri,  renk: "#7C3AED", bg: "#F5F3FF" },
-  "Kardiyoloji":     { Ikon: IkonKardiyoloji, renk: "#DC2626", bg: "#FFF1F2" },
-  "Ortopedi":        { Ikon: IkonOrtopedi,    renk: "#2563EB", bg: "#EFF6FF" },
-  "Göz Hastalıkları":{ Ikon: IkonGoz,        renk: "#0369A1", bg: "#E0F2FE" },
-  "Dermatoloji":     { Ikon: IkonDermatoloji, renk: "#BE185D", bg: "#FDF2F8" },
-  "KBB":             { Ikon: IkonKBB,         renk: "#0E7C7B", bg: "#E6F4F4" },
-  "Çocuk Sağlığı":   { Ikon: IkonCocuk,      renk: "#059669", bg: "#ECFDF5" },
-  "Nöroloji":        { Ikon: IkonNoroloji,    renk: "#1D4ED8", bg: "#EFF6FF" },
-  "Genel":           { Ikon: null,            renk: "#6B7280", bg: "#F3F4F6" },
+  "Estetik Cerrahi":    { Ikon: IkonEstetik,        renk: "#D97706", bg: "#FFFBEB" },
+  "Diş Hekimliği":      { Ikon: IkonDis,            renk: "#0E7C7B", bg: "#F0FDFA" },
+  "KBB":                { Ikon: IkonKBB,            renk: "#0E7C7B", bg: "#E6F4F4" },
+  "Kardiyoloji":        { Ikon: IkonKardiyoloji,    renk: "#DC2626", bg: "#FFF1F2" },
+  "Ortopedi":           { Ikon: IkonOrtopedi,       renk: "#2563EB", bg: "#EFF6FF" },
+  "Göz Hastalıkları":   { Ikon: IkonGoz,            renk: "#0369A1", bg: "#E0F2FE" },
+  "Dermatoloji":        { Ikon: IkonDermatoloji,    renk: "#BE185D", bg: "#FDF2F8" },
+  "Psikiyatri":         { Ikon: IkonPsikiyatri,     renk: "#7C3AED", bg: "#F5F3FF" },
+  "Çocuk Sağlığı":      { Ikon: IkonCocuk,          renk: "#059669", bg: "#ECFDF5" },
+  "Üroloji":            { Ikon: IkonUroloji,        renk: "#0369A1", bg: "#E0F2FE" },
+  "Kadın Hast. & Doğum":{ Ikon: IkonKadin,          renk: "#BE185D", bg: "#FDF2F8" },
+  "Genel Cerrahi":      { Ikon: IkonGenelCerrahi,   renk: "#059669", bg: "#ECFDF5" },
+  "Nöroloji":           { Ikon: IkonNoroloji,       renk: "#1D4ED8", bg: "#EFF6FF" },
+  "Fizik Tedavi":       { Ikon: IkonFizikTedavi,    renk: "#0E7C7B", bg: "#E6F4F4" },
+  "Gastroenteroloji":   { Ikon: IkonGastro,         renk: "#92400E", bg: "#FFFBEB" },
+  "İç Hastalıkları":    { Ikon: IkonIcHastaliklari, renk: "#374151", bg: "#F3F4F6" },
+  "Onkoloji":           { Ikon: IkonOnkoloji,       renk: "#DC2626", bg: "#FFF1F2" },
+  "Romatoloji":         { Ikon: IkonRomatoloji,     renk: "#7C3AED", bg: "#F5F3FF" },
+  "Endokrinoloji":      { Ikon: IkonEndokrin,       renk: "#059669", bg: "#ECFDF5" },
+  "Genel":              { Ikon: null,               renk: "#6B7280", bg: "#F3F4F6" },
 };
 
 export default async function HastaFormlariSayfasi({ searchParams }) {
@@ -48,7 +59,7 @@ export default async function HastaFormlariSayfasi({ searchParams }) {
       {/* Hero */}
       <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-14">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-white text-3xl md:text-4xl font-bold mb-3">📋 Hasta Formları</h1>
+          <h1 className="text-white text-3xl md:text-4xl font-bold mb-3">📋 Hasta Onam Formları</h1>
           <p className="text-gray-300 text-lg mb-2">Branşa özel onam formları, KVKK belgeleri</p>
           <p className="text-gray-400 text-sm">PDF olarak görüntüleyin veya doğrudan indirin</p>
         </div>
