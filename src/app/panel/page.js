@@ -23,11 +23,13 @@ import TemaSecici from "@/components/TemaSecici";
 import HaritaSecici from "@/components/HaritaSecici";
 
 const ADRES_TIPLERI = [
-  { deger: "muayenehane", etiket: "🏠 Muayenehane" },
-  { deger: "klinik", etiket: "🏥 Klinik" },
-  { deger: "hastane", etiket: "🏨 Hastane" },
-  { deger: "tip_merkezi", etiket: "🏢 Tıp Merkezi" },
+  { deger: "muayenehane", etiket: "Muayenehane" },
+  { deger: "klinik", etiket: "Klinik" },
+  { deger: "hastane", etiket: "Hastane" },
+  { deger: "tip_merkezi", etiket: "Tıp Merkezi" },
 ];
+
+const I = /** @type {const} */ ({ viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round", strokeLinejoin:"round", width:22, height:22 });
 
 
 export default async function Panel() {
@@ -87,7 +89,7 @@ export default async function Panel() {
 
         <div className="mb-6">
           <h1 style={{ color: "var(--navy)" }} className="text-2xl font-bold">
-            Hoş geldiniz, {doktor.ad.split(" ").slice(1).join(" ") || doktor.ad} 👋
+            Hoş geldiniz, {doktor.ad.split(" ").slice(1).join(" ") || doktor.ad}
           </h1>
           <p className="text-gray-500 text-sm mt-1">Doktor panelinize genel bakış</p>
         </div>
@@ -95,13 +97,13 @@ export default async function Panel() {
         {/* ÖZET KARTLAR */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           {[
-            { baslik: "Ortalama Puan", deger: doktor.puan || "—", icon: "⭐", renk: "#D97706", bg: "#FFFBEB" },
-            { baslik: "Toplam Yorum", deger: yorumlar.length, icon: "💬", renk: "var(--teal)", bg: "#F0FDFA" },
-            { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? "✅" : "⏳", renk: doktor.onaylandi ? "var(--success)" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
-            { baslik: "Bekleyen Randevu", deger: Number(analitik.bekleyen_randevu) || 0, icon: "📅", renk: Number(analitik.bekleyen_randevu) > 0 ? "#DC2626" : "#6B7280", bg: Number(analitik.bekleyen_randevu) > 0 ? "#FFF1F2" : "#F5F7FA" },
+            { baslik: "Ortalama Puan", deger: doktor.puan || "—", icon: <svg {...I}><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>, renk: "#D97706", bg: "#FFFBEB" },
+            { baslik: "Toplam Yorum", deger: yorumlar.length, icon: <svg {...I}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>, renk: "var(--teal)", bg: "#F0FDFA" },
+            { baslik: "Profil Durumu", deger: doktor.onaylandi ? "Yayında" : "İncelemede", icon: doktor.onaylandi ? <svg {...I}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg> : <svg {...I}><circle cx="12" cy="12" r="9"/><polyline points="12 7 12 12 15 15"/></svg>, renk: doktor.onaylandi ? "var(--success)" : "#D97706", bg: doktor.onaylandi ? "#F0FDF4" : "#FFFBEB" },
+            { baslik: "Bekleyen Randevu", deger: Number(analitik.bekleyen_randevu) || 0, icon: <svg {...I}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>, renk: Number(analitik.bekleyen_randevu) > 0 ? "#DC2626" : "#6B7280", bg: Number(analitik.bekleyen_randevu) > 0 ? "#FFF1F2" : "#F5F7FA" },
           ].map((kart) => (
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
-              <span className="text-2xl">{kart.icon}</span>
+              <span style={{ color: kart.renk }}>{kart.icon}</span>
               <p style={{ color: kart.renk }} className="text-xl font-bold mt-3">{kart.deger}</p>
               <p className="text-gray-600 text-sm mt-1">{kart.baslik}</p>
             </div>
@@ -111,13 +113,13 @@ export default async function Panel() {
         {/* ANALİTİK */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           {[
-            { baslik: "Bu Ay Randevu", deger: Number(analitik.bu_ay_randevu) || 0, icon: "📊", renk: "var(--navy)", bg: "#EFF6FF" },
-            { baslik: "Bu Ay Yorum", deger: Number(analitik.bu_ay_yorum) || 0, icon: "💬", renk: "#7C3AED", bg: "#F5F3FF" },
-            { baslik: "Profil Görüntülenme", deger: Number(analitik.profil_goruntulenme) || 0, icon: "👁️", renk: "var(--success)", bg: "#F0FDF4" },
+            { baslik: "Bu Ay Randevu", deger: Number(analitik.bu_ay_randevu) || 0, icon: <svg {...I}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01"/></svg>, renk: "var(--navy)", bg: "#EFF6FF" },
+            { baslik: "Bu Ay Yorum", deger: Number(analitik.bu_ay_yorum) || 0, icon: <svg {...I}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>, renk: "#7C3AED", bg: "#F5F3FF" },
+            { baslik: "Profil Görüntülenme", deger: Number(analitik.profil_goruntulenme) || 0, icon: <svg {...I}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>, renk: "var(--success)", bg: "#F0FDF4" },
           ].map((kart) => (
             <div key={kart.baslik} style={{ backgroundColor: kart.bg }} className="rounded-2xl p-5 border border-gray-100">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-xl">{kart.icon}</span>
+                <span style={{ color: kart.renk }}>{kart.icon}</span>
               </div>
               <p style={{ color: kart.renk }} className="text-2xl font-bold">{kart.deger.toLocaleString("tr-TR")}</p>
               <p className="text-gray-600 text-sm mt-1">{kart.baslik}</p>
@@ -300,7 +302,7 @@ export default async function Panel() {
 
                 {/* Medikal Turizm — gizli alan, profilde yayınlanmaz */}
                 <div className="pt-3 border-t border-gray-100">
-                  <p className="text-xs font-semibold text-gray-500 mb-2">🌍 Medikal Turizm</p>
+                  <p className="text-xs font-semibold text-gray-500 mb-2 flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={13} height={13}><circle cx="12" cy="12" r="9"/><path d="M12 3a14.5 14.5 0 0 0 0 18M3 12h18"/><path d="M12 3a14.5 14.5 0 0 1 0 18"/></svg> Medikal Turizm</p>
                   <label className="flex items-center gap-3 cursor-pointer py-1">
                     <div className="relative flex-shrink-0">
                       <input type="checkbox" name="medikal_turizm" defaultChecked={!!doktor.medikal_turizm} className="sr-only peer" />
@@ -316,13 +318,13 @@ export default async function Panel() {
                       placeholder="Aracı komisyon oranı (örn. %15)"
                       className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
                     />
-                    <p className="text-xs text-gray-400 mt-1">🔒 Sadece yöneticiye görünür — profilinizde yayınlanmaz.</p>
+                    <p className="text-xs text-gray-400 mt-1 flex items-center gap-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={11} height={11}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Sadece yöneticiye görünür — profilinizde yayınlanmaz.</p>
                   </div>
                 </div>
 
                 {/* Eğitim Bilgileri */}
                 <div className="pt-3 border-t border-gray-100">
-                  <p className="text-sm font-semibold text-gray-700 mb-3">🎓 Eğitim Bilgileri</p>
+                  <p className="text-sm font-semibold text-gray-700 mb-3 flex items-center gap-1.5"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={15} height={15}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> Eğitim Bilgileri</p>
 
                   {/* Lise */}
                   <div className="mb-4 p-3 bg-gray-50 rounded-xl space-y-2">
@@ -409,7 +411,7 @@ export default async function Panel() {
             {/* Paket Yükselt kartı — sadece ücretsiz pakette */}
             {(!doktor.paket || doktor.paket === "ucretsiz") && (
               <div style={{ background: "linear-gradient(135deg, var(--navy), #0a3d62)" }} className="rounded-2xl p-5 text-center">
-                <div className="text-2xl mb-2">🚀</div>
+                <div style={{ color: "#4DD9D8" }} className="flex justify-center mb-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
                 <h3 className="text-white font-bold text-sm mb-1">Premium'a Yükselt</h3>
                 <p className="text-gray-300 text-xs mb-4 leading-relaxed">
                   AI Asistan, öne çıkarma ve analitik dashboard için paketi yükseltin.
@@ -428,7 +430,7 @@ export default async function Panel() {
             {/* Görüşme Özetle — Pro/Kurumsal */}
             {["pro", "kurumsal"].includes(doktor.paket) && (
               <a href="/gorusme-ozet" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="flex items-center gap-4 rounded-2xl p-5 hover:opacity-90 transition-opacity">
-                <span className="text-3xl">🎙️</span>
+                <span style={{ color: "#C4B5FD" }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={30} height={30}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></span>
                 <div className="flex-1">
                   <div className="text-white font-bold text-sm mb-0.5">Görüşme Özetle</div>
                   <p className="text-purple-200 text-xs leading-relaxed">Hasta görüşmenizi kaydedin, AI otomatik özetlesin</p>
@@ -472,7 +474,7 @@ export default async function Panel() {
               </div>
               {yorumlar.length === 0 ? (
                 <div className="text-center py-10">
-                  <p className="text-4xl mb-3">💬</p>
+                  <div style={{ color: "#CBD5E1" }} className="flex justify-center mb-3"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={44} height={44}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
                   <p className="text-gray-500 text-sm">Henüz yorum yok.</p>
                 </div>
               ) : (
@@ -491,7 +493,7 @@ export default async function Panel() {
                                 <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full">✓ Doğrulanmış</span>
                               )}
                               {yorum.dogrulama_durumu === "moderasyon_bekliyor" && (
-                                <span style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }} className="text-xs px-2 py-0.5 rounded-full">🔍 Moderasyonda</span>
+                                <span style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={10} height={10}><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg> Moderasyonda</span>
                               )}
                             </div>
                             <span className="text-xs text-gray-400">{yorum.tarih}</span>
