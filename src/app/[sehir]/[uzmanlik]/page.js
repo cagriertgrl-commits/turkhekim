@@ -3,6 +3,7 @@ import AramaKutusu from "@/components/AramaKutusu";
 import MobilFiltre from "@/components/MobilFiltre";
 import sql from "@/lib/db";
 import Link from "next/link";
+import { slugGorunum } from "@/lib/branslar";
 
 const SEHIR_MAP = {
   istanbul: "İstanbul", ankara: "Ankara", izmir: "İzmir", bursa: "Bursa",
@@ -11,33 +12,12 @@ const SEHIR_MAP = {
   samsun: "Samsun", eskisehir: "Eskişehir",
 };
 
-const UZMANLIK_MAP = {
-  "kbb-uzmani": "KBB Uzmanı", "kardiyoloji": "Kardiyoloji", "ortopedi": "Ortopedi",
-  "dermatoloji": "Dermatoloji", "goz-hastaliklari": "Göz Hastalıkları",
-  "plastik-cerrahi": "Plastik Cerrahi", "noroloji": "Nöroloji", "psikiyatri": "Psikiyatri",
-  "dis-hekimi": "Diş Hekimi", "rinoplasti": "Rinoplasti", "onkoloji": "Onkoloji",
-  "genel-cerrahi": "Genel Cerrahi", "uroloji": "Üroloji", "endokrinoloji": "Endokrinoloji",
-  "gastroenteroloji": "Gastroenteroloji", "gogus-hastaliklari": "Göğüs Hastalıkları",
-  "fizik-tedavi": "Fizik Tedavi", "beyin-ve-sinir-cerrahisi": "Beyin ve Sinir Cerrahisi",
-  "kadin-hastaliklari-ve-dogum": "Kadın Hastalıkları ve Doğum",
-  "cocuk-hastaliklari": "Çocuk Hastalıkları", "aile-hekimi": "Aile Hekimi",
-  "estetik-cerrahi": "Estetik Cerrahi", "romatoloji": "Romatoloji",
-  "kalp-damar-cerrahisi": "Kalp ve Damar Cerrahisi", "damar-cerrahisi": "Damar Cerrahisi",
-  "nefroloji": "Nefroloji", "hematoloji": "Hematoloji", "gogus-cerrahisi": "Göğüs Cerrahisi",
-  "cocuk-cerrahisi": "Çocuk Cerrahisi", "cocuk-norolojisi": "Çocuk Nörolojisi",
-  "cocuk-psikiyatrisi": "Çocuk ve Ergen Psikiyatrisi", "acil-tip": "Acil Tıp",
-  "spor-hekimligi": "Spor Hekimliği", "algoloji": "Algoloji", "geriatri": "Geriatri",
-  "nukleer-tip": "Nükleer Tıp", "patoloji": "Patoloji", "el-cerrahisi": "El Cerrahisi",
-  "dahiliye": "Dahiliye", "anestezi": "Anestezi",
-  "enfeksiyon-hastaliklari": "Enfeksiyon Hastalıkları", "radyoloji": "Radyoloji",
-};
-
 function sehirGorunum(slug) {
   return SEHIR_MAP[slug.toLowerCase()] || (slug.charAt(0).toUpperCase() + slug.slice(1));
 }
 
 function uzmanlikGorunum(slug) {
-  return UZMANLIK_MAP[slug.toLowerCase()] || slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+  return slugGorunum(slug.toLowerCase());
 }
 
 export async function generateMetadata({ params }) {

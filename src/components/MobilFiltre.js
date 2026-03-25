@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { BRANSLAR } from "@/lib/branslar";
 
 export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAktif, onlineFiltreAktif, siralamaPrm = "puan", doktorSayisi }) {
   const [acik, setAcik] = useState(false);
@@ -19,20 +20,7 @@ export default function MobilFiltre({ sehirParam, uzmanlikParam, sigortaFiltreAk
   }
 
   const SEHIRLER = ["istanbul", "ankara", "izmir", "bursa", "antalya"];
-  const UZMANLIKLAR = [
-    { label: "KBB Uzmanı", slug: "kbb-uzmani" },
-    { label: "Kardiyoloji", slug: "kardiyoloji" },
-    { label: "Ortopedi", slug: "ortopedi" },
-    { label: "Göz Hastalıkları", slug: "goz-hastaliklari" },
-    { label: "Diş Hekimi", slug: "dis-hekimi" },
-    { label: "Dermatoloji", slug: "dermatoloji" },
-    { label: "Psikiyatri", slug: "psikiyatri" },
-    { label: "Kadın Doğum", slug: "kadin-dogum" },
-    { label: "Çocuk Hastalıkları", slug: "cocuk-hastaliklari" },
-    { label: "Plastik Cerrahi", slug: "plastik-cerrahi" },
-    { label: "Rinoplasti", slug: "rinoplasti" },
-    { label: "Nöroloji", slug: "noroloji" },
-  ];
+  const UZMANLIKLAR = BRANSLAR.slice(0, 12).map(b => ({ label: b.kanonikal, slug: b.slug }));
   const SIRALAMA_SECENEKLERI = [
     { label: "En Yüksek Puan", val: "puan" },
     { label: "En Fazla Yorum", val: "yorum" },

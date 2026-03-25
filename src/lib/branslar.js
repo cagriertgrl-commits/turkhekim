@@ -168,7 +168,7 @@ export const BRANSLAR = [
     kanonikal: "Kalp ve Damar Cerrahisi",
     gorunum: "Kalp ve Damar Cerrahisi",
     slug: "kalp-damar-cerrahisi",
-    aliases: ["kalp damar cerrahisi", "kalp cerrahisi", "damar cerrahisi", "kardiyovaskuler cerrahi", "bypass", "kalp damar", "cardiovascular surgery"],
+    aliases: ["kalp damar cerrahisi", "kalp cerrahisi", "kardiyovaskuler cerrahi", "bypass", "kalp damar", "cardiovascular surgery"],
   },
   {
     kanonikal: "Damar Cerrahisi",
@@ -186,7 +186,7 @@ export const BRANSLAR = [
     kanonikal: "Hematoloji",
     gorunum: "Hematoloji (Kan Hastalıkları)",
     slug: "hematoloji",
-    aliases: ["hematoloji", "kan hastaliklari", "lösemi", "anemi", "hematology", "kan"],
+    aliases: ["hematoloji", "kan hastaliklari", "losemi", "anemi", "hematology", "kan"],
   },
   {
     kanonikal: "Göğüs Cerrahisi",
@@ -255,6 +255,14 @@ export const BRANSLAR = [
     aliases: ["el cerrahisi", "el bilek cerrahisi", "hand surgery"],
   },
 ];
+
+/**
+ * Slug'dan görüntü adı döndürür — BRANSLAR listesini kaynak olarak kullanır
+ */
+export function slugGorunum(slug) {
+  const brans = BRANSLAR.find(b => b.slug === slug);
+  return brans?.kanonikal || slug.replace(/-/g, " ").replace(/\b\w/g, c => c.toUpperCase());
+}
 
 /**
  * Türkçe karakter normalizasyonu
