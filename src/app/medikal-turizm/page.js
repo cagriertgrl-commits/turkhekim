@@ -2,12 +2,12 @@ import Navbar from "@/components/Navbar";
 import { IkonRinoplasti, IkonDis, IkonSacEkimi, IkonGoz, IkonOrtopedi, IkonEstetik } from "@/components/UzmanlikIkonlari";
 
 const tedaviler = [
-  { Ikon: IkonRinoplasti, renk: "#0D2137", bg: "#F1F5F9", ad: "Rinoplasti",      fiyat: "2.000 - 5.000 USD", sure: "1-2 gün hastane" },
-  { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA", ad: "Diş Tedavisi",    fiyat: "500 - 3.000 USD",   sure: "3-7 gün" },
-  { Ikon: IkonSacEkimi,   renk: "#7C3AED", bg: "#F5F3FF", ad: "Saç Ekimi",       fiyat: "1.500 - 3.500 USD", sure: "1 gün" },
-  { Ikon: IkonGoz,        renk: "#0369A1", bg: "#E0F2FE", ad: "Göz Ameliyatı",   fiyat: "1.000 - 2.500 USD", sure: "1 gün" },
-  { Ikon: IkonOrtopedi,   renk: "#2563EB", bg: "#EFF6FF", ad: "Ortopedi",        fiyat: "3.000 - 8.000 USD", sure: "3-7 gün hastane" },
-  { Ikon: IkonEstetik,    renk: "#D97706", bg: "#FFFBEB", ad: "Estetik Cerrahi", fiyat: "2.000 - 6.000 USD", sure: "1-3 gün hastane" },
+  { Ikon: IkonRinoplasti, renk: "#0D2137", bg: "#F1F5F9", ad: "Rinoplasti",      fiyat: "2.500 - 7.500 USD", sure: "7-10 gün" },
+  { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA", ad: "Diş Tedavisi",    fiyat: "400 - 6.000 USD",   sure: "5-7 gün" },
+  { Ikon: IkonSacEkimi,   renk: "#7C3AED", bg: "#F5F3FF", ad: "Saç Ekimi (FUE/DHI)", fiyat: "1.500 - 5.000 USD", sure: "3-5 gün" },
+  { Ikon: IkonGoz,        renk: "#0369A1", bg: "#E0F2FE", ad: "Göz Ameliyatı",   fiyat: "800 - 3.500 USD",   sure: "2-4 gün" },
+  { Ikon: IkonOrtopedi,   renk: "#2563EB", bg: "#EFF6FF", ad: "Ortopedi",        fiyat: "6.000 - 15.000 USD", sure: "10-14 gün" },
+  { Ikon: IkonEstetik,    renk: "#D97706", bg: "#FFFBEB", ad: "Estetik Cerrahi", fiyat: "2.500 - 6.700 USD", sure: "7-10 gün" },
 ];
 
 
