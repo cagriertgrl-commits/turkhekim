@@ -164,6 +164,96 @@ export const BRANSLAR = [
     slug: "estetik-cerrahi",
     aliases: ["estetik cerrahi", "estetik", "guzellestirme", "liposuction", "botoks"],
   },
+  {
+    kanonikal: "Kalp ve Damar Cerrahisi",
+    gorunum: "Kalp ve Damar Cerrahisi",
+    slug: "kalp-damar-cerrahisi",
+    aliases: ["kalp damar cerrahisi", "kalp cerrahisi", "damar cerrahisi", "kardiyovaskuler cerrahi", "bypass", "kalp damar", "cardiovascular surgery"],
+  },
+  {
+    kanonikal: "Damar Cerrahisi",
+    gorunum: "Damar Cerrahisi (Vasküler)",
+    slug: "damar-cerrahisi",
+    aliases: ["damar cerrahisi", "vaskuler cerrahi", "varis", "damar", "vascular surgery"],
+  },
+  {
+    kanonikal: "Nefroloji",
+    gorunum: "Nefroloji (Böbrek Hastalıkları)",
+    slug: "nefroloji",
+    aliases: ["nefroloji", "bobrek hastaliklari", "diyaliz", "nephrology", "bobrek", "bobrek doktoru"],
+  },
+  {
+    kanonikal: "Hematoloji",
+    gorunum: "Hematoloji (Kan Hastalıkları)",
+    slug: "hematoloji",
+    aliases: ["hematoloji", "kan hastaliklari", "lösemi", "anemi", "hematology", "kan"],
+  },
+  {
+    kanonikal: "Göğüs Cerrahisi",
+    gorunum: "Göğüs Cerrahisi",
+    slug: "gogus-cerrahisi",
+    aliases: ["gogus cerrahisi", "akciger cerrahisi", "torasik cerrahi", "thoracic surgery"],
+  },
+  {
+    kanonikal: "Çocuk Cerrahisi",
+    gorunum: "Çocuk Cerrahisi (Pediatrik Cerrahi)",
+    slug: "cocuk-cerrahisi",
+    aliases: ["cocuk cerrahisi", "pediatrik cerrahi", "pediatric surgery"],
+  },
+  {
+    kanonikal: "Çocuk Nörolojisi",
+    gorunum: "Çocuk Nörolojisi",
+    slug: "cocuk-norolojisi",
+    aliases: ["cocuk norolojisi", "pediatrik noroloji", "cocuk beyin sinir", "pediatric neurology"],
+  },
+  {
+    kanonikal: "Çocuk Psikiyatrisi",
+    gorunum: "Çocuk ve Ergen Psikiyatrisi",
+    slug: "cocuk-psikiyatrisi",
+    aliases: ["cocuk psikiyatrisi", "ergen psikiyatrisi", "cocuk ruh sagligi", "child psychiatry"],
+  },
+  {
+    kanonikal: "Acil Tıp",
+    gorunum: "Acil Tıp",
+    slug: "acil-tip",
+    aliases: ["acil tip", "acil servis", "emergency medicine", "acil doktor"],
+  },
+  {
+    kanonikal: "Spor Hekimliği",
+    gorunum: "Spor Hekimliği",
+    slug: "spor-hekimligi",
+    aliases: ["spor hekimligi", "spor hekimi", "spor doktoru", "sports medicine"],
+  },
+  {
+    kanonikal: "Algoloji",
+    gorunum: "Algoloji (Ağrı Kliniği)",
+    slug: "algoloji",
+    aliases: ["algoloji", "agri klinigi", "agri yonetimi", "pain management", "agri doktoru"],
+  },
+  {
+    kanonikal: "Geriatri",
+    gorunum: "Geriatri (Yaşlı Sağlığı)",
+    slug: "geriatri",
+    aliases: ["geriatri", "yasli sagligi", "geriatrics", "yaslilik", "yas hastaliklari"],
+  },
+  {
+    kanonikal: "Nükleer Tıp",
+    gorunum: "Nükleer Tıp",
+    slug: "nukleer-tip",
+    aliases: ["nukleer tip", "pet ct", "sintigrafi", "nuclear medicine"],
+  },
+  {
+    kanonikal: "Patoloji",
+    gorunum: "Patoloji",
+    slug: "patoloji",
+    aliases: ["patoloji", "biyopsi", "patolojik inceleme", "pathology"],
+  },
+  {
+    kanonikal: "El Cerrahisi",
+    gorunum: "El Cerrahisi",
+    slug: "el-cerrahisi",
+    aliases: ["el cerrahisi", "el bilek cerrahisi", "hand surgery"],
+  },
 ];
 
 /**

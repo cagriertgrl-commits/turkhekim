@@ -22,6 +22,14 @@ const UZMANLIK_MAP = {
   "kadin-hastaliklari-ve-dogum": "Kadın Hastalıkları ve Doğum",
   "cocuk-hastaliklari": "Çocuk Hastalıkları", "aile-hekimi": "Aile Hekimi",
   "estetik-cerrahi": "Estetik Cerrahi", "romatoloji": "Romatoloji",
+  "kalp-damar-cerrahisi": "Kalp ve Damar Cerrahisi", "damar-cerrahisi": "Damar Cerrahisi",
+  "nefroloji": "Nefroloji", "hematoloji": "Hematoloji", "gogus-cerrahisi": "Göğüs Cerrahisi",
+  "cocuk-cerrahisi": "Çocuk Cerrahisi", "cocuk-norolojisi": "Çocuk Nörolojisi",
+  "cocuk-psikiyatrisi": "Çocuk ve Ergen Psikiyatrisi", "acil-tip": "Acil Tıp",
+  "spor-hekimligi": "Spor Hekimliği", "algoloji": "Algoloji", "geriatri": "Geriatri",
+  "nukleer-tip": "Nükleer Tıp", "patoloji": "Patoloji", "el-cerrahisi": "El Cerrahisi",
+  "dahiliye": "Dahiliye", "anestezi": "Anestezi",
+  "enfeksiyon-hastaliklari": "Enfeksiyon Hastalıkları", "radyoloji": "Radyoloji",
 };
 
 function sehirGorunum(slug) {
