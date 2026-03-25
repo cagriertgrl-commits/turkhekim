@@ -1,12 +1,13 @@
 import Navbar from "@/components/Navbar";
+import { IkonRinoplasti, IkonDis, IkonSacEkimi, IkonGoz, IkonOrtopedi, IkonEstetik } from "@/components/UzmanlikIkonlari";
 
 const tedaviler = [
-  { icon: "👃", ad: "Rinoplasti", fiyat: "2.000 - 5.000 USD", sure: "1-2 gün hastane" },
-  { icon: "🦷", ad: "Diş Tedavisi", fiyat: "500 - 3.000 USD", sure: "3-7 gün" },
-  { icon: "💇", ad: "Saç Ekimi", fiyat: "1.500 - 3.500 USD", sure: "1 gün" },
-  { icon: "👁️", ad: "Göz Ameliyatı", fiyat: "1.000 - 2.500 USD", sure: "1 gün" },
-  { icon: "🦴", ad: "Ortopedi", fiyat: "3.000 - 8.000 USD", sure: "3-7 gün hastane" },
-  { icon: "💉", ad: "Estetik Cerrahi", fiyat: "2.000 - 6.000 USD", sure: "1-3 gün hastane" },
+  { Ikon: IkonRinoplasti, renk: "#0D2137", bg: "#F1F5F9", ad: "Rinoplasti",      fiyat: "2.000 - 5.000 USD", sure: "1-2 gün hastane" },
+  { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA", ad: "Diş Tedavisi",    fiyat: "500 - 3.000 USD",   sure: "3-7 gün" },
+  { Ikon: IkonSacEkimi,   renk: "#7C3AED", bg: "#F5F3FF", ad: "Saç Ekimi",       fiyat: "1.500 - 3.500 USD", sure: "1 gün" },
+  { Ikon: IkonGoz,        renk: "#0369A1", bg: "#E0F2FE", ad: "Göz Ameliyatı",   fiyat: "1.000 - 2.500 USD", sure: "1 gün" },
+  { Ikon: IkonOrtopedi,   renk: "#2563EB", bg: "#EFF6FF", ad: "Ortopedi",        fiyat: "3.000 - 8.000 USD", sure: "3-7 gün hastane" },
+  { Ikon: IkonEstetik,    renk: "#D97706", bg: "#FFFBEB", ad: "Estetik Cerrahi", fiyat: "2.000 - 6.000 USD", sure: "1-3 gün hastane" },
 ];
 
 
@@ -113,7 +114,9 @@ export default function MediakalTurizm() {
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {tedaviler.map((t) => (
               <div key={t.ad} className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow">
-                <div className="text-4xl mb-3">{t.icon}</div>
+                <div style={{ backgroundColor: t.bg, color: t.renk }} className="w-12 h-12 rounded-xl flex items-center justify-center mb-4">
+                  <t.Ikon />
+                </div>
                 <h3 style={{ color: "#0D2137" }} className="font-bold text-lg mb-1">{t.ad}</h3>
                 <p style={{ color: "#0E7C7B" }} className="text-sm font-medium mb-1">{t.fiyat}</p>
                 <p className="text-gray-400 text-xs">⏱ {t.sure}</p>

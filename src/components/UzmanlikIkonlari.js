@@ -21,6 +21,8 @@ export const IkonIcHastaliklari= () => <svg {...S}><circle cx="12" cy="12" r="9"
 export const IkonOnkoloji    = () => <svg {...S}><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4"/><line x1="12" y1="3" x2="12" y2="8"/><line x1="12" y1="16" x2="12" y2="21"/><line x1="3" y1="12" x2="8" y2="12"/><line x1="16" y1="12" x2="21" y2="12"/></svg>;
 export const IkonRomatoloji  = () => <svg {...S}><circle cx="8" cy="8" r="3"/><circle cx="16" cy="16" r="3"/><line x1="10.5" y1="10.5" x2="13.5" y2="13.5"/><path d="M8 5V3M8 13v-2M5 8H3M13 8h-2"/></svg>;
 export const IkonEndokrin    = () => <svg {...S}><path d="M12 3c-2.5 0-4.5 1.5-4.5 4 0 1.5.8 2.8 2 3.5v1.5h5V10.5c1.2-.7 2-2 2-3.5 0-2.5-2-4-4.5-4z"/><rect x="9.5" y="12" width="5" height="2" rx="1"/><path d="M10 14v5M14 14v5"/><line x1="8" y1="19" x2="16" y2="19"/></svg>;
+export const IkonSacEkimi    = () => <svg {...S}><circle cx="12" cy="6" r="3"/><path d="M6 21v-2a6 6 0 0 1 12 0v2"/><path d="M6 12c0-1 .7-1.8 2-2.2M18 12c0-1-.7-1.8-2-2.2"/><path d="M9 14.5c1 .7 2 1 3 1s2-.3 3-1"/></svg>;
+export const IkonKalpDamar   = () => <svg {...S}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/><path d="M8 10h2l1.5 3 2-6 1.5 3H17" strokeWidth="1.3"/></svg>;
 
 export const UZMANLIK_GRID = [
   { slug: "kbb-uzmani",         Ikon: IkonKBB,         renk: "#0E7C7B", bg: "#E6F4F4" },
