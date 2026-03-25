@@ -1,14 +1,10 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
-
-function adminKontrol(request) {
-  const cookie = request.cookies.get("admin-token")?.value;
-  return cookie === process.env.ADMIN_SECRET;
-}
+import { adminKontrol } from "@/lib/adminAuth";
 
 // Yorum sil
 export async function DELETE(request) {
-  if (!adminKontrol(request)) {
+  if (!await adminKontrol(request)) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 

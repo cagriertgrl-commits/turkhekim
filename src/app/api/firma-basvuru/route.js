@@ -1,6 +1,7 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { headers } from "next/headers";
 
 const FIRMA_TIPLERI = ["ilac", "tibbi_cihaz", "saglik_hizmeti", "sigorta", "diger"];
@@ -11,7 +12,7 @@ export async function POST(request) {
   try {
     const headersList = await headers();
     const ip = headersList.get("x-forwarded-for") || "unknown";
-    const { basarili } = rateLimit(`firma-basvuru-${ip}`, 3, 3600); // saatte 3
+    const { basarili } = rateLimit(`firma-basvuru-${ip}`, RATE_LIMITS.FIRMA_BASVURU.limit, RATE_LIMITS.FIRMA_BASVURU.pencereDakika); // saatte 3
     if (!basarili) {
       return NextResponse.json({ hata: "Çok fazla başvuru. Lütfen daha sonra tekrar deneyin." }, { status: 429 });
     }

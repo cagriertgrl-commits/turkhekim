@@ -40,12 +40,17 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
   }
 
   async function gizleDegistir(soruId, gizli) {
-    await fetch("/api/soru", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ soru_id: soruId, gizli }),
-    });
-    setSorular((p) => p.map((s) => s.id === soruId ? { ...s, gizli } : s));
+    try {
+      const res = await fetch("/api/soru", {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ soru_id: soruId, gizli }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setSorular((p) => p.map((s) => s.id === soruId ? { ...s, gizli } : s));
+    } catch (err) {
+      console.error("Soru gizleme hatası:", err);
+    }
   }
 
   async function soruSil(soruId) {

@@ -4,10 +4,10 @@ import { NextResponse } from "next/server";
 
 export async function POST(req) {
   const session = await getSession();
-  if (!session) return NextResponse.json({ error: "Giriş gerekli" }, { status: 401 });
+  if (!session) return NextResponse.json({ hata: "Giriş gerekli" }, { status: 401 });
 
   const { paylasi_id } = await req.json();
-  if (!paylasi_id) return NextResponse.json({ error: "Eksik parametre" }, { status: 400 });
+  if (!paylasi_id) return NextResponse.json({ hata: "Eksik parametre" }, { status: 400 });
 
   try {
     // Toggle: varsa sil, yoksa ekle
@@ -24,6 +24,6 @@ export async function POST(req) {
       return NextResponse.json({ begendi: true });
     }
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ hata: err.message }, { status: 500 });
   }
 }

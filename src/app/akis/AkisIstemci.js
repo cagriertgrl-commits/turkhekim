@@ -137,7 +137,7 @@ function PaylasiForm({ session, kategori, onYeni }) {
         body: JSON.stringify({ icerik, kategori: seciliKat, etiketler }),
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data.error);
+      if (!res.ok) throw new Error(data.hata || "Bir hata oluştu");
       setIcerik("");
       setEtiketler("");
       onYeni(data.post);

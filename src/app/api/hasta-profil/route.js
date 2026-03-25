@@ -1,10 +1,11 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 
 export async function POST(request) {
   const ip = request.headers.get("x-forwarded-for") || "unknown";
-  const limitAsildi = await rateLimit(`hastaprofil:${ip}`, 5, 3600);
+  const limitAsildi = await rateLimit(`hastaprofil:${ip}`, RATE_LIMITS.HASTA_PROFIL.limit, RATE_LIMITS.HASTA_PROFIL.pencereDakika);
   if (limitAsildi) return NextResponse.json({ hata: "Çok fazla istek." }, { status: 429 });
 
   const body = await request.json();

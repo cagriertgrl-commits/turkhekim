@@ -40,8 +40,14 @@ export default function MedyaPanel({ baslangicMedya = [] }) {
   }
 
   async function sil(id) {
-    await fetch(`/api/doktor-medya?id=${id}`, { method: "DELETE" });
-    setMedya(medya.filter((m) => m.id !== id));
+    try {
+      const res = await fetch(`/api/doktor-medya?id=${id}`, { method: "DELETE" });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setMedya(medya.filter((m) => m.id !== id));
+    } catch (err) {
+      console.error("Medya silme hatası:", err);
+      setHata("Silme işlemi başarısız.");
+    }
   }
 
   return (

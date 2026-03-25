@@ -1,14 +1,10 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
-
-function adminKontrol(request) {
-  const cookie = request.cookies.get("admin-token")?.value;
-  return cookie === process.env.ADMIN_SECRET;
-}
+import { adminKontrol } from "@/lib/adminAuth";
 
 // Doktor onayla / reddet
 export async function PATCH(request) {
-  if (!adminKontrol(request)) {
+  if (!await adminKontrol(request)) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 
@@ -30,7 +26,7 @@ export async function PATCH(request) {
 
 // Doktor sil
 export async function DELETE(request) {
-  if (!adminKontrol(request)) {
+  if (!await adminKontrol(request)) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 

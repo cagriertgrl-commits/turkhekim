@@ -39,19 +39,19 @@ export async function GET(req) {
     }
     return NextResponse.json({ posts, sayfa });
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ hata: err.message }, { status: 500 });
   }
 }
 
 // POST /api/akis — yeni paylaşım
 export async function POST(req) {
   const session = await getSession();
-  if (!session) return NextResponse.json({ error: "Giriş gerekli" }, { status: 401 });
+  if (!session) return NextResponse.json({ hata: "Giriş gerekli" }, { status: 401 });
 
   const body = await req.json();
   const { icerik, kategori, resim_url, etiketler } = body;
 
-  if (!icerik?.trim()) return NextResponse.json({ error: "İçerik boş olamaz" }, { status: 400 });
+  if (!icerik?.trim()) return NextResponse.json({ hata: "İçerik boş olamaz" }, { status: 400 });
 
   const slug = `post-${Date.now()}-${session.id}`;
 
@@ -63,6 +63,6 @@ export async function POST(req) {
     `;
     return NextResponse.json({ post });
   } catch (err) {
-    return NextResponse.json({ error: err.message }, { status: 500 });
+    return NextResponse.json({ hata: err.message }, { status: 500 });
   }
 }

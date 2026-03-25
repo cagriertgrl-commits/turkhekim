@@ -1,13 +1,14 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { headers } from "next/headers";
 
 export async function GET(request) {
   try {
     const headersList = await headers();
     const ip = headersList.get("x-forwarded-for") || "unknown";
-    const { basarili } = rateLimit(`hasta-sorgu-${ip}`, 10, 60); // dakikada 10
+    const { basarili } = rateLimit(`hasta-sorgu-${ip}`, RATE_LIMITS.HASTA_SORGU.limit, RATE_LIMITS.HASTA_SORGU.pencereDakika); // dakikada 10
     if (!basarili) {
       return NextResponse.json({ hata: "Çok fazla sorgu. Lütfen bekleyin." }, { status: 429 });
     }

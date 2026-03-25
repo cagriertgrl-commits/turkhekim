@@ -3,13 +3,14 @@ import sql from "@/lib/db";
 
 
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { NextResponse } from "next/server";
 
 // Hasta soru gönderir
 export async function POST(request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-    const { basarili } = rateLimit(ip, 5, 60); // saatte 5 soru
+    const { basarili } = rateLimit(ip, RATE_LIMITS.SORU.limit, RATE_LIMITS.SORU.pencereDakika); // saatte 5 soru
     if (!basarili) {
       return NextResponse.json({ hata: "Çok fazla istek. Lütfen bekleyin." }, { status: 429 });
     }

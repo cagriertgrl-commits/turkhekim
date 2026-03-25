@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { compare } from "bcryptjs";
 import { sessionOlustur, COOKIE_ADI } from "@/lib/session";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import sql from "@/lib/db";
 
 export async function POST(request) {
@@ -9,7 +10,7 @@ export async function POST(request) {
   if (!email || !sifre) return NextResponse.json({ hata: "Bilgiler eksik." }, { status: 400 });
 
   const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-  const { basarili } = rateLimit(`giris-${ip}`, 5, 15);
+  const { basarili } = rateLimit(`giris-${ip}`, RATE_LIMITS.GIRIS.limit, RATE_LIMITS.GIRIS.pencereDakika);
   if (!basarili) return NextResponse.json({ hata: "Çok fazla deneme. 15 dakika bekleyin." }, { status: 429 });
 
   const [doktor] = await sql`SELECT * FROM doktorlar WHERE email = ${email} LIMIT 1`;

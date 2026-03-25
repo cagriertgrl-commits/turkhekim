@@ -5,6 +5,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
@@ -57,7 +58,7 @@ Başka konularda normal yardımcı ol.`;
 
 export async function POST(request) {
   const ip = request.headers.get("x-forwarded-for") || "unknown";
-  const limitAsildi = await rateLimit(`ai:${ip}`, 20, 3600);
+  const limitAsildi = await rateLimit(`ai:${ip}`, RATE_LIMITS.AI_ASISTAN.limit, RATE_LIMITS.AI_ASISTAN.pencereDakika);
   if (limitAsildi) return NextResponse.json({ hata: "Çok fazla istek. Lütfen bir süre bekleyin." }, { status: 429 });
 
   const session = await getSession();

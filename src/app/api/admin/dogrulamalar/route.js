@@ -1,14 +1,10 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
-
-function adminKontrol(request) {
-  const cookie = request.cookies.get("admin-token")?.value;
-  return cookie === process.env.ADMIN_SECRET;
-}
+import { adminKontrol } from "@/lib/adminAuth";
 
 // Tüm doğrulama kayıtlarını listele (admin moderasyon için)
 export async function GET(request) {
-  if (!adminKontrol(request)) {
+  if (!await adminKontrol(request)) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 
@@ -39,7 +35,7 @@ export async function GET(request) {
 
 // Admin moderasyon kararı: yayinlandi | reddedildi
 export async function PATCH(request) {
-  if (!adminKontrol(request)) {
+  if (!await adminKontrol(request)) {
     return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
   }
 

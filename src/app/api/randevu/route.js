@@ -1,11 +1,12 @@
 import sql from "@/lib/db";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-    const { basarili } = rateLimit(`randevu-${ip}`, 5, 60); // saatte 5 randevu
+    const { basarili } = rateLimit(`randevu-${ip}`, RATE_LIMITS.RANDEVU.limit, RATE_LIMITS.RANDEVU.pencereDakika); // saatte 5 randevu
     if (!basarili) {
       return NextResponse.json(
         { hata: "Çok fazla randevu talebi. Lütfen 1 saat bekleyin." },

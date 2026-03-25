@@ -27,13 +27,20 @@ export default function BildirimZili() {
       const veri = await res.json();
       setBildirimler(veri.bildirimler || []);
       setOkunmamis(veri.okunmamis || 0);
-    } catch {}
+    } catch (err) {
+      console.error("Bildirim yükleme hatası:", err);
+    }
   }
 
   async function tumunuOku() {
-    await fetch("/api/bildirim", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
-    setBildirimler(bildirimler.map((b) => ({ ...b, okundu: true })));
-    setOkunmamis(0);
+    try {
+      const res = await fetch("/api/bildirim", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({}) });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setBildirimler(bildirimler.map((b) => ({ ...b, okundu: true })));
+      setOkunmamis(0);
+    } catch (err) {
+      console.error("Bildirimleri okundu işaretleme hatası:", err);
+    }
   }
 
   const tipIkon = {

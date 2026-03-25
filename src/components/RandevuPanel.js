@@ -82,20 +82,30 @@ export default function RandevuPanel({ doktorId }) {
 
   useEffect(() => {
     fetch(`/api/randevu?doktor_id=${doktorId}`)
-      .then((r) => r.json())
-      .then((data) => { setRandevular(Array.isArray(data) ? data : []); setYukleniyor(false); });
+      .then((r) => {
+        if (!r.ok) throw new Error(`HTTP ${r.status}`);
+        return r.json();
+      })
+      .then((data) => { setRandevular(Array.isArray(data) ? data : []); })
+      .catch((err) => console.error("Randevu yükleme hatası:", err))
+      .finally(() => setYukleniyor(false));
   }, [doktorId]);
 
   async function durumGuncelle(id, yeniDurum, sebep, not) {
-    await fetch("/api/randevu-durum", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ randevu_id: id, durum: yeniDurum, doktor_notu: not || null, iptal_sebep: sebep || null }),
-    });
-    setRandevular((prev) =>
-      prev.map((r) => r.id === id ? { ...r, durum: yeniDurum, doktor_notu: not || r.doktor_notu, iptal_sebep: sebep || null } : r)
-    );
-    setIptalRandevu(null);
+    try {
+      const res = await fetch("/api/randevu-durum", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ randevu_id: id, durum: yeniDurum, doktor_notu: not || null, iptal_sebep: sebep || null }),
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      setRandevular((prev) =>
+        prev.map((r) => r.id === id ? { ...r, durum: yeniDurum, doktor_notu: not || r.doktor_notu, iptal_sebep: sebep || null } : r)
+      );
+      setIptalRandevu(null);
+    } catch (err) {
+      console.error("Randevu durum güncelleme hatası:", err);
+    }
   }
 
   const filtreliler = filtre === "hepsi" ? randevular : randevular.filter((r) => r.durum === filtre);

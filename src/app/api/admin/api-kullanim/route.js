@@ -1,10 +1,6 @@
 import sql from "@/lib/db";
 import { NextResponse } from "next/server";
-
-function adminKontrol(request) {
-  const cookie = request.cookies.get("admin-token")?.value;
-  return cookie === process.env.ADMIN_SECRET;
-}
+import { adminKontrol } from "@/lib/adminAuth";
 
 // Pricing per million tokens (approximate)
 const FIYATLAR = {
@@ -18,7 +14,7 @@ function maliyetHesapla(model, inputTokens, outputTokens) {
 }
 
 export async function GET(request) {
-  if (!adminKontrol(request)) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
+  if (!await adminKontrol(request)) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   try {
     // Table might not exist yet

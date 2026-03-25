@@ -1,5 +1,6 @@
 import sql from "@/lib/db";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { NextResponse } from "next/server";
 
 const GECERLI_KATEGORILER = ["hakaret", "yanlis_bilgi", "spam", "gizlilik_ihlali", "diger"];
@@ -7,7 +8,7 @@ const GECERLI_KATEGORILER = ["hakaret", "yanlis_bilgi", "spam", "gizlilik_ihlali
 export async function POST(request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-    const { basarili } = rateLimit(ip, 5, 60); // saatte 5 şikayet
+    const { basarili } = rateLimit(ip, RATE_LIMITS.SIKAYET.limit, RATE_LIMITS.SIKAYET.pencereDakika); // saatte 5 şikayet
     if (!basarili) {
       return NextResponse.json({ hata: "Çok fazla şikayet. Lütfen bekleyin." }, { status: 429 });
     }

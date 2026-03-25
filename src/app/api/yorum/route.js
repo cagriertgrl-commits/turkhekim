@@ -1,11 +1,12 @@
 import sql from "@/lib/db";
 import { rateLimit } from "@/lib/rateLimit";
+import { RATE_LIMITS } from "@/lib/constants";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
   try {
     const ip = request.headers.get("x-forwarded-for") || "bilinmiyor";
-    const { basarili } = rateLimit(ip, 3, 10); // 10 dakikada 3 yorum
+    const { basarili } = rateLimit(ip, RATE_LIMITS.YORUM.limit, RATE_LIMITS.YORUM.pencereDakika); // 10 dakikada 3 yorum
     if (!basarili) {
       return NextResponse.json(
         { hata: `Çok fazla istek. Lütfen 10 dakika bekleyin.` },
