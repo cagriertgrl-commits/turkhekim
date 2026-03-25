@@ -9,7 +9,7 @@ import AnasayfaNedenBiz from "./AnasayfaNedenBiz";
 const TR_ADLAR = { "kbb-uzmani": "KBB", "kardiyoloji": "Kardiyoloji", "ortopedi": "Ortopedi", "plastik-cerrahi": "Plastik Cerrahi", "goz-hastaliklari": "Göz", "dis-hekimi": "Diş Hekimi", "dermatoloji": "Dermatoloji", "noroloji": "Nöroloji", "psikiyatri": "Psikiyatri", "cocuk-hastaliklari": "Çocuk Sağlığı", "estetik-cerrahi": "Estetik Cerrahi", "rinoplasti": "Rinoplasti" };
 
 const POPULER_SEHIRLER = [
-  { ad: "İstanbul", slug: "istanbul", foto: "/istanbul.jpg" },
+  { ad: "İstanbul", slug: "istanbul", foto: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=400&h=300&q=80" },
   { ad: "Ankara", slug: "ankara", foto: "/ankara.jpg" },
   { ad: "İzmir", slug: "izmir", foto: "/izmir.jpg" },
   { ad: "Antalya", slug: "antalya", foto: "/antalya.jpg" },
