@@ -102,7 +102,7 @@ const PAKETLER = [
 export default function PaketlerSayfasi() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Navbar />
+      <Navbar aktifSayfa="Paketler" />
 
       {/* Hero */}
       <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-16">
@@ -117,7 +117,7 @@ export default function PaketlerSayfasi() {
 
         {/* Görüşme Özetle Banner */}
         <div style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="rounded-2xl p-6 mb-8 flex flex-col md:flex-row items-center gap-5">
-          <div className="text-4xl">🎙️</div>
+          <div style={{ color: "#C4B5FD" }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={36} height={36}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></div>
           <div className="flex-1 text-center md:text-left">
             <div className="text-white font-bold text-lg mb-1">Yeni: Görüşme Özetle — AI Not Asistanı</div>
             <p className="text-purple-200 text-sm leading-relaxed">
@@ -140,7 +140,7 @@ export default function PaketlerSayfasi() {
                   style={{ backgroundColor: paket.renk }}
                   className="absolute -top-3 left-1/2 -translate-x-1/2 text-white text-xs font-bold px-4 py-1 rounded-full whitespace-nowrap"
                 >
-                  🌟 En Popüler
+                  En Popüler
                 </div>
               )}
 
@@ -193,7 +193,7 @@ export default function PaketlerSayfasi() {
               { s: "Fatura kesiyor musunuz?", c: "Evet, tüm ödemeler için e-fatura düzenliyoruz." },
             ].map((item) => (
               <div key={item.s}>
-                <h3 className="font-semibold text-sm text-gray-900 mb-1">❓ {item.s}</h3>
+                <h3 className="font-semibold text-sm text-gray-900 mb-1">{item.s}</h3>
                 <p className="text-gray-500 text-sm leading-relaxed">{item.c}</p>
               </div>
             ))}

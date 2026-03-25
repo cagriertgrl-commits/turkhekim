@@ -56,8 +56,8 @@ export default function Giris() {
       <div className="flex-1 flex items-center justify-center px-6 py-12">
         <div className="bg-white rounded-2xl shadow-sm p-8 w-full max-w-md">
           <div className="text-center mb-8">
-            <div style={{ backgroundColor: "#E8F5F5" }} className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-              <span className="text-3xl">🏥</span>
+            <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
             </div>
             <h1 style={{ color: "#0D2137" }} className="text-2xl font-bold">Doktor Girişi</h1>
             <p className="text-gray-400 text-sm mt-1">Panelinize erişmek için giriş yapın</p>

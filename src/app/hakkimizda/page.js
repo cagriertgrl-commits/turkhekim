@@ -6,34 +6,35 @@ export const metadata = {
   description: "DoktorPusula hakkında — Türkiye'nin bağımsız sağlık platformunun hikayesi ve misyonu.",
 };
 
+const S = /** @type {const} */ ({ viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round", strokeLinejoin:"round", width:24, height:24 });
 const DEGERLELER = [
   {
-    icon: "🔒",
+    svg: <svg {...S}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>,
     baslik: "Tam Şeffaflık",
     aciklama: "Hiçbir yorum silinemez veya değiştirilemez. Doktor sıralaması reklam bütçesine değil, gerçek hasta puanına göre yapılır.",
   },
   {
-    icon: "🇹🇷",
+    svg: <svg {...S}><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
     baslik: "Tamamen Bağımsız",
     aciklama: "Yabancı sermaye veya holding bağlantısı yoktur. Türk doktorların güvendiği, Türk hastalar için kurulmuştur.",
   },
   {
-    icon: "🌍",
+    svg: <svg {...S}><circle cx="12" cy="12" r="9"/><path d="M12 3a14.5 14.5 0 0 0 0 18M3 12h18"/><path d="M12 3a14.5 14.5 0 0 1 0 18"/></svg>,
     baslik: "Çok Dilli Erişim",
     aciklama: "Türkçe, Farsça, Arapça ve Azerbaycan Türkçesi ile medikal turistler kendi dilinde hizmet alır.",
   },
   {
-    icon: "✅",
+    svg: <svg {...S}><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>,
     baslik: "Doğrulanmış Yorumlar",
     aciklama: "Her yorum telefon numarasıyla doğrulanır. Gerçek hasta, gerçek deneyim. Sahte yorum sıfır tolerans.",
   },
   {
-    icon: "🏥",
+    svg: <svg {...S}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>,
     baslik: "Doktor Odaklı",
     aciklama: "Doktorlar profillerini ücretsiz oluşturur, randevularını yönetir. Platform doktorları değil, hastaları destekler.",
   },
   {
-    icon: "⚡",
+    svg: <svg {...S}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>,
     baslik: "Teknoloji ile Sağlık",
     aciklama: "Modern altyapı, hızlı arama, anlık randevu. Sağlık aramak artık kolaylaşıyor.",
   },
@@ -49,7 +50,7 @@ const ISTATISTIKLER = [
 export default function Hakkimizda() {
   return (
     <>
-      <Navbar />
+      <Navbar aktifSayfa="Hakkımızda" />
       <main className="min-h-screen bg-white">
 
         {/* HERO */}
@@ -154,7 +155,7 @@ export default function Hakkimizda() {
             <div className="grid md:grid-cols-3 gap-5">
               {DEGERLELER.map((d) => (
                 <div key={d.baslik} className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-                  <div className="text-3xl mb-4">{d.icon}</div>
+                  <div style={{ color: "#0E7C7B" }} className="mb-4">{d.svg}</div>
                   <h3 style={{ color: "#0D2137" }} className="font-bold text-base mb-2">{d.baslik}</h3>
                   <p className="text-gray-500 text-sm leading-relaxed">{d.aciklama}</p>
                 </div>
@@ -170,16 +171,16 @@ export default function Hakkimizda() {
             <h2 style={{ color: "#0D2137" }} className="text-3xl font-bold mb-10">Bize Ulaşın</h2>
             <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
               {[
-                { etiket: "Genel İletişim", deger: "iletisim@doktorpusula.com", icon: "📧" },
-                { etiket: "Doktor Destek", deger: "doktor@doktorpusula.com", icon: "🏥" },
-                { etiket: "Basın & Medya", deger: "basin@doktorpusula.com", icon: "📰" },
+                { etiket: "Genel İletişim", deger: "iletisim@doktorpusula.com", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={20} height={20}><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg> },
+                { etiket: "Doktor Destek", deger: "doktor@doktorpusula.com", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={20} height={20}><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9,22 9,12 15,12 15,22"/></svg> },
+                { etiket: "Basın & Medya", deger: "basin@doktorpusula.com", icon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={20} height={20}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><line x1="8" y1="7" x2="16" y2="7"/><line x1="8" y1="11" x2="16" y2="11"/><line x1="8" y1="15" x2="12" y2="15"/></svg> },
               ].map((item, i) => (
                 <div
                   key={item.etiket}
                   className={`flex items-center justify-between px-6 py-4 ${i < 2 ? "border-b border-gray-100" : ""}`}
                 >
                   <div className="flex items-center gap-3">
-                    <span className="text-xl">{item.icon}</span>
+                    <span style={{ color: "#0E7C7B" }}>{item.icon}</span>
                     <span className="text-gray-500 text-sm">{item.etiket}</span>
                   </div>
                   <a href={`mailto:${item.deger}`} style={{ color: "#0E7C7B" }} className="font-semibold text-sm hover:underline">

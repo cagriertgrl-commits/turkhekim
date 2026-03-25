@@ -118,7 +118,7 @@ function AkordeonItem({ soru, cevap, link }) {
 export default function SSSPage() {
   return (
     <>
-      <Navbar />
+      <Navbar aktifSayfa="SSS" />
       <main>
         {/* Hero */}
         <section style={{ backgroundColor: "#0D2137" }} className="py-16 px-6">
@@ -145,7 +145,7 @@ export default function SSSPage() {
             {/* Hastalar İçin */}
             <div>
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-2xl">🏥</span>
+                <span style={{ color: "#0E7C7B" }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={22} height={22}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></span>
                 <h2 className="text-xl font-bold" style={{ color: "#0D2137" }}>
                   Hastalar İçin
                 </h2>
@@ -160,7 +160,7 @@ export default function SSSPage() {
             {/* Doktorlar İçin */}
             <div>
               <div className="flex items-center gap-3 mb-5">
-                <span className="text-2xl">👨‍⚕️</span>
+                <span style={{ color: "#0E7C7B" }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={22} height={22}><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>
                 <h2 className="text-xl font-bold" style={{ color: "#0D2137" }}>
                   Doktorlar İçin
                 </h2>
