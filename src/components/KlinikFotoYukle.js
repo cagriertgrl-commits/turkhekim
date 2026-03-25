@@ -73,7 +73,7 @@ export default function KlinikFotoYukle({ baslangicFotolar = [] }) {
               onClick={() => fotoSil(url)}
               className="absolute inset-0 bg-black bg-opacity-50 text-white text-xs font-semibold opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center"
             >
-              🗑️ Sil
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={14} height={14} style={{display:"inline"}}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg> Sil
             </button>
           </div>
         ))}
@@ -88,7 +88,7 @@ export default function KlinikFotoYukle({ baslangicFotolar = [] }) {
               <span className="text-xs text-gray-400">Yükleniyor...</span>
             ) : (
               <>
-                <span className="text-2xl">📷</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={28} height={28} style={{color:"#9CA3AF"}}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
                 <span className="text-xs text-gray-400 text-center px-1">Fotoğraf ekle</span>
               </>
             )}

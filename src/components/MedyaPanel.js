@@ -2,12 +2,12 @@
 import { useState } from "react";
 
 const TIP_ETIKETLER = {
-  makale: { etiket: "📄 Makale", renk: "#1E40AF", bg: "#EFF6FF" },
-  haber: { etiket: "📰 Haber", renk: "#065F46", bg: "#ECFDF5" },
-  dergi: { etiket: "📖 Dergi", renk: "#7C3AED", bg: "#F5F3FF" },
-  kitap: { etiket: "📚 Kitap", renk: "#92400E", bg: "#FFFBEB" },
-  video: { etiket: "🎥 Video", renk: "#DC2626", bg: "#FFF1F2" },
-  sosyal: { etiket: "🔗 Sosyal Medya", renk: "#0369A1", bg: "#F0F9FF" },
+  makale: { etiket: "Makale", renk: "#1E40AF", bg: "#EFF6FF" },
+  haber: { etiket: "Haber", renk: "#065F46", bg: "#ECFDF5" },
+  dergi: { etiket: "Dergi", renk: "#7C3AED", bg: "#F5F3FF" },
+  kitap: { etiket: "Kitap", renk: "#92400E", bg: "#FFFBEB" },
+  video: { etiket: "Video", renk: "#DC2626", bg: "#FFF1F2" },
+  sosyal: { etiket: "Sosyal Medya", renk: "#0369A1", bg: "#F0F9FF" },
 };
 
 export default function MedyaPanel({ baslangicMedya = [] }) {
@@ -54,7 +54,7 @@ export default function MedyaPanel({ baslangicMedya = [] }) {
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between mb-4">
         <h2 style={{ color: "#0D2137" }} className="font-bold text-lg flex items-center gap-2">
-          📰 Yayınlar & Medya
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={20} height={20}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><line x1="10" y1="6" x2="18" y2="6"/><line x1="10" y1="10" x2="18" y2="10"/><line x1="10" y1="14" x2="18" y2="14"/></svg> Yayınlar & Medya
         </h2>
         <button
           onClick={() => setFormAcik(!formAcik)}
@@ -140,7 +140,7 @@ export default function MedyaPanel({ baslangicMedya = [] }) {
 
       {medya.length === 0 ? (
         <div className="text-center py-8">
-          <p className="text-4xl mb-2">📰</p>
+          <div className="flex justify-center mb-2" style={{color:"#CBD5E1"}}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={44} height={44}><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><line x1="10" y1="6" x2="18" y2="6"/><line x1="10" y1="10" x2="18" y2="10"/><line x1="10" y1="14" x2="18" y2="14"/></svg></div>
           <p className="text-gray-400 text-sm">Henüz yayın eklenmemiş.</p>
           <p className="text-gray-400 text-xs mt-1">Makale, haber veya sosyal medya paylaşımlarınızı ekleyin.</p>
         </div>

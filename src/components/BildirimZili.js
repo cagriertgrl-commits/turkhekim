@@ -44,11 +44,12 @@ export default function BildirimZili() {
   }
 
   const tipIkon = {
-    yorum_dogrulama: "💬",
-    randevu_durumu: "📅",
-    yorum_moderasyon: "🔍",
-    anlaşmazlik: "⚠️",
+    yorum_dogrulama: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>,
+    randevu_durumu: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>,
+    yorum_moderasyon: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>,
+    anlaşmazlik: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>,
   };
+  const varsayilanIkon = <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>;
 
   return (
     <div className="relative" ref={ref}>
@@ -89,7 +90,7 @@ export default function BildirimZili() {
                   style={{ backgroundColor: b.okundu ? "#fff" : "#F0FDFA" }}
                   className="flex items-start gap-3 px-4 py-3 hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0"
                 >
-                  <span className="text-lg flex-shrink-0">{tipIkon[b.tip] || "🔔"}</span>
+                  <span className="text-lg flex-shrink-0" style={{color:"#0D2137"}}>{tipIkon[b.tip] || varsayilanIkon}</span>
                   <div className="flex-1 min-w-0">
                     <p style={{ color: "#0D2137" }} className="font-semibold text-xs mb-0.5">{b.baslik}</p>
                     <p className="text-gray-500 text-xs line-clamp-2">{b.mesaj}</p>

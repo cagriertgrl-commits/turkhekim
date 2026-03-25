@@ -405,7 +405,7 @@ export default async function Panel() {
             <div className="bg-white rounded-2xl p-6 shadow-sm">
               <h2 style={{ color: "var(--navy)" }} className="font-bold text-lg mb-1">Profil Teması</h2>
               <p className="text-xs text-gray-400 mb-3">Herkese açık profil sayfanızın görünümünü özelleştirin</p>
-              <TemaSecici mevcutTema={doktor.tema || "varsayilan"} arkaplanUrl={doktor.arka_plan_foto_url} gizleBashlik={true} />
+              <TemaSecici mevcutTema={doktor.tema || "varsayilan"} gizleBashlik={true} />
             </div>
 
             {/* Paket Yükselt kartı — sadece ücretsiz pakette */}

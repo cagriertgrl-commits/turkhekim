@@ -2,12 +2,12 @@
 import { useState, useRef, useEffect } from "react";
 
 const HIZLI_SORULAR = [
-  { etiket: "⚖️ Malpraktis Nedir?", soru: "Tıbbi malpraktis nedir, Türk hukukunda nasıl tanımlanır?" },
-  { etiket: "📋 Emsal Kararlar", soru: "Türkiye'de malpraktis davalarında emsal Yargıtay kararları hakkında bilgi verir misin?" },
-  { etiket: "📄 Aydınlatılmış Rıza", soru: "Aydınlatılmış rıza formu nedir, hukuki önemi nedir?" },
-  { etiket: "🏥 Klinik Kurulum", soru: "Özel klinik açmak için gerekli izinler ve süreçler nelerdir?" },
-  { etiket: "🛡️ Hasta Hakları", soru: "Hasta hakları yönetmeliğine göre doktorların sorumlulukları nelerdir?" },
-  { etiket: "📊 SGK & Sigorta", soru: "Doktor malpraktis sigortası nedir, nasıl alınır?" },
+  { etiket: "Malpraktis Nedir?", soru: "Tıbbi malpraktis nedir, Türk hukukunda nasıl tanımlanır?" },
+  { etiket: "Emsal Kararlar", soru: "Türkiye'de malpraktis davalarında emsal Yargıtay kararları hakkında bilgi verir misin?" },
+  { etiket: "Aydınlatılmış Rıza", soru: "Aydınlatılmış rıza formu nedir, hukuki önemi nedir?" },
+  { etiket: "Klinik Kurulum", soru: "Özel klinik açmak için gerekli izinler ve süreçler nelerdir?" },
+  { etiket: "Hasta Hakları", soru: "Hasta hakları yönetmeliğine göre doktorların sorumlulukları nelerdir?" },
+  { etiket: "SGK & Sigorta", soru: "Doktor malpraktis sigortası nedir, nasıl alınır?" },
 ];
 
 export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
@@ -15,7 +15,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
   const [mesajlar, setMesajlar] = useState([
     {
       rol: "assistant",
-      icerik: "Merhaba! Ben DoktorPusula AI Asistanıyım. 🩺\n\nSize özellikle **malpraktis hukuku**, **emsal kararlar**, **hasta hakları** ve **klinik yönetim** konularında yardımcı olabilirim.\n\nNasıl yardımcı olabilirim?",
+      icerik: "Merhaba! Ben DoktorPusula AI Asistanıyım.\n\nSize özellikle **malpraktis hukuku**, **emsal kararlar**, **hasta hakları** ve **klinik yönetim** konularında yardımcı olabilirim.\n\nNasıl yardımcı olabilirim?",
     },
   ]);
   const [girdi, setGirdi] = useState("");
@@ -72,7 +72,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
       >
         <div className="flex items-center gap-3">
           <div style={{ backgroundColor: "#0D2137" }} className="w-10 h-10 rounded-xl flex items-center justify-center text-lg flex-shrink-0">
-            🤖
+            <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="4"/><line x1="12" y1="9" x2="12" y2="11"/><circle cx="8" cy="16" r="1" fill="white"/><circle cx="16" cy="16" r="1" fill="white"/></svg>
           </div>
           <div className="text-left">
             <h3 style={{ color: "#0D2137" }} className="font-bold text-sm">DoktorPusula AI Asistan</h3>
@@ -86,7 +86,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
             </span>
           ) : (
             <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-1 rounded-full font-semibold">
-              🔒 Premium
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={11} height={11} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>Premium
             </span>
           )}
           <span className="text-gray-400 text-sm">{acik ? "▲" : "▼"}</span>
@@ -95,7 +95,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
 
       {acik && !erisimVar && (
         <div className="border-t border-gray-100 p-6 text-center">
-          <div className="text-4xl mb-3">🚀</div>
+          <div className="flex justify-center mb-3" style={{color:"#0E7C7B"}}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={40} height={40}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
           <h3 style={{ color: "#0D2137" }} className="font-bold mb-2">Premium Özellik</h3>
           <p className="text-sm text-gray-500 mb-4 leading-relaxed">
             AI Asistan, malpraktis hukuku ve klinik yönetim konularında anında yanıt veriyor.
@@ -138,7 +138,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
               <div key={i} className={`flex ${msg.rol === "user" ? "justify-end" : "justify-start"}`}>
                 {msg.rol === "assistant" && (
                   <div style={{ backgroundColor: "#0D2137" }} className="w-7 h-7 rounded-full flex items-center justify-center text-xs mr-2 flex-shrink-0 mt-1">
-                    🤖
+                    <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="4"/><line x1="12" y1="9" x2="12" y2="11"/><circle cx="8" cy="16" r="1" fill="white"/><circle cx="16" cy="16" r="1" fill="white"/></svg>
                   </div>
                 )}
                 <div
@@ -155,7 +155,7 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
             {yukleniyor && (
               <div className="flex justify-start">
                 <div style={{ backgroundColor: "#0D2137" }} className="w-7 h-7 rounded-full flex items-center justify-center text-xs mr-2 flex-shrink-0">
-                  🤖
+                  <svg viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={18} height={18}><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="4"/><line x1="12" y1="9" x2="12" y2="11"/><circle cx="8" cy="16" r="1" fill="white"/><circle cx="16" cy="16" r="1" fill="white"/></svg>
                 </div>
                 <div style={{ backgroundColor: "#F5F7FA" }} className="rounded-2xl px-4 py-3">
                   <div className="flex gap-1">

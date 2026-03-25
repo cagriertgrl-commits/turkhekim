@@ -67,7 +67,7 @@ export default function FotoYukle({ fotoUrl: baslangic, initials }) {
         {!yukleniyor && (
           <div className="absolute inset-0 rounded-2xl bg-black/0 group-hover:bg-black/35 transition-all duration-200 flex items-center justify-center">
             <div className="opacity-0 group-hover:opacity-100 transition-opacity bg-white/90 rounded-xl px-3 py-2 text-xs font-semibold text-gray-800 flex items-center gap-1.5">
-              📷 {fotoUrl ? "Değiştir" : "Yükle"}
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={14} height={14}><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg> {fotoUrl ? "Değiştir" : "Yükle"}
             </div>
           </div>
         )}

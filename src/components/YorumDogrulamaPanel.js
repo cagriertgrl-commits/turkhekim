@@ -39,7 +39,7 @@ export default function YorumDogrulamaPanel({ dogrulamalar = [] }) {
     <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100">
       <div className="flex items-center justify-between mb-4">
         <h2 style={{ color: "#0D2137" }} className="font-bold text-lg flex items-center gap-2">
-          🔍 Yorum Doğrulama
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={20} height={20}><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg> Yorum Doğrulama
         </h2>
         {bekleyenler.length > 0 && (
           <span style={{ backgroundColor: "#FFF3CD", color: "#D97706" }} className="text-xs px-2 py-1 rounded-full font-bold">

@@ -25,7 +25,7 @@ export async function PATCH(request) {
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
   const { tema } = await request.json();
-  const gecerliTemalar = ["varsayilan", "koyu", "teal", "desen"];
+  const gecerliTemalar = ["varsayilan", "koyu", "teal"];
   if (!gecerliTemalar.includes(tema)) {
     return NextResponse.json({ hata: "Geçersiz tema." }, { status: 400 });
   }

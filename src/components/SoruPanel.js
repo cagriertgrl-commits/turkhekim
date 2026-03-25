@@ -82,9 +82,9 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
       {/* Filtre */}
       <div className="flex gap-1.5 mb-4">
         {[
-          { k: "bekleyen", e: `⏳ Bekleyen (${bekleyenler.length})` },
-          { k: "yanitlanan", e: `✅ Yanıtlanan (${yanitlananlar.length})` },
-          { k: "gizli", e: `👁 Gizli (${gizliler.length})` },
+          { k: "bekleyen", e: `Bekleyen (${bekleyenler.length})` },
+          { k: "yanitlanan", e: `Yanıtlanan (${yanitlananlar.length})` },
+          { k: "gizli", e: `Gizli (${gizliler.length})` },
         ].map(({ k, e }) => (
           <button
             key={k}
@@ -101,7 +101,7 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
 
       {gosterilenler.length === 0 ? (
         <div className="text-center py-10">
-          <p className="text-4xl mb-3">❓</p>
+          <div className="flex justify-center mb-3" style={{color:"#CBD5E1"}}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={44} height={44}><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <p className="text-gray-400 text-sm">Bu kategoride soru yok.</p>
         </div>
       ) : (
@@ -118,7 +118,7 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
                     <span className="text-xs font-semibold text-gray-700">{s.soran_adi}</span>
                     <div className="flex items-center gap-1">
                       <span className="text-xs text-gray-400">{new Date(s.created_at).toLocaleDateString("tr-TR")}</span>
-                      <button onClick={() => soruSil(s.id)} className="text-gray-300 hover:text-red-400 text-xs ml-1" title="Soruyu sil">🗑</button>
+                      <button onClick={() => soruSil(s.id)} className="text-gray-300 hover:text-red-400 text-xs ml-1" title="Soruyu sil"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={13} height={13}><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg></button>
                     </div>
                   </div>
                   <p className="text-sm text-gray-700 mt-0.5">{s.soru}</p>
@@ -157,8 +157,8 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
                     <span className="text-xs font-semibold text-gray-700">{s.soran_adi}</span>
                     <div className="flex items-center gap-1.5">
                       {s.gizli
-                        ? <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-0.5 rounded-full">👁 Gizli</span>
-                        : <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full">✓ Yayında</span>
+                        ? <span style={{ backgroundColor: "#FEF3C7", color: "#D97706" }} className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={10} height={10}><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg> Gizli</span>
+                        : <span style={{ backgroundColor: "#D1FAE5", color: "#059669" }} className="text-xs px-2 py-0.5 rounded-full flex items-center gap-1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" width={10} height={10}><polyline points="20 6 9 17 4 12"/></svg> Yayında</span>
                       }
                     </div>
                   </div>
@@ -192,13 +192,13 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
                   onClick={() => { setDuzenlenenId(s.id); setYanitlar((p) => ({ ...p, [s.id]: s.yanit })); }}
                   className="text-xs px-2.5 py-1 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50"
                 >
-                  ✏️ Düzenle
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>Düzenle
                 </button>
                 <button
                   onClick={() => gizleDegistir(s.id, !s.gizli)}
                   className="text-xs px-2.5 py-1 border border-gray-200 rounded-lg text-gray-500 hover:bg-gray-50"
                 >
-                  {s.gizli ? "👁 Yayına Al" : "🚫 Gizle"}
+                  {s.gizli ? <><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>Yayına Al</> : <><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><circle cx="12" cy="12" r="10"/><line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/></svg>Gizle</>}
                 </button>
               </div>
             </div>

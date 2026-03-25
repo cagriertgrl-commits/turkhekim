@@ -3,10 +3,10 @@
 import { useState, useEffect } from "react";
 
 const DURUM_RENK = {
-  bekliyor: { bg: "#FEF3C7", text: "#92400E", etiket: "⏳ Bekliyor" },
-  onaylandi: { bg: "#D1FAE5", text: "#065F46", etiket: "✅ Onaylandı" },
-  iptal: { bg: "#FEE2E2", text: "#991B1B", etiket: "❌ İptal" },
-  tamamlandi: { bg: "#EDE9FE", text: "#5B21B6", etiket: "🏁 Tamamlandı" },
+  bekliyor: { bg: "#FEF3C7", text: "#92400E", etiket: "Bekliyor", ikon: "hourglass" },
+  onaylandi: { bg: "#D1FAE5", text: "#065F46", etiket: "Onaylandı", ikon: "check" },
+  iptal: { bg: "#FEE2E2", text: "#991B1B", etiket: "İptal", ikon: "x" },
+  tamamlandi: { bg: "#EDE9FE", text: "#5B21B6", etiket: "Tamamlandı", ikon: "flag" },
 };
 
 const IPTAL_SEBEPLER = [
@@ -125,10 +125,10 @@ export default function RandevuPanel({ doktorId }) {
       {/* Filtre */}
       <div className="flex gap-1.5 mb-4 flex-wrap">
         {[
-          { k: "bekliyor", e: "⏳ Bekliyor" },
-          { k: "onaylandi", e: "✅ Onaylı" },
-          { k: "tamamlandi", e: "🏁 Tamamlanan" },
-          { k: "iptal", e: "❌ İptal" },
+          { k: "bekliyor", e: "Bekliyor" },
+          { k: "onaylandi", e: "Onaylı" },
+          { k: "tamamlandi", e: "Tamamlanan" },
+          { k: "iptal", e: "İptal" },
           { k: "hepsi", e: "Tümü" },
         ].map(({ k, e }) => (
           <button
@@ -152,7 +152,7 @@ export default function RandevuPanel({ doktorId }) {
         </div>
       ) : filtreliler.length === 0 ? (
         <div className="text-center py-12">
-          <p className="text-4xl mb-3">📅</p>
+          <div className="flex justify-center mb-3" style={{color:"#CBD5E1"}}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={44} height={44}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
           <p className="text-gray-400 text-sm">Bu kategoride randevu yok.</p>
         </div>
       ) : (
@@ -170,16 +170,16 @@ export default function RandevuPanel({ doktorId }) {
                       </span>
                     </div>
                     <a href={`tel:${r.telefon}`} style={{ color: "#0E7C7B" }} className="text-sm font-medium hover:underline">
-                      📞 {r.telefon}
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>{r.telefon}
                     </a>
                     {r.tarih && (
                       <p className="text-xs font-medium mt-1" style={{ color: "#0D2137" }}>
-                        📅 {new Date(r.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" })}
-                        {r.saat && <span style={{ color: "#0E7C7B" }}> ⏰ {r.saat}</span>}
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>{new Date(r.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "long", weekday: "long" })}
+                        {r.saat && <span style={{ color: "#0E7C7B" }}> <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:2}}><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>{r.saat}</span>}
                       </p>
                     )}
                     {r.sikayet && (
-                      <p className="text-xs text-gray-400 mt-1 truncate">💬 {r.sikayet}</p>
+                      <p className="text-xs text-gray-400 mt-1 truncate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={12} height={12} style={{display:"inline",verticalAlign:"middle",marginRight:3}}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>{r.sikayet}</p>
                     )}
                     {r.iptal_sebep && (
                       <p className="text-xs text-red-400 mt-1">
