@@ -1,20 +1,22 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import Link from "next/link";
 
+const S = /** @type {const} */ ({ viewBox:"0 0 24 24", fill:"none", stroke:"currentColor", strokeWidth:"1.8", strokeLinecap:"round", strokeLinejoin:"round", width:12, height:12 });
+
 const KATEGORI_ETIKET = {
-  genel: { etiket: "Genel", renk: "#6B7280", bg: "#F3F4F6" },
-  kongre: { etiket: "🎓 Kongre", renk: "#7C3AED", bg: "#F5F3FF" },
-  "saglik-ipucu": { etiket: "💡 Sağlık İpucu", renk: "#059669", bg: "#ECFDF5" },
-  arastirma: { etiket: "🔬 Araştırma", renk: "#1D4ED8", bg: "#EFF6FF" },
-  duyuru: { etiket: "📣 Duyuru", renk: "#D97706", bg: "#FFFBEB" },
-  firma: { etiket: "🏢 Firma", renk: "#0E7C7B", bg: "#E6F4F4" },
+  genel:         { etiket: "Genel",       renk: "#6B7280", bg: "#F3F4F6", svg: <svg {...S}><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 3"/></svg> },
+  kongre:        { etiket: "Kongre",      renk: "#7C3AED", bg: "#F5F3FF", svg: <svg {...S}><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg> },
+  "saglik-ipucu":{ etiket: "Sağlık İpucu",renk: "#059669", bg: "#ECFDF5", svg: <svg {...S}><circle cx="12" cy="12" r="9"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg> },
+  arastirma:     { etiket: "Araştırma",   renk: "#1D4ED8", bg: "#EFF6FF", svg: <svg {...S}><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg> },
+  duyuru:        { etiket: "Duyuru",      renk: "#D97706", bg: "#FFFBEB", svg: <svg {...S}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0"/></svg> },
+  firma:         { etiket: "Firma",       renk: "#0E7C7B", bg: "#E6F4F4", svg: <svg {...S}><rect x="2" y="7" width="20" height="15" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg> },
 };
 
 function zaman(iso) {
   const d = new Date(iso);
   const now = new Date();
-  const fark = Math.floor((now - d) / 1000);
+  const fark = Math.floor((now.getTime() - d.getTime()) / 1000);
   if (fark < 60) return "az önce";
   if (fark < 3600) return `${Math.floor(fark / 60)} dk önce`;
   if (fark < 86400) return `${Math.floor(fark / 3600)} sa önce`;
@@ -22,7 +24,7 @@ function zaman(iso) {
   return d.toLocaleDateString("tr-TR");
 }
 
-function PostKart({ post, session, onBegen }) {
+function PostKart({ post, session }) {
   const [begeniSayisi, setBegeniSayisi] = useState(post.begeni_sayisi || 0);
   const [begendi, setBegendi] = useState(post.begendi || false);
   const [yukleniyor, setYukleniyor] = useState(false);
@@ -76,8 +78,8 @@ function PostKart({ post, session, onBegen }) {
           </div>
         </div>
         <div className="flex items-center gap-2 flex-shrink-0">
-          <span style={{ backgroundColor: kat.bg, color: kat.renk }} className="text-xs px-2 py-0.5 rounded-full font-semibold">
-            {kat.etiket}
+          <span style={{ backgroundColor: kat.bg, color: kat.renk }} className="inline-flex items-center gap-1 text-xs px-2 py-0.5 rounded-full font-semibold">
+            {kat.svg}{kat.etiket}
           </span>
           <span className="text-xs text-gray-400">{zaman(post.created_at)}</span>
         </div>
@@ -109,7 +111,7 @@ function PostKart({ post, session, onBegen }) {
           style={{ color: begendi ? "#DC2626" : "#9CA3AF" }}
           title={session ? "" : "Beğenmek için giriş yapın"}
         >
-          <span className="text-base">{begendi ? "❤️" : "🤍"}</span>
+          <svg viewBox="0 0 24 24" fill={begendi ? "currentColor" : "none"} stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={14} height={14}><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78L12 21.23l8.84-8.84 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
           {begeniSayisi > 0 && <span>{begeniSayisi}</span>}
           <span>{begendi ? "Beğenildi" : "Beğen"}</span>
         </button>
@@ -166,11 +168,11 @@ function PaylasiForm({ session, kategori, onYeni }) {
           onChange={e => setSeciliKat(e.target.value)}
           className="text-xs border border-gray-200 rounded-lg px-2 py-1.5 focus:outline-none focus:ring-2 focus:ring-teal-500"
         >
-          <option value="genel">📢 Genel</option>
-          <option value="kongre">🎓 Kongre & Etkinlik</option>
-          <option value="saglik-ipucu">💡 Sağlık İpucu</option>
-          <option value="arastirma">🔬 Araştırma</option>
-          <option value="duyuru">📣 Duyuru</option>
+          <option value="genel">Genel</option>
+          <option value="kongre">Kongre & Etkinlik</option>
+          <option value="saglik-ipucu">Sağlık İpucu</option>
+          <option value="arastirma">Araştırma</option>
+          <option value="duyuru">Duyuru</option>
         </select>
         <input
           value={etiketler}
@@ -227,7 +229,9 @@ export default function AkisIstemci({ baslangicPostlar, session, kategori }) {
 
       {postlar.length === 0 ? (
         <div className="text-center py-16">
-          <p className="text-4xl mb-3">📭</p>
+          <div style={{ color: "#CBD5E1" }} className="flex justify-center mb-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={48} height={48}><path d="M22 12h-6l-2 3h-4l-2-3H2"/><path d="M5.45 5.11L2 12v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-6l-3.45-6.89A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z"/></svg>
+          </div>
           <p className="text-gray-500 text-sm">Henüz paylaşım yok.</p>
           {session && <p className="text-gray-400 text-xs mt-1">İlk paylaşımı siz yapın!</p>}
         </div>
