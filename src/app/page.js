@@ -20,12 +20,12 @@ function rozetHesapla(doktor) {
 }
 
 const POPULER_SEHIRLER = [
-  { ad: "İstanbul", slug: "istanbul", foto: "https://images.unsplash.com/photo-1524231757912-21f4fe3a7200?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "Ankara", slug: "ankara", foto: "https://images.unsplash.com/photo-1578894303900-16f3a135cac1?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "İzmir", slug: "izmir", foto: "https://images.unsplash.com/photo-1581449516-de23d18a9e79?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "Antalya", slug: "antalya", foto: "https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "Bursa", slug: "bursa", foto: "https://images.unsplash.com/photo-1506905925345-e44c4ea2c478?auto=format&fit=crop&w=400&h=300&q=80" },
-  { ad: "Adana", slug: "adana", foto: "https://images.unsplash.com/photo-1504214208698-ea1916a2195a?auto=format&fit=crop&w=400&h=300&q=80" },
+  { ad: "İstanbul", slug: "istanbul", foto: "/istanbul.jpg" },
+  { ad: "Ankara", slug: "ankara", foto: "/ankara.jpg" },
+  { ad: "İzmir", slug: "izmir", foto: "/izmir.jpg" },
+  { ad: "Antalya", slug: "antalya", foto: "/antalya.jpg" },
+  { ad: "Bursa", slug: "bursa", foto: "/bursa.jpg" },
+  { ad: "Adana", slug: "adana", foto: "/adana.jpg" },
   { ad: "Eskişehir", slug: "eskisehir", foto: "/eskisehir.jpg" },
 ];
 
