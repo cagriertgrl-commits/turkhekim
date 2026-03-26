@@ -2,40 +2,40 @@
 import { useState } from "react";
 import Link from "next/link";
 
-const MakaleIcon = ({ name }) => {
+const MakaleIcon = ({ name, color = "currentColor" }) => {
   const icons = {
     ear: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M12.02 20c.88 0 1.71-.35 2.33-.97.62-.62.97-1.45.97-2.33 0-1.83-1.5-3.3-3.3-3.3-1.83 0-3.3 1.5-3.3 3.3 0 .88.35 1.71.97 2.33.62.62 1.45.97 2.33.97zm0-6.6c2.57 0 4.66-2.09 4.66-4.66S14.59 4.08 12.02 4.08 7.36 6.17 7.36 8.74s2.09 4.66 4.66 4.66z" />
       </svg>
     ),
     nose: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M9 11c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm6 0c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm-6 4c-2.2 0-4 1.8-4 4 0 .3.2.5.5.5.3 0 .5-.2.5-.5 0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9c0 .3.2.5.5.5.3 0 .5-.2.5-.5 0-2.2-1.8-4-4-4zm6 0c-2.2 0-4 1.8-4 4 0 .3.2.5.5.5.3 0 .5-.2.5-.5 0-1.6 1.3-2.9 2.9-2.9s2.9 1.3 2.9 2.9c0 .3.2.5.5.5.3 0 .5-.2.5-.5 0-2.2-1.8-4-4-4z" />
       </svg>
     ),
     sleep: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M19.35 10.04C18.67 6.59 15.64 4 12 4 9.11 4 6.6 5.64 5.35 8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96z" />
       </svg>
     ),
     injection: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M17.1 12.3c-.2-.2-.5-.3-.7-.3-.1 0-.2 0-.3.1l-1.4.4.6-1.6c.1-.2.1-.5 0-.7l-3.5-6c-.2-.3-.5-.5-.9-.5s-.7.2-.9.5l-3.5 6c-.1.2-.1.5 0 .7l.6 1.6-1.4-.4c-.1 0-.2-.1-.3-.1-.3 0-.5.1-.7.3-.4.4-.4 1 0 1.4l4.4 4.4c.2.2.4.3.7.3s.5-.1.7-.3l4.4-4.4c.4-.4.4-1 0-1.4z" />
       </svg>
     ),
     eye: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
       </svg>
     ),
     hair: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M17.75 7L14 3.25l-10 10V17h3.75L17.75 7zm2.96-2.96c.39-.39.39-1.02 0-1.41L18.37.29c-.39-.39-1.02-.39-1.41 0L15.96 2.3c-.39.39-.39 1.02 0 1.41l1.41 1.41c.39.39 1.02.39 1.41 0L20.71 4.04zM6 19.5c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z" />
       </svg>
     ),
     article: (
-      <svg fill="currentColor" viewBox="0 0 24 24">
+      <svg fill={color} viewBox="0 0 24 24">
         <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-8-6z" />
       </svg>
     ),
@@ -116,7 +116,7 @@ export default function SaglikRehberiIcerik({ makaleler }) {
               <Link href={filtreli[0].href} className="block mb-8 group">
                 <div style={{ background: "linear-gradient(135deg, #0D2137, #0a3d62)" }} className="rounded-2xl p-8 flex flex-col md:flex-row items-center gap-8 hover:opacity-95 transition-opacity">
                   <div className="text-white flex-shrink-0 w-28 h-28 flex items-center justify-center bg-white bg-opacity-10 rounded-2xl text-5xl">
-                    <MakaleIcon name={filtreli[0].goruntu} />
+                    <MakaleIcon name={filtreli[0].goruntu} color="#4DD9D8" />
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-3">
@@ -154,8 +154,8 @@ export default function SaglikRehberiIcerik({ makaleler }) {
                     href={makale.href}
                     className="block bg-white rounded-2xl shadow-sm hover:shadow-lg transition-all hover:-translate-y-0.5 overflow-hidden border border-gray-100 group"
                   >
-                    <div style={{ backgroundColor: renk.bg }} className="h-36 flex items-center justify-center text-4xl" style={{ color: renk.text }}>
-                      <MakaleIcon name={makale.goruntu} />
+                    <div style={{ backgroundColor: renk.bg }} className="h-36 flex items-center justify-center text-4xl">
+                      <MakaleIcon name={makale.goruntu} color={renk.text} />
                     </div>
                     <div className="p-5">
                       <div className="flex items-center gap-2 mb-2">

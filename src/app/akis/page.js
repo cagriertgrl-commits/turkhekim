@@ -11,36 +11,42 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 const KATEGORILER = [
-  { deger: "", etiket: "Tümü", svg: null },
+  { deger: "", etiket: "Tümü", svg: null, renk: null },
   {
     deger: "genel",
     etiket: "Genel",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    renk: "#6B7280",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="#6B7280" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
   {
     deger: "kongre",
     etiket: "Kongre & Etkinlik",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M6 12v5c3 3 9 3 12 0v-5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    renk: "#7C3AED",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="#7C3AED" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M6 12v5c3 3 9 3 12 0v-5" stroke="#7C3AED" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
   {
     deger: "saglik-ipucu",
     etiket: "Sağlık İpucu",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+    renk: "#059669",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><circle cx="12" cy="12" r="9" stroke="#059669" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><line x1="12" y1="8" x2="12" y2="12" stroke="#059669" strokeWidth="1.5" strokeLinecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="#059669" strokeWidth="1.5" strokeLinecap="round"/></svg>
   },
   {
     deger: "arastirma",
     etiket: "Araştırma",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    renk: "#1D4ED8",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><circle cx="11" cy="11" r="7" stroke="#1D4ED8" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="m21 21-4.35-4.35" stroke="#1D4ED8" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
   {
     deger: "duyuru",
     etiket: "Duyuru",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    renk: "#D97706",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="#D97706" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
   {
     deger: "firma",
     etiket: "Firma",
-    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><rect x="2" y="7" width="20" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+    renk: "#0E7C7B",
+    svg: <svg viewBox="0 0 24 24" width={14} height={14}><rect x="2" y="7" width="20" height="15" rx="2" stroke="#0E7C7B" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="#0E7C7B" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
   },
 ];
 
