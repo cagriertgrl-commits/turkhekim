@@ -134,12 +134,17 @@ export default async function DoktorProfil({ params }) {
     <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: "#F5F7FA" }}>
       <Navbar />
 
+      {/* Schema.org markup */}
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        "@context": "https://schema.org", "@type": "Physician",
-        "name": unvanAd, "medicalSpecialty": doktor.uzmanlik,
-        "address": { "@type": "PostalAddress", "addressLocality": doktor.sehir, "addressCountry": "TR" },
-        "url": doktor.website || undefined,
-        "aggregateRating": doktor.yorum_sayisi > 0 ? { "@type": "AggregateRating", "ratingValue": doktor.puan, "reviewCount": doktor.yorum_sayisi } : undefined,
+        "@context": "https://schema.org",
+        "@type": "Physician",
+        "name": unvanAd || "Doktor",
+        "medicalSpecialty": doktor?.uzmanlik || "",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": doktor?.sehir || "",
+          "addressCountry": "TR"
+        }
       }) }} />
 
       {/* HERO */}
