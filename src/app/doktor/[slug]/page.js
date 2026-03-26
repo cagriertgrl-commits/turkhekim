@@ -83,11 +83,15 @@ export default async function DoktorProfil({ params }) {
 
   // Profil teması
   const tema = doktor.tema || "varsayilan";
-  const heroStyle = tema === "teal"
-    ? { background: "linear-gradient(135deg, var(--teal) 0%, var(--success) 100%)" }
-    : tema === "koyu"
-    ? { background: "linear-gradient(135deg, #060f1a 0%, var(--navy) 100%)" }
-    : { background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%)" }; // varsayilan + desen
+  const temaStiller = {
+    beyaz: { background: "#FFFFFF" },
+    varsayilan: { background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" },
+    turkuaz: { background: "linear-gradient(135deg, #0E7C7B 0%, #06B6D4 100%)" },
+    koyu: { background: "linear-gradient(135deg, #1F2937 0%, #111827 100%)" },
+    mor: { background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" },
+    pembe: { background: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)" },
+  };
+  const heroStyle = temaStiller[tema] || temaStiller.varsayilan;
 
   const adresTipEtiket = {
     muayenehane: "🏠 Muayenehane",

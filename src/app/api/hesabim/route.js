@@ -29,7 +29,7 @@ export async function PATCH(request) {
 
   // Tema alanı varsa kaydet
   if (tema !== undefined) {
-    const gecerliTemalar = ["varsayilan", "koyu", "teal"];
+    const gecerliTemalar = ["beyaz", "varsayilan", "turkuaz", "koyu", "mor", "pembe"];
     if (!gecerliTemalar.includes(tema)) {
       return NextResponse.json({ hata: "Geçersiz tema." }, { status: 400 });
     }

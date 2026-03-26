@@ -4,9 +4,12 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 const TEMALAR = [
-  { id: "varsayilan", ad: "Varsayılan", stil: { backgroundColor: "#F5F7FA" } },
-  { id: "koyu", ad: "Koyu Mavi", stil: { backgroundColor: "#0D2137" } },
-  { id: "teal", ad: "Teal", stil: { background: "linear-gradient(135deg, #0E7C7B, #059669)" } },
+  { id: "beyaz", ad: "Beyaz", stil: { backgroundColor: "#FFFFFF", border: "1px solid #E5E7EB" } },
+  { id: "varsayilan", ad: "Mavi", stil: { background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" } },
+  { id: "turkuaz", ad: "Turkuaz", stil: { background: "linear-gradient(135deg, #0E7C7B 0%, #06B6D4 100%)" } },
+  { id: "koyu", ad: "Koyu", stil: { background: "linear-gradient(135deg, #1F2937 0%, #111827 100%)" } },
+  { id: "mor", ad: "Mor", stil: { background: "linear-gradient(135deg, #7C3AED 0%, #6D28D9 100%)" } },
+  { id: "pembe", ad: "Pembe", stil: { background: "linear-gradient(135deg, #EC4899 0%, #DB2777 100%)" } },
 ];
 
 export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
@@ -62,7 +65,7 @@ export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
           {mesaj && !kaydediliyor && <span className={`text-xs ${mesaj.startsWith("✓") ? "text-green-600" : "text-red-600"}`}>{mesaj}</span>}
         </div>
       )}
-      <div className="grid grid-cols-3 gap-1.5">
+      <div className="grid grid-cols-6 gap-1.5">
         {TEMALAR.map((t) => {
           return (
             <button
@@ -87,9 +90,9 @@ export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
           );
         })}
       </div>
-      <div className="flex justify-between mt-1">
+      <div className="grid grid-cols-6 gap-1.5 mt-2">
         {TEMALAR.map((t) => (
-          <span key={t.id} className="text-xs text-gray-400 text-center" style={{ width: "33%" }}>{t.ad}</span>
+          <span key={t.id} className="text-xs text-gray-400 text-center">{t.ad}</span>
         ))}
       </div>
     </div>
