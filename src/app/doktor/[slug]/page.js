@@ -223,10 +223,7 @@ export default async function DoktorProfil({ params }) {
                     width="100%"
                     height="240"
                     style={{ display: "block" }}
-                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${doktor.boylam}!3d${doktor.enlem}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s!2s${doktor.enlem},${doktor.boylam}!5e0!3m2!1str!2str`}
-                    allowFullScreen=""
-                    loading="lazy"
-                    referrerPolicy="no-referrer-when-downgrade"
+                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${doktor.boylam - 0.01},${doktor.enlem - 0.01},${parseFloat(doktor.boylam) + 0.01},${parseFloat(doktor.enlem) + 0.01}&layer=mapnik&marker=${doktor.enlem},${doktor.boylam}`}
                   />
                   <a
                     href={`https://www.google.com/maps/search/?api=1&query=${doktor.enlem},${doktor.boylam}`}
