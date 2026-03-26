@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const TEMALAR = [
   { id: "varsayilan", ad: "Varsayılan", stil: { backgroundColor: "#F5F7FA" } },
@@ -9,26 +10,37 @@ const TEMALAR = [
 ];
 
 export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
+  const router = useRouter();
   const [tema, setTema] = useState(mevcutTema || "varsayilan");
   const [kaydediliyor, setKaydediliyor] = useState(false);
   const [mesaj, setMesaj] = useState(null);
 
   async function sec(yeniTema) {
+    console.log("Tema seçildi:", yeniTema);
     setTema(yeniTema);
     setKaydediliyor(true);
+    setMesaj(null);
     try {
       const r = await fetch("/api/hesabim", {
         method: "PATCH",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tema: yeniTema }),
       });
+      console.log("API yanıt status:", r.status);
+      const data = await r.json();
+      console.log("API yanıt:", data);
+
       if (r.ok) {
         setMesaj("✓ Kaydedildi");
-        setTimeout(() => setMesaj(null), 2000);
+        // Sayfa yenileme (tema değişikliği hemen görünsün)
+        setTimeout(() => {
+          router.refresh();
+        }, 500);
       } else {
-        setMesaj("✗ Kaydedilemedi");
+        setMesaj("✗ " + (data.hata || "Kaydedilemedi"));
       }
-    } catch (_) {
+    } catch (err) {
+      console.error("Tema kaydetme hatası:", err);
       setMesaj("✗ Bağlantı hatası");
     } finally {
       setKaydediliyor(false);
