@@ -28,11 +28,10 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
       const map = L.map(mapRef.current).setView([konum.enlem, konum.boylam], 15);
       instanceRef.current = map;
 
-      // CartoDB Voyager - daha detaylı ve renkli harita
-      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastered/voyager/{z}/{x}/{y}{r}.png", {
+      // OpenStreetMap - güvenilir ve hızlı
+      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
         attribution: '© OpenStreetMap contributors',
-        subdomains: "abcd",
-        maxZoom: 20,
+        maxZoom: 19,
       }).addTo(map);
 
       // Attribution kontrolünü kapat (Haritada Aç link'ini gizle)
