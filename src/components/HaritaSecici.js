@@ -30,10 +30,13 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
 
       // CartoDB Voyager - daha detaylı ve renkli harita
       L.tileLayer("https://{s}.basemaps.cartocdn.com/rastered/voyager/{z}/{x}/{y}{r}.png", {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        attribution: '© OpenStreetMap contributors',
         subdomains: "abcd",
         maxZoom: 20,
       }).addTo(map);
+
+      // Attribution kontrolünü kapat (Haritada Aç link'ini gizle)
+      map.attributionControl.setPrefix(false);
 
       // Custom marker icon - daha belirgin
       const markerIcon = L.divIcon({
