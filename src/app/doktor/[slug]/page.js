@@ -92,15 +92,18 @@ export default async function DoktorProfil({ params }) {
 
   sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme,0)+1 WHERE id=${doktor.id}`.catch(()=>{});
 
-  const tamIsim = [doktor.ad, doktor.soyad].filter(Boolean).join(" ");
+  // Güvenli veri çekimi
+  const ad = doktor?.ad || "";
+  const soyad = doktor?.soyad || "";
+  const tamIsim = [ad, soyad].filter(Boolean).join(" ") || "Doktor";
   const initials = (tamIsim.split(" ").map(n => n[0]).join("").slice(0, 2) || "DR").toUpperCase();
-  const unvanAd = doktor.unvan ? `${doktor.unvan} ${tamIsim}` : tamIsim;
-  const sehirSlug = slugify(doktor.sehir || "istanbul");
-  const uzmanlikSlug = slugify(doktor.uzmanlik || "doktor");
+  const unvanAd = doktor?.unvan ? `${doktor.unvan} ${tamIsim}` : tamIsim;
+  const sehirSlug = slugify(doktor?.sehir || "istanbul");
+  const uzmanlikSlug = slugify(doktor?.uzmanlik || "doktor");
 
-  const sigortalar = (doktor.sigorta || "").split(",").map(s => s.trim()).filter(Boolean);
-  const hizmetler = (doktor.hizmetler || "").split("\n").map(s => s.trim()).filter(Boolean);
-  const diller = (doktor.diller || "").split(",").map(s => s.trim()).filter(Boolean);
+  const sigortalar = ((doktor?.sigorta || "") + "").split(",").map(s => s.trim()).filter(Boolean);
+  const hizmetler = ((doktor?.hizmetler || "") + "").split("\n").map(s => s.trim()).filter(Boolean);
+  const diller = ((doktor?.diller || "") + "").split(",").map(s => s.trim()).filter(Boolean);
 
   // Profil teması
   const tema = doktor.tema || "varsayilan";
