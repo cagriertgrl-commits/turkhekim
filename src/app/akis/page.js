@@ -11,13 +11,37 @@ export const metadata = {
 export const dynamic = "force-dynamic";
 
 const KATEGORILER = [
-  { deger: "", etiket: "Tümü" },
-  { deger: "genel", etiket: "📢 Genel" },
-  { deger: "kongre", etiket: "🎓 Kongre & Etkinlik" },
-  { deger: "saglik-ipucu", etiket: "💡 Sağlık İpucu" },
-  { deger: "arastirma", etiket: "🔬 Araştırma" },
-  { deger: "duyuru", etiket: "📣 Duyuru" },
-  { deger: "firma", etiket: "🏢 Firma" },
+  { deger: "", etiket: "Tümü", svg: null },
+  {
+    deger: "genel",
+    etiket: "Genel",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  },
+  {
+    deger: "kongre",
+    etiket: "Kongre & Etkinlik",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 10v6M2 10l10-5 10 5-10 5z" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M6 12v5c3 3 9 3 12 0v-5" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  },
+  {
+    deger: "saglik-ipucu",
+    etiket: "Sağlık İpucu",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><line x1="12" y1="8" x2="12" y2="12" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/><line x1="12" y1="16" x2="12.01" y2="16" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/></svg>
+  },
+  {
+    deger: "arastirma",
+    etiket: "Araştırma",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="m21 21-4.35-4.35" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  },
+  {
+    deger: "duyuru",
+    etiket: "Duyuru",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><path d="M22 17H2a3 3 0 0 0 3-3V9a7 7 0 0 1 14 0v5a3 3 0 0 0 3 3zm-8.27 4a2 2 0 0 1-3.46 0" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  },
+  {
+    deger: "firma",
+    etiket: "Firma",
+    svg: <svg fill="currentColor" viewBox="0 0 24 24" width={14} height={14}><rect x="2" y="7" width="20" height="15" rx="2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" stroke="currentColor" strokeWidth="1.5" fill="none" strokeLinecap="round" strokeLinejoin="round"/></svg>
+  },
 ];
 
 export default async function AkisSayfasi({ searchParams }) {
@@ -71,7 +95,7 @@ export default async function AkisSayfasi({ searchParams }) {
 
   return (
     <div className="min-h-screen" style={{ backgroundColor: "#F5F7FA" }}>
-      <Navbar />
+      <Navbar aktifSayfa="Sağlık Akışı" />
 
       <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-10">
         <div className="max-w-3xl mx-auto">
@@ -87,12 +111,13 @@ export default async function AkisSayfasi({ searchParams }) {
             <a
               key={k.deger}
               href={k.deger ? `/akis?kategori=${k.deger}` : "/akis"}
-              className="flex-shrink-0 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
+              className="flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold transition-all"
               style={{
                 backgroundColor: kategori === k.deger ? "#0D2137" : "#F3F4F6",
                 color: kategori === k.deger ? "#fff" : "#6B7280",
               }}
             >
+              {k.svg && <span style={{ display: "flex", alignItems: "center" }}>{k.svg}</span>}
               {k.etiket}
             </a>
           ))}
@@ -104,7 +129,6 @@ export default async function AkisSayfasi({ searchParams }) {
           baslangicPostlar={postlarJson}
           session={session ? { id: session.id, ad: session.ad } : null}
           kategori={kategori}
-          kategoriler={KATEGORILER}
         />
       </div>
     </div>
