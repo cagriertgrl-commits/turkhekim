@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -r \"TODO\\\\|FIXME\\\\|HACK\\\\|XXX\" \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" --include=\"*.js\" --include=\"*.jsx\" --include=\"*.ts\" --include=\"*.tsx\" 2>/dev/null | head -50)",
+      "Bash(grep -r \"import.*from.*unused\\\\|require.*unused\" \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" --include=\"*.js\" --include=\"*.jsx\" 2>/dev/null | head -20)",
+      "Bash(grep -r \"console\\\\.log\" \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" --include=\"*.js\" --include=\"*.jsx\" --include=\"*.tsx\" 2>/dev/null | head -30)",
+      "Bash(ls -la \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/app/admin\" | grep -E \"\\\\.js$\")",
+      "Bash(ls -la \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/app\" | grep -E \"\\\\.js$\")",
+      "Bash(find \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" -name \"*.js\" | xargs grep -l \"import.*fetch\\\\|export.*fetch\" | head -20)",
+      "Bash(find \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" -type f \\\\( -name \"*.js\" -o -name \"*.ts\" \\\\) | xargs grep -l \"export.*fetch\\\\|export.*apiCall\\\\|export.*api\\\\|export const.*client\" | grep -E \"\\(util|helper|lib|service\\)\" | head -20)",
+      "Bash(find \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src\" -type f -name \"*.js\" | xargs grep -l \"export.*const\\\\|export function\\\\|export default\" | grep -E \"api|fetch|http|request|client\" | head -20)",
+      "Bash(ls -la \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/lib/\" | grep -E \"\\\\.js$|\\\\.ts$\")",
+      "Bash(find \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/app/api\" -name \"route.js\" -exec grep -l \"export async function POST\\\\|export async function PUT\\\\|export async function PATCH\" {})",
+      "Bash(while read:*)",
+      "Bash(do if:*)",
+      "Read(//c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/**)",
+      "Bash(then echo:*)",
+      "Bash(grep -h \"rateLimit\" \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/app/api\"/**/*.js 2>/dev/null | grep -oE \"rateLimit\\\\([^)]+\\\\)\" | sort -u)",
+      "Bash(npx next:*)"
+    ]
+  },
+  "effortLevel": "low",
+  "claudeMdExcludes": ["C:/Users/cagri/OneDrive/Desktop/CLAUDE.md"],
+  "hooks": {
+    "PreCompact": [
+      {
+        "matcher": "auto",
+        "hooks": [
+          {
+            "type": "agent",
+            "model": "claude-haiku-4-5-20251001",
+            "prompt": "Bu konuşmada yapılan teknik çalışmayı özetle. Şunları kısa ve madde madde listele: (1) değiştirilen veya oluşturulan dosyalar ve ne değişti, (2) alınan kritik teknik kararlar, (3) çözülen hatalar, (4) tamamlanmamış bekleyen görevler. Özet compact sonrası ana modele bağlam olarak verilecektir — teknik detayları koru.",
+            "statusMessage": "Haiku bağlamı özetliyor...",
+            "timeout": 45
+          }
+        ]
+      }
+    ]
+  }
+}
