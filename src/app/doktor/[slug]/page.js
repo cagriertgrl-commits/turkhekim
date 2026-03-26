@@ -129,7 +129,8 @@ export default async function DoktorProfil({ params }) {
     `Merhaba ${unvanAd},\n\nDoktorPusula üzerinden profilinizi inceledim ve randevu almak istiyorum.\n\nAd Soyad: \nŞikayet: \nTercih Edilen Tarih: \n\nTeşekkürler.`
   );
 
-  return (
+  try {
+    return (
     <div className="min-h-screen overflow-x-hidden" style={{ backgroundColor: "#F5F7FA" }}>
       <Navbar />
 
@@ -528,5 +529,19 @@ export default async function DoktorProfil({ params }) {
         </div>
       </div>
     </div>
-  );
+    );
+  } catch (err) {
+    console.error("Doktor profil render hatası:", err);
+    return (
+      <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-red-600 mb-2">⚠️ Sayfa Yüklenemedi</h1>
+          <p className="text-gray-600 mb-4">Doktor profili yüklenirken bir hata oluştu.</p>
+          <a href="/" className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            Ana sayfaya dön
+          </a>
+        </div>
+      </div>
+    );
+  }
 }
