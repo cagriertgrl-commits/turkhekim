@@ -217,23 +217,57 @@ export default async function DoktorProfil({ params }) {
             {doktor.enlem && doktor.boylam && (
               <div className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100">
                 <h3 className="font-bold text-gray-900 mb-3 text-sm">📍 Konum</h3>
-                <div style={{ borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}>
+                <div style={{ position: "relative", borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}>
                   <iframe
                     title="Konum"
                     width="100%"
-                    height="200"
+                    height="240"
                     style={{ display: "block" }}
-                    src={`https://www.openstreetmap.org/export/embed.html?bbox=${doktor.boylam - 0.01},${doktor.enlem - 0.01},${parseFloat(doktor.boylam) + 0.01},${parseFloat(doktor.enlem) + 0.01}&layer=mapnik&marker=${doktor.enlem},${doktor.boylam}`}
+                    src={`https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d${doktor.boylam}!3d${doktor.enlem}!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s!2s${doktor.enlem},${doktor.boylam}!5e0!3m2!1str!2str`}
+                    allowFullScreen=""
+                    loading="lazy"
+                    referrerPolicy="no-referrer-when-downgrade"
                   />
+                  <a
+                    href={`https://www.google.com/maps/search/?api=1&query=${doktor.enlem},${doktor.boylam}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      position: "absolute",
+                      top: 10,
+                      right: 10,
+                      zIndex: 1000,
+                      backgroundColor: "#0E7C7B",
+                      padding: "8px 12px",
+                      borderRadius: 8,
+                      color: "white",
+                      fontSize: "12px",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                      boxShadow: "0 4px 12px rgba(14, 124, 123, 0.25)",
+                      display: "flex",
+                      alignItems: "center",
+                      gap: 6,
+                      cursor: "pointer",
+                      transition: "all 0.3s"
+                    }}
+                    onMouseEnter={(e) => {
+                      e.target.style.backgroundColor = "#06B6D4";
+                      e.target.style.boxShadow = "0 6px 16px rgba(14, 124, 123, 0.35)";
+                      e.target.style.transform = "translateY(-2px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.target.style.backgroundColor = "#0E7C7B";
+                      e.target.style.boxShadow = "0 4px 12px rgba(14, 124, 123, 0.25)";
+                      e.target.style.transform = "translateY(0)";
+                    }}
+                  >
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5z" />
+                    </svg>
+                    <span>Google Haritalar</span>
+                  </a>
                 </div>
-                <a
-                  href={`https://www.openstreetmap.org/?mlat=${doktor.enlem}&mlon=${doktor.boylam}#map=16/${doktor.enlem}/${doktor.boylam}`}
-                  target="_blank" rel="noopener noreferrer"
-                  style={{ color: "#0E7C7B" }}
-                  className="text-xs font-semibold mt-2 inline-block hover:underline"
-                >
-                  Haritada Aç →
-                </a>
               </div>
             )}
 
