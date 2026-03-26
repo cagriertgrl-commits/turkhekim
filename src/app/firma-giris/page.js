@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 
 export default function FirmaGiris() {
@@ -90,9 +91,9 @@ export default function FirmaGiris() {
 
           <p className="text-center text-xs text-gray-400 mt-6">
             Henüz hesabınız yok mu?{" "}
-            <a href="/medikal-firma#basvuru" style={{ color: "var(--teal)" }} className="font-medium hover:underline">
+            <Link href="/medikal-firma#basvuru" style={{ color: "var(--teal)" }} className="font-medium hover:underline">
               Başvurun
-            </a>
+            </Link>
           </p>
         </div>
       </div>

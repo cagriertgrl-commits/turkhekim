@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 // adim: bekliyor | kayit | bitti | transkript | ozetleniyor | ozet
 export default function GorusmeOzetSayfasi() {
@@ -232,7 +233,7 @@ export default function GorusmeOzetSayfasi() {
       {/* Navbar */}
       <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4 sticky top-0 z-40">
         <div className="max-w-3xl mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5">
             <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="15" fill="#0E7C7B"/>
               <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="0.6" opacity="0.35"/>
@@ -248,8 +249,8 @@ export default function GorusmeOzetSayfasi() {
               <circle cx="16" cy="16" r="0.8" fill="#C9A84C"/>
             </svg>
             <span className="text-white font-bold">Doktor<span style={{ color: "#C9A84C" }}>Pusula</span></span>
-          </a>
-          <a href="/panel" className="text-gray-300 hover:text-white text-sm">← Panele Dön</a>
+          </Link>
+          <Link href="/panel" className="text-gray-300 hover:text-white text-sm">← Panele Dön</Link>
         </div>
       </nav>
 

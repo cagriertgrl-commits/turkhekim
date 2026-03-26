@@ -25,10 +25,6 @@ export default function FirmaPaneli() {
   const [duzenlenenId, setDuzenlenenId] = useState(null);
   const [duzenlemeForm, setDuzenlemeForm] = useState({});
 
-  useEffect(() => {
-    yukleFirma();
-  }, []);
-
   async function yukleFirma() {
     const [firmaRes, urunRes] = await Promise.all([
       fetch("/api/firma/beni-getir"),
@@ -50,6 +46,10 @@ export default function FirmaPaneli() {
     }
     setYukleniyor(false);
   }
+
+  useEffect(() => {
+    yukleFirma();
+  }, []);
 
   async function urunEkle(e) {
     e.preventDefault();

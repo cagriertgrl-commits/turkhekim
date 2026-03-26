@@ -429,7 +429,7 @@ function DoktorOlForm() {
                     <a href="/kullanim-kosullari" target="_blank" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
                       Doktor Kullanım Koşulları
                     </a>
-                    'nı okudum ve kabul ediyorum.{" "}
+                    &apos;nı okudum ve kabul ediyorum.{" "}
                     <span className="text-red-500 font-medium">*</span>
                   </span>
                 </label>
@@ -445,7 +445,7 @@ function DoktorOlForm() {
                     <a href="/gizlilik" target="_blank" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
                       KVKK Aydınlatma Metni
                     </a>
-                    'ni okudum; kişisel verilerimin işlenmesine açık rıza veriyorum.{" "}
+                    &apos;ni okudum; kişisel verilerimin işlenmesine açık rıza veriyorum.{" "}
                     <span className="text-red-500 font-medium">*</span>
                   </span>
                 </label>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 
 export default function Giris() {
@@ -40,7 +41,7 @@ export default function Giris() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
       <nav style={{ backgroundColor: "#0D2137" }} className="px-6 py-4">
-        <a href="/" className="flex items-center gap-2.5 w-fit">
+        <Link href="/" className="flex items-center gap-2.5 w-fit">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="16" r="15" fill="#0E7C7B"/>
             <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="0.6" opacity="0.35"/>
@@ -58,7 +59,7 @@ export default function Giris() {
           <span className="text-white font-bold text-xl tracking-tight">
             Doktor<span style={{ color: "#C9A84C" }}>Pusula</span>
           </span>
-        </a>
+        </Link>
       </nav>
 
       <div className="flex-1 flex items-center justify-center px-6 py-12">
@@ -125,9 +126,9 @@ export default function Giris() {
 
           <p className="text-center text-sm text-gray-400 mt-6">
             Hesabınız yok mu?{" "}
-            <a href="/kayit-ol" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+            <Link href="/kayit-ol" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
               Ücretsiz kayıt olun
-            </a>
+            </Link>
           </p>
         </div>
       </div>

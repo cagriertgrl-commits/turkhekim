@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import AdminOzet from "./AdminOzet";
 import AdminDoktorTablosu from "./AdminDoktorTablosu";
 import AdminYorumModerasyon from "./AdminYorumModerasyon";
@@ -137,7 +138,7 @@ export default function AdminPanel() {
                 {toplamBekleyen} işlem bekliyor
               </span>
             )}
-            <a href="/" className="text-gray-400 hover:text-white text-sm">Siteye Dön</a>
+            <Link href="/" className="text-gray-400 hover:text-white text-sm">Siteye Dön</Link>
           </div>
         </div>
       </nav>
