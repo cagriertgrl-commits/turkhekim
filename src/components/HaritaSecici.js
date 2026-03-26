@@ -100,67 +100,59 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
     <div>
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css" />
 
-      {/* Adres arama */}
-      <form onSubmit={adresAra} className="flex gap-2 mb-2">
-        <input
-          type="text"
-          value={aramaMetni}
-          onChange={(e) => setAramaMetni(e.target.value)}
-          placeholder="Adres veya klinik adı ara..."
-          className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
-        />
-        <button
-          type="submit"
-          disabled={araniyor}
-          className="px-3 py-2 rounded-lg text-sm font-medium text-white"
-          style={{ backgroundColor: "var(--primary)" }}
-        >
-          {araniyor ? "..." : "Ara"}
-        </button>
-      </form>
-
-      {/* Arama sonuçları */}
-      {sonuclar.length > 0 && (
-        <div className="border border-gray-200 rounded-lg overflow-hidden mb-2 shadow-sm">
-          {sonuclar.map((s, i) => (
-            <button
-              key={i}
-              type="button"
-              onClick={() => sonucSec(s)}
-              className="w-full text-left px-3 py-2 text-xs hover:bg-teal-50 border-b border-gray-100 last:border-0 text-gray-700"
-            >
-              {s.display_name}
-            </button>
-          ))}
+      {/* Arama */}
+      <form onSubmit={adresAra} className="mb-3">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={aramaMetni}
+            onChange={(e) => setAramaMetni(e.target.value)}
+            placeholder="Adres ara..."
+            className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-teal-500"
+          />
+          <button
+            type="submit"
+            disabled={araniyor}
+            className="px-4 py-2 rounded-lg text-sm font-medium text-white bg-teal-600 hover:bg-teal-700 disabled:opacity-50"
+          >
+            {araniyor ? "..." : "Ara"}
+          </button>
         </div>
-      )}
+
+        {/* Arama sonuçları */}
+        {sonuclar.length > 0 && (
+          <div className="border border-gray-200 rounded-lg mt-2 overflow-hidden shadow-sm">
+            {sonuclar.map((s, i) => (
+              <button
+                key={i}
+                type="button"
+                onClick={() => sonucSec(s)}
+                className="w-full text-left px-3 py-2 text-xs hover:bg-teal-50 border-b border-gray-100 last:border-0 text-gray-700"
+              >
+                {s.display_name.split(",")[0]}
+              </button>
+            ))}
+          </div>
+        )}
+      </form>
 
       {/* Harita */}
       <div
         ref={mapRef}
-        style={{ height: 240, borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}
+        style={{ height: 300, borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB", marginBottom: 12 }}
       />
       {!yuklendi && (
-        <div style={{ height: 240, borderRadius: 12, border: "1px solid #E5E7EB", backgroundColor: "#F9FAFB" }}
-          className="flex items-center justify-center text-sm text-gray-400">
+        <div style={{ height: 300, borderRadius: 12, border: "1px solid #E5E7EB", backgroundColor: "#F9FAFB" }}
+          className="flex items-center justify-center text-sm text-gray-400 mb-3">
           Harita yükleniyor...
         </div>
       )}
 
       {/* Hidden inputs for form submission */}
-      <div className="flex gap-3 mt-2">
-        <div className="flex-1">
-          <label className="text-xs text-gray-400 block mb-1">Enlem</label>
-          <input readOnly value={konum.enlem} name="enlem"
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs bg-gray-50 text-gray-600" />
-        </div>
-        <div className="flex-1">
-          <label className="text-xs text-gray-400 block mb-1">Boylam</label>
-          <input readOnly value={konum.boylam} name="boylam"
-            className="w-full border border-gray-200 rounded-lg px-3 py-2 text-xs bg-gray-50 text-gray-600" />
-        </div>
-      </div>
-      <p className="text-xs text-gray-400 mt-1">Adres arayın veya haritaya tıklayın / işaretçiyi sürükleyin.</p>
+      <input type="hidden" name="enlem" value={konum.enlem} />
+      <input type="hidden" name="boylam" value={konum.boylam} />
+
+      <p className="text-xs text-gray-500">💡 Haritaya tıkla veya işaretçiyi sürükle</p>
     </div>
   );
 }
