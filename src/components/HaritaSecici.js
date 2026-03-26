@@ -137,10 +137,27 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
       </form>
 
       {/* Harita */}
-      <div
-        ref={mapRef}
-        style={{ height: 300, borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB", marginBottom: 12 }}
-      />
+      <div style={{ position: "relative", marginBottom: 12 }}>
+        <div
+          ref={mapRef}
+          style={{ height: 300, borderRadius: 12, overflow: "hidden", border: "1px solid #E5E7EB" }}
+        />
+        {yuklendi && (
+          <a
+            href={`https://www.google.com/maps/search/?api=1&query=${konum.enlem},${konum.boylam}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="absolute top-3 right-3 flex items-center gap-1.5 px-3 py-2 bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow text-xs font-medium text-gray-700 border border-gray-200"
+            title="Google Haritalar'da aç"
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8z" />
+              <path d="M12 12h5" />
+            </svg>
+            Google Haritalar
+          </a>
+        )}
+      </div>
       {!yuklendi && (
         <div style={{ height: 300, borderRadius: 12, border: "1px solid #E5E7EB", backgroundColor: "#F9FAFB" }}
           className="flex items-center justify-center text-sm text-gray-400 mb-3">
