@@ -76,20 +76,20 @@ async function uyguGorelOlustur(caption) {
       <circle cx="950" cy="950" r="120" fill="none" stroke="#a78bfa" stroke-width="2" opacity="0.3"/>
 
       <!-- Ana metin -->
-      <text x="540" y="400" font-size="32" font-weight="bold" fill="#f3e8ff" text-anchor="middle" font-family="Arial, sans-serif" dominant-baseline="middle">
-        Felsefe & Edebiyat
+      <text x="540" y="300" font-size="36" font-weight="bold" fill="#f3e8ff" text-anchor="middle" font-family="Georgia, serif" dominant-baseline="middle">
+        ✨ Felsefe ✨
       </text>
 
-      <!-- Caption (multi-line) -->
-      <foreignObject x="60" y="500" width="960" height="400">
-        <div style="color:#e9d5ff;font-size:18px;line-height:1.6;text-align:center;word-wrap:break-word;padding:20px;font-family:Arial,sans-serif;">
-          ${caption.substring(0, 200)}...
+      <!-- Caption -->
+      <foreignObject x="60" y="400" width="960" height="450">
+        <div style="color:#e9d5ff;font-size:20px;line-height:1.7;text-align:center;word-wrap:break-word;padding:30px;font-family:Georgia,serif;">
+          ${caption.substring(0, 280)}
         </div>
       </foreignObject>
 
       <!-- Footer -->
-      <text x="540" y="950" font-size="14" fill="#a78bfa" text-anchor="middle" font-family="Arial, sans-serif">
-        @doktorpusula • Düşün, Sor, Keşfet
+      <text x="540" y="950" font-size="14" fill="#c084fc" text-anchor="middle" font-family="Georgia, serif">
+        Düşün • Sor • Keşfet
       </text>
     </svg>
   `;
@@ -121,43 +121,64 @@ export async function POST(req) {
     // Görsel Blob'a yükle
     const timestamp = Date.now();
     const blobResult = await put(`instagram/${timestamp}.png`, gorsel, {
-      access: "public",
+      contentType: "image/png",
+      access: "private",
     });
 
-    // Buffer API'ye gönder
-    const bufferResponse = await fetch("https://api.buffer.com/1/updates/create.json", {
+    // Buffer GraphQL API'ye gönder
+    const graphqlQuery = `
+      mutation CreateUpdate($channelId: ID!, $text: String!, $mediaUrl: String!) {
+        createUpdate(input: {
+          channelId: $channelId
+          content: {
+            text: $text
+          }
+          media: {
+            photo: $mediaUrl
+          }
+        }) {
+          update {
+            id
+          }
+        }
+      }
+    `;
+
+    const bufferResponse = await fetch("https://api.buffer.com/graphql", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.BUFFER_API_KEY}`,
       },
       body: JSON.stringify({
-        access_token: process.env.BUFFER_API_KEY,
-        channel_id: process.env.BUFFER_CHANNEL_ID,
-        media: {
-          photo: blobResult.url,
+        query: graphqlQuery,
+        variables: {
+          channelId: process.env.BUFFER_CHANNEL_ID,
+          text: caption,
+          mediaUrl: blobResult.url,
         },
-        text: caption,
-        shorten_url: false,
       }),
     });
 
     const bufferData = await bufferResponse.json();
 
-    if (!bufferResponse.ok) {
-      throw new Error(`Buffer API error: ${JSON.stringify(bufferData)}`);
+    if (bufferData.errors) {
+      throw new Error(`Buffer API error: ${JSON.stringify(bufferData.errors)}`);
     }
+
+    const bufferId = bufferData.data?.createUpdate?.update?.id;
 
     // DB'ye kaydet
     await sql`
       INSERT INTO instagram_gonderiler (konu, caption, gorsel_url, durum, instagram_id)
-      VALUES (${konu}, ${caption}, ${blobResult.url}, 'yayinlandi', ${bufferData.buffer_id})
+      VALUES (${konu}, ${caption}, ${blobResult.url}, 'yayinlandi', ${bufferId})
     `;
 
     return NextResponse.json({
       success: true,
       konu,
       caption: caption.substring(0, 100),
-      bufferId: bufferData.buffer_id,
+      bufferId,
     });
   } catch (err) {
     console.error("Instagram cron error:", err);
