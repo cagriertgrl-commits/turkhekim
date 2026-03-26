@@ -18,7 +18,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "15 Mart 2025",
     okumaSuresi: "6 dk",
-    goruntu: "👂",
+    goruntu: "ear",
     kaynak: "platform",
   },
   {
@@ -29,7 +29,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "10 Mart 2025",
     okumaSuresi: "8 dk",
-    goruntu: "👃",
+    goruntu: "nose",
     kaynak: "platform",
   },
   {
@@ -40,7 +40,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "5 Mart 2025",
     okumaSuresi: "5 dk",
-    goruntu: "😴",
+    goruntu: "sleep",
     kaynak: "platform",
   },
   {
@@ -51,7 +51,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "15 Şubat 2025",
     okumaSuresi: "4 dk",
-    goruntu: "💉",
+    goruntu: "injection",
     kaynak: "platform",
   },
   {
@@ -62,7 +62,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "1 Şubat 2025",
     okumaSuresi: "7 dk",
-    goruntu: "👁️",
+    goruntu: "eye",
     kaynak: "platform",
   },
   {
@@ -73,7 +73,7 @@ const PLATFORM_MAKALELER = [
     yazar: "DoktorPusula.com",
     tarih: "8 Şubat 2025",
     okumaSuresi: "6 dk",
-    goruntu: "💈",
+    goruntu: "hair",
     kaynak: "platform",
   },
 ];
@@ -111,7 +111,7 @@ export default async function SaglikRehberi() {
       tarih: r.yayin_tarihi
         ? new Date(r.yayin_tarihi).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" })
         : new Date(r.olusturulma).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" }),
-      goruntu: "📝",
+      goruntu: "article",
       kaynak: "doktor",
       doktorSlug: r.doktor_slug,
     }));
