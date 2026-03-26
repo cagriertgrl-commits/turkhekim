@@ -25,14 +25,29 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
         shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
       });
 
-      const map = L.map(mapRef.current).setView([konum.enlem, konum.boylam], 14);
+      const map = L.map(mapRef.current).setView([konum.enlem, konum.boylam], 15);
       instanceRef.current = map;
 
-      L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "© OpenStreetMap",
+      // CartoDB Voyager - daha detaylı ve renkli harita
+      L.tileLayer("https://{s}.basemaps.cartocdn.com/rastered/voyager/{z}/{x}/{y}{r}.png", {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: "abcd",
+        maxZoom: 20,
       }).addTo(map);
 
-      const marker = L.marker([konum.enlem, konum.boylam], { draggable: true }).addTo(map);
+      // Custom marker icon - daha belirgin
+      const markerIcon = L.divIcon({
+        className: "custom-marker",
+        html: `<div style="width:32px;height:32px;background:linear-gradient(135deg, #0E7C7B 0%, #06B6D4 100%);border:3px solid white;border-radius:50%;box-shadow:0 2px 8px rgba(0,0,0,0.3);display:flex;align-items:center;justify-content:center;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white" stroke="white" stroke-width="2">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/>
+          </svg>
+        </div>`,
+        iconSize: [32, 32],
+        iconAnchor: [16, 16],
+      });
+
+      const marker = L.marker([konum.enlem, konum.boylam], { draggable: true, icon: markerIcon }).addTo(map);
       markerRef.current = marker;
 
       marker.on("dragend", () => {
