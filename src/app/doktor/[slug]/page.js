@@ -55,19 +55,40 @@ function slugify(s = "") {
 export default async function DoktorProfil({ params }) {
   const { slug } = await params;
 
-  const [doktorlar, session] = await Promise.all([
-    sql`SELECT * FROM doktorlar WHERE slug = ${slug}`,
-    getSession(),
-  ]);
-  if (!doktorlar.length) notFound();
+  let doktorlar = [];
+  let session = null;
+
+  try {
+    const result = await Promise.all([
+      sql`SELECT * FROM doktorlar WHERE slug = ${slug}`,
+      getSession(),
+    ]);
+    doktorlar = result[0] || [];
+    session = result[1];
+  } catch (err) {
+    console.error("Doktor profili yükleme hatası:", err);
+    notFound();
+  }
+
+  if (!doktorlar?.length) notFound();
   const doktor = doktorlar[0];
+  if (!doktor) notFound();
+
   const kendiProfili = session?.id === doktor.id;
 
-  const [yorumlar, sorular, medya] = await Promise.all([
-    sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} AND dogrulama_durumu = 'onaylandi' ORDER BY created_at DESC`,
-    sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL AND gizli = false ORDER BY created_at DESC LIMIT 10`,
-    sql`SELECT * FROM doktor_medya WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
-  ]);
+  let yorumlar = [], sorular = [], medya = [];
+  try {
+    const result = await Promise.all([
+      sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} AND dogrulama_durumu = 'onaylandi' ORDER BY created_at DESC`,
+      sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} AND yanit IS NOT NULL AND gizli = false ORDER BY created_at DESC LIMIT 10`,
+      sql`SELECT * FROM doktor_medya WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
+    ]);
+    yorumlar = result[0] || [];
+    sorular = result[1] || [];
+    medya = result[2] || [];
+  } catch (err) {
+    console.error("Doktor veri yükleme hatası:", err);
+  }
 
   sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme,0)+1 WHERE id=${doktor.id}`.catch(()=>{});
 
