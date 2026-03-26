@@ -171,28 +171,35 @@ export default function HaritaSecici({ mevcutEnlem, mevcutBoylam, onChange }) {
             top: 12,
             right: 12,
             zIndex: 1000,
-            backgroundColor: "white",
-            padding: "8px 12px",
+            backgroundColor: "#0E7C7B",
+            padding: "10px 14px",
             borderRadius: 8,
-            border: "1px solid #E5E7EB",
-            boxShadow: "0 2px 8px rgba(0,0,0,0.1)",
+            border: "none",
+            boxShadow: "0 4px 12px rgba(14, 124, 123, 0.25)",
             display: "flex",
             alignItems: "center",
-            gap: 6,
-            fontSize: "12px",
-            fontWeight: 500,
-            color: "#374151",
+            gap: 8,
+            fontSize: "13px",
+            fontWeight: 600,
+            color: "white",
             textDecoration: "none",
             cursor: "pointer",
-            transition: "all 0.2s"
+            transition: "all 0.3s ease"
           }}
-          onMouseEnter={(e) => e.target.style.boxShadow = "0 4px 12px rgba(0,0,0,0.15)"}
-          onMouseLeave={(e) => e.target.style.boxShadow = "0 2px 8px rgba(0,0,0,0.1)"}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = "#06B6D4";
+            e.target.style.boxShadow = "0 6px 16px rgba(14, 124, 123, 0.35)";
+            e.target.style.transform = "translateY(-2px)";
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = "#0E7C7B";
+            e.target.style.boxShadow = "0 4px 12px rgba(14, 124, 123, 0.25)";
+            e.target.style.transform = "translateY(0)";
+          }}
           title="Google Haritalar'da aç"
         >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <path d="M21 10c0-7-9-13-9-13s-9 6-9 13a9 9 0 0 0 18 0z" />
-            <circle cx="12" cy="10" r="3" />
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5z" />
           </svg>
           <span>Google Haritalar</span>
         </a>
