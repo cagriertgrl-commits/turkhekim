@@ -45,8 +45,8 @@ export default function FirmaPaneli() {
         const data = await urunRes.json();
         setUrunler(data.urunler);
       }
-    } catch (err) {
-      console.error("Firma yükleme hatası:", err);
+    } catch {
+      /* sessiz */
     } finally {
       setYukleniyor(false);
     }

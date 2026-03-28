@@ -124,7 +124,7 @@ export default async function TedaviDetay({ params }) {
                     <div key={doktor.slug} className="bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md transition-all">
                       <div className="flex items-start gap-4">
                         {doktor.foto_url ? (
-                          <img src={doktor.foto_url} alt={doktor.ad} className="w-16 h-16 rounded-2xl object-cover flex-shrink-0" />
+                          <img src={doktor.foto_url} alt={doktor.ad} loading="lazy" className="w-16 h-16 rounded-2xl object-cover flex-shrink-0" />
                         ) : (
                           <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-xl flex-shrink-0">
                             {initials}

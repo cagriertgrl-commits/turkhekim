@@ -58,7 +58,12 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
   }
 
   function metniFormatla(metin) {
-    return metin
+    const temiz = metin
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;");
+    return temiz
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\n/g, "<br/>");
   }

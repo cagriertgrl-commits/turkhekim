@@ -77,8 +77,7 @@ export default function GorusmeOzetSayfasi() {
         animRef.current = requestAnimationFrame(guncelle);
       };
       guncelle();
-    } catch (err) {
-      console.error("Ses görselleştirici başarısız:", err);
+    } catch {
       setHata("Ses görselleştirme başarısız oldu. Ses kaydı devam ediyor.");
     }
 
@@ -176,8 +175,7 @@ export default function GorusmeOzetSayfasi() {
         const res = await fetch("/api/hastalar");
         const data = await res.json();
         setEskiHastalar(data.hastalar || []);
-      } catch (err) {
-        console.error("Hasta listesi yüklenemedi:", err);
+      } catch {
         setHata("Hasta listesi yüklenemedi. Yeni hasta kaydedebilirsiniz.");
       }
     }

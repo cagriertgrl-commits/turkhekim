@@ -7617,7 +7617,6 @@ export default function FormIcerik({ form, hekim }) {
       setTimeout(() => URL.revokeObjectURL(url), 60000);
     } catch (err) {
       alert("Form oluşturulurken hata: " + err.message);
-      console.error(err);
     }
   }
 

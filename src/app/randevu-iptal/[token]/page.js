@@ -38,8 +38,7 @@ export default function RandevuIptal() {
       const data = await res.json();
       if (res.ok) setAdim("basari");
       else { setHata(data.hata || "Bir hata oluştu."); setAdim("hata"); }
-    } catch (err) {
-      console.error("Randevu iptal hatası:", err);
+    } catch {
       setHata("Bağlantı hatası. Lütfen tekrar deneyin.");
       setAdim("hata");
     }

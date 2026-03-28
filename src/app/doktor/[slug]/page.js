@@ -170,7 +170,7 @@ export default async function DoktorProfil({ params }) {
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="flex-shrink-0">
               {doktor.foto_url ? (
-                <img src={doktor.foto_url} alt={unvanAd} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: "var(--teal)" }} />
+                <img src={doktor.foto_url} alt={unvanAd} loading="eager" className="w-32 h-32 md:w-40 md:h-40 rounded-2xl object-cover border-4 shadow-xl" style={{ borderColor: "var(--teal)" }} />
               ) : (
                 <div style={{ backgroundColor: "var(--teal)" }} className="w-32 h-32 md:w-40 md:h-40 rounded-2xl flex items-center justify-center font-bold text-4xl text-white shadow-xl">
                   {initials}
@@ -503,8 +503,7 @@ export default async function DoktorProfil({ params }) {
       </div>
     </div>
     );
-  } catch (err) {
-    console.error("Doktor profil render hatası:", err);
+  } catch {
     return (
       <div className="min-h-screen bg-red-50 flex items-center justify-center p-4">
         <div className="text-center">

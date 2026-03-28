@@ -27,8 +27,8 @@ export default function BildirimZili() {
       const veri = await res.json();
       setBildirimler(veri.bildirimler || []);
       setOkunmamis(veri.okunmamis || 0);
-    } catch (err) {
-      console.error("Bildirim yükleme hatası:", err);
+    } catch {
+      /* sessiz — polling tekrar deneyecek */
     }
   }
 
@@ -38,8 +38,8 @@ export default function BildirimZili() {
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setBildirimler(bildirimler.map((b) => ({ ...b, okundu: true })));
       setOkunmamis(0);
-    } catch (err) {
-      console.error("Bildirimleri okundu işaretleme hatası:", err);
+    } catch {
+      /* sessiz */
     }
   }
 
@@ -57,6 +57,7 @@ export default function BildirimZili() {
         onClick={() => setAcik(!acik)}
         className="relative p-2 rounded-lg hover:bg-white/10 transition-colors"
         title="Bildirimler"
+        aria-label="Bildirimler"
       >
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
           <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>

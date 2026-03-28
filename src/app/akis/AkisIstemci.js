@@ -90,7 +90,7 @@ function PostKart({ post, session }) {
 
       {/* Resim */}
       {post.resim_url && (
-        <img src={post.resim_url} alt="" className="w-full rounded-xl object-cover max-h-72 mb-3" />
+        <img src={post.resim_url} alt="Paylaşım görseli" loading="lazy" className="w-full rounded-xl object-cover max-h-72 mb-3" />
       )}
 
       {/* Etiketler */}

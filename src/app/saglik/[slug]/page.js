@@ -219,7 +219,7 @@ export default async function MakaleSayfasi({ params }) {
             <div className="space-y-4">
               <div className="bg-white rounded-2xl p-6 shadow-sm text-center sticky top-6">
                 {makale.foto_url ? (
-                  <img src={makale.foto_url} alt={makale.doktor_ad} className="w-16 h-16 rounded-full object-cover mx-auto mb-3" />
+                  <img src={makale.foto_url} alt={makale.doktor_ad} loading="lazy" className="w-16 h-16 rounded-full object-cover mx-auto mb-3" />
                 ) : (
                   <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-16 h-16 rounded-full flex items-center justify-center font-bold text-xl mx-auto mb-3">
                     {makale.doktor_ad?.split(" ").slice(-1)[0]?.[0] || "D"}

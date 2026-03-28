@@ -48,7 +48,7 @@ export default function AdminPanel() {
       setDogrulamalar(dg.dogrulamalar || []);
       setRandevular(r.randevular || []);
       setApiKullanim(apiData);
-    } catch (e) { console.error("Veri çekme hatası:", e); }
+    } catch { /* sessiz */ }
     setYukleniyor(false);
   }
 
@@ -57,7 +57,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/doktorlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, onaylandi }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setDoktorlar(doktorlar.map(d => d.id === id ? { ...d, onaylandi } : d));
-    } catch (err) { console.error("Doktor onay hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   async function paketGuncelle(id, paket) {
@@ -65,7 +65,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/doktorlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, paket }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setDoktorlar(doktorlar.map(d => d.id === id ? { ...d, paket } : d));
-    } catch (err) { console.error("Paket güncelleme hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   async function doktorSil(id) {
@@ -74,7 +74,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/doktorlar", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setDoktorlar(doktorlar.filter(d => d.id !== id));
-    } catch (err) { console.error("Doktor silme hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   async function yorumYayinla(id) {
@@ -82,7 +82,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/yorumlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, islem: "yayinla" }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setYorumlar(yorumlar.map(y => y.id === id ? { ...y, dogrulama_durumu: "onaylandi" } : y));
-    } catch (err) { console.error("Yorum yayınlama hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   async function yorumReddet(id, neden) {
@@ -90,7 +90,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/yorumlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, islem: "reddet", neden }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setYorumlar(yorumlar.map(y => y.id === id ? { ...y, dogrulama_durumu: "reddedildi" } : y));
-    } catch (err) { console.error("Yorum reddetme hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   async function yorumSil(id) {
@@ -99,7 +99,7 @@ export default function AdminPanel() {
       const res = await fetch("/api/admin/yorumlar", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, doktor_id: yorumlar.find(y => y.id === id)?.doktor_id }) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setYorumlar(yorumlar.filter(y => y.id !== id));
-    } catch (err) { console.error("Yorum silme hatası:", err); }
+    } catch { /* sessiz */ }
   }
 
   const bekleyenDoktorlar = doktorlar.filter(d => !d.onaylandi);

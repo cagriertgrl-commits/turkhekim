@@ -40,8 +40,8 @@ export default function FeedPanel({ doktorId }) {
       const res = await fetch(`/api/feed/doktor?doktorId=${doktorId}`);
       const data = await res.json();
       setPaylasilar(data.paylasilar || []);
-    } catch (err) {
-      console.error("Feed yükleme hatası:", err);
+    } catch {
+      /* sessiz */
     } finally {
       setYukluyor(false);
     }

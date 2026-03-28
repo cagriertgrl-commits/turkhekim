@@ -44,8 +44,7 @@ export default function MedyaPanel({ baslangicMedya = [] }) {
       const res = await fetch(`/api/doktor-medya?id=${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setMedya(medya.filter((m) => m.id !== id));
-    } catch (err) {
-      console.error("Medya silme hatası:", err);
+    } catch {
       setHata("Silme işlemi başarısız.");
     }
   }

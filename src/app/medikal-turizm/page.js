@@ -1,6 +1,12 @@
 import Navbar from "@/components/Navbar";
 import { IkonRinoplasti, IkonDis, IkonSacEkimi, IkonGoz, IkonOrtopedi, IkonEstetik } from "@/components/UzmanlikIkonlari";
 
+export const metadata = {
+  title: "Medikal Turizm Turkiye",
+  description: "Turkiye'de medikal turizm: rinoplasti, dis tedavisi, sac ekimi, goz ameliyati. Uygun fiyat, dunya standartlarinda saglik hizmeti.",
+  alternates: { canonical: "https://doktorpusula.com/medikal-turizm" },
+};
+
 const tedaviler = [
   { Ikon: IkonRinoplasti, renk: "#0D2137", bg: "#F1F5F9", ad: "Rinoplasti",      fiyat: "2.500 - 7.500 USD", sure: "7-10 gün" },
   { Ikon: IkonDis,        renk: "#0E7C7B", bg: "#F0FDFA", ad: "Diş Tedavisi",    fiyat: "400 - 6.000 USD",   sure: "5-7 gün" },

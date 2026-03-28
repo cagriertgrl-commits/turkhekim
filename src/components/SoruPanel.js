@@ -48,8 +48,8 @@ export default function SoruPanel({ sorular: baslangicSorular }) {
       });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setSorular((p) => p.map((s) => s.id === soruId ? { ...s, gizli } : s));
-    } catch (err) {
-      console.error("Soru gizleme hatası:", err);
+    } catch {
+      /* sessiz */
     }
   }
 

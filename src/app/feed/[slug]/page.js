@@ -108,7 +108,7 @@ export default async function FeedDetay({ params }) {
           <h3 className="text-sm font-semibold text-gray-500 uppercase tracking-wide mb-4">Yazar Hakkında</h3>
           <div className="flex items-start gap-4">
             {p.foto_url ? (
-              <img src={p.foto_url} alt={tamIsim} className="w-16 h-16 rounded-2xl object-cover border-2 border-gray-100 flex-shrink-0" />
+              <img src={p.foto_url} alt={tamIsim} loading="lazy" className="w-16 h-16 rounded-2xl object-cover border-2 border-gray-100 flex-shrink-0" />
             ) : (
               <div style={{ backgroundColor: "var(--light-teal)", color: "var(--teal)" }} className="w-16 h-16 rounded-2xl flex items-center justify-center font-bold text-xl flex-shrink-0">
                 {initials}

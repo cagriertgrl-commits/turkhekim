@@ -6,8 +6,8 @@ export default function CikisButonu() {
       onClick={async () => {
         try {
           await fetch("/api/auth/logout", { method: "POST" });
-        } catch (err) {
-          console.error("Çıkış hatası:", err);
+        } catch {
+          /* sessiz */
         }
         window.location.href = "/giris";
       }}

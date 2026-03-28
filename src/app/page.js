@@ -45,8 +45,8 @@ export default async function Home() {
       ORDER BY y.tarih DESC
       LIMIT 3
     `;
-  } catch (err) {
-    console.error("Anasayfa veri çekme hatası:", err);
+  } catch {
+    /* veri çekilemezse sayfa boş render olur */
   }
 
   const jsonLd = {

@@ -19,7 +19,6 @@ export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
   const [mesaj, setMesaj] = useState(null);
 
   async function sec(yeniTema) {
-    console.log("Tema seçildi:", yeniTema);
     setTema(yeniTema);
     setKaydediliyor(true);
     setMesaj(null);
@@ -29,9 +28,7 @@ export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ tema: yeniTema }),
       });
-      console.log("API yanıt status:", r.status);
       const data = await r.json();
-      console.log("API yanıt:", data);
 
       if (r.ok) {
         setMesaj("✓ Kaydedildi");
@@ -42,8 +39,7 @@ export default function TemaSecici({ mevcutTema, gizleBashlik = false }) {
       } else {
         setMesaj("✗ " + (data.hata || "Kaydedilemedi"));
       }
-    } catch (err) {
-      console.error("Tema kaydetme hatası:", err);
+    } catch {
       setMesaj("✗ Bağlantı hatası");
     } finally {
       setKaydediliyor(false);

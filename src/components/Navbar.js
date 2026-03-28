@@ -84,7 +84,7 @@ export default function Navbar({ aktifSayfa }) {
                   style={{ borderColor: "var(--teal)" }}
                 >
                   {kullanici.foto_url ? (
-                    <img src={kullanici.foto_url} alt="" className="w-full h-full object-cover" />
+                    <img src={kullanici.foto_url} alt={kullanici.ad || "Profil"} className="w-full h-full object-cover" />
                   ) : (
                     <div
                       className="w-full h-full flex items-center justify-center text-white text-xs font-bold"

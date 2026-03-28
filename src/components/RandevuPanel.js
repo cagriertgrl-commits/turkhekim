@@ -87,7 +87,7 @@ export default function RandevuPanel({ doktorId }) {
         return r.json();
       })
       .then((data) => { setRandevular(Array.isArray(data) ? data : []); })
-      .catch((err) => console.error("Randevu yükleme hatası:", err))
+      .catch(() => {})
       .finally(() => setYukleniyor(false));
   }, [doktorId]);
 
@@ -103,8 +103,8 @@ export default function RandevuPanel({ doktorId }) {
         prev.map((r) => r.id === id ? { ...r, durum: yeniDurum, doktor_notu: not || r.doktor_notu, iptal_sebep: sebep || null } : r)
       );
       setIptalRandevu(null);
-    } catch (err) {
-      console.error("Randevu durum güncelleme hatası:", err);
+    } catch {
+      /* sessiz */
     }
   }
 
