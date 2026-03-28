@@ -10,6 +10,8 @@ export const RATE_LIMITS = {
   FIRMA_BASVURU: { limit: 3,  pencereDakika: 60 },
   HASTA_PROFIL:  { limit: 5,  pencereDakika: 60 },
   HASTA_SORGU:   { limit: 10, pencereDakika: 60 },
+  TERCUMAN_KAYIT: { limit: 3,  pencereDakika: 60 },
+  TERCUMAN_GIRIS: { limit: 5,  pencereDakika: 15 },
 };
 
 /** Admin oturum süresi (saniye) */

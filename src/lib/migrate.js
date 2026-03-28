@@ -314,6 +314,35 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_paylasi_begeni_paylasi ON paylasi_begeni(paylasi_id)`;
   console.log("✅ paylasilar feed kolonları + paylasi_begeni oluşturuldu");
 
+  // ─── TERCÜMANLAR tablosu ────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS tercumanlar (
+      id SERIAL PRIMARY KEY,
+      slug TEXT UNIQUE NOT NULL,
+      ad TEXT NOT NULL,
+      soyad TEXT,
+      email TEXT UNIQUE NOT NULL,
+      sifre_hash TEXT NOT NULL,
+      telefon TEXT,
+      foto_url TEXT,
+      hakkinda TEXT,
+      diller TEXT NOT NULL,
+      uzmanlik_alani TEXT,
+      sertifikalar TEXT,
+      deneyim_yil INTEGER DEFAULT 0,
+      sehir TEXT,
+      fiyat TEXT,
+      musait BOOLEAN DEFAULT true,
+      aktif BOOLEAN DEFAULT false,
+      kvkk_onaylandi BOOLEAN DEFAULT false,
+      sozlesme_onaylandi BOOLEAN DEFAULT false,
+      created_at TIMESTAMPTZ DEFAULT NOW()
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_tercumanlar_sehir ON tercumanlar(sehir)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_tercumanlar_aktif ON tercumanlar(aktif)`;
+  console.log("✅ tercumanlar tablosu oluşturuldu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }
