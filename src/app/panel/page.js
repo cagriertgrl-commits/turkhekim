@@ -39,6 +39,8 @@ export default async function Panel() {
   const doktorlar = await sql`SELECT * FROM doktorlar WHERE id = ${session.id} LIMIT 1`;
   const doktor = doktorlar[0];
 
+  if (!doktor) redirect("/giris");
+
   const [yorumlar, sorular, analitkler, medyaListesi, dogrulamalar, gorusmeler] = await Promise.all([
     sql`SELECT * FROM yorumlar WHERE doktor_id = ${doktor.id} ORDER BY created_at DESC`,
     sql`SELECT * FROM sorular WHERE doktor_id = ${doktor.id} ORDER BY yanit NULLS FIRST, created_at DESC`,

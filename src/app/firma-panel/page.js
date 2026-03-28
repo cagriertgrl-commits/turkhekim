@@ -26,25 +26,30 @@ export default function FirmaPaneli() {
   const [duzenlemeForm, setDuzenlemeForm] = useState({});
 
   async function yukleFirma() {
-    const [firmaRes, urunRes] = await Promise.all([
-      fetch("/api/firma/beni-getir"),
-      fetch("/api/firma/urunler"),
-    ]);
+    try {
+      const [firmaRes, urunRes] = await Promise.all([
+        fetch("/api/firma/beni-getir"),
+        fetch("/api/firma/urunler"),
+      ]);
 
-    if (firmaRes.status === 401) {
-      window.location.href = "/firma-giris";
-      return;
-    }
+      if (firmaRes.status === 401) {
+        window.location.href = "/firma-giris";
+        return;
+      }
 
-    if (firmaRes.ok) {
-      const data = await firmaRes.json();
-      setFirma(data.firma);
+      if (firmaRes.ok) {
+        const data = await firmaRes.json();
+        setFirma(data.firma);
+      }
+      if (urunRes.ok) {
+        const data = await urunRes.json();
+        setUrunler(data.urunler);
+      }
+    } catch (err) {
+      console.error("Firma yükleme hatası:", err);
+    } finally {
+      setYukleniyor(false);
     }
-    if (urunRes.ok) {
-      const data = await urunRes.json();
-      setUrunler(data.urunler);
-    }
-    setYukleniyor(false);
   }
 
   useEffect(() => {

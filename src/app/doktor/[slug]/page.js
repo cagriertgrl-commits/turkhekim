@@ -66,20 +66,17 @@ export default async function DoktorProfil({ params }) {
     ]);
     doktorlar = result[0] || [];
     session = result[1];
-  } catch (err) {
-    console.error("Doktor profili yükleme hatası:", err);
+  } catch {
     notFound();
   }
 
   if (!doktorlar?.length) {
-    console.error("Doktor bulunamadı:", slug);
     notFound();
   }
 
   const doktor = doktorlar[0];
 
   if (!doktor || !doktor.id) {
-    console.error("Doktor verisi hatalı:", doktor);
     notFound();
   }
 
@@ -95,8 +92,8 @@ export default async function DoktorProfil({ params }) {
     yorumlar = result[0] || [];
     sorular = result[1] || [];
     medya = result[2] || [];
-  } catch (err) {
-    console.error("Doktor veri yükleme hatası:", err);
+  } catch {
+    // Veri yükleme başarısız, boş listelerle devam et
   }
 
   sql`UPDATE doktorlar SET profil_goruntulenme = COALESCE(profil_goruntulenme,0)+1 WHERE id=${doktor.id}`.catch(()=>{});

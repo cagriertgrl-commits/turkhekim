@@ -77,7 +77,10 @@ export default function GorusmeOzetSayfasi() {
         animRef.current = requestAnimationFrame(guncelle);
       };
       guncelle();
-    } catch {}
+    } catch (err) {
+      console.error("Ses görselleştirici başarısız:", err);
+      setHata("Ses görselleştirme başarısız oldu. Ses kaydı devam ediyor.");
+    }
 
     // Konuşma tanıma
     const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
@@ -173,7 +176,10 @@ export default function GorusmeOzetSayfasi() {
         const res = await fetch("/api/hastalar");
         const data = await res.json();
         setEskiHastalar(data.hastalar || []);
-      } catch {}
+      } catch (err) {
+        console.error("Hasta listesi yüklenemedi:", err);
+        setHata("Hasta listesi yüklenemedi. Yeni hasta kaydedebilirsiniz.");
+      }
     }
   }
 

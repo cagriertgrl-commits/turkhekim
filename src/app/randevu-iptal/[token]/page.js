@@ -29,14 +29,20 @@ export default function RandevuIptal() {
 
   async function iptalEt() {
     setAdim("yukluyor");
-    const res = await fetch("/api/randevu-iptal", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ token, sebep: "hasta_istedigi" }),
-    });
-    const data = await res.json();
-    if (res.ok) setAdim("basari");
-    else { setHata(data.hata || "Bir hata oluştu."); setAdim("hata"); }
+    try {
+      const res = await fetch("/api/randevu-iptal", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ token, sebep: "hasta_istedigi" }),
+      });
+      const data = await res.json();
+      if (res.ok) setAdim("basari");
+      else { setHata(data.hata || "Bir hata oluştu."); setAdim("hata"); }
+    } catch (err) {
+      console.error("Randevu iptal hatası:", err);
+      setHata("Bağlantı hatası. Lütfen tekrar deneyin.");
+      setAdim("hata");
+    }
   }
 
   return (

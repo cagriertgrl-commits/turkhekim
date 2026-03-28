@@ -27,10 +27,14 @@ export default async function FormDetay({ params }) {
     SELECT ad, unvan, diploma_no, sicil_no FROM doktorlar WHERE id = ${session.id}
   `;
 
+  if (!doktor) {
+    redirect("/giris");
+  }
+
   const hekimBilgisi = {
-    adUnvan: [doktor?.unvan, doktor?.ad].filter(Boolean).join(" ") || session.ad || "",
-    diplomaNo: doktor?.diploma_no || "",
-    sicilNo: doktor?.sicil_no || "",
+    adUnvan: [doktor.unvan, doktor.ad].filter(Boolean).join(" ") || "",
+    diplomaNo: doktor.diploma_no || "",
+    sicilNo: doktor.sicil_no || "",
   };
 
   return (
