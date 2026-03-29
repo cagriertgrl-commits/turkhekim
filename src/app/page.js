@@ -5,6 +5,7 @@ import Link from "next/link";
 import { UZMANLIK_GRID } from "@/components/UzmanlikIkonlari";
 import AnasayfaDoktorlar from "./AnasayfaDoktorlar";
 import AnasayfaNedenBiz from "./AnasayfaNedenBiz";
+import CanliAktivite from "./CanliAktivite";
 
 const TR_ADLAR = { "kbb-uzmani": "KBB", "kardiyoloji": "Kardiyoloji", "ortopedi": "Ortopedi", "plastik-cerrahi": "Plastik Cerrahi", "goz-hastaliklari": "Göz", "dis-hekimi": "Diş Hekimi", "dermatoloji": "Dermatoloji", "noroloji": "Nöroloji", "psikiyatri": "Psikiyatri", "cocuk-hastaliklari": "Çocuk Sağlığı", "estetik-cerrahi": "Estetik Cerrahi", "rinoplasti": "Rinoplasti" };
 
@@ -21,7 +22,7 @@ const POPULER_SEHIRLER = [
 export default async function Home() {
   let doktorlar = [];
   let sonYorumlar = [];
-  let istatistikler = { doktor_sayisi: 0, yorum_sayisi: 0 };
+  let istatistikler = { doktor_sayisi: 0, yorum_sayisi: 0, randevu_sayisi: 0 };
 
   try {
     doktorlar = await sql`
@@ -49,6 +50,9 @@ export default async function Home() {
     /* veri çekilemezse sayfa boş render olur */
   }
 
+  const yorumSayisi = parseInt(istatistikler.yorum_sayisi) || 0;
+  const doktorSayisi = parseInt(istatistikler.doktor_sayisi) || 0;
+
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "MedicalOrganization",
@@ -58,7 +62,7 @@ export default async function Home() {
     "description": "Türkiye'nin bağımsız, şeffaf sağlık platformu. Doğrulanmış yorumlar ve kolay randevu.",
     "address": { "@type": "PostalAddress", "addressCountry": "TR" },
     "availableLanguage": ["Turkish", "English", "Arabic"],
-    "numberOfEmployees": { "@type": "QuantitativeValue", "value": istatistikler.doktor_sayisi },
+    "numberOfEmployees": { "@type": "QuantitativeValue", "value": doktorSayisi },
   };
 
   return (
@@ -66,7 +70,7 @@ export default async function Home() {
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/<\/script>/gi, '<\\/script>') }} />
       <Navbar />
 
-      {/* HERO */}
+      {/* ═══ HERO — Loss Aversion ═══ */}
       <section
         style={{ background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 50%, var(--navy) 100%)" }}
         className="relative px-6 py-24 overflow-x-hidden"
@@ -75,33 +79,35 @@ export default async function Home() {
         <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full opacity-10" style={{ background: "radial-gradient(circle, var(--gold), transparent)", transform: "translate(-30%, 30%)" }} />
 
         <div className="max-w-6xl mx-auto text-center relative z-10">
-          <div style={{ backgroundColor: "rgba(14,124,123,0.12)", borderColor: "rgba(14,124,123,0.31)" }} className="inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6">
-            <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-            <span style={{ color: "#4DD9D8" }} className="text-sm font-medium">Türkiye&apos;nin Bağımsız Sağlık Platformu</span>
-          </div>
+          {/* Live badge */}
+          <CanliAktivite />
 
           <h1 className="text-white text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Doğru Hekime<br />
-            <span style={{ color: "var(--teal)" }}>Güvenle Ulaş</span>
+            Yanlış Doktora Gitmenin<br />
+            <span className="text-white">Bedeli Ağır.</span>
           </h1>
+          <p className="text-2xl md:text-3xl font-bold mb-6" style={{ color: "var(--teal)" }}>
+            Doğrulanmış Yorumlarla Karar Ver.
+          </p>
           <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Doğrulanmış yorumlar, şeffaf profiller ve kolay randevu.
-            Yabancı sermayeden bağımsız, Türkiye&apos;nin sağlık otoritesi.
+            Türkiye&apos;de doktor yorumları silinebilir, sıralamalar parayla değişir.
+            DoktorPusula&apos;da bu <strong className="text-white">imkansız</strong>. Telefon ile doğrulanmış
+            gerçek hasta deneyimlerini oku, güvenle karar ver.
           </p>
 
           <AramaKutusu />
         </div>
       </section>
 
-      {/* İSTATİSTİKLER */}
+      {/* ═══ İSTATİSTİKLER — Specificity Bias ═══ */}
       <section style={{ backgroundColor: "var(--teal)" }} className="px-6 py-10">
         <div className="max-w-6xl mx-auto">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 text-center text-white">
             {[
-              { sayi: istatistikler.doktor_sayisi > 0 ? `${parseInt(istatistikler.doktor_sayisi).toLocaleString("tr-TR")}+` : "180K+", etiket: "Kayıtlı Hekim" },
-              { sayi: istatistikler.yorum_sayisi > 0 ? `${parseInt(istatistikler.yorum_sayisi).toLocaleString("tr-TR")}+` : "500+", etiket: "Doğrulanmış Yorum" },
-              { sayi: "5 Dil", etiket: "Çok Dilli Destek" },
-              { sayi: "81 İl", etiket: "Türkiye Geneli" },
+              { sayi: yorumSayisi > 0 ? yorumSayisi.toLocaleString("tr-TR") : "500+", etiket: "Doğrulanmış Yorum (silinemez)" },
+              { sayi: doktorSayisi > 0 ? doktorSayisi.toLocaleString("tr-TR") : "180+", etiket: "Kayıtlı Hekim" },
+              { sayi: "%100", etiket: "Yerli & Bağımsız" },
+              { sayi: "81 İl", etiket: "47 Uzmanlık Alanı" },
             ].map((item) => (
               <div key={item.etiket}>
                 <div className="text-3xl font-bold">{item.sayi}</div>
@@ -112,11 +118,11 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* UZMANLIK ALANLARI */}
+      {/* ═══ UZMANLIK ALANLARI ═══ */}
       <section className="px-6 py-16 bg-white">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-10">
-            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold mb-2">Uzmanlık Alanı Seçin</h2>
+            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold mb-2">Şehrimde Doktor Ara</h2>
             <p className="text-gray-400 text-sm">İhtiyacınıza göre doğru uzmana ulaşın</p>
           </div>
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-3">
@@ -133,33 +139,32 @@ export default async function Home() {
       {/* ÖNE ÇIKAN DOKTORLAR */}
       <AnasayfaDoktorlar doktorlar={doktorlar} />
 
-      {/* NASIL ÇALIŞIR */}
+      {/* ═══ NASIL ÇALIŞIR — Cognitive Ease ═══ */}
       <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-20">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
             <p style={{ color: "var(--teal)" }} className="text-xs font-bold mb-2 uppercase tracking-widest">Basit ve Hızlı</p>
-            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold">Nasıl Çalışır?</h2>
+            <h2 style={{ color: "var(--navy)" }} className="text-2xl md:text-3xl font-bold">60 Saniyede Randevu Al</h2>
           </div>
           <div className="grid md:grid-cols-3 gap-8 relative">
-            {/* bağlantı çizgisi */}
             <div className="hidden md:block absolute top-9 left-[calc(16.67%+2rem)] right-[calc(16.67%+2rem)] h-px" style={{ background: "linear-gradient(to right, var(--teal), var(--teal))", opacity: 0.2 }} />
             {[
               {
                 adim: "01",
-                baslik: "Doktor Ara",
-                aciklama: "Uzmanlık ve şehir seçerek yüzlerce doktor arasından filtrele. Puan, yorum ve deneyime göre sırala.",
+                baslik: "Şehir + Uzmanlık Seç",
+                aciklama: "2 saniyede yüzlerce sonuç. Puan, yorum sayısı ve deneyime göre otomatik sıralama.",
                 svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="26" height="26"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35"/></svg>,
               },
               {
                 adim: "02",
-                baslik: "Profil İncele",
-                aciklama: "Doktorun deneyimini, doğrulanmış hasta yorumlarını ve muayene fiyatını şeffaf şekilde gör.",
+                baslik: "Gerçek Yorumları Oku",
+                aciklama: "Silinemeyen, telefon ile doğrulanmış hasta deneyimleri. Şeffaf fiyat ve deneyim bilgisi.",
                 svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="26" height="26"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="8" y1="13" x2="16" y2="13"/><line x1="8" y1="17" x2="13" y2="17"/></svg>,
               },
               {
                 adim: "03",
-                baslik: "Randevu Al",
-                aciklama: "Doğrudan doktor profili üzerinden randevu talebi gönder. Onay SMS ile bildirilir.",
+                baslik: "Randevu Gönder",
+                aciklama: "Doktor profilinden tek tıkla randevu. Ortalama 2 saat içinde onay, SMS ile bildirim.",
                 svg: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width="26" height="26"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01"/></svg>,
               },
             ].map((adim, i) => (
@@ -180,7 +185,7 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* POPÜLER ŞEHİRLER */}
+      {/* ═══ POPÜLER ŞEHİRLER ═══ */}
       <section style={{ backgroundColor: "#F5F7FA" }} className="px-6 py-16">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-8">
@@ -204,41 +209,50 @@ export default async function Home() {
         </div>
       </section>
 
-      {/* SON YORUMLAR */}
+      {/* ═══ YORUMLAR — Trust Trigger ═══ */}
       {sonYorumlar.length > 0 && (
         <section className="px-6 py-16 bg-white">
           <div className="max-w-6xl mx-auto">
             <div className="flex items-center justify-between mb-10">
               <div>
-                <h2 style={{ color: "var(--navy)" }} className="text-2xl font-bold">Gerçek Hasta Yorumları</h2>
-                <p className="text-gray-500 text-sm mt-1">Telefon ile doğrulanmış, değiştirilemeyen yorumlar</p>
+                <h2 style={{ color: "var(--navy)" }} className="text-2xl font-bold">Bu Yorumlar Silinemez.</h2>
+                <p className="text-gray-500 text-sm mt-1">
+                  Her yorum telefon numarasıyla doğrulanır. Ne doktor ne platform hiçbir yorumu kaldıramaz.
+                  Bu, Türkiye&apos;de <strong style={{ color: "var(--teal)" }}>sadece DoktorPusula&apos;da</strong> var.
+                </p>
               </div>
             </div>
             <div className="grid md:grid-cols-3 gap-5">
-              {sonYorumlar.map((yorum, i) => (
-                <Link key={i} href={`/doktor/${yorum.slug}`} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow">
-                  <div className="flex items-center gap-1 mb-3">
-                    {[1,2,3,4,5].map((y) => (
-                      <span key={y} className={y <= yorum.puan ? "text-yellow-400" : "text-gray-200"}>★</span>
-                    ))}
-                  </div>
-                  <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">&quot;{yorum.metin}&quot;</p>
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <div className="text-xs font-semibold text-gray-700">{yorum.hasta_adi}</div>
-                      <div style={{ color: "var(--teal)" }} className="text-xs">{yorum.doktor_ad} · {yorum.uzmanlik}</div>
+              {sonYorumlar.map((yorum, i) => {
+                const tarih = new Date(yorum.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "long", year: "numeric" });
+                return (
+                  <Link key={i} href={`/doktor/${yorum.slug}`} className="bg-white border border-gray-100 rounded-2xl p-5 hover:shadow-md transition-shadow">
+                    <div className="flex items-center gap-1 mb-3">
+                      {[1,2,3,4,5].map((y) => (
+                        <span key={y} className={y <= yorum.puan ? "text-yellow-400" : "text-gray-200"}>★</span>
+                      ))}
                     </div>
-                    <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">Doğrulanmış</span>
-                  </div>
-                </Link>
-              ))}
+                    <p className="text-gray-700 text-sm leading-relaxed mb-4 line-clamp-3">&quot;{yorum.metin}&quot;</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <div className="text-xs font-semibold text-gray-700">{yorum.hasta_adi}</div>
+                        <div style={{ color: "var(--teal)" }} className="text-xs">{yorum.doktor_ad} · {yorum.uzmanlik}</div>
+                      </div>
+                      <span style={{ backgroundColor: "#D1FAE5", color: "var(--success)" }} className="text-xs px-2 py-0.5 rounded-full font-semibold">📞 Doğrulanmış</span>
+                    </div>
+                    <div className="mt-3 pt-3 border-t border-gray-50 text-xs text-gray-400">
+                      📅 {tarih}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
       )}
 
       {/* NEDEN BİZ + MEDİKAL TURİZM + DOKTOR CTA */}
-      <AnasayfaNedenBiz />
+      <AnasayfaNedenBiz doktorSayisi={doktorSayisi} />
     </div>
   );
 }
