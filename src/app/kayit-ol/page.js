@@ -211,9 +211,9 @@ export default function KayitOl() {
 
         <p className="text-center text-xs text-gray-400 mt-8">
           Zaten hesabınız var mı?{" "}
-          <a href="/giris" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+          <Link href="/giris" style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
             Giriş Yapın
-          </a>
+          </Link>
         </p>
       </div>
     </div>

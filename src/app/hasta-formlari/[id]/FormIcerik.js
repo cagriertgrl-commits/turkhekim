@@ -1,5 +1,6 @@
 "use client";
 import { useRef, useState } from "react";
+import Link from "next/link";
 
 // Form şablonları — gerçek klinik içerik
 const FORM_SABLONLARI = {
@@ -7626,7 +7627,7 @@ export default function FormIcerik({ form, hekim }) {
     <div>
       {/* Başlık */}
       <div className="mb-6">
-        <a href="/hasta-formlari" style={{ color: "#0E7C7B" }} className="text-sm hover:underline">← Tüm Formlar</a>
+        <Link href="/hasta-formlari" style={{ color: "#0E7C7B" }} className="text-sm hover:underline">← Tüm Formlar</Link>
         <h1 style={{ color: "#0D2137" }} className="text-xl font-bold mt-2">{form.baslik}</h1>
         <p className="text-gray-400 text-sm mt-1">{form.aciklama}</p>
       </div>

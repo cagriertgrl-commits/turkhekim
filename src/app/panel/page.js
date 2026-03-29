@@ -1,6 +1,6 @@
 import { getSession } from "@/lib/session";
 
-
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import sql from "@/lib/db";
 import FotoYukle from "@/components/FotoYukle";
@@ -67,7 +67,7 @@ export default async function Panel() {
       {/* NAVBAR */}
       <nav style={{ backgroundColor: "var(--navy)" }} className="px-6 py-4 sticky top-0 z-40">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <a href="/" className="flex items-center gap-2.5">
+          <Link href="/" className="flex items-center gap-2.5">
             <svg width="30" height="30" viewBox="0 0 32 32" fill="none">
               <circle cx="16" cy="16" r="15" fill="var(--teal)"/>
               <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="0.6" opacity="0.35"/>
@@ -83,13 +83,13 @@ export default async function Panel() {
               <circle cx="16" cy="16" r="0.8" fill="var(--gold)"/>
             </svg>
             <span className="text-white font-bold text-lg">Doktor<span style={{ color: "var(--gold)" }}>Pusula</span></span>
-          </a>
+          </Link>
           <div className="flex items-center gap-3">
             <BildirimZili />
             <span className="text-gray-300 text-sm hidden md:block">{doktor.ad}</span>
-            <a href={`/doktor/${doktor.slug}`} style={{ borderColor: "var(--teal)", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
+            <Link href={`/doktor/${doktor.slug}`} style={{ borderColor: "var(--teal)", color: "#4DD9D8" }} className="border text-xs px-3 py-1.5 rounded-lg hover:opacity-80 hidden md:block">
               Profilimi Gör
-            </a>
+            </Link>
             <CikisButonu />
           </div>
         </div>
@@ -422,14 +422,14 @@ export default async function Panel() {
             {(!doktor.paket || doktor.paket === "ucretsiz") && (
               <div style={{ background: "linear-gradient(135deg, var(--navy), #0a3d62)" }} className="rounded-2xl p-5 text-center">
                 <div style={{ color: "#4DD9D8" }} className="flex justify-center mb-2"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={28} height={28}><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg></div>
-                <h3 className="text-white font-bold text-sm mb-1">Premium'a Yükselt</h3>
+                <h3 className="text-white font-bold text-sm mb-1">Premium&apos;a Yükselt</h3>
                 <p className="text-gray-300 text-xs mb-4 leading-relaxed">
                   AI Asistan, öne çıkarma ve analitik dashboard için paketi yükseltin.
                 </p>
-                <a href="/paketler" style={{ backgroundColor: "var(--teal)" }}
+                <Link href="/paketler" style={{ backgroundColor: "var(--teal)" }}
                   className="block text-white text-xs font-semibold py-2.5 rounded-xl hover:opacity-90 transition-opacity">
                   Paketleri İncele →
-                </a>
+                </Link>
               </div>
             )}
           </div>
@@ -439,14 +439,14 @@ export default async function Panel() {
 
             {/* Görüşme Özetle — Pro/Kurumsal */}
             {["pro", "kurumsal"].includes(doktor.paket) && (
-              <a href="/gorusme-ozet" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="flex items-center gap-4 rounded-2xl p-5 hover:opacity-90 transition-opacity">
+              <Link href="/gorusme-ozet" style={{ background: "linear-gradient(135deg, #7C3AED 0%, #4F46E5 100%)" }} className="flex items-center gap-4 rounded-2xl p-5 hover:opacity-90 transition-opacity">
                 <span style={{ color: "#C4B5FD" }}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={30} height={30}><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg></span>
                 <div className="flex-1">
                   <div className="text-white font-bold text-sm mb-0.5">Görüşme Özetle</div>
                   <p className="text-purple-200 text-xs leading-relaxed">Hasta görüşmenizi kaydedin, AI otomatik özetlesin</p>
                 </div>
                 <span className="text-purple-300 text-lg">→</span>
-              </a>
+              </Link>
             )}
 
             {/* AI Asistan */}

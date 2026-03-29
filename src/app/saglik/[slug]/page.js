@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import { notFound } from "next/navigation";
 import sql from "@/lib/db";
@@ -71,7 +72,7 @@ const PLATFORM_MAKALELER = {
     icerik: [
       { tip: "giris", metin: "Botoks (botulinum toksin), yüz kırışıklıklarını azaltmak için en yaygın kullanılan estetik uygulamalardan biridir. Ancak etrafında birçok yanlış inanç dolaşmaktadır." },
       { tip: "baslik", metin: "5 Yaygın Botoks Efsanesi" },
-      { tip: "liste", items: ["'Botoks zehirdir' — Kontrollü dozda tamamen güvenlidir", "'Yüz donup kalır' — Doğru uygulamada ifade korunur", "'Bağımlılık yapar' — Tıbbi bağımlılık yoktur", "'Herkes anlıyor' — İyi uygulamada doğal görünür", "'Kalıcıdır' — 4-6 ay içinde etkisi geçer"] },
+      { tip: "liste", items: ["&apos;Botoks zehirdir&apos; — Kontrollü dozda tamamen güvenlidir", "&apos;Yüz donup kalır&apos; — Doğru uygulamada ifade korunur", "&apos;Bağımlılık yapar&apos; — Tıbbi bağımlılık yoktur", "&apos;Herkes anlıyor&apos; — İyi uygulamada doğal görünür", "&apos;Kalıcıdır&apos; — 4-6 ay içinde etkisi geçer"] },
       { tip: "kutu", renk: "yesil", metin: "✅ Güvenli botoks için mutlaka sertifikalı hekim tercih edin." },
     ],
     faq: [
@@ -178,9 +179,9 @@ export default async function MakaleSayfasi({ params }) {
         <Navbar aktifSayfa="Sağlık Rehberi" />
         <div className="max-w-4xl mx-auto px-6 py-10">
           <p className="text-sm text-gray-400 mb-6">
-            <a href="/" className="hover:text-gray-600">Ana Sayfa</a>
+            <Link href="/" className="hover:text-gray-600">Ana Sayfa</Link>
             <span className="mx-2">›</span>
-            <a href="/saglik" className="hover:text-gray-600">Sağlık Rehberi</a>
+            <Link href="/saglik" className="hover:text-gray-600">Sağlık Rehberi</Link>
             <span className="mx-2">›</span>
             <span style={{ color: "#0E7C7B" }}>{makale.uzmanlik}</span>
           </p>
@@ -191,9 +192,9 @@ export default async function MakaleSayfasi({ params }) {
             </span>
             <h1 style={{ color: "#0D2137" }} className="text-2xl md:text-3xl font-bold mt-4 mb-4 leading-tight">{makale.baslik}</h1>
             <div className="flex flex-wrap items-center gap-4 text-sm text-gray-500">
-              <a href={`/doktor/${makale.doktor_slug}`} style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
+              <Link href={`/doktor/${makale.doktor_slug}`} style={{ color: "#0E7C7B" }} className="font-medium hover:underline">
                 👨‍⚕️ {makale.doktor_ad}
-              </a>
+              </Link>
               <span>📅 {tarih}</span>
             </div>
           </div>
@@ -239,10 +240,10 @@ export default async function MakaleSayfasi({ params }) {
                   Randevu Al
                 </a>
               </div>
-              <a href="/saglik" style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
+              <Link href="/saglik" style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
                 className="block border rounded-xl p-4 text-center text-sm font-medium hover:bg-gray-50">
                 ← Tüm Makaleler
-              </a>
+              </Link>
             </div>
           </div>
         </div>
@@ -260,9 +261,9 @@ export default async function MakaleSayfasi({ params }) {
       <div className="max-w-4xl mx-auto px-6 py-10">
 
         <p className="text-sm text-gray-400 mb-6">
-          <a href="/" className="hover:text-gray-600">Ana Sayfa</a>
+          <Link href="/" className="hover:text-gray-600">Ana Sayfa</Link>
           <span className="mx-2">›</span>
-          <a href="/saglik" className="hover:text-gray-600">Sağlık Rehberi</a>
+          <Link href="/saglik" className="hover:text-gray-600">Sağlık Rehberi</Link>
           <span className="mx-2">›</span>
           <span style={{ color: "#0E7C7B" }}>{makale.kategori}</span>
         </p>
@@ -303,15 +304,15 @@ export default async function MakaleSayfasi({ params }) {
               <div className="text-4xl mb-3">{makale.goruntu}</div>
               <p className="font-bold text-gray-900 mb-1">DoktorPusula</p>
               <p className="text-xs text-gray-400 mb-4">Editöryal İçerik</p>
-              <a href="/istanbul/kbb-uzmani" style={{ backgroundColor: "#0D2137" }}
+              <Link href="/istanbul/kbb-uzmani" style={{ backgroundColor: "#0D2137" }}
                 className="block text-white text-sm py-2 rounded-xl font-medium hover:opacity-90">
                 Uzman Bul →
-              </a>
+              </Link>
             </div>
-            <a href="/saglik" style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
+            <Link href="/saglik" style={{ borderColor: "#0E7C7B", color: "#0E7C7B" }}
               className="block border rounded-xl p-4 text-center text-sm font-medium hover:bg-gray-50">
               ← Tüm Makaleler
-            </a>
+            </Link>
           </div>
         </div>
       </div>

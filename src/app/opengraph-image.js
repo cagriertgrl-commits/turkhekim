@@ -43,7 +43,7 @@ export default async function Image() {
 
         {/* Açıklama */}
         <div style={{ color: "#94A3B8", fontSize: 28, textAlign: "center", maxWidth: 800 }}>
-          Türkiye'nin Bağımsız Sağlık Platformu
+          Türkiye&apos;nin Bağımsız Sağlık Platformu
         </div>
 
         {/* Alt çizgi */}

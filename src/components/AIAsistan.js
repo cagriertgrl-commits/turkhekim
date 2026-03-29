@@ -1,5 +1,6 @@
 "use client";
 import { useState, useRef, useEffect } from "react";
+import Link from "next/link";
 
 const HIZLI_SORULAR = [
   { etiket: "Malpraktis Nedir?", soru: "Tıbbi malpraktis nedir, Türk hukukunda nasıl tanımlanır?" },
@@ -106,13 +107,13 @@ export default function AIAsistan({ doktorId, paket = "ucretsiz" }) {
             AI Asistan, malpraktis hukuku ve klinik yönetim konularında anında yanıt veriyor.
             Bu özellik <strong>Premium paket</strong> ve üstü için geçerlidir.
           </p>
-          <a
+          <Link
             href="/paketler"
             style={{ backgroundColor: "#0E7C7B" }}
             className="inline-block text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity"
           >
             Paketi Yükselt →
-          </a>
+          </Link>
         </div>
       )}
 

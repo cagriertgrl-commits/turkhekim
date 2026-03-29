@@ -146,7 +146,7 @@ export default function HastalıklarPage() {
             Doğru Uzmana Ulaşmaya Hazır mısınız?
           </h2>
           <p className="text-gray-400 mb-6 max-w-xl mx-auto">
-            Türkiye'nin dört bir yanında binlerce uzman doktorla randevu alın.
+            Türkiye&apos;nin dört bir yanında binlerce uzman doktorla randevu alın.
           </p>
           <Link
             href="/istanbul/kbb-uzmani"

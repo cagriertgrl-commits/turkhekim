@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 export default function HastalarPanel({ gorusmeler }) {
   const [acikId, setAcikId] = useState(null);
@@ -12,9 +13,9 @@ export default function HastalarPanel({ gorusmeler }) {
         <div className="text-center py-10">
           <div className="flex justify-center mb-3" style={{color:"#CBD5E1"}}><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" width={44} height={44}><path d="M4.8 2.3A.3.3 0 1 0 5 2H4a2 2 0 0 0-2 2v5a6 6 0 0 0 6 6 6 6 0 0 0 6-6V4a2 2 0 0 0-2-2h-1a.2.2 0 1 0 .3.3"/><path d="M8 15v1a6 6 0 0 0 6 6 6 6 0 0 0 6-6v-4"/><circle cx="20" cy="10" r="2"/></svg></div>
           <p className="text-gray-400 text-sm">Henüz kaydedilmiş görüşme yok.</p>
-          <a href="/gorusme-ozet" className="inline-block mt-3 text-xs text-purple-600 underline hover:opacity-80">
+          <Link href="/gorusme-ozet" className="inline-block mt-3 text-xs text-purple-600 underline hover:opacity-80">
             Görüşme Özetle →
-          </a>
+          </Link>
         </div>
       </div>
     );
@@ -36,9 +37,9 @@ export default function HastalarPanel({ gorusmeler }) {
           <span style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }} className="text-xs font-bold px-3 py-1 rounded-full">
             {Object.keys(hastalar).length} hasta
           </span>
-          <a href="/gorusme-ozet" style={{ backgroundColor: "#7C3AED" }} className="text-white text-xs px-3 py-1.5 rounded-lg hover:opacity-90">
+          <Link href="/gorusme-ozet" style={{ backgroundColor: "#7C3AED" }} className="text-white text-xs px-3 py-1.5 rounded-lg hover:opacity-90">
             + Yeni Görüşme
-          </a>
+          </Link>
         </div>
       </div>
 

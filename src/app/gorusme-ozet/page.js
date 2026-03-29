@@ -622,7 +622,7 @@ export default function GorusmeOzetSayfasi() {
                 <span className="text-2xl">✅</span>
                 <div className="flex-1">
                   <p className="font-semibold text-green-800 text-sm">Görüşme başarıyla kaydedildi</p>
-                  <p className="text-green-600 text-xs mt-0.5">Paneldeki "Hastalarım" bölümünden görüntüleyebilirsiniz.</p>
+                  <p className="text-green-600 text-xs mt-0.5">Paneldeki &quot;Hastalarım&quot; bölümünden görüntüleyebilirsiniz.</p>
                 </div>
                 <button
                   onClick={sifirla}

@@ -60,7 +60,7 @@ export default function TedavilerSayfasi() {
       <div style={{ background: "linear-gradient(135deg, #0D2137 0%, #0a3d62 100%)" }} className="px-6 py-14">
         <div className="max-w-5xl mx-auto text-center">
           <h1 className="text-white text-3xl font-bold mb-3">Tedaviler & Hizmetler</h1>
-          <p className="text-gray-300">Aradığınız tedavi için Türkiye'nin en iyi uzmanlarını bulun</p>
+          <p className="text-gray-300">Aradığınız tedavi için Türkiye&apos;nin en iyi uzmanlarını bulun</p>
         </div>
       </div>
 

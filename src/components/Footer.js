@@ -52,7 +52,7 @@ export default function Footer() {
               </span>
             </Link>
             <p className="text-gray-400 text-xs leading-relaxed mb-4">
-              Türkiye'nin bağımsız, şeffaf sağlık platformu. Doğrulanmış yorumlar ve kolay randevu.
+              Türkiye&apos;nin bağımsız, şeffaf sağlık platformu. Doğrulanmış yorumlar ve kolay randevu.
             </p>
             <div className="flex gap-3">
               <a href="mailto:info@doktorpusula.com" style={{ color: "#4DD9D8" }} className="text-xs hover:underline">

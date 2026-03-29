@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 import { IkonRinoplasti, IkonDis, IkonSacEkimi, IkonGoz, IkonOrtopedi, IkonEstetik } from "@/components/UzmanlikIkonlari";
 
 export const metadata = {
@@ -58,19 +59,19 @@ export default function MediakalTurizm() {
                 <span style={{ color: "#0E7C7B" }} className="text-sm font-medium">🌍 Medikal Turizm Portalı</span>
               </div>
               <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 leading-tight">
-                Türkiye'de Sağlık,<br />
+                Türkiye&apos;de Sağlık,<br />
                 <span style={{ color: "#0E7C7B" }}>Kendi Dilinde</span>
               </h1>
               <p className="text-gray-300 text-lg mb-8 leading-relaxed">
-                Farsça, Arapça ve Türkçe destek ile Türkiye'nin en iyi doktorlarına ulaşın. Randevu, tercüman, transfer ve konaklama — hepsi tek elden.
+                Farsça, Arapça ve Türkçe destek ile Türkiye&apos;nin en iyi doktorlarına ulaşın. Randevu, tercüman, transfer ve konaklama — hepsi tek elden.
               </p>
               <div className="flex flex-wrap gap-3">
                 <a href="https://wa.me/905000000000" style={{ backgroundColor: "#0E7C7B" }} className="text-white px-6 py-3 rounded-xl font-medium hover:opacity-90 transition-opacity flex items-center gap-2">
                   <span>💬</span> WhatsApp ile Yaz
                 </a>
-                <a href="/istanbul/kbb-uzmani" style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border px-6 py-3 rounded-xl font-medium hover:opacity-80 transition-opacity">
+                <Link href="/istanbul/kbb-uzmani" style={{ borderColor: "#0E7C7B", color: "#4DD9D8" }} className="border px-6 py-3 rounded-xl font-medium hover:opacity-80 transition-opacity">
                   Doktor Bul →
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -99,7 +100,7 @@ export default function MediakalTurizm() {
           {[
             { sayi: "200K+", etiket: "Yıllık İranlı Turist" },
             { sayi: "4 Dil", etiket: "Destek" },
-            { sayi: "%60", etiket: "Avrupa'dan Ucuz" },
+            { sayi: "%60", etiket: "Avrupa&apos;dan Ucuz" },
             { sayi: "7/24", etiket: "WhatsApp Destek" },
           ].map((item) => (
             <div key={item.etiket}>
@@ -115,7 +116,7 @@ export default function MediakalTurizm() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 style={{ color: "#0D2137" }} className="text-3xl font-bold mb-4">En Çok Tercih Edilen Tedaviler</h2>
-            <p className="text-gray-500">Türkiye'ye gelen medikal turistlerin en sık başvurduğu tedavi alanları</p>
+            <p className="text-gray-500">Türkiye&apos;ye gelen medikal turistlerin en sık başvurduğu tedavi alanları</p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
             {tedaviler.map((t) => (
@@ -146,7 +147,7 @@ export default function MediakalTurizm() {
                     <span key={i} className="text-yellow-400">★</span>
                   ))}
                 </div>
-                <p className="text-gray-600 text-sm leading-relaxed mb-4">"{yorum.metin}"</p>
+                <p className="text-gray-600 text-sm leading-relaxed mb-4">&quot;{yorum.metin}&quot;</p>
                 <div className="flex items-center gap-3">
                   <div style={{ backgroundColor: "#E8F5F5", color: "#0E7C7B" }} className="w-10 h-10 rounded-full flex items-center justify-center font-bold">
                     {yorum.bayrak}

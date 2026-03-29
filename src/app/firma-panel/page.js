@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 
 const KATEGORILER = [
   { deger: "ilac", etiket: "İlaç" },
@@ -132,7 +133,7 @@ export default function FirmaPaneli() {
       <div style={{ backgroundColor: "var(--navy)" }} className="px-6 py-4">
         <div className="max-w-5xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <a href="/" className="text-white font-bold text-lg">DoktorPusula</a>
+            <Link href="/" className="text-white font-bold text-lg">DoktorPusula</Link>
             <span className="text-gray-400 text-sm hidden sm:block">/ Firma Paneli</span>
           </div>
           <div className="flex items-center gap-4">
@@ -281,7 +282,7 @@ export default function FirmaPaneli() {
             {urunler.length === 0 ? (
               <div className="bg-white rounded-2xl p-10 border border-gray-100 text-center">
                 <p className="text-gray-400 text-sm">Henüz ürün eklenmemiş.</p>
-                <p className="text-gray-300 text-xs mt-1">Yukarıdaki "Ürün Ekle" butonuyla başlayın.</p>
+                <p className="text-gray-300 text-xs mt-1">Yukarıdaki &quot;Ürün Ekle&quot; butonuyla başlayın.</p>
               </div>
             ) : (
               <div className="space-y-3">

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import DilSecici from "./DilSecici";
 
 export default function Navbar({ aktifSayfa }) {
@@ -34,7 +35,7 @@ export default function Navbar({ aktifSayfa }) {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
 
         {/* LOGO */}
-        <a href="/" className="flex items-center gap-2.5">
+        <Link href="/" className="flex items-center gap-2.5">
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
             <circle cx="16" cy="16" r="15" fill="var(--teal)"/>
             <circle cx="16" cy="16" r="14" fill="none" stroke="white" strokeWidth="0.6" opacity="0.35"/>
@@ -52,19 +53,19 @@ export default function Navbar({ aktifSayfa }) {
           <span className="text-white font-bold text-xl tracking-tight">
             Doktor<span style={{ color: "var(--gold)" }}>Pusula</span>
           </span>
-        </a>
+        </Link>
 
         {/* MASAÜSTÜ MENÜ */}
         <div className="hidden md:flex items-center gap-8">
           {linkler.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               style={aktifSayfa === link.etiket ? { color: "var(--teal)" } : {}}
               className="text-gray-300 hover:text-white text-sm transition-colors"
             >
               {link.etiket}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -78,7 +79,7 @@ export default function Navbar({ aktifSayfa }) {
           ) : kullanici ? (
             // Giriş yapılmış
             <>
-              <a href="/panel" title="Panelim" className="flex-shrink-0">
+              <Link href="/panel" title="Panelim" className="flex-shrink-0">
                 <div
                   className="w-8 h-8 rounded-full overflow-hidden border-2 hover:border-teal-300 transition-colors"
                   style={{ borderColor: "var(--teal)" }}
@@ -94,21 +95,21 @@ export default function Navbar({ aktifSayfa }) {
                     </div>
                   )}
                 </div>
-              </a>
+              </Link>
             </>
           ) : (
             // Giriş yapılmamış
             <>
-              <a href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">
+              <Link href="/giris" className="text-gray-300 hover:text-white text-sm transition-colors">
                 Giriş Yap
-              </a>
-              <a
+              </Link>
+              <Link
                 href="/kayit-ol"
                 style={{ backgroundColor: "var(--teal)" }}
                 className="text-white px-4 py-2 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
               >
                 Kayıt Ol
-              </a>
+              </Link>
             </>
           )}
         </div>
@@ -135,7 +136,7 @@ export default function Navbar({ aktifSayfa }) {
       {menuAcik && (
         <div style={{ backgroundColor: "#0a1c2e", borderColor: "#ffffff10" }} className="md:hidden absolute top-full left-0 right-0 border-t px-6 py-4 space-y-1">
           {linkler.map((link) => (
-            <a
+            <Link
               key={link.href}
               href={link.href}
               onClick={() => setMenuAcik(false)}
@@ -143,14 +144,14 @@ export default function Navbar({ aktifSayfa }) {
               className="block text-gray-300 hover:text-white py-3 text-sm border-b border-white border-opacity-10 transition-colors"
             >
               {link.etiket}
-            </a>
+            </Link>
           ))}
           <div className="pt-3 space-y-2">
             {kullanici ? (
               <>
-                <a href="/panel" className="block text-teal-400 hover:text-white py-2 text-sm font-medium transition-colors">
+                <Link href="/panel" className="block text-teal-400 hover:text-white py-2 text-sm font-medium transition-colors">
                   {kullanici.ad?.split(" ")[0]} — Panelim
-                </a>
+                </Link>
                 <button
                   onClick={cikisYap}
                   className="block w-full text-left text-gray-400 hover:text-white py-2 text-sm transition-colors bg-transparent border-0 cursor-pointer"
@@ -160,16 +161,16 @@ export default function Navbar({ aktifSayfa }) {
               </>
             ) : (
               <>
-                <a href="/giris" className="block text-gray-300 hover:text-white py-2 text-sm transition-colors">
+                <Link href="/giris" className="block text-gray-300 hover:text-white py-2 text-sm transition-colors">
                   Giriş Yap
-                </a>
-                <a
+                </Link>
+                <Link
                   href="/kayit-ol"
                   style={{ backgroundColor: "var(--teal)" }}
                   className="block text-white text-center py-3 rounded-lg text-sm font-medium hover:opacity-90 transition-opacity"
                 >
                   Kayıt Ol
-                </a>
+                </Link>
               </>
             )}
             <div className="pt-2">

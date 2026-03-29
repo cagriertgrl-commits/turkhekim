@@ -135,7 +135,7 @@ export default function YorumFormu({ doktorId }) {
             <a href="/gizlilik" target="_blank" style={{ color: "#0E7C7B" }} className="hover:underline font-medium">
               KVKK Aydınlatma Metni
             </a>
-            'ni okudum; telefon numaram ve kişisel verilerimin yorum doğrulaması amacıyla işlenmesine onay veriyorum.
+            &apos;ni okudum; telefon numaram ve kişisel verilerimin yorum doğrulaması amacıyla işlenmesine onay veriyorum.
           </span>
         </label>
 

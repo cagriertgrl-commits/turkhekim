@@ -28,7 +28,7 @@ export default function MedikalFirmaSayfasi() {
             Doktorlara Ulaşmanın En Akıllı Yolu
           </h1>
           <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            DoktorPusula'nın 10.000+ doktor ağıyla tanışın. İlaç firmanızı, medikal ürünlerinizi ve sağlık hizmetlerinizi hedef doktorlara doğrudan ulaştırın.
+            DoktorPusula&apos;nın 10.000+ doktor ağıyla tanışın. İlaç firmanızı, medikal ürünlerinizi ve sağlık hizmetlerinizi hedef doktorlara doğrudan ulaştırın.
           </p>
           <div className="flex flex-wrap justify-center gap-6 text-sm text-gray-300">
             <span>✓ Şehir & uzmanlık bazlı hedefleme</span>

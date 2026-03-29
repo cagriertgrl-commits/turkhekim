@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import Link from "next/link";
 
 export const metadata = {
   title: "Sayfa Bulunamadı | DoktorPusula",
@@ -27,19 +28,19 @@ export default function NotFound() {
             Aradığınız sayfa taşınmış, silinmiş ya da hiç var olmamış olabilir.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <a
+            <Link
               href="/"
               style={{ backgroundColor: "#0E7C7B" }}
               className="text-white px-6 py-3 rounded-lg font-medium hover:opacity-90 transition-opacity"
             >
               Ana Sayfaya Dön
-            </a>
-            <a
+            </Link>
+            <Link
               href="/istanbul/kbb-uzmani"
               className="text-gray-300 border border-gray-600 px-6 py-3 rounded-lg font-medium hover:border-gray-400 hover:text-white transition-colors"
             >
               Doktor Bul
-            </a>
+            </Link>
           </div>
         </div>
       </main>

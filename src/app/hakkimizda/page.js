@@ -67,14 +67,14 @@ export default function Hakkimizda() {
             <div style={{ backgroundColor: "#0E7C7B20", borderColor: "#0E7C7B50" }}
               className="inline-flex items-center gap-2 border rounded-full px-4 py-2 mb-6">
               <span className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-              <span style={{ color: "#4DD9D8" }} className="text-sm font-medium">🇹🇷 Türkiye'nin Bağımsız Sağlık Platformu</span>
+              <span style={{ color: "#4DD9D8" }} className="text-sm font-medium">🇹🇷 Türkiye&apos;nin Bağımsız Sağlık Platformu</span>
             </div>
             <h1 className="text-white text-4xl md:text-5xl font-bold mb-6 leading-tight">
               Sağlıkta Güveni<br />
               <span style={{ color: "#0E7C7B" }}>Yeniden İnşa Ediyoruz</span>
             </h1>
             <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
-              Türkiye'deki sağlık platformları ya yabancı sermayeye ya da reklam geliri için
+              Türkiye&apos;deki sağlık platformları ya yabancı sermayeye ya da reklam geliri için
               doktor sıralamasını bozan teşviklere dayanıyordu. DoktorPusula bu sorunları çözmek için kuruldu.
             </p>
           </div>
@@ -103,7 +103,7 @@ export default function Hakkimizda() {
                 </h2>
                 <div className="space-y-4 text-gray-600 text-sm leading-relaxed">
                   <p>
-                    Türkiye'de doktor aramak zordu. Mevcut platformlar ya yabancı ortaklara sahipti
+                    Türkiye&apos;de doktor aramak zordu. Mevcut platformlar ya yabancı ortaklara sahipti
                     ya da daha fazla reklam bütçesi olan doktorları öne çıkarıyordu.
                     Hasta yorumları kolayca silinebiliyor, gerçek deneyimler gizleniyordu.
                   </p>
@@ -114,7 +114,7 @@ export default function Hakkimizda() {
                   </p>
                   <p>
                     Yorumlar silinemez. Sıralamalar para ile değiştirilemez.
-                    Medikal turistler kendi dilinde hizmet alır. Platform tamamen Türkiye'de,
+                    Medikal turistler kendi dilinde hizmet alır. Platform tamamen Türkiye&apos;de,
                     Türk ekip tarafından geliştirilmektedir.
                   </p>
                 </div>
