@@ -44,31 +44,42 @@ export default function RandevuFormu({ doktorId, doktorAd, onlineRandevu }) {
 
   const gonder = async (e) => {
     e.preventDefault();
+    if (!form.hasta_adi.trim() || !form.telefon.trim()) {
+      setDurum("hata");
+      setMesaj("Ad ve telefon alanları zorunludur.");
+      return;
+    }
     setYukleniyor(true);
     setDurum(null);
 
-    const res = await fetch("/api/randevu", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ...form,
-        doktor_id: doktorId,
-        tip,
-        tarih: seciliTarih,
-        saat: seciliSaat,
-      }),
-    });
+    try {
+      const res = await fetch("/api/randevu", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...form,
+          doktor_id: doktorId,
+          tip,
+          tarih: seciliTarih,
+          saat: seciliSaat,
+        }),
+      });
 
-    const data = await res.json();
-    setYukleniyor(false);
+      const data = await res.json();
 
-    if (res.ok) {
-      setDurum("basari");
-      setMesaj(data.mesaj);
-      setForm({ hasta_adi: "", telefon: "", sikayet: "" });
-    } else {
+      if (res.ok) {
+        setDurum("basari");
+        setMesaj(data.mesaj);
+        setForm({ hasta_adi: "", telefon: "", sikayet: "" });
+      } else {
+        setDurum("hata");
+        setMesaj(data.hata || "Bir hata oluştu.");
+      }
+    } catch {
       setDurum("hata");
-      setMesaj(data.hata);
+      setMesaj("Bağlantı hatası. Lütfen tekrar deneyin.");
+    } finally {
+      setYukleniyor(false);
     }
   };
 

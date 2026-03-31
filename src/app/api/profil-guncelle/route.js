@@ -8,7 +8,12 @@ export async function POST(request) {
   const session = await getSession();
   if (!session) return NextResponse.json({ hata: "Yetkisiz." }, { status: 401 });
 
-  const formData = await request.formData();
+  let formData;
+  try {
+    formData = await request.formData();
+  } catch {
+    return NextResponse.json({ hata: "Geçersiz form verisi." }, { status: 400 });
+  }
   const g = (k) => formData.get(k)?.toString().trim() || "";
 
   const hakkinda = g("hakkinda");

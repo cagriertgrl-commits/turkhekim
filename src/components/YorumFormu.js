@@ -42,6 +42,8 @@ export default function YorumFormu({ doktorId }) {
         return;
       }
       setAdim(2);
+      setForm({ hasta_adi: "", telefon: "", puan: 0, metin: "" });
+      setKvkkOnay(false);
     } catch {
       setHata("Bağlantı hatası.");
     }

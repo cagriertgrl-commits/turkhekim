@@ -34,14 +34,17 @@ export default function AdminPanel() {
   const [firmaBasvurular, setFirmaBasvurular] = useState([]);
   const [apiKullanim, setApiKullanim] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
+  const [yetkisiz, setYetkisiz] = useState(false);
 
   useEffect(() => { veriCek(); }, []);
 
   async function veriCek() {
     setYukleniyor(true);
     try {
+      const authCheck = await fetch("/api/admin/doktorlar");
+      if (authCheck.status === 401) { setYetkisiz(true); setYukleniyor(false); return; }
       const [d, y, dg, r, apiData, tc, fb] = await Promise.all([
-        fetch("/api/admin/doktorlar").then(r => r.ok ? r.json() : []),
+        authCheck.ok ? authCheck.json() : [],
         fetch("/api/yorum-listesi").then(r => r.ok ? r.json() : { yorumlar: [] }),
         fetch("/api/admin/dogrulamalar").then(r => r.ok ? r.json() : { dogrulamalar: [] }).catch(() => ({ dogrulamalar: [] })),
         fetch("/api/admin/randevular").then(r => r.ok ? r.json() : { randevular: [] }).catch(() => ({ randevular: [] })),
@@ -149,6 +152,20 @@ export default function AdminPanel() {
   const bekleyenFirmalar = firmaBasvurular.filter(f => f.durum === "bekliyor");
   const moderasyonBekleyen = yorumlar.filter(y => y.dogrulama_durumu === "moderasyon_bekliyor");
   const toplamBekleyen = bekleyenDoktorlar.length + moderasyonBekleyen.length + bekleyenTercumanlar.length + bekleyenFirmalar.length;
+
+  if (yetkisiz) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 style={{ color: "#0D2137" }} className="text-2xl font-bold mb-2">Yetkisiz Erişim</h1>
+          <p className="text-gray-500 mb-4">Bu sayfayı görüntüleme yetkiniz yok.</p>
+          <Link href="/admin-giris" style={{ backgroundColor: "#0D2137" }} className="text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90">
+            Admin Girişi
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -371,7 +388,7 @@ export default function AdminPanel() {
                   <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <h3 className="font-bold text-gray-800 mb-4 text-sm">Bu Ay — Endpoint Bazlı</h3>
                     <div className="space-y-3">
-                      {apiKullanim.endpoint.map((row, i) => (
+                      {apiKullanim?.endpoint?.map((row, i) => (
                         <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                           <div>
                             <span className="font-medium text-sm text-gray-800">{row.endpoint}</span>
@@ -391,7 +408,7 @@ export default function AdminPanel() {
                   <div className="bg-white rounded-xl p-5 border border-gray-100 shadow-sm">
                     <h3 className="font-bold text-gray-800 mb-4 text-sm">Son 7 Gün</h3>
                     <div className="space-y-2">
-                      {apiKullanim.gunluk.map((g, i) => (
+                      {apiKullanim?.gunluk?.map((g, i) => (
                         <div key={i} className="flex items-center justify-between py-2 border-b border-gray-50 last:border-0">
                           <span className="text-sm text-gray-600">{new Date(g.tarih).toLocaleDateString("tr-TR", { day: "numeric", month: "short" })}</span>
                           <div className="flex gap-4 text-xs text-gray-500">

@@ -5,6 +5,7 @@ import Link from "next/link";
 
 // adim: bekliyor | kayit | bitti | transkript | ozetleniyor | ozet
 export default function GorusmeOzetSayfasi() {
+  const [yetkili, setYetkili] = useState(false);
   const [tarayiciDestekli, setTarayiciDestekli] = useState(null);
   const [adim, setAdim] = useState("bekliyor"); // bekliyor | kayit | bitti | isleniyor | transkript | ozetleniyor | ozet
   const [yuklemePct, setYuklemePct] = useState(0);
@@ -35,6 +36,10 @@ export default function GorusmeOzetSayfasi() {
   const streamRef = useRef(null);
 
   useEffect(() => {
+    fetch("/api/me").then(r => r.json()).then(d => {
+      if (!d.kullanici) { window.location.href = "/giris"; return; }
+      setYetkili(true);
+    }).catch(() => { window.location.href = "/giris"; });
     const ok = "webkitSpeechRecognition" in window || "SpeechRecognition" in window;
     setTarayiciDestekli(ok);
     return () => temizle();
@@ -229,7 +234,7 @@ export default function GorusmeOzetSayfasi() {
     return `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
   }
 
-  if (tarayiciDestekli === null) return null;
+  if (!yetkili || tarayiciDestekli === null) return null;
 
   return (
     <div className="min-h-screen bg-gray-50">
