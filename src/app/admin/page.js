@@ -9,6 +9,8 @@ const SEKMELER = [
   { key: "ozet", label: "Özet" },
   { key: "bekleyen", label: "Bekleyen" },
   { key: "doktorlar", label: "Doktorlar" },
+  { key: "tercumanlar", label: "Tercümanlar" },
+  { key: "firmalar", label: "Firma Başvuruları" },
   { key: "yorumlar", label: "Yorum Moderasyon" },
   { key: "dogrulamalar", label: "Doğrulamalar" },
   { key: "randevular", label: "Randevular" },
@@ -28,6 +30,8 @@ export default function AdminPanel() {
   const [yorumlar, setYorumlar] = useState([]);
   const [dogrulamalar, setDogrulamalar] = useState([]);
   const [randevular, setRandevular] = useState([]);
+  const [tercumanlar, setTercumanlar] = useState([]);
+  const [firmaBasvurular, setFirmaBasvurular] = useState([]);
   const [apiKullanim, setApiKullanim] = useState(null);
   const [yukleniyor, setYukleniyor] = useState(true);
 
@@ -36,18 +40,22 @@ export default function AdminPanel() {
   async function veriCek() {
     setYukleniyor(true);
     try {
-      const [d, y, dg, r, apiData] = await Promise.all([
+      const [d, y, dg, r, apiData, tc, fb] = await Promise.all([
         fetch("/api/admin/doktorlar").then(r => r.ok ? r.json() : []),
         fetch("/api/yorum-listesi").then(r => r.ok ? r.json() : { yorumlar: [] }),
         fetch("/api/admin/dogrulamalar").then(r => r.ok ? r.json() : { dogrulamalar: [] }).catch(() => ({ dogrulamalar: [] })),
         fetch("/api/admin/randevular").then(r => r.ok ? r.json() : { randevular: [] }).catch(() => ({ randevular: [] })),
         fetch("/api/admin/api-kullanim").then(r => r.ok ? r.json() : null).catch(() => null),
+        fetch("/api/admin/tercumanlar").then(r => r.ok ? r.json() : { tercumanlar: [] }).catch(() => ({ tercumanlar: [] })),
+        fetch("/api/admin/firma-basvurular").then(r => r.ok ? r.json() : { basvurular: [] }).catch(() => ({ basvurular: [] })),
       ]);
       setDoktorlar(Array.isArray(d) ? d : (d.doktorlar || []));
       setYorumlar(y.yorumlar || []);
       setDogrulamalar(dg.dogrulamalar || []);
       setRandevular(r.randevular || []);
       setApiKullanim(apiData);
+      setTercumanlar(tc.tercumanlar || []);
+      setFirmaBasvurular(fb.basvurular || []);
     } catch { /* sessiz */ }
     setYukleniyor(false);
   }
@@ -102,9 +110,45 @@ export default function AdminPanel() {
     } catch { /* sessiz */ }
   }
 
+  async function tercumanOnayla(id, aktif) {
+    try {
+      const res = await fetch("/api/admin/tercumanlar", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, aktif }) });
+      if (!res.ok) throw new Error();
+      setTercumanlar(tercumanlar.map(t => t.id === id ? { ...t, aktif } : t));
+    } catch { /* sessiz */ }
+  }
+
+  async function tercumanSil(id) {
+    if (!confirm("Bu tercümanı silmek istiyor musunuz?")) return;
+    try {
+      const res = await fetch("/api/admin/tercumanlar", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+      if (!res.ok) throw new Error();
+      setTercumanlar(tercumanlar.filter(t => t.id !== id));
+    } catch { /* sessiz */ }
+  }
+
+  async function firmaDurumGuncelle(id, durum) {
+    try {
+      const res = await fetch("/api/admin/firma-basvurular", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id, durum }) });
+      if (!res.ok) throw new Error();
+      setFirmaBasvurular(firmaBasvurular.map(f => f.id === id ? { ...f, durum } : f));
+    } catch { /* sessiz */ }
+  }
+
+  async function firmaBasvuruSil(id) {
+    if (!confirm("Bu başvuruyu silmek istiyor musunuz?")) return;
+    try {
+      const res = await fetch("/api/admin/firma-basvurular", { method: "DELETE", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ id }) });
+      if (!res.ok) throw new Error();
+      setFirmaBasvurular(firmaBasvurular.filter(f => f.id !== id));
+    } catch { /* sessiz */ }
+  }
+
   const bekleyenDoktorlar = doktorlar.filter(d => !d.onaylandi);
+  const bekleyenTercumanlar = tercumanlar.filter(t => !t.aktif);
+  const bekleyenFirmalar = firmaBasvurular.filter(f => f.durum === "bekliyor");
   const moderasyonBekleyen = yorumlar.filter(y => y.dogrulama_durumu === "moderasyon_bekliyor");
-  const toplamBekleyen = bekleyenDoktorlar.length + moderasyonBekleyen.length;
+  const toplamBekleyen = bekleyenDoktorlar.length + moderasyonBekleyen.length + bekleyenTercumanlar.length + bekleyenFirmalar.length;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -145,11 +189,13 @@ export default function AdminPanel() {
 
       {/* İSTATİSTİKLER */}
       <div style={{ backgroundColor: "#0D2137" }} className="px-6 pb-8 pt-4">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-6 gap-3">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-3">
           {[
             { baslik: "Toplam Doktor", deger: doktorlar.length, renk: "#4DD9D8" },
             { baslik: "Onaylı", deger: doktorlar.filter(d => d.onaylandi).length, renk: "#6EE7B7" },
             { baslik: "Bekleyen", deger: bekleyenDoktorlar.length, renk: "#FCD34D" },
+            { baslik: "Tercümanlar", deger: tercumanlar.length, renk: "#A78BFA" },
+            { baslik: "Firma Başvuru", deger: firmaBasvurular.length, renk: "#F97316" },
             { baslik: "Toplam Yorum", deger: yorumlar.length, renk: "#C4B5FD" },
             { baslik: "Mod. Bekleyen", deger: moderasyonBekleyen.length, renk: "#FCA5A5" },
             { baslik: "Toplam Randevu", deger: randevular.length, renk: "#93C5FD" },
@@ -176,6 +222,12 @@ export default function AdminPanel() {
               {s.label}
               {s.key === "bekleyen" && bekleyenDoktorlar.length > 0 && (
                 <span className="bg-yellow-400 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">{bekleyenDoktorlar.length}</span>
+              )}
+              {s.key === "tercumanlar" && bekleyenTercumanlar.length > 0 && (
+                <span className="bg-purple-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">{bekleyenTercumanlar.length}</span>
+              )}
+              {s.key === "firmalar" && bekleyenFirmalar.length > 0 && (
+                <span className="bg-orange-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">{bekleyenFirmalar.length}</span>
               )}
               {s.key === "yorumlar" && moderasyonBekleyen.length > 0 && (
                 <span className="bg-purple-500 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">{moderasyonBekleyen.length}</span>
@@ -393,6 +445,113 @@ export default function AdminPanel() {
               </tbody>
             </table>
             {randevular.length === 0 && <div className="text-center py-10 text-gray-400">Henüz randevu yok</div>}
+          </div>
+        )}
+
+        {/* TERCÜMANLAR */}
+        {!yukleniyor && aktifSekme === "tercumanlar" && (
+          <div className="space-y-3">
+            {tercumanlar.length === 0 ? (
+              <div className="bg-white rounded-2xl p-14 text-center shadow-sm">
+                <p style={{ color: "#0D2137" }} className="font-bold text-lg">Henüz tercüman kaydı yok</p>
+                <p className="text-gray-400 text-sm mt-1">Tercümanlar kayıt oldukça burada görünecek.</p>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead style={{ backgroundColor: "#F5F7FA" }}>
+                    <tr>
+                      {["Ad Soyad", "E-posta", "Telefon", "Diller", "Şehir", "Durum", "Tarih", "İşlem"].map(h => (
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 font-semibold text-xs">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {tercumanlar.map((t, i) => (
+                      <tr key={t.id} style={{ backgroundColor: i % 2 === 0 ? "white" : "#FAFAFA" }}>
+                        <td className="px-4 py-3 font-medium text-gray-900">{t.ad} {t.soyad || ""}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{t.email}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{t.telefon}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs max-w-[200px]"><p className="truncate">{t.diller}</p></td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{t.sehir || "—"}</td>
+                        <td className="px-4 py-3">
+                          <span style={{ backgroundColor: t.aktif ? "#D1FAE5" : "#FFFBEB", color: t.aktif ? "#059669" : "#D97706" }} className="text-xs px-2 py-1 rounded-full font-semibold">
+                            {t.aktif ? "Aktif" : "Bekliyor"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-400 text-xs">{t.created_at ? new Date(t.created_at).toLocaleDateString("tr-TR") : "—"}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex gap-1">
+                            {!t.aktif && (
+                              <button onClick={() => tercumanOnayla(t.id, true)} style={{ backgroundColor: "#059669" }} className="text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Onayla</button>
+                            )}
+                            {t.aktif && (
+                              <button onClick={() => tercumanOnayla(t.id, false)} className="bg-yellow-500 text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Askıya Al</button>
+                            )}
+                            <button onClick={() => tercumanSil(t.id)} className="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Sil</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* FİRMA BAŞVURULARI */}
+        {!yukleniyor && aktifSekme === "firmalar" && (
+          <div className="space-y-3">
+            {firmaBasvurular.length === 0 ? (
+              <div className="bg-white rounded-2xl p-14 text-center shadow-sm">
+                <p style={{ color: "#0D2137" }} className="font-bold text-lg">Henüz firma başvurusu yok</p>
+                <p className="text-gray-400 text-sm mt-1">Firmalar başvuru yaptıkça burada görünecek.</p>
+              </div>
+            ) : (
+              <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                <table className="w-full text-sm">
+                  <thead style={{ backgroundColor: "#F5F7FA" }}>
+                    <tr>
+                      {["Firma Adı", "Yetkili", "E-posta", "Telefon", "Tipi", "Paket", "Durum", "Tarih", "İşlem"].map(h => (
+                        <th key={h} className="text-left px-4 py-3 text-gray-500 font-semibold text-xs">{h}</th>
+                      ))}
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {firmaBasvurular.map((f, i) => (
+                      <tr key={f.id} style={{ backgroundColor: i % 2 === 0 ? "white" : "#FAFAFA" }}>
+                        <td className="px-4 py-3 font-medium text-gray-900">{f.firma_adi}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{f.yetkili_adi}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{f.email}</td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{f.telefon}</td>
+                        <td className="px-4 py-3">
+                          <span style={{ backgroundColor: "#EFF6FF", color: "#1E40AF" }} className="text-xs px-2 py-1 rounded-full font-semibold">{f.firma_tipi}</span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-500 text-xs">{f.paket || "standart"}</td>
+                        <td className="px-4 py-3">
+                          <span style={{ backgroundColor: f.durum === "onaylandi" ? "#D1FAE5" : f.durum === "reddedildi" ? "#FFF1F2" : "#FFFBEB", color: f.durum === "onaylandi" ? "#059669" : f.durum === "reddedildi" ? "#DC2626" : "#D97706" }} className="text-xs px-2 py-1 rounded-full font-semibold">
+                            {f.durum === "onaylandi" ? "Onaylı" : f.durum === "reddedildi" ? "Reddedildi" : "Bekliyor"}
+                          </span>
+                        </td>
+                        <td className="px-4 py-3 text-gray-400 text-xs">{f.created_at ? new Date(f.created_at).toLocaleDateString("tr-TR") : "—"}</td>
+                        <td className="px-4 py-3">
+                          <div className="flex gap-1">
+                            {f.durum === "bekliyor" && (
+                              <>
+                                <button onClick={() => firmaDurumGuncelle(f.id, "onaylandi")} style={{ backgroundColor: "#059669" }} className="text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Onayla</button>
+                                <button onClick={() => firmaDurumGuncelle(f.id, "reddedildi")} className="bg-red-500 text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Reddet</button>
+                              </>
+                            )}
+                            <button onClick={() => firmaBasvuruSil(f.id)} className="bg-red-600 text-white px-3 py-1 rounded-lg text-xs font-bold hover:opacity-90">Sil</button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </div>
         )}
 
