@@ -136,6 +136,29 @@ export default function KayitOl() {
           })}
         </div>
 
+        {/* TERCÜMAN */}
+        <div className="mt-6 border-t border-gray-100 pt-6">
+          <p className="text-center text-gray-400 text-xs mb-4 uppercase tracking-wider font-medium">Tercümanlık</p>
+          <Link
+            href="/tercuman-ol"
+            className="group flex items-center gap-4 bg-white rounded-2xl p-5 shadow-sm border border-gray-100 hover:shadow-md hover:border-purple-100 transition-all max-w-md mx-auto"
+          >
+            <div className="w-14 h-14 rounded-2xl flex items-center justify-center flex-shrink-0" style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" width={26} height={26}>
+                <path d="M5 8l6 6" /><path d="M4 14l6-6 2-3" /><path d="M2 5h12" /><path d="M7 2h1" />
+                <path d="M22 22l-5-10-5 10" /><path d="M14 18h6" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="font-bold text-gray-900 text-sm mb-0.5">Medikal Tercüman</h3>
+              <p className="text-xs text-gray-400 leading-snug">Sağlık turizmi tercümanı olarak katılın, hasta ve doktorlarla buluşun</p>
+            </div>
+            <div className="text-xs font-semibold py-1.5 px-3 rounded-full flex-shrink-0" style={{ backgroundColor: "#F5F3FF", color: "#7C3AED" }}>
+              Kayıt Ol →
+            </div>
+          </Link>
+        </div>
+
         {/* KURUMSAL */}
         <div className="mt-6 border-t border-gray-100 pt-6">
           <p className="text-center text-gray-400 text-xs mb-4 uppercase tracking-wider font-medium">Kurumsal Üyelik</p>
