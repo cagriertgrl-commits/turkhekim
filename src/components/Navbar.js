@@ -23,10 +23,13 @@ export default function Navbar({ aktifSayfa }) {
 
   const linkler = [
     { href: "/istanbul/kbb-uzmani", etiket: "Doktor Bul" },
-    { href: "/akis", etiket: "Akış" },
     { href: "/tedaviler", etiket: "Tedaviler" },
     { href: "/medikal-turizm", etiket: "Medikal Turizm" },
     { href: "/tercumanlar", etiket: "Tercümanlar" },
+  ];
+
+  const mobilEkstra = [
+    { href: "/akis", etiket: "Akış" },
     { href: "/hasta-formlari", etiket: "Onam Formları" },
   ];
 
@@ -56,7 +59,7 @@ export default function Navbar({ aktifSayfa }) {
         </Link>
 
         {/* MASAÜSTÜ MENÜ */}
-        <div className="hidden md:flex items-center gap-8">
+        <div className="hidden lg:flex items-center gap-6">
           {linkler.map((link) => (
             <Link
               key={link.href}
@@ -70,7 +73,7 @@ export default function Navbar({ aktifSayfa }) {
         </div>
 
         {/* MASAÜSTÜ SAĞ */}
-        <div className="hidden md:flex items-center gap-3">
+        <div className="hidden lg:flex items-center gap-3">
           <DilSecici />
 
           {kullanici === undefined ? (
@@ -116,7 +119,7 @@ export default function Navbar({ aktifSayfa }) {
 
         {/* MOBİL HAMBURGER */}
         <button
-          className="md:hidden flex flex-col gap-1.5 p-2"
+          className="lg:hidden flex flex-col gap-1.5 p-2"
           onClick={() => setMenuAcik(!menuAcik)}
           aria-label="Menü"
         >
@@ -134,8 +137,8 @@ export default function Navbar({ aktifSayfa }) {
 
       {/* MOBİL DROPDOWN MENÜ */}
       {menuAcik && (
-        <div style={{ backgroundColor: "#0a1c2e", borderColor: "#ffffff10" }} className="md:hidden absolute top-full left-0 right-0 border-t px-6 py-4 space-y-1">
-          {linkler.map((link) => (
+        <div style={{ backgroundColor: "#0a1c2e", borderColor: "#ffffff10" }} className="lg:hidden absolute top-full left-0 right-0 border-t px-6 py-4 space-y-1">
+          {[...linkler, ...mobilEkstra].map((link) => (
             <Link
               key={link.href}
               href={link.href}
