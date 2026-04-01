@@ -46,30 +46,30 @@ export default async function TercumanProfil({ params }) {
         {/* Profil kartı */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
           {/* Üst banner */}
-          <div style={{ background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%)" }} className="h-32 relative" />
-
-          <div className="px-8 pb-8 -mt-16 relative">
-            {/* Avatar */}
-            <div className="flex items-end gap-5 mb-6">
+          <div style={{ background: "linear-gradient(135deg, var(--navy) 0%, #0a3d62 100%)" }} className="px-8 pt-10 pb-20 relative">
+            <div className="flex items-center gap-5">
               {t.foto_url ? (
-                <img src={t.foto_url} alt={ad} className="w-28 h-28 rounded-2xl object-cover border-4 border-white shadow-lg" />
+                <img src={t.foto_url} alt={ad} className="w-24 h-24 rounded-2xl object-cover border-4 border-white/20 shadow-lg" />
               ) : (
-                <div style={{ backgroundColor: "var(--teal)" }} className="w-28 h-28 rounded-2xl flex items-center justify-center text-white text-3xl font-bold border-4 border-white shadow-lg">
+                <div style={{ backgroundColor: "var(--teal)" }} className="w-24 h-24 rounded-2xl flex items-center justify-center text-white text-3xl font-bold border-4 border-white/20 shadow-lg">
                   {initials}
                 </div>
               )}
-              <div className="pb-2">
-                <h1 style={{ color: "var(--navy)" }} className="text-2xl font-bold">{ad}</h1>
-                <p style={{ color: "var(--teal)" }} className="text-sm font-semibold">Medikal Tercüman</p>
-                {t.sehir && <p className="text-gray-400 text-sm mt-0.5">{t.sehir}</p>}
+              <div>
+                <h1 className="text-white text-2xl font-bold">{ad}</h1>
+                <p style={{ color: "#4DD9D8" }} className="text-sm font-semibold">Medikal Tercüman</p>
+                {t.sehir && <p className="text-gray-300 text-sm mt-0.5">{t.sehir}</p>}
               </div>
-              <div className="ml-auto pb-2">
-                <span style={{ backgroundColor: t.musait ? "#D1FAE5" : "#FEE2E2", color: t.musait ? "#059669" : "#DC2626" }}
+              <div className="ml-auto">
+                <span style={{ backgroundColor: t.musait ? "rgba(5,150,105,0.2)" : "rgba(220,38,38,0.2)", color: t.musait ? "#6EE7B7" : "#FCA5A5" }}
                   className="text-xs px-3 py-1.5 rounded-full font-semibold">
                   {t.musait ? "Müsait" : "Meşgul"}
                 </span>
               </div>
             </div>
+          </div>
+
+          <div className="px-8 pb-8 -mt-10 relative">
 
             {/* Diller */}
             {dilListesi.length > 0 && (
