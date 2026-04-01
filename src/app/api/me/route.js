@@ -9,6 +9,6 @@ export async function GET() {
   const doktor = rows[0] || {};
   return NextResponse.json(
     { kullanici: { ad: session.ad, slug: session.slug, foto_url: doktor.foto_url } },
-    { headers: { "Cache-Control": "private, max-age=60, stale-while-revalidate=30" } }
+    { headers: { "Cache-Control": "no-store" } }
   );
 }
