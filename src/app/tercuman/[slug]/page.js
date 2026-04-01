@@ -103,7 +103,9 @@ export default async function TercumanProfil({ params }) {
               {t.fiyat && (
                 <div className="bg-gray-50 rounded-xl p-4">
                   <p className="text-xs text-gray-400 mb-1">Ücret</p>
-                  <p className="text-sm font-semibold text-gray-800">{t.fiyat}</p>
+                  <p className="text-sm font-semibold text-gray-800">
+                    {/^[\d.,\s]+$/.test(t.fiyat.trim()) ? `${t.fiyat.trim()} ₺ / seans` : t.fiyat}
+                  </p>
                 </div>
               )}
               {t.sertifikalar && (
