@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import sql from "@/lib/db";
 import Link from "next/link";
 
+export const dynamic = "force-dynamic";
+
 export const metadata = {
   title: "Medikal Tercümanlar",
   description: "DoktorPusula medikal tercüman ağı. Arapça, Farsça, Rusça, İngilizce ve daha fazla dilde profesyonel sağlık tercümanları.",
