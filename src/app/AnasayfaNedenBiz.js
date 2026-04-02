@@ -84,7 +84,7 @@ export default function AnasayfaNedenBiz({ doktorSayisi }) {
             Verified doctors, transparent prices, full support.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
-            <Link href="/medikal-turizm" className="bg-white text-teal-700 font-semibold px-8 py-3 rounded-xl hover:opacity-90 transition-opacity shadow-lg">
+            <Link href="/medikal-turizm" className="btn-glitch" data-text="Medical Tourism Portal →" style={{ backgroundColor: "white", color: "var(--teal)" }}>
               Medical Tourism Portal →
             </Link>
             <Link href="/fa" className="border-2 border-white/40 text-white font-semibold px-8 py-3 rounded-xl hover:bg-white/10 transition-colors">
@@ -121,7 +121,7 @@ export default function AnasayfaNedenBiz({ doktorSayisi }) {
                   </div>
                 ))}
               </div>
-              <Link href="/kayit-ol" style={{ backgroundColor: "var(--teal)" }} className="inline-block text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity shadow-lg">
+              <Link href="/kayit-ol" className="btn-glitch" data-text="Ücretsiz Profil Oluştur — 3 Dakika">
                 Ücretsiz Profil Oluştur — 3 Dakika
               </Link>
             </div>

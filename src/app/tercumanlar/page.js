@@ -44,8 +44,7 @@ export default async function TercumanlarSayfasi() {
             <div className="text-4xl mb-4">🌐</div>
             <p style={{ color: "var(--navy)" }} className="font-bold text-lg mb-2">Henüz tercüman profili yok</p>
             <p className="text-gray-400 text-sm mb-6">Medikal tercüman olarak katılmak ister misiniz?</p>
-            <Link href="/tercuman-ol" style={{ backgroundColor: "var(--teal)" }}
-              className="inline-block text-white px-6 py-2.5 rounded-xl text-sm font-semibold hover:opacity-90 transition-opacity">
+            <Link href="/tercuman-ol" className="btn-glitch" data-text="Tercüman Olarak Kayıt Ol">
               Tercüman Olarak Kayıt Ol
             </Link>
           </div>
@@ -103,8 +102,7 @@ export default async function TercumanlarSayfasi() {
         {/* CTA */}
         <div className="mt-12 text-center">
           <p className="text-gray-400 text-sm mb-3">Siz de medikal tercüman olarak katılın</p>
-          <Link href="/tercuman-ol" style={{ backgroundColor: "var(--navy)" }}
-            className="inline-block text-white px-8 py-3 rounded-xl font-semibold hover:opacity-90 transition-opacity">
+          <Link href="/tercuman-ol" className="btn-glitch btn-glitch--navy" data-text="Tercüman Olarak Kayıt Ol — 3 Dakika">
             Tercüman Olarak Kayıt Ol — 3 Dakika
           </Link>
         </div>
