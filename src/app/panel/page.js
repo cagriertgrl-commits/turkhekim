@@ -99,7 +99,7 @@ export default async function Panel() {
 
         <div className="mb-6">
           <h1 style={{ color: "var(--navy)" }} className="text-2xl font-bold">
-            Hoş geldiniz, {doktor.ad.split(" ").slice(1).join(" ") || doktor.ad}
+            Hoş geldiniz, {doktor.unvan ? `${doktor.unvan} ${doktor.ad}` : doktor.ad}
           </h1>
           <p className="text-gray-500 text-sm mt-1">Doktor panelinize genel bakış</p>
         </div>
@@ -406,10 +406,12 @@ export default async function Panel() {
                   Kaydet
                 </button>
               </form>
+
+              <div className="mt-6 pt-6 border-t border-gray-100">
+                <SifreDegistir />
+              </div>
               </div>
             </details>
-
-            <SifreDegistir />
 
             {/* Profil Teması */}
             <div className="bg-white rounded-2xl p-6 shadow-sm">

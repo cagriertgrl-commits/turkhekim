@@ -83,16 +83,12 @@ export default async function Home() {
           <CanliAktivite />
 
           <h1 className="text-white text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            Yanlış Doktora Gitmenin<br />
-            <span className="text-white">Bedeli Ağır.</span>
+            Doğru Hekime<br />
+            <span style={{ color: "var(--teal)" }}>Güvenle Ulaşın.</span>
           </h1>
-          <p className="text-2xl md:text-3xl font-bold mb-6" style={{ color: "var(--teal)" }}>
-            Doğrulanmış Yorumlarla Karar Ver.
-          </p>
           <p className="text-gray-300 text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
-            Türkiye&apos;de doktor yorumları silinebilir, sıralamalar parayla değişir.
-            DoktorPusula&apos;da bu <strong className="text-white">imkansız</strong>. Telefon ile doğrulanmış
-            gerçek hasta deneyimlerini oku, güvenle karar ver.
+            Doğrulanmış hasta yorumları, şeffaf doktor profilleri ve kolay randevu.
+            Türkiye&apos;nin bağımsız sağlık platformunda doktorunuzu bulun.
           </p>
 
           <AramaKutusu />
