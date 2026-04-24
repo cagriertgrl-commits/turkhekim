@@ -1,6 +1,9 @@
 import "./globals.css";
+import Script from "next/script";
 import Footer from "@/components/Footer";
 import CerezBanner from "@/components/CerezBanner";
+
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 
 export const viewport = {
   width: "device-width",
@@ -49,7 +52,24 @@ export default function RootLayout({ children }) {
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
       </head>
-      <body className="min-h-full flex flex-col">{children}<Footer /><CerezBanner /></body>
+      <body className="min-h-full flex flex-col">
+        {children}
+        <Footer />
+        <CerezBanner />
+        {GA_ID && (
+          <>
+            <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
+            <Script id="ga-init" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_ID}', { page_path: window.location.pathname });
+              `}
+            </Script>
+          </>
+        )}
+      </body>
     </html>
   );
 }

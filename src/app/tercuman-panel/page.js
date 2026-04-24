@@ -68,6 +68,35 @@ export default function TercumanPanel() {
     }
   }
 
+  async function fotoYukle(e) {
+    const dosya = e.target.files?.[0];
+    if (!dosya) return;
+    if (dosya.size > 300 * 1024) {
+      setHata("Fotoğraf 300KB'dan küçük olmalı.");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = async () => {
+      try {
+        const res = await fetch("/api/tercuman/profil-foto", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ base64: reader.result }),
+        });
+        if (res.ok) {
+          const data = await res.json();
+          setTercuman((p) => ({ ...p, foto_url: data.url }));
+        } else {
+          const data = await res.json();
+          setHata(data.hata || "Fotoğraf yüklenemedi.");
+        }
+      } catch {
+        setHata("Fotoğraf yüklenemedi.");
+      }
+    };
+    reader.readAsDataURL(dosya);
+  }
+
   if (yukleniyor) {
     return (
       <div className="min-h-screen bg-gray-50">
@@ -92,11 +121,28 @@ export default function TercumanPanel() {
       <div className="max-w-4xl mx-auto px-6 py-10">
         {/* Başlık */}
         <div className="flex items-center justify-between mb-8">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              Merhaba, {tercuman.ad} {tercuman.soyad || ""}
-            </h1>
-            <p className="text-sm text-gray-500 mt-1">Tercüman Panelinize Hoşgeldiniz</p>
+          <div className="flex items-center gap-4">
+            <label className="relative cursor-pointer group">
+              {tercuman.foto_url ? (
+                <img src={tercuman.foto_url} alt={tercuman.ad}
+                  className="w-16 h-16 rounded-2xl object-cover border-2 border-white shadow group-hover:opacity-75 transition-opacity" />
+              ) : (
+                <div style={{ backgroundColor: "var(--teal)" }}
+                  className="w-16 h-16 rounded-2xl flex items-center justify-center text-white font-bold text-lg group-hover:opacity-75 transition-opacity">
+                  {(tercuman.ad?.[0] || "") + (tercuman.soyad?.[0] || "")}
+                </div>
+              )}
+              <div className="absolute inset-0 flex items-center justify-center rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              </div>
+              <input type="file" accept="image/*" onChange={fotoYukle} className="hidden" />
+            </label>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900">
+                Merhaba, {tercuman.ad} {tercuman.soyad || ""}
+              </h1>
+              <p className="text-sm text-gray-500 mt-1">Tercüman Panelinize Hoşgeldiniz</p>
+            </div>
           </div>
           <button onClick={cikisYap}
             className="text-sm text-gray-500 hover:text-red-600 transition-colors">

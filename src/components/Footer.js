@@ -20,7 +20,7 @@ const LINKLER = {
     { href: "/hakkimizda", ad: "Hakkımızda" },
     { href: "/gizlilik", ad: "Gizlilik Politikası" },
     { href: "/kullanim-kosullari", ad: "Kullanım Koşulları" },
-    { href: "mailto:info@doktorpusula.com", ad: "İletişim" },
+    { href: "/iletisim", ad: "İletişim" },
   ],
 };
 

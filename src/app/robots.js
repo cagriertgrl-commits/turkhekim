@@ -3,7 +3,7 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/admin/"],
+      disallow: ["/api/", "/admin/", "/admin-giris/", "/panel/", "/firma-panel/", "/tercuman-panel/", "/hesabim/", "/giris/", "/firma-giris/", "/tercuman-giris/"],
     },
     sitemap: "https://doktorpusula.com/sitemap.xml",
   };
