@@ -98,15 +98,20 @@ export default function Giris() {
               />
             </div>
 
-            <label className="flex items-center gap-2.5 cursor-pointer select-none">
-              <input
-                type="checkbox"
-                checked={beniHatirla}
-                onChange={(e) => setBeniHatirla(e.target.checked)}
-                className="w-4 h-4 rounded accent-teal-600"
-              />
-              <span className="text-sm text-gray-600">Beni hatırla <span className="text-gray-400">(30 gün)</span></span>
-            </label>
+            <div className="flex items-center justify-between">
+              <label className="flex items-center gap-2.5 cursor-pointer select-none">
+                <input
+                  type="checkbox"
+                  checked={beniHatirla}
+                  onChange={(e) => setBeniHatirla(e.target.checked)}
+                  className="w-4 h-4 rounded accent-teal-600"
+                />
+                <span className="text-sm text-gray-600">Beni hatırla <span className="text-gray-400">(30 gün)</span></span>
+              </label>
+              <Link href="/sifre-unuttum" style={{ color: "#0E7C7B" }} className="text-sm hover:underline">
+                Şifremi unuttum
+              </Link>
+            </div>
 
             {hata && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3">

@@ -1,7 +1,10 @@
 import sql from "@/lib/db";
 import { hash } from "bcryptjs";
+import crypto from "crypto";
 import { rateLimit } from "@/lib/rateLimit";
 import { RATE_LIMITS } from "@/lib/constants";
+import { mevzuatKontrol } from "@/lib/mevzuat";
+import { mailGonder, emailDogrulamaSablon } from "@/lib/mail";
 import { NextResponse } from "next/server";
 
 function slugOlustur(ad) {
@@ -35,6 +38,12 @@ export async function POST(request) {
       return NextResponse.json({ hata: "Kullanım koşulları ve KVKK onayı zorunludur." }, { status: 400 });
     }
 
+    // Sağlık reklam mevzuatı uyumu
+    const hakkindaKontrol = mevzuatKontrol(hakkinda || "");
+    if (!hakkindaKontrol.uygun) {
+      return NextResponse.json({ hata: hakkindaKontrol.uyari }, { status: 400 });
+    }
+
     const mevcutEmail = await sql`SELECT id FROM doktorlar WHERE email = ${email}`;
     if (mevcutEmail.length > 0) {
       return NextResponse.json({ hata: "Bu email zaten kayıtlı." }, { status: 400 });
@@ -45,14 +54,20 @@ export async function POST(request) {
     const finalSlug = mevcutSlug.length > 0 ? slug + "-" + Date.now() : slug;
 
     const hashedSifre = await hash(sifre, 12);
+    const dogrulamaToken = crypto.randomBytes(32).toString("hex");
 
     const yeni = await sql`
-      INSERT INTO doktorlar (slug, ad, soyad, unvan, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, diploma_no, hakkinda, puan, yorum_sayisi, musait, onaylandi, sozlesme_onaylandi, kvkk_onaylandi, onay_tarihi)
-      VALUES (${finalSlug}, ${ad}, ${soyad || ""}, ${unvan || ""}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${diploma_no || ""}, ${hakkinda || ""}, 0, 0, true, false, true, true, NOW())
+      INSERT INTO doktorlar (slug, ad, soyad, unvan, uzmanlik, sehir, ilce, telefon, email, sifre, deneyim, diploma_no, hakkinda, puan, yorum_sayisi, musait, onaylandi, sozlesme_onaylandi, kvkk_onaylandi, onay_tarihi, email_dogrulama_token)
+      VALUES (${finalSlug}, ${ad}, ${soyad || ""}, ${unvan || ""}, ${uzmanlik}, ${sehir}, ${ilce || ""}, ${telefon}, ${email}, ${hashedSifre}, ${deneyim || ""}, ${diploma_no || ""}, ${hakkinda || ""}, 0, 0, true, false, true, true, NOW(), ${dogrulamaToken})
       RETURNING id, slug
     `;
 
-    return NextResponse.json({ mesaj: "Kayıt başarılı!", slug: yeni[0].slug });
+    // E-posta doğrulama maili
+    const link = `https://doktorpusula.com/email-dogrula?token=${dogrulamaToken}`;
+    const sablon = emailDogrulamaSablon(ad, link);
+    await mailGonder({ to: email, ...sablon });
+
+    return NextResponse.json({ mesaj: "Kayıt başarılı! E-posta doğrulama bağlantısı gönderildi.", slug: yeni[0].slug });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ hata: "Sunucu hatası." }, { status: 500 });

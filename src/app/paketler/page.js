@@ -1,4 +1,5 @@
 import Navbar from "@/components/Navbar";
+import PaketCTA from "./PaketCTA";
 
 export const metadata = {
   title: "Paketler & Fiyatlandırma — DoktorPusula",
@@ -28,10 +29,11 @@ const PAKETLER = [
     cta: "Ücretsiz Başla",
     href: "/kayit-ol",
     populer: false,
+    paketSlug: null,
   },
   {
     ad: "Premium",
-    fiyat: "999",
+    fiyat: "299",
     periyot: "ay",
     renk: "#D97706",
     bg: "#FFFBEB",
@@ -50,10 +52,11 @@ const PAKETLER = [
     cta: "Premium'a Geç",
     href: "mailto:satis@doktorpusula.com?subject=Premium Paket Talebi",
     populer: true,
+    paketSlug: "premium",
   },
   {
     ad: "Pro",
-    fiyat: "1.599",
+    fiyat: "599",
     periyot: "ay",
     renk: "#7C3AED",
     bg: "#F5F3FF",
@@ -73,6 +76,7 @@ const PAKETLER = [
     cta: "Pro'ya Geç",
     href: "mailto:satis@doktorpusula.com?subject=Pro Paket Talebi",
     populer: false,
+    paketSlug: "pro",
   },
   {
     ad: "Kurumsal",
@@ -96,6 +100,7 @@ const PAKETLER = [
     cta: "Teklif Al",
     href: "mailto:kurumsal@doktorpusula.com?subject=Kurumsal Paket Talebi",
     populer: false,
+    paketSlug: null,
   },
 ];
 
@@ -167,16 +172,13 @@ export default function PaketlerSayfasi() {
                 ))}
               </ul>
 
-              <a
-                href={paket.href}
-                style={paket.populer
-                  ? { backgroundColor: paket.renk, color: "white" }
-                  : { borderColor: paket.renk, color: paket.renk }
-                }
-                className={`block text-center py-2.5 rounded-xl text-sm font-semibold transition-opacity hover:opacity-90 ${paket.populer ? "" : "border-2"}`}
-              >
-                {paket.cta}
-              </a>
+              <PaketCTA
+                paketSlug={paket.paketSlug}
+                populer={paket.populer}
+                renk={paket.renk}
+                cta={paket.cta}
+                fallbackHref={paket.href}
+              />
             </div>
           ))}
         </div>

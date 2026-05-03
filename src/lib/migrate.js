@@ -343,6 +343,64 @@ async function migrate() {
   await sql`CREATE INDEX IF NOT EXISTS idx_tercumanlar_aktif ON tercumanlar(aktif)`;
   console.log("✅ tercumanlar tablosu oluşturuldu");
 
+  // ─── Doktor doğrulama kolonları ─────────────────────────────────────────────
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS diploma_belge_url TEXT`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS diploma_dogrulandi BOOLEAN DEFAULT false`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS diploma_dogrulama_tarihi TIMESTAMPTZ`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS email_dogrulandi BOOLEAN DEFAULT false`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS email_dogrulama_token TEXT`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS sifre_sifirlama_token TEXT`;
+  await sql`ALTER TABLE doktorlar ADD COLUMN IF NOT EXISTS sifre_sifirlama_son TIMESTAMPTZ`;
+  console.log("✅ doktor doğrulama kolonları");
+
+  // ─── ÖDEMELER tablosu ──────────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS odemeler (
+      id SERIAL PRIMARY KEY,
+      doktor_id INTEGER REFERENCES doktorlar(id) ON DELETE CASCADE,
+      paket TEXT NOT NULL,
+      tutar NUMERIC(10,2) NOT NULL,
+      para_birimi TEXT DEFAULT 'TRY',
+      saglayici TEXT DEFAULT 'iyzico',
+      saglayici_odeme_id TEXT,
+      konversasyon_id TEXT UNIQUE,
+      durum TEXT DEFAULT 'bekliyor',
+      odeme_tipi TEXT,
+      kart_son_4 TEXT,
+      fatura_no TEXT,
+      hata_mesaji TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      tamamlandi_at TIMESTAMPTZ
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_odemeler_doktor ON odemeler(doktor_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_odemeler_durum ON odemeler(durum)`;
+  console.log("✅ odemeler tablosu");
+
+  // ─── FATURALAR tablosu ──────────────────────────────────────────────────
+  await sql`
+    CREATE TABLE IF NOT EXISTS faturalar (
+      id SERIAL PRIMARY KEY,
+      odeme_id INTEGER REFERENCES odemeler(id) ON DELETE SET NULL,
+      doktor_id INTEGER REFERENCES doktorlar(id) ON DELETE SET NULL,
+      fatura_no TEXT UNIQUE,
+      kdv_orani INTEGER DEFAULT 20,
+      net_tutar NUMERIC(10,2) NOT NULL,
+      kdv_tutar NUMERIC(10,2) NOT NULL,
+      brut_tutar NUMERIC(10,2) NOT NULL,
+      vergi_kimlik_no TEXT,
+      adi_soyadi TEXT,
+      adres TEXT,
+      durum TEXT DEFAULT 'taslak',
+      e_arsiv_url TEXT,
+      created_at TIMESTAMPTZ DEFAULT NOW(),
+      kesilme_tarihi TIMESTAMPTZ
+    )
+  `;
+  await sql`CREATE INDEX IF NOT EXISTS idx_faturalar_doktor ON faturalar(doktor_id)`;
+  await sql`CREATE INDEX IF NOT EXISTS idx_faturalar_durum ON faturalar(durum)`;
+  console.log("✅ faturalar tablosu");
+
   console.log("\n🎉 Tüm migrasyonlar tamamlandı!");
   process.exit(0);
 }

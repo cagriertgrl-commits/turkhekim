@@ -1,4 +1,5 @@
 import { getSession } from "@/lib/session";
+import { mevzuatKontrol } from "@/lib/mevzuat";
 
 
 import sql from "@/lib/db";
@@ -70,6 +71,16 @@ export async function POST(request) {
 
   if (hakkinda.length > 3000) return NextResponse.json({ hata: "Hakkında 3000 karakteri geçemez." }, { status: 400 });
   if (website && !website.startsWith("http")) return NextResponse.json({ hata: "Website http:// ile başlamalı." }, { status: 400 });
+
+  // Sağlık reklam mevzuatı uyumu
+  const hakkindaKontrol = mevzuatKontrol(hakkinda);
+  if (!hakkindaKontrol.uygun) {
+    return NextResponse.json({ hata: hakkindaKontrol.uyari }, { status: 400 });
+  }
+  const fiyatKontrol = mevzuatKontrol(fiyat);
+  if (!fiyatKontrol.uygun) {
+    return NextResponse.json({ hata: fiyatKontrol.uyari }, { status: 400 });
+  }
 
   try {
     await sql`
