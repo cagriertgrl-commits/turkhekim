@@ -21,6 +21,7 @@ import CikisButonu from "@/components/CikisButonu";
 import WhatsappInput from "@/components/WhatsappInput";
 import TemaSecici from "@/components/TemaSecici";
 import HaritaSecici from "@/components/HaritaSecici";
+import WidgetKodu from "@/components/WidgetKodu";
 
 const ADRES_TIPLERI = [
   { deger: "muayenehane", etiket: "Muayenehane" },
@@ -419,6 +420,9 @@ export default async function Panel() {
               <p className="text-xs text-gray-400 mb-3">Herkese açık profil sayfanızın görünümünü özelleştirin</p>
               <TemaSecici mevcutTema={doktor.tema || "varsayilan"} gizleBashlik={true} />
             </div>
+
+            {/* Widget Kodu */}
+            <WidgetKodu slug={doktor.slug} />
 
             {/* Paket Yükselt kartı — sadece ücretsiz pakette */}
             {(!doktor.paket || doktor.paket === "ucretsiz") && (

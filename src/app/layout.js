@@ -1,5 +1,6 @@
 import "./globals.css";
 import Script from "next/script";
+import { headers } from "next/headers";
 import Footer from "@/components/Footer";
 import CerezBanner from "@/components/CerezBanner";
 
@@ -44,19 +45,27 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const headersList = await headers();
+  const pathname = headersList.get("x-pathname") || headersList.get("x-invoke-path") || headersList.get("x-matched-path") || "";
+  const embedSayfasi = pathname.startsWith("/embed");
+
   return (
     <html lang="tr" className="h-full antialiased">
       <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+        {!embedSayfasi && <link rel="preconnect" href="https://fonts.googleapis.com" />}
+        {!embedSayfasi && <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />}
+        {!embedSayfasi && <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />}
       </head>
-      <body className="min-h-full flex flex-col">
+      <body className={embedSayfasi ? "" : "min-h-full flex flex-col"}>
         {children}
-        <Footer />
-        <CerezBanner />
-        {GA_ID && (
+        {!embedSayfasi && (
+          <>
+            <Footer />
+            <CerezBanner />
+          </>
+        )}
+        {GA_ID && !embedSayfasi && (
           <>
             <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`} strategy="afterInteractive" />
             <Script id="ga-init" strategy="afterInteractive">
