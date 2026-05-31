@@ -12,6 +12,11 @@ export const RATE_LIMITS = {
   HASTA_SORGU:   { limit: 10, pencereDakika: 60 },
   TERCUMAN_KAYIT: { limit: 3,  pencereDakika: 60 },
   TERCUMAN_GIRIS: { limit: 5,  pencereDakika: 15 },
+  AVUKAT_KAYIT:  { limit: 3,  pencereDakika: 60 },
+  AVUKAT_GIRIS:  { limit: 5,  pencereDakika: 15 },
+  HUKUK_AI:      { limit: 15, pencereDakika: 60 },
+  HUKUK_TALEP:   { limit: 3,  pencereDakika: 60 },
+  HUKUK_BULTEN:  { limit: 5,  pencereDakika: 60 },
 };
 
 /** Admin oturum süresi (saniye) */

@@ -15,12 +15,10 @@
       "Bash(do if:*)",
       "Read(//c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/**)",
       "Bash(then echo:*)",
-      "Bash(grep -h \"rateLimit\" \"/c/Users/cagri/OneDrive/Desktop/Yazılım/turkhekim/src/app/api\"/**/*.js 2>/dev/null | grep -oE \"rateLimit\\\\([^)]+\\\\)\" | sort -u)",
-      "Bash(npx next:*)"
+      "Bash(npx next:*)",
+      "WebSearch"
     ]
   },
-  "effortLevel": "low",
-  "claudeMdExcludes": ["C:/Users/cagri/OneDrive/Desktop/CLAUDE.md"],
   "hooks": {
     "PreCompact": [
       {
@@ -28,13 +26,17 @@
         "hooks": [
           {
             "type": "agent",
-            "model": "claude-haiku-4-5-20251001",
             "prompt": "Bu konuşmada yapılan teknik çalışmayı özetle. Şunları kısa ve madde madde listele: (1) değiştirilen veya oluşturulan dosyalar ve ne değişti, (2) alınan kritik teknik kararlar, (3) çözülen hatalar, (4) tamamlanmamış bekleyen görevler. Özet compact sonrası ana modele bağlam olarak verilecektir — teknik detayları koru.",
-            "statusMessage": "Haiku bağlamı özetliyor...",
-            "timeout": 45
+            "timeout": 45,
+            "model": "claude-haiku-4-5-20251001",
+            "statusMessage": "Haiku bağlamı özetliyor..."
           }
         ]
       }
     ]
-  }
+  },
+  "effortLevel": "low",
+  "claudeMdExcludes": [
+    "C:/Users/cagri/OneDrive/Desktop/CLAUDE.md"
+  ]
 }
