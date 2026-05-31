@@ -2,6 +2,8 @@ import Navbar from "@/components/Navbar";
 import sql from "@/lib/db";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import YorumBolumu from "./YorumBolumu";
+import MusaitlikBolumu from "./MusaitlikBolumu";
 
 export async function generateMetadata({ params }) {
   const { slug } = await params;
@@ -147,6 +149,11 @@ export default async function TercumanProfil({ params }) {
               )}
             </div>
           </div>
+        </div>
+
+        <div className="mt-6 grid md:grid-cols-2 gap-6">
+          <MusaitlikBolumu tercumanId={t.id} />
+          <YorumBolumu tercumanId={t.id} />
         </div>
       </div>
     </div>

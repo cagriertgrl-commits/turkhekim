@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
+import TalepSekmesi from "./TalepSekmesi";
+import MusaitlikSekmesi from "./MusaitlikSekmesi";
 
 export default function TercumanPanel() {
   const [tercuman, setTercuman] = useState(null);
@@ -261,6 +263,10 @@ export default function TercumanPanel() {
             </div>
           )}
         </div>
+
+        {/* Faz 3 — Tercüman talepleri + müsaitlik */}
+        <TalepSekmesi tercumanId={tercuman.id} />
+        <MusaitlikSekmesi tercumanId={tercuman.id} />
       </div>
     </div>
   );
