@@ -60,10 +60,28 @@ export async function POST(request) {
       }
     }
 
-    await sql`
+    const [yeni] = await sql`
       INSERT INTO randevular (doktor_id, hasta_adi, telefon, sikayet, durum, tip, tarih, saat, iptal_token)
       VALUES (${doktor_id}, ${hasta_adi.trim()}, ${telefon.trim()}, ${sikayet?.trim() || ""}, 'bekliyor', ${randevuTipi}, ${tarih || null}, ${saat || null}, ${iptalToken})
+      RETURNING id
     `;
+
+    // SMS / WhatsApp hatırlatma kuyruğa eklenir — sessiz başarısızlık, randevu akışını bozmaz
+    if (tarih && telefon) {
+      try {
+        const [doktor] = await sql`SELECT ad, soyad FROM doktorlar WHERE id = ${doktor_id}`;
+        const { randevuHatirlatmasiPlanla } = await import("@/lib/smsServisi");
+        await randevuHatirlatmasiPlanla({
+          randevuId: yeni.id,
+          telefon: telefon.trim(),
+          doktorAdi: `${doktor?.ad || ""} ${doktor?.soyad || ""}`.trim() || "Hekim",
+          tarih,
+          saat,
+        });
+      } catch (smsErr) {
+        console.error("SMS hatırlatma planlama hatası (kritik değil):", smsErr);
+      }
+    }
 
     return NextResponse.json({
       mesaj: "Randevu talebiniz alındı. Doktor en kısa sürede sizi arayacak.",
