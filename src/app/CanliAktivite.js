@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 
-const SEHIRLER = ["İstanbul", "Ankara", "İzmir", "Antalya", "Bursa", "Adana", "Mersin", "Konya", "Gaziantep", "Trabzon"];
+const SEHIRLER = ["İstanbul", "Ankara", "İzmir", "Antalya", "Bursa", "Adana", "Eskişehir", "Konya", "Gaziantep", "Trabzon"];
 const ISLEMLER = [
   "randevu alındı",
   "doktor profili incelendi",

@@ -16,7 +16,7 @@ function slugYap(metin) {
 
 const SEHIRLER = [
   "İstanbul", "Ankara", "İzmir", "Bursa", "Antalya",
-  "Adana", "Konya", "Gaziantep", "Mersin", "Kayseri",
+  "Adana", "Konya", "Gaziantep", "Kayseri",
   "Trabzon", "Diyarbakır", "Samsun", "Eskişehir", "Erzurum",
 ];
 

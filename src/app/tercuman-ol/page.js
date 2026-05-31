@@ -6,7 +6,7 @@ import Link from "next/link";
 
 const SEHIRLER = [
   "İstanbul", "Ankara", "İzmir", "Antalya", "Bursa", "Adana", "Gaziantep",
-  "Konya", "Mersin", "Kayseri", "Trabzon", "Samsun", "Eskişehir", "Diyarbakır",
+  "Konya", "Kayseri", "Trabzon", "Samsun", "Eskişehir", "Diyarbakır",
   "Muğla", "Aydın", "Denizli", "Tekirdağ", "Sakarya", "Manisa",
 ];
 

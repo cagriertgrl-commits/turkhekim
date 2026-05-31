@@ -13,7 +13,7 @@ const TR_ADLAR = { "kbb-uzmani": "KBB", "kardiyoloji": "Kardiyoloji", "ortopedi"
 
 const SEHIRLER = [
   "İstanbul", "Ankara", "İzmir", "Antalya", "Bursa", "Adana",
-  "Gaziantep", "Konya", "Mersin", "Kayseri", "Trabzon", "Samsun",
+  "Gaziantep", "Konya", "Eskişehir", "Kayseri", "Trabzon", "Samsun",
 ];
 
 function sehirSlug(s) {
