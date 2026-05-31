@@ -11,7 +11,7 @@ export async function GET(req) {
 
   const talepler = kategori
     ? await sql`
-        SELECT t.id, t.kategori, t.baslik, t.aciklama, t.butce, t.son_tarih, t.durum, t.created_at,
+        SELECT t.id, t.doktor_id, t.kategori, t.baslik, t.aciklama, t.butce, t.son_tarih, t.durum, t.created_at,
                d.ad AS doktor_ad, d.uzmanlik AS doktor_uzmanlik, d.sehir AS doktor_sehir
         FROM malzeme_talepleri t
         LEFT JOIN doktorlar d ON d.id = t.doktor_id
@@ -19,7 +19,7 @@ export async function GET(req) {
         ORDER BY t.created_at DESC LIMIT 100
       `
     : await sql`
-        SELECT t.id, t.kategori, t.baslik, t.aciklama, t.butce, t.son_tarih, t.durum, t.created_at,
+        SELECT t.id, t.doktor_id, t.kategori, t.baslik, t.aciklama, t.butce, t.son_tarih, t.durum, t.created_at,
                d.ad AS doktor_ad, d.uzmanlik AS doktor_uzmanlik, d.sehir AS doktor_sehir
         FROM malzeme_talepleri t
         LEFT JOIN doktorlar d ON d.id = t.doktor_id

@@ -2,6 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import PazaryeriIlanlarSekmesi from "./PazaryeriIlanlarSekmesi";
+import GelenTaleplerSekmesi from "./GelenTaleplerSekmesi";
+import MesajlarSekmesi from "./MesajlarSekmesi";
 
 const KATEGORILER = [
   { deger: "ilac", etiket: "İlaç" },
@@ -179,15 +182,18 @@ export default function FirmaPaneli() {
         )}
 
         {/* Sekmeler */}
-        <div className="flex gap-2 mb-6">
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
           {[
             { id: "urunler", label: "Ürünlerim" },
+            { id: "pazaryeri", label: "🏷️ Pazaryeri İlanlarım" },
+            { id: "talepler", label: "📋 Gelen Talepler" },
+            { id: "mesajlar", label: "💬 Mesajlar" },
             { id: "takipciler", label: "Takipçiler" },
           ].map((s) => (
             <button
               key={s.id}
               onClick={() => setAktifSekme(s.id)}
-              className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors ${
+              className={`px-4 py-2 rounded-xl text-sm font-medium transition-colors whitespace-nowrap ${
                 aktifSekme === s.id
                   ? "text-white"
                   : "bg-white text-gray-500 border border-gray-200 hover:border-gray-300"
@@ -350,6 +356,15 @@ export default function FirmaPaneli() {
             )}
           </div>
         )}
+
+        {/* PAZARYERİ İLANLARIM */}
+        {aktifSekme === "pazaryeri" && firma && <PazaryeriIlanlarSekmesi firmaId={firma.id} />}
+
+        {/* GELEN TALEPLER (RFQ) */}
+        {aktifSekme === "talepler" && firma && <GelenTaleplerSekmesi firmaKategori={firma.kategori || firma.tip} firmaId={firma.id} />}
+
+        {/* MESAJLAR */}
+        {aktifSekme === "mesajlar" && <MesajlarSekmesi tip="firma" />}
 
         {/* TAKİPÇİLER SEKMESİ */}
         {aktifSekme === "takipciler" && (
