@@ -63,6 +63,18 @@ export default function HukukAnaSayfa() {
             >
               📨 Danışmanlık Talep Et
             </Link>
+            <Link
+              href="/hukuk/makaleler"
+              className="border-2 border-white/40 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10"
+            >
+              📰 Makaleler
+            </Link>
+            <Link
+              href="/hukuk/sik-sorulan-sorular"
+              className="border-2 border-white/40 text-white px-6 py-3 rounded-lg font-semibold hover:bg-white/10"
+            >
+              💡 SSS
+            </Link>
           </div>
         </div>
       </section>
