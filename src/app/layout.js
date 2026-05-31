@@ -43,6 +43,9 @@ export const metadata = {
   alternates: {
     canonical: "https://doktorpusula.com",
   },
+  verification: {
+    google: "jH0OkxAT8LwYb6n_Ghs6ago4Q200Jdsihyq_oBR5NOk",
+  },
 };
 
 export default async function RootLayout({ children }) {
