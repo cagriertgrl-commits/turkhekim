@@ -5,6 +5,7 @@ import AdminOzet from "./AdminOzet";
 import AdminDoktorTablosu from "./AdminDoktorTablosu";
 import AdminYorumModerasyon from "./AdminYorumModerasyon";
 
+const YONETIM_LINK_TEXT = "🆕 Detaylı Yönetim Paneli →";
 const SEKMELER = [
   { key: "ozet", label: "Özet" },
   { key: "bekleyen", label: "Bekleyen" },
@@ -199,6 +200,9 @@ export default function AdminPanel() {
                 {toplamBekleyen} işlem bekliyor
               </span>
             )}
+            <Link href="/admin/yonetim" style={{ backgroundColor: "#0E7C7B" }} className="text-white text-xs px-3 py-1.5 rounded-lg font-semibold hover:opacity-90">
+              {YONETIM_LINK_TEXT}
+            </Link>
             <Link href="/" className="text-gray-400 hover:text-white text-sm">Siteye Dön</Link>
           </div>
         </div>
